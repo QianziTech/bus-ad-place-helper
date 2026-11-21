@@ -101,6 +101,9 @@ export function yuanText(yuan: number): string {
   const wan = yuan / 10000
   return `¥${(Math.round(wan * 10) / 10).toFixed(1)} 万`
 }
+export function analysisModeText(mode: 'off' | 'mock' | 'live'): string {
+  return { off: '规则生成', mock: '离线演示', live: '在线 AI' }[mode]
+}
 const plainYuan = (yuan: number) => `¥${yuan.toLocaleString('zh-CN')}`
 const wanRange = (low: number, high: number) => `${Math.round(low / 1000) / 10}–${Math.round(high / 1000) / 10} 万`
 
@@ -283,14 +286,14 @@ export function buildVm(input: {
     headline: headlineTemplate,
     headlineSource: copy.source,
     copy,
-    brandContextSource: copy.source === 'llm' ? '背景由 AI 生成（live）' : copy.source === 'mock' ? 'AI 回放（mock）' : '模板生成',
+    brandContextSource: copy.source === 'llm' ? 'AI 辅助整理' : copy.source === 'mock' ? '演示样例' : '模板文案',
     strategySource:
       mode === 'off'
-        ? '本次取舍 基础分配（确定性规则）'
-        : `本次取舍 AI 参与（${mode === 'mock' ? 'mock 回放' : 'live'}）· ${rounds.length} 轮 · ${rounds.reduce((sum, item) => sum + item.acceptedCount, 0)} 条偏好被采纳 / ${rounds.reduce((sum, item) => sum + item.rejected.length, 0)} 条被拒`,
+        ? '本次资源按规则推荐。'
+        : `${analysisModeText(mode)} · ${rounds.length} 轮推荐 · 采用 ${rounds.reduce((sum, item) => sum + item.acceptedCount, 0)} 项，未采用 ${rounds.reduce((sum, item) => sum + item.rejected.length, 0)} 项。`,
     lines,
     anchors,
-    anchorNotice: anchors.some(anchor => anchor.busCount === null && anchor.metroCount === null) ? '后端未提供锚点的候选计数，本页只显示本方案选中数。' : null,
+    anchorNotice: anchors.some(anchor => anchor.busCount === null && anchor.metroCount === null) ? '部分商圈暂无候选数量，仅显示本方案已选资源。' : null,
     busLines,
     metroLines,
     quantity: lines.reduce((sum, line) => sum + line.quantity, 0),

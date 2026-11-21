@@ -6,6 +6,13 @@ import { failureTitle } from '../plan/buildVm'
 
 defineProps<{ failure: PlanFailure | null }>()
 
+const fallbackText = {
+  brief: '需求提取暂不可用，已沿用现有需求。',
+  strategy: 'AI 推荐暂不可用，已使用基础方案。',
+  copy: 'AI 文案暂不可用，已使用模板文案。',
+  verify: 'AI 检查暂不可用，已完成规则检查。',
+}
+
 const alertType = computed(() => {
   if (state.networkError) return 'error'
   const status = state.result && state.result.status !== 'ok' ? state.result.status : null
@@ -53,8 +60,10 @@ function applySuggestion(text: string) {
   </div>
   <!-- off 模式下策略与成稿按设计跳过，不算降级告警。 -->
   <div v-else-if="state.result && state.result.status === 'ok' && state.mode !== 'off' && state.result.degraded?.length" class="status-bar warning">
-    <a-tag color="orange">AI 已降级</a-tag>
-    <span v-for="item in state.result.degraded" :key="item.stage">{{ item.stage }}：{{ item.reason }}　</span>
-    <span class="caption">方案照常可读可导出。</span>
+    <span v-for="item in state.result.degraded" :key="item.stage">{{ fallbackText[item.stage] }}　</span>
+    <details class="caption">
+      <summary>查看原因</summary>
+      <div v-for="item in state.result.degraded" :key="item.stage">{{ item.reason }}</div>
+    </details>
   </div>
 </template>

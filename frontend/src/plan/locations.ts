@@ -1,7 +1,7 @@
 /** 把后端扫描的 JSON 路径转成可读位置，导出阻断清单与核验面板共用。 */
 const fieldLabels: Record<string, string> = {
   businessGoal: '生意目标',
-  name: 'Campaign 名称',
+  name: '活动名称',
   audience: '目标人群',
   primaryGoal: '主目标',
   successMetric: '成功衡量',
@@ -20,11 +20,11 @@ export function humanLocation(location?: string): string {
     if (cleaned.endsWith(`.${field}`)) {
       if (cleaned.startsWith('copy.')) return `AI 文案 · ${label}`
       if (cleaned.includes('campaignOverride')) return `需求细节 · ${label}`
-      if (cleaned.startsWith('plan.') || cleaned.startsWith('campaign.')) return `生效 Campaign · ${label}`
+      if (cleaned.startsWith('plan.') || cleaned.startsWith('campaign.')) return `本次需求 · ${label}`
       return label
     }
   }
   if (cleaned.startsWith('copy')) return 'AI 文案'
-  if (cleaned.startsWith('plan.') || cleaned.startsWith('campaign.')) return '方案 Campaign'
+  if (cleaned.startsWith('plan.') || cleaned.startsWith('campaign.')) return '投放需求'
   return cleaned
 }

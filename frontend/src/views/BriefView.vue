@@ -4,6 +4,7 @@ import { message } from 'ant-design-vue'
 import { api, ApiError } from '../api/client'
 import { state, workbench, industryMeta, setCampaignOverride, loadMeta } from '../state/workbench'
 import { localScan } from '../plan/sanitize'
+import { analysisModeText } from '../plan/buildVm'
 import type { BriefResult, CampaignOverride, BriefSample, Check } from '../plan/types'
 
 const samples = ref<BriefSample[]>([])
@@ -59,15 +60,15 @@ async function parse() {
     const response = (await api.parseBrief({ text: text.value, industry: workbench.industry })) as unknown as BriefResult
     result.value = response
     draft.value = { ...(response.campaignDraft || {}) }
-    if (response.status === 'disabled') message.info('当前模式未开启 AI 分析，右栏保留手工填写')
-    else if (response.status === 'unavailable') message.warning(response.reason || '拆解不可用，请手工填写')
+    if (response.status === 'disabled') message.info('当前未开启 AI，可使用行业参考需求')
+    else if (response.status === 'unavailable') message.warning(response.reason || '暂时无法提取需求，可使用行业参考需求')
   } catch (error) {
     if (error instanceof ApiError && error.scanChecks.length) {
       // 入口拦截：服务端 400 附 checks[]，保留原文供修改。
       scanHits.value = error.scanChecks
       return
     }
-    const detail = error instanceof Error ? error.message : '拆解请求失败'
+    const detail = error instanceof Error ? error.message : '需求提取失败'
     message.error(detail)
   } finally {
     parsing.value = false
@@ -79,22 +80,17 @@ const rows = computed(() => {
   if (!campaign) return []
   const current = draft.value
   const source = (key: keyof CampaignOverride) => {
-    if ((current as Record<string, unknown>)[key] !== undefined) return { text: '人工', color: 'blue' }
-    if (result.value && !missing.value.some(item => item.includes(labelOf(key)))) return { text: '文本命中', color: 'green' }
+    if ((current as Record<string, unknown>)[key] !== undefined) return { text: '需求提取', color: 'green' }
     return { text: '行业预置', color: 'default' }
   }
-  const labels: Record<string, string> = {
-    name: '③', businessGoal: '②', audience: '④', primaryGoal: '③', window: '⑤', budgetHintYuan: '⑤', successMetric: '⑦',
-  }
-  const labelOf = (key: keyof CampaignOverride) => labels[key as string] || ''
   const items = [
-    { key: 'name' as const, label: '③ campaign', value: current.name ?? campaign.name },
+    { key: 'name' as const, label: '③ 投放活动', value: current.name ?? campaign.name },
     { key: 'businessGoal' as const, label: '② 生意目标', value: current.businessGoal ?? campaign.businessGoal },
     { key: 'primaryGoal' as const, label: '③ 主目标', value: current.primaryGoal ?? campaign.primaryGoal },
     { key: 'audience' as const, label: '④ 人群', value: current.audience ?? campaign.audience },
     { key: 'window' as const, label: '⑤ 建议档期', value: `${(current.window ?? campaign.window).start} ~ ${(current.window ?? campaign.window).end}` },
     { key: 'budgetHintYuan' as const, label: '⑤ 建议预算', value: `${Math.round((current.budgetHintYuan ?? campaign.budgetHintYuan) / 10000)} 万` },
-    { key: 'successMetric' as const, label: '⑦ KPI / 证明', value: (() => { const metric = current.successMetric ?? campaign.successMetric; return `${metric.kpi}；${metric.proof}` })() },
+    { key: 'successMetric' as const, label: '⑦ 效果衡量', value: (() => { const metric = current.successMetric ?? campaign.successMetric; return `${metric.kpi}；${metric.proof}` })() },
   ]
   return items.map(item => ({ ...item, source: source(item.key) }))
 })
@@ -122,7 +118,7 @@ function applyToWorkbench() {
     setCampaignOverride(merged as CampaignOverride)
   }
   location.hash = '/'
-  message.success('已写入 Campaign，回到工作台点「生成方案」生效')
+  message.success('需求已应用，请生成方案')
 }
 
 onMounted(async () => {
@@ -135,8 +131,8 @@ onMounted(async () => {
   <div class="app-page">
     <div class="page-narrow">
       <div class="page-head">
-        <h2>客户需求拆解</h2>
-        <p>左栏原文 → 右栏 campaign 假设书草稿。拆解只写 campaign，不改行业 / 投放对象 / 预算上限 / 档期。</p>
+        <h2>客户需求</h2>
+        <p>从客户来信中提取投放目标、人群和活动要求。</p>
       </div>
       <div style="display: grid; grid-template-columns: 58fr 42fr; gap: 20px; align-items: start">
         <div class="entry-card">
@@ -145,42 +141,42 @@ onMounted(async () => {
             <a-select v-model:value="workbench.industry" :options="industryOptions" size="small" style="width: 140px" />
             <span class="caption">样本</span>
             <a-select :value="selected" :options="samples.map(item => ({ value: item.title, label: item.title }))" size="small" style="flex: 1"
-              placeholder="选择参考 brief" @update:value="(title: string) => { const s = samples.find(i => i.title === title); if (s) selectSample(s) }" />
+              placeholder="选择参考需求" @update:value="(title: string) => { const s = samples.find(i => i.title === title); if (s) selectSample(s) }" />
             <a-button size="small" @click="() => { selected = '自拟'; text = '' }">自拟</a-button>
           </div>
           <a-textarea v-model:value="text" :rows="14" :maxlength="2000" show-count
-            placeholder="粘贴 4A 邮件，或自拟一段需求（行业仍从上方选择）" />
+            placeholder="粘贴客户来信，或填写投放需求" />
           <p class="caption" :style="scanHits.length ? 'color: var(--danger)' : ''">
             <template v-if="scanHits.length">
-              ● 服务端拦截 {{ scanHits.length }} 处，请按建议修改原文：
+              请修改以下 {{ scanHits.length }} 处表述：
               <span v-for="(hit, index) in scanHits" :key="index" style="display:block">{{ hit.element }}：{{ hit.message }}<template v-if="hit.suggestion">，{{ hit.suggestion }}</template></span>
             </template>
-            <template v-else-if="localHits.length">● 检测到：{{ localHits.join('、') }}，已拦下，请修改后再拆解</template>
-            <template v-else>● 未检测到成交价形态；实名由服务端在提交时校验</template>
+            <template v-else-if="localHits.length">请修改以下表述后重试：{{ localHits.join('、') }}</template>
+            <template v-else>请使用客户代称，勿填写真实成交价。</template>
           </p>
           <a-space style="margin-top: 8px">
-            <a-button type="primary" :loading="parsing" @click="parse">拆解为 campaign</a-button>
-            <a-tag color="blue">模式 {{ state.mode }}</a-tag>
+            <a-button type="primary" :loading="parsing" @click="parse">提取需求</a-button>
+            <a-tag color="blue">{{ analysisModeText(state.mode) }}</a-tag>
           </a-space>
         </div>
 
         <div class="entry-card">
-          <h3>campaign 假设书草稿</h3>
+          <h3>投放需求草稿</h3>
           <div v-for="row in rows" :key="row.key" style="padding: 8px 0; border-top: 1px solid var(--line)">
             <div class="caption">{{ row.label }} <a-tag :color="row.source.color" style="margin-left: 6px">{{ row.source.text }}</a-tag></div>
             <div style="font-size: 13px">{{ row.value }}</div>
           </div>
           <div v-if="rows.length" style="margin-top: 10px">
             <a-space wrap>
-              <a-button size="small" @click="applyDate">采纳档期 chip</a-button>
-              <a-button size="small" @click="applyBudget">采纳预算 chip</a-button>
+              <a-button size="small" @click="applyDate">使用建议档期</a-button>
+              <a-button size="small" @click="applyBudget">使用建议预算</a-button>
             </a-space>
           </div>
           <p v-if="missing.length" class="caption" style="margin-top: 10px; color: var(--warn)">还差 {{ missing.length }} 项：{{ missing.join('、') }}（将沿用行业预置）</p>
           <p v-else-if="result" class="caption" style="margin-top: 10px; color: var(--ok)">七要素已覆盖，可直接应用到工作台。</p>
-          <p v-if="!rows.length" class="caption">尚无行业预置，等待 /api/meta。</p>
+          <p v-if="!rows.length" class="caption">暂无行业参考需求。</p>
           <a-button block type="primary" style="margin-top: 14px" :disabled="!rows.length" @click="applyToWorkbench">应用到工作台 →</a-button>
-          <p class="caption" style="margin-top: 8px">off 或解析失败时，右栏保留手工七要素，不阻断出方案。</p>
+          <p class="caption" style="margin-top: 8px">应用后可在工作台查看需求细节。预算与档期仅在点击上方按钮后更新。</p>
         </div>
       </div>
     </div>
