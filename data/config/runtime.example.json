@@ -1,0 +1,14 @@
+{
+  "mode": "mock",
+  "llm": {
+    "provider": "compatible",
+    "baseUrl": "https://api.openai.com/v1",
+    "model": "",
+    "timeoutMs": 8000,
+    "retries": 1,
+    "temperature": 0.2
+  },
+  "includeHistoricalProfiles": true,
+  "updatedAt": "2026-11-21T00:00:00.000Z",
+  "source": "file"
+}

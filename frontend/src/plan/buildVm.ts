@@ -38,8 +38,9 @@ export interface PlanVmAnchor {
   station: string
   role: string
   rationale: string
-  busCount: number
-  metroCount: number
+  /** 周边候选数与「本方案选中数」；后端未提供候选元数据时为 null，界面显示「—」。 */
+  busCount: number | null
+  metroCount: number | null
   selectedCount: number
   coord?: { lng: number; lat: number; exit: string }
 }
@@ -109,18 +110,24 @@ export function industryName(meta: { industries: MetaIndustry[] } | null, id: st
   return meta?.industries.find(item => item.id === id)?.name || id
 }
 
-function anchorFromMeta(metaIndustry: MetaIndustry | undefined, anchorsById: Record<string, Anchor> | undefined) {
+function anchorIdParts(id: string) {
+  const dash = id.indexOf('-')
+  return dash < 0 ? { station: id, areaName: id } : { station: id.slice(dash + 1), areaName: id.slice(dash + 1) }
+}
+
+function anchorFromMeta(metaIndustry: MetaIndustry | undefined, anchorsById: Record<string, Anchor> | undefined): PlanVmAnchor[] {
   const list: PlanVmAnchor[] = []
   for (const ref of metaIndustry?.anchors || []) {
+    const fallback = anchorIdParts(ref.id)
     const full = anchorsById?.[ref.id]
     list.push({
       id: ref.id,
-      areaName: ref.areaName || full?.areaName || ref.id,
-      station: ref.station || full?.station || '',
+      areaName: ref.areaName || full?.areaName || fallback.areaName,
+      station: ref.station || full?.station || fallback.station,
       role: ref.role || full?.role || 'businessArea',
       rationale: ref.rationale || '',
-      busCount: ref.candidateCounts?.bus ?? 0,
-      metroCount: ref.candidateCounts?.metro ?? 0,
+      busCount: ref.candidateCounts?.bus ?? (full ? full.candidates.filter(item => item.mediaKey.startsWith('bus|')).length : null),
+      metroCount: ref.candidateCounts?.metro ?? (full ? full.candidates.filter(item => item.mediaKey.startsWith('metro|')).length : null),
       selectedCount: ref.selectedCount ?? 0,
       coord: full?.coord ? { lng: full.coord.lng, lat: full.coord.lat, exit: full.coord.exit } : undefined,
     })
@@ -131,20 +138,34 @@ function anchorFromMeta(metaIndustry: MetaIndustry | undefined, anchorsById: Rec
 function fallbackAnchors(plan: PlanSuccess): PlanVmAnchor[] {
   const map = new Map<string, PlanVmAnchor>()
   for (const line of plan.lines) {
-    for (const reason of line.reasons) {
-      const matched = reason.match(/^([^：:]+?)：/)
-      if (!matched) continue
-      const name = matched[1].trim()
-      if (!name || name.length > 40) continue
-      const entry = map.get(name) || {
-        id: name, areaName: name, station: '', role: 'businessArea', rationale: '',
-        busCount: 0, metroCount: 0, selectedCount: 0,
+    const ids = new Set<string>()
+    for (const ref of line.evidenceRefs || []) {
+      const matched = ref.match(/^coverage:([^:]+):/)
+      if (matched) ids.add(matched[1])
+    }
+    for (const id of ids) {
+      const station = id.includes('-') ? id.slice(id.indexOf('-') + 1) : id
+      const areaPrefix = line.reasons
+        .map(reason => reason.split(/[：:]/)[0].trim())
+        .filter(prefix => prefix.length <= 24)
+        .find(prefix => prefix.startsWith(station))
+      const entry = map.get(id) || {
+        id,
+        areaName: areaPrefix || station,
+        station,
+        role: 'businessArea',
+        rationale: '',
+        busCount: null,
+        metroCount: null,
+        selectedCount: 0,
+        coord: undefined,
       }
+      if (areaPrefix && entry.areaName === entry.station) entry.areaName = areaPrefix
       entry.selectedCount += 1
-      map.set(name, entry)
+      map.set(id, entry)
     }
   }
-  return [...map.values()]
+  return [...map.values()].sort((a, b) => b.selectedCount - a.selectedCount)
 }
 
 function normalizeLines(lines: PlanLine[]): PlanVmLine[] {
@@ -194,16 +215,18 @@ export function buildVm(input: {
       station: item.station,
       role: item.role,
       rationale: item.rationale,
-      busCount: item.candidateCounts?.bus ?? 0,
-      metroCount: item.candidateCounts?.metro ?? 0,
+      busCount: item.candidateCounts?.bus ?? null,
+      metroCount: item.candidateCounts?.metro ?? null,
       selectedCount: item.selectedCount ?? 0,
       coord: input.anchorsById?.[item.id]?.coord
         ? { lng: input.anchorsById[item.id].coord.lng, lat: input.anchorsById[item.id].coord.lat, exit: input.anchorsById[item.id].coord.exit }
         : undefined,
     }))
   }
+  // 选中数按覆盖证据（coverage:<anchorId>:<mediaKey>）归属，避免同名商圈误并。
   for (const anchor of anchors) {
-    anchor.selectedCount = plan.lines.filter(line => line.reasons.some(reason => reason.startsWith(anchor.areaName))).length || anchor.selectedCount
+    const matched = plan.lines.filter(line => (line.evidenceRefs || []).some(ref => ref.startsWith(`coverage:${anchor.id}:`)))
+    if (matched.length) anchor.selectedCount = matched.length
   }
   const busLines = lines.filter(line => line.kind === 'bus')
   const metroLines = lines.filter(line => line.kind === 'metro')
@@ -250,7 +273,7 @@ export function buildVm(input: {
         : `本次取舍 AI 参与（${mode === 'mock' ? 'mock 回放' : 'live'}）· ${plan.rounds.length} 轮 · ${plan.rounds.reduce((sum, item) => sum + item.acceptedCount, 0)} 条偏好被采纳 / ${plan.rounds.reduce((sum, item) => sum + item.rejected.length, 0)} 条被拒`,
     lines,
     anchors,
-    anchorNotice: planAnchors.length || metaIndustry?.anchors?.length ? null : '本轮未提供锚点元数据，锚点卡按入选理由归类。',
+    anchorNotice: anchors.some(anchor => anchor.busCount === null && anchor.metroCount === null) ? '后端未提供锚点的候选计数，本页只显示本方案选中数。' : null,
     busLines,
     metroLines,
     quantity: lines.reduce((sum, line) => sum + line.quantity, 0),

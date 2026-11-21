@@ -25,7 +25,7 @@ function anchorCard(anchor: PlanVmAnchor) {
   return `<div class="card">
     <h3>${h(anchor.areaName)}</h3>
     <small>${anchor.station ? `站点 ${h(anchor.station)} · ` : ''}${anchor.role === 'landmark' ? '地标' : '业务区'}</small>
-    <p style="margin:8px 0 0;font-size:14px">周边候选 公交 ${anchor.busCount} · 地铁 ${anchor.metroCount}<br><span class="muted">本方案选中 ${anchor.selectedCount} 项</span></p>
+    <p style="margin:8px 0 0;font-size:14px">${anchor.busCount === null && anchor.metroCount === null ? '周边候选暂无数据' : `周边候选 公交 ${anchor.busCount ?? '—'} · 地铁 ${anchor.metroCount ?? '—'}`}<br><span class="muted">本方案选中 ${anchor.selectedCount} 项</span></p>
     ${anchor.rationale ? `<p class="note" style="margin-top:6px">${h(copyText(anchor.rationale, 120))}</p>` : ''}
     ${coord}
   </div>`
@@ -224,7 +224,7 @@ ${head}
       <h3>锚点命中汇总</h3>
       <table class="data">
         <thead><tr><th>锚点</th><th>站点</th><th class="num">公交候选</th><th class="num">地铁候选</th><th class="num">本方案选中</th></tr></thead>
-        <tbody>${vm.anchors.map(anchor => `<tr><td>${h(anchor.areaName)}</td><td>${h(anchor.station || '—')}</td><td class="num">${anchor.busCount}</td><td class="num">${anchor.metroCount}</td><td class="num">${anchor.selectedCount}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">本轮未提供锚点元数据。</td></tr>'}</tbody>
+        <tbody>${vm.anchors.map(anchor => `<tr><td>${h(anchor.areaName)}</td><td>${h(anchor.station || '—')}</td><td class="num">${anchor.busCount ?? '—'}</td><td class="num">${anchor.metroCount ?? '—'}</td><td class="num">${anchor.selectedCount}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">本轮未提供锚点元数据。</td></tr>'}</tbody>
       </table>
     </div>
     <div class="card">
