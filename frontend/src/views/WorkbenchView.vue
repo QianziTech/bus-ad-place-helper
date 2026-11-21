@@ -114,11 +114,36 @@ function resetDrawer() {
   drawerDraft.value = {}
 }
 
+const demoSections = ['s1', 's2', 's3', 's4', 's5', 's6'] as const
+
+/** 演示模式章节跳转：文档在 iframe 里，直接操作它的 document。 */
+function scrollDemo(target: 'next' | 'prev' | number) {
+  const frame = document.querySelector<HTMLIFrameElement>('iframe.demo')
+  const doc = frame?.contentWindow?.document
+  const win = frame?.contentWindow
+  if (!doc || !win) return
+  const tops = demoSections.map(id => doc.getElementById(id)?.offsetTop ?? 0)
+  const current = win.scrollY
+  if (typeof target === 'number') {
+    win.scrollTo({ top: tops[target] ?? 0, behavior: 'smooth' })
+    return
+  }
+  const index = tops.reduce((best, top, i) => Math.abs(top - current) < Math.abs(tops[best] - current) ? i : best, 0)
+  const nextIndex = target === 'next' ? Math.min(tops.length - 1, index + 1) : Math.max(0, index - 1)
+  win.scrollTo({ top: tops[nextIndex], behavior: 'smooth' })
+}
+
 function onKey(event: KeyboardEvent) {
-  if (event.target instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return
-  if (event.key === 'Escape' && fullscreen.value) fullscreen.value = false
-  else if (event.key.toLowerCase() === 'f' && !fullscreen.value && vm.value) openFullscreen()
-  else if (event.key.toLowerCase() === 'd' && fullscreen.value) handleDownload()
+  if (!fullscreen.value) {
+    if (event.target instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return
+    if (event.key.toLowerCase() === 'f' && vm.value) openFullscreen()
+    return
+  }
+  if (event.key === 'Escape') fullscreen.value = false
+  else if (event.key.toLowerCase() === 'd') handleDownload()
+  else if (event.key >= '1' && event.key <= '6') scrollDemo(Number(event.key) - 1)
+  else if (event.key === 'PageDown') { event.preventDefault(); scrollDemo('next') }
+  else if (event.key === 'PageUp') { event.preventDefault(); scrollDemo('prev') }
 }
 onMounted(() => window.addEventListener('keydown', onKey))
 </script>
@@ -202,7 +227,8 @@ onMounted(() => window.addEventListener('keydown', onKey))
     </a-drawer>
 
     <div v-if="fullscreen" style="position: fixed; inset: 0; background: #fff; z-index: 20; display: flex; flex-direction: column">
-      <iframe :srcdoc="fullscreenHtml" style="flex: 1; width: 100%; border: none" title="全屏演示" sandbox="allow-same-origin" />
+      <iframe class="demo" :srcdoc="fullscreenHtml" style="flex: 1; width: 100%; border: none" title="全屏演示" sandbox="allow-same-origin" />
+      <div style="position: fixed; left: 20px; bottom: 16px; font-size: 12px; color: var(--ink-3)">1–6 跳节 · PageDown/PageUp 翻节 · Esc 退出 · D 下载</div>
       <a-space style="position: fixed; right: 20px; bottom: 20px">
         <a-button @click="handleDownload" :disabled="!vm">下载（D）</a-button>
         <a-button @click="fullscreen = false">退出（Esc）</a-button>
