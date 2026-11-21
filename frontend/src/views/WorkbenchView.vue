@@ -186,9 +186,9 @@ onMounted(() => window.addEventListener('keydown', onKey))
         <StageProgress :stages="state.stages" />
       </div>
 
-      <div class="panel-block" v-if="pipeline && state.prevSuccess">
-        <h4>本次变化</h4>
-        <DiffPanel :diff="state.diff" @focus="focusLine" @clear="clearCompare" />
+      <div class="panel-block" v-if="(pipeline && state.prevSuccess) || state.showBaseline">
+        <h4>{{ state.showBaseline ? 'AI 方案 → 基础分配' : '本次变化' }}</h4>
+        <DiffPanel :diff="state.diff" :mode="state.showBaseline ? 'baseline' : 'regen'" @focus="focusLine" @clear="clearCompare" />
       </div>
 
       <div class="panel-block">
