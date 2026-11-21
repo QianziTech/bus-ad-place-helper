@@ -4,10 +4,22 @@
  */
 import { PLAN_CSS } from './plan.css'
 import { escapeHtml as h, copyText } from './sanitize'
-import { wanRange, yuanText, windowText, type PlanVm, type PlanVmAnchor, type PlanVmLine } from './buildVm'
+import { wanRange, yuanText, windowText, dateTimeText, type PlanVm, type PlanVmAnchor, type PlanVmLine } from './buildVm'
 
 const w = (yuan: number) => yuanText(yuan)
 const wan = (yuan: number) => `${Math.round(yuan / 1000) / 10} 万`
+
+/** 导出页面必须能离线读出库存来源与查询时间：实时 / 归档 / 周截面三种口径各自写明。 */
+function inventoryLine(vm: PlanVm): string {
+  const detail = vm.inventory
+  if (!detail?.kinds.length) return `库存核对 ${vm.queriedAtText}`
+  return detail.kinds.map(item => {
+    const label = item.kind === 'bus' ? '公交' : '地铁'
+    if (item.queriedAt) return `${label} ${item.sourceLabel}，查询于 ${dateTimeText(item.queriedAt)}`
+    if (item.sampleDates?.length) return `${label} ${item.sourceLabel}，采样 ${item.sampleDates.join('、')}`
+    return `${label} ${item.sourceLabel}`
+  }).join(' · ')
+}
 
 export interface RenderOptions {
   /** 预览时的高亮 mediaKey，导出为空。 */
@@ -262,7 +274,7 @@ ${head}
 
 <section id="s5">
   <h2>排期与上线次序</h2>
-  <div class="tl"><b>${h(windowText(vm.startDate, vm.endDate))}</b><br><small>${vm.billingMonths} 个计费月 · 库存核对于 ${h(vm.queriedAtText)}</small></div>
+  <div class="tl"><b>${h(windowText(vm.startDate, vm.endDate))}</b><br><small>${vm.billingPending ? '计费口径待确认（报价按 1 个计费月参考估算）' : `${vm.billingMonths} 个计费月`} · ${h(inventoryLine(vm))}</small></div>
   <h3 style="margin-top:12px">上线批次（夜间施工，单晚上限 ${vm.schedule.singleNightCap} 台 / 口）</h3>
   ${scheduleBlock(vm)}
   <p class="note">本方案展示计划投放档期；实际施工与上刊由签约后的执行流程确认。</p>
@@ -368,6 +380,6 @@ ${head}
 }
 
 export function planFileName(vm: PlanVm): string {
-  const budget = Math.round(vm.request.budgetYuan / 10000)
-  return `投放方案-${vm.industryName}-${budget}万-${vm.request.startDate}.html`
+  // 预算在成品内可切换，文件名固定按行业与起始日命名，不再写入预算金额。
+  return `投放方案-${vm.industryName}-${vm.request.startDate}.html`
 }
