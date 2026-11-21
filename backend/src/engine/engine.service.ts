@@ -1,11 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Campaign, Candidate, CandidatePool, Client, Industry, InventoryWindow, MediaKind, PlanFailure, PlanLine, PlanRequest, PlanResult, RejectionReason, StrategyPreference, TraceStep } from '../shared/contracts';
+import { BadRequestException, Inject, Injectable, Optional } from '@nestjs/common';
+import { Campaign, Candidate, CandidatePool, Client, Industry, InventoryWindow, MediaKind, PlanAnchor, PlanFailure, PlanLine, PlanRequest, PlanResult, RejectionReason, StrategyPreference, TraceStep } from '../shared/contracts';
 import { PlanDataService } from '../shared/data/plan-data.service';
 import { ScheduleService } from './schedule.service';
 
 const kinds: MediaKind[] = ['bus', 'metro'];
 const labels = { bus: '公交', metro: '地铁' };
-const premiumLimit = 0.1;
+export interface EngineOptions { premiumRatio?: number }
 const unique = <T>(values: T[]) => [...new Set(values)];
 const keyOrder = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
 const baseOrder = (a: Candidate, b: Candidate) => b.anchorIds.length - a.anchorIds.length || a.unitEstimateYuan - b.unitEstimateYuan || keyOrder(a.mediaKey, b.mediaKey);
@@ -18,17 +18,33 @@ function failure(status: PlanFailure['status'], message: string, suggestions: st
 
 @Injectable()
 export class EngineService {
-  constructor(private readonly planData: PlanDataService, private readonly schedule: ScheduleService) {}
+  private readonly premiumLimit: number;
+  constructor(private readonly planData: PlanDataService, private readonly schedule: ScheduleService,
+    @Optional() @Inject('ENGINE_OPTIONS') options: EngineOptions = {}) {
+    this.premiumLimit = options.premiumRatio ?? Number(process.env.STRATEGY_PREMIUM_RATIO ?? 0.1);
+    if (!Number.isFinite(this.premiumLimit) || this.premiumLimit < 0) throw new Error('策略溢价上限必须为非负数值');
+  }
 
   getMeta() {
     const data = this.planData.data;
     const windows = new Map<string, { startDate: string; endDate: string }>();
     for (const kind of kinds) for (const window of data[kind].windows) windows.set(`${window.startDate}/${window.endDate}`, { startDate: window.startDate, endDate: window.endDate });
     return {
-      industries: data.briefs.industries.map(item => ({ id: item.id, name: item.name, client: publicClient(item.client), campaign: structuredClone(item.campaign) })),
+      industries: data.briefs.industries.map(item => ({ id: item.id, name: item.name, client: publicClient(item.client), campaign: structuredClone(item.campaign), anchors: this.summarizeAnchors(item.anchors) })),
       media: kinds, budget: { minYuan: 1000000, maxYuan: 5000000, presetsYuan: [1000000, 2000000, 5000000] },
       windows: [...windows.values()].sort((a, b) => keyOrder(a.startDate, b.startDate) || keyOrder(a.endDate, b.endDate)),
     };
+  }
+
+  // Anchor metadata is read-only: counts describe the coverage module, not current stock.
+  private summarizeAnchors(refs: { id: string; rationale: string }[]) {
+    const data = this.planData.data;
+    return refs.map(ref => {
+      const anchor = data.coverage.anchorsById[ref.id];
+      const counts = { bus: 0, metro: 0 };
+      for (const candidate of anchor.candidates) counts[data.bus.mediaByKey[candidate.mediaKey] ? 'bus' : 'metro']++;
+      return { id: ref.id, areaName: anchor.areaName, station: anchor.station, role: anchor.role, rationale: ref.rationale, candidateCounts: counts };
+    });
   }
 
   private campaign(industry: Industry, request: PlanRequest): Campaign {
@@ -154,7 +170,7 @@ export class EngineService {
       if (profiles.length > initialProfiles.size) notices.push('首轮保留全部行业 POI 候选和匹配度靠前的 8 个圈外画像候选；扩选轮纳入其余有证据候选。');
     }
     if (candidates.some(candidate => candidate.trafficReference)) notices.push('公交历史画像按原月份展示，仅作人群参考；不同线路历史覆盖人次不相加为方案触达。');
-    return { status: 'ok', request: structuredClone(request), client: publicClient(industry.client), campaign, candidates: candidates.sort(baseOrder), billingMonths, queriedAt, notices, excluded };
+    return { status: 'ok', request: structuredClone(request), client: publicClient(industry.client), campaign, candidates: candidates.sort(baseOrder), anchors: this.summarizeAnchors(activeAnchors), billingMonths, queriedAt, notices, excluded };
   }
 
   private profileScore(candidate: Candidate, campaign: Campaign) {
@@ -214,7 +230,7 @@ export class EngineService {
           if (!pendingRejections.has(item.candidate.mediaKey)) pendingRejections.set(item.candidate.mediaKey, 'over_budget');
           continue;
         }
-        if (item.candidate.unitEstimateYuan * 10 > base.unitEstimateYuan * 11) {
+        if (item.candidate.unitEstimateYuan - base.unitEstimateYuan > base.unitEstimateYuan * this.premiumLimit) {
           pendingRejections.set(item.candidate.mediaKey, 'premium_exceeded');
           continue;
         }
@@ -228,7 +244,7 @@ export class EngineService {
       if (accepted) {
         accepted.preference.disposition = 'accepted';
         preferredKeys.add(choice.mediaKey);
-        trace.push({ step: 'preference', message: `${choice.mediaKey} 相对同类基准 ${base.mediaKey} 的单位价差 ${choice.unitEstimateYuan - base.unitEstimateYuan} 元，未超过 ${premiumLimit * 100}% 溢价上限，本次分配 ${count} 单位。`, evidenceRefs: accepted.preference.evidenceRefs });
+        trace.push({ step: 'preference', message: `${choice.mediaKey} 相对同类基准 ${base.mediaKey} 的单位价差 ${choice.unitEstimateYuan - base.unitEstimateYuan} 元，未超过 ${this.premiumLimit * 100}% 溢价上限，本次分配 ${count} 单位。`, evidenceRefs: accepted.preference.evidenceRefs });
       }
     }
     for (const item of valid) {
@@ -247,10 +263,16 @@ export class EngineService {
     });
     const totalYuan = lines.reduce((sum, line) => sum + line.lineTotalYuan, 0);
     const schedule = this.schedule.generate(lines, request, resolved.campaign, Object.fromEntries(candidates.map(candidate => [candidate.mediaKey, candidate.anchorIds.length])));
+    const selectedKeys = new Set(lines.map(line => line.mediaKey));
+    // 同一 mediaKey 被多锚点命中时，每个锚点各自计一次，不做跨锚点求和。
+    const anchors: PlanAnchor[] = resolved.anchors.map(anchor => ({
+      ...anchor,
+      selectedCount: candidates.filter(candidate => selectedKeys.has(candidate.mediaKey) && candidate.anchorIds.includes(anchor.id)).length,
+    }));
     trace.push({ step: 'pricing', message: `单位估算 = 月刊例中值 × ${resolved.billingMonths} 个计费月（四舍五入）+ 单位制作费；共 ${totalYuan} 元，余量 ${remaining} 元。` });
     trace.push({ step: 'schedule', message: `按最终数量编排 ${schedule.batches.length} 批，排期状态 ${schedule.status}。` });
     return {
-      status: 'ok', request: structuredClone(request), client: resolved.client, campaign: resolved.campaign, lines, billingMonths: resolved.billingMonths,
+      status: 'ok', request: structuredClone(request), client: resolved.client, campaign: resolved.campaign, lines, anchors, billingMonths: resolved.billingMonths,
       totalYuan, remainingYuan: request.budgetYuan - totalYuan, queriedAt: resolved.queriedAt, schedule,
       assumptions: unique(['客户为代称，客户背景与 Campaign 均为提案假设。', '报价采用刊例区间中值估算，单位制作费仅计一次；不含客户折扣、税费及真实成交价。', ...candidates.filter(candidate => quantities.has(candidate.mediaKey)).flatMap(candidate => candidate.assumptions)]),
       notices: resolved.notices, trace, ...(preferences.length ? { strategyPreferences: preferences } : {}),

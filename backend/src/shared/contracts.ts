@@ -19,6 +19,8 @@ export interface Price { monthlyLowYuan: number; monthlyHighYuan: number; produc
 export interface CoverageCandidate { mediaKey: string; relation: string; source: string; distanceM?: number }
 export interface Anchor { areaName: string; station: string; role: 'businessArea' | 'landmark'; coord: { lng: number; lat: number; exit: string; source: string }; candidates: CoverageCandidate[] }
 export interface TrafficReference { period: string; source: string; coveragePv?: number; ageGroups?: { label: string; percent: number }[] }
+export interface AnchorSummary { id: string; areaName: string; station: string; role: 'businessArea' | 'landmark'; rationale: string; candidateCounts: { bus: number; metro: number } }
+export interface PlanAnchor extends AnchorSummary { selectedCount: number }
 export interface PlanData { bus: MediaData; metro: MediaData; pricing: { pricesByMediaKey: Record<string, Price> }; briefs: { industries: Industry[] }; coverage: { anchorsById: Record<string, Anchor> }; traffic: { byMediaKey: Record<string, TrafficReference> } }
 export type RejectionReason = 'unknown_media' | 'no_stock' | 'over_budget' | 'premium_exceeded' | 'invalid_evidence';
 export interface StrategyPreference { mediaKey: string; reason: string; evidenceRefs: string[]; disposition?: 'accepted' | `rejected:${RejectionReason}` }
@@ -30,18 +32,18 @@ export interface Candidate {
   anchorIds: string[]; evidenceRefs: string[]; reasons: string[]; sources: string[]; assumptions: string[]; trafficReference?: TrafficReference;
 }
 export interface PlanFailure { status: 'missing_window' | 'missing_data' | 'no_inventory' | 'over_budget'; message: string; suggestions: string[] }
-export interface CandidatePool { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; candidates: Candidate[]; billingMonths: number; queriedAt: string; notices: string[]; excluded: { mediaKey: string; reason: RejectionReason }[] }
+export interface CandidatePool { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; candidates: Candidate[]; anchors: AnchorSummary[]; billingMonths: number; queriedAt: string; notices: string[]; excluded: { mediaKey: string; reason: RejectionReason }[] }
 export interface PlanLine extends Omit<Candidate, 'anchorIds' | 'assumptions'> { quantity: number; lineTotalYuan: number; preferredByAi?: boolean }
 export interface ScheduleBatch { no: number; nightDate: string; mediaKeys: string[]; quantity: number; cumulative: number; publishStartDate: string; risk: string | null }
 export interface Schedule { status: 'ok' | 'unavailable' | 'capacity_short'; singleNightCap: number; batches: ScheduleBatch[]; rainBufferNights: number; compensationBufferQty: number; notes: string[]; assumptions: string[] }
 export interface TraceStep { step: string; message: string; evidenceRefs?: string[]; elapsedMs?: number }
-export interface PlanSuccess { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; lines: PlanLine[]; billingMonths: number; totalYuan: number; remainingYuan: number; queriedAt: string; schedule: Schedule; assumptions: string[]; notices: string[]; trace: TraceStep[]; strategyPreferences?: StrategyPreference[] }
+export interface PlanSuccess { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; lines: PlanLine[]; anchors: PlanAnchor[]; billingMonths: number; totalYuan: number; remainingYuan: number; queriedAt: string; schedule: Schedule; assumptions: string[]; notices: string[]; trace: TraceStep[]; strategyPreferences?: StrategyPreference[] }
 export type PlanResult = PlanSuccess | PlanFailure;
 export interface Check { element: string; status: 'pass' | 'warn' | 'fail'; message: string; evidenceRefs: string[]; blocking?: boolean; location?: string; suggestion?: string }
 export interface PlanCopy { headline: string; brandContext: string; strategyLine: string; selectionRationale: string; assumptionEcho: string; source: 'llm' | 'mock' | 'template' }
 export interface Round { round: number; candidateCount: number; preferredCount: number; acceptedCount: number; rejected: { mediaKey: string; reason: RejectionReason }[]; requestReplan: boolean; elapsedMs: number }
 export interface Degraded { stage: 'brief' | 'strategy' | 'copy' | 'verify'; reason: string }
-export interface PipelineSuccess extends PlanSuccess { copy: PlanCopy; checks: Check[]; rounds: Round[]; degraded: Degraded[]; exportAllowed: boolean }
+export interface PipelineSuccess extends PlanSuccess { copy: PlanCopy; checks: Check[]; rounds: Round[]; degraded: Degraded[]; exportAllowed: boolean; mediaObjective?: string; windowFit?: { status: 'aligned' | 'risk' | 'unknown'; reason: string; evidenceRefs: string[] }; measurement?: { kpi: string; proof: string } }
 export interface AnalysisContext { mode: AnalysisMode; deadline: number; config: RuntimeConfig }
 export interface RuntimeConfig { mode: AnalysisMode; llm: { provider: string; baseUrl: string; model: string; timeoutMs: number; retries: number; temperature: number; apiKey?: string }; includeHistoricalProfiles: boolean; updatedAt: string; source: 'file' | 'environment' }
 export interface StrategyResult { status: 'ok' | 'disabled' | 'unavailable'; strategyPreferences: StrategyPreference[]; mediaObjective: string; requestReplan: boolean; replanReason?: string; windowFit?: { status: 'aligned' | 'risk' | 'unknown'; reason: string; evidenceRefs: string[] }; measurement?: { kpi: string; proof: string }; reason?: string }

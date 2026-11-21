@@ -87,6 +87,21 @@ test('metadata deduplicates windows and exposes only public client fields', () =
   assert.equal(result.budget.maxYuan, 5000000);
 });
 
+test('anchors expose coverage counts from metadata and selected counts from the plan', () => {
+  const meta = engine().getMeta();
+  assert.deepEqual(meta.industries[0].anchors, [
+    { id: 'a1', areaName: '示例商圈', station: '示例站', role: 'businessArea', rationale: '通勤场景', candidateCounts: { bus: 1, metro: 1 } },
+    { id: 'a2', areaName: '另一商圈', station: '另一站', role: 'businessArea', rationale: '零售场景', candidateCounts: { bus: 1, metro: 0 } },
+  ]);
+  const plan = engine().generate(request());
+  ok(plan);
+  // 同一公交媒体命中两个锚点，各锚点分别计数，不跨锚点求和。
+  assert.deepEqual(plan.anchors.map(anchor => [anchor.id, anchor.candidateCounts, anchor.selectedCount]), [
+    ['a1', { bus: 1, metro: 1 }, 2],
+    ['a2', { bus: 1, metro: 0 }, 1],
+  ]);
+});
+
 test('exact full windows are mandatory for each selected media; queriedAt is the older timestamp', () => {
   const fixture = data();
   fixture.metro.windows[0].endDate = '2027-07-30';
@@ -183,6 +198,16 @@ test('preference validation exposes premium, stock, budget, unknown and evidence
   const over = engine(costly).generate(request({ strategyPreferences: [pref(preferred)] }));
   ok(over);
   assert.equal(over.strategyPreferences?.[0].disposition, 'rejected:over_budget');
+});
+
+test('configured premium ceiling changes preference acceptance without changing inventory or pricing', () => {
+  const fixture = data();
+  const service = new EngineService({ data: fixture } as PlanDataService, new ScheduleService(), { premiumRatio: 0.05 });
+  const result = service.generate(request({ strategyPreferences: [pref(preferred)] }));
+  ok(result);
+  assert.equal(result.strategyPreferences?.[0].disposition, 'rejected:premium_exceeded');
+  assert.ok(result.lines.every(line => line.mediaKey !== preferred));
+  assert.throws(() => new EngineService({ data: fixture } as PlanDataService, new ScheduleService(), { premiumRatio: -1 }), /溢价/);
 });
 
 test('the same preference recalculates at 1, 2 and 5 million without exceeding inventory or budget', () => {

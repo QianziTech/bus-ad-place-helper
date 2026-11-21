@@ -28,10 +28,10 @@ export class PositiveMediaBiasConstraint implements ValidatorConstraintInterface
 }
 
 export class CampaignWindowDto {
-  @ApiProperty({ example: '2027-07-01', pattern: '^2027-\\d{2}-\\d{2}$' })
+  @ApiProperty({ example: '2027-06-01', pattern: '^2027-\\d{2}-\\d{2}$' })
   @Validate(PlanDateConstraint) start!: string;
 
-  @ApiProperty({ example: '2027-07-31', pattern: '^2027-\\d{2}-\\d{2}$' })
+  @ApiProperty({ example: '2027-06-30', pattern: '^2027-\\d{2}-\\d{2}$' })
   @Validate(PlanDateConstraint) @Validate(DateOrderConstraint, ['start']) end!: string;
 }
 export class MediaBiasDto {
@@ -56,7 +56,7 @@ export class CampaignOverrideDto implements CampaignOverride {
   @ApiPropertyOptional({ description: '要解决的生意目标', example: '增加上海市场的新品认知' })
   @ValidateIf((_o, value) => value !== undefined) @IsString() @IsNotEmpty() @MaxLength(2000) businessGoal?: string;
 
-  @ApiPropertyOptional({ enum: ['认知', '到店', '促销', '拉新'] })
+  @ApiPropertyOptional({ enum: ['认知', '到店', '促销', '拉新'], example: '认知' })
   @ValidateIf((_o, value) => value !== undefined) @IsIn(['认知', '到店', '促销', '拉新']) primaryGoal?: Campaign['primaryGoal'];
 
   @ApiPropertyOptional({ example: '18–40 岁通勤人群' })
@@ -83,26 +83,26 @@ export class CampaignOverrideDto implements CampaignOverride {
 
 export class CampaignDto implements Campaign {
   @ApiProperty({ example: 'F1-C1' }) @IsString() @IsNotEmpty() id!: string;
-  @ApiProperty() @IsString() @IsNotEmpty() name!: string;
-  @ApiProperty() @IsString() @IsNotEmpty() businessGoal!: string;
-  @ApiProperty({ enum: ['认知', '到店', '促销', '拉新'] }) @IsIn(['认知', '到店', '促销', '拉新']) primaryGoal!: Campaign['primaryGoal'];
-  @ApiProperty() @IsString() @IsNotEmpty() audience!: string;
+  @ApiProperty({ example: '夏季新品认知' }) @IsString() @IsNotEmpty() name!: string;
+  @ApiProperty({ example: '增加上海市场新品认知' }) @IsString() @IsNotEmpty() businessGoal!: string;
+  @ApiProperty({ enum: ['认知', '到店', '促销', '拉新'], example: '认知' }) @IsIn(['认知', '到店', '促销', '拉新']) primaryGoal!: Campaign['primaryGoal'];
+  @ApiProperty({ example: '通勤人群' }) @IsString() @IsNotEmpty() audience!: string;
   @ApiProperty({ type: CampaignWindowDto }) @IsObject() @ValidateNested() @Type(() => CampaignWindowDto) window!: CampaignWindowDto;
-  @ApiProperty({ minimum: 1 }) @IsInt() @Min(1) budgetHintYuan!: number;
-  @ApiProperty({ enum: ['bus', 'metro'], isArray: true }) @IsArray() @ArrayMinSize(1) @ArrayUnique() @IsIn(['bus', 'metro'], { each: true }) mediaScope!: MediaKind[];
+  @ApiProperty({ minimum: 1, example: 2000000 }) @IsInt() @Min(1) budgetHintYuan!: number;
+  @ApiProperty({ enum: ['bus', 'metro'], isArray: true, example: ['bus', 'metro'] }) @IsArray() @ArrayMinSize(1) @ArrayUnique() @IsIn(['bus', 'metro'], { each: true }) mediaScope!: MediaKind[];
   @ApiProperty({ type: MediaBiasDto }) @IsObject() @ValidateNested() @Type(() => MediaBiasDto) mediaBias!: MediaBiasDto;
   @ApiProperty({ type: SuccessMetricDto }) @IsObject() @ValidateNested() @Type(() => SuccessMetricDto) successMetric!: SuccessMetricDto;
-  @ApiProperty({ type: [String] }) @IsArray() @IsString({ each: true }) constraints!: string[];
+  @ApiProperty({ type: [String], example: ['客户背景均为提案假设'] }) @IsArray() @IsString({ each: true }) constraints!: string[];
 }
 
 export class StrategyPreferenceDto implements StrategyPreference {
-  @ApiProperty({ example: 'bus|1|车身', description: '引擎候选媒体键' })
+  @ApiProperty({ example: 'bus|1|大三侧', description: '引擎候选媒体键' })
   @IsString() @IsNotEmpty() @MaxLength(300) mediaKey!: string;
 
   @ApiProperty({ example: '历史画像支持通勤人群匹配' })
   @IsString() @IsNotEmpty() @MaxLength(2000) reason!: string;
 
-  @ApiProperty({ type: [String], description: '至少含一条本媒体覆盖或历史画像证据', minItems: 1 })
+  @ApiProperty({ type: [String], description: '至少含一条本媒体覆盖或历史画像证据', minItems: 1, example: ['traffic:bus|1|大三侧:2023-05'] })
   @IsArray() @ArrayMinSize(1) @ArrayMaxSize(100) @IsString({ each: true }) @MaxLength(500, { each: true }) evidenceRefs!: string[];
 }
 
@@ -115,10 +115,10 @@ export class CreatePlanDto implements PlanRequest {
   @ApiProperty({ enum: ['bus', 'metro'], isArray: true, minItems: 1, uniqueItems: true, example: ['bus', 'metro'] })
   @IsArray() @ArrayMinSize(1) @ArrayUnique() @IsIn(['bus', 'metro'], { each: true }) media!: MediaKind[];
 
-  @ApiProperty({ example: '2027-07-01', pattern: '^2027-\\d{2}-\\d{2}$' })
+  @ApiProperty({ example: '2027-06-01', pattern: '^2027-\\d{2}-\\d{2}$' })
   @Validate(PlanDateConstraint) startDate!: string;
 
-  @ApiProperty({ example: '2027-07-31', pattern: '^2027-\\d{2}-\\d{2}$' })
+  @ApiProperty({ example: '2027-06-30', pattern: '^2027-\\d{2}-\\d{2}$' })
   @Validate(PlanDateConstraint) @Validate(DateOrderConstraint, ['startDate']) endDate!: string;
 
   @ApiPropertyOptional({ type: CampaignOverrideDto, description: '只接受 Campaign 的可编辑字段，不接受客户身份或 campaign.id' })

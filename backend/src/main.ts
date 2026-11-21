@@ -29,7 +29,7 @@ export async function createApplication() {
   app.useGlobalPipes({ transform(value: unknown) {
     if (value && typeof value === 'object') {
       const body = value as Record<string, unknown>;
-      for (const name of ['briefText', 'text', 'campaignOverride']) {
+      for (const name of ['briefText', 'text', 'campaignOverride', 'strategyPreferences']) {
         if (body[name] !== undefined) scan.assertInput(typeof body[name] === 'string' ? body[name] : JSON.stringify(body[name]));
       }
     }

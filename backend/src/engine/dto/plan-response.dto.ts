@@ -19,6 +19,17 @@ export class TrafficReferenceDto {
   @ApiPropertyOptional({ minimum: 0 }) coveragePv?: number;
   @ApiPropertyOptional({ type: [AgeGroupDto] }) ageGroups?: AgeGroupDto[];
 }
+export class AnchorSummaryDto {
+  @ApiProperty({ example: 'food-人民广场' }) id!: string;
+  @ApiProperty({ example: '人民广场 · 南京东路商圈' }) areaName!: string;
+  @ApiProperty({ example: '人民广场' }) station!: string;
+  @ApiProperty({ enum: ['businessArea', 'landmark'] }) role!: string;
+  @ApiProperty({ example: '全市地铁换乘量最大的口，通勤与游客叠加' }) rationale!: string;
+  @ApiProperty({ description: '覆盖模块给出的候选数，不代表当前可售量', example: { bus: 17, metro: 9 } }) candidateCounts!: { bus: number; metro: number };
+}
+export class PlanAnchorDto extends AnchorSummaryDto {
+  @ApiProperty({ minimum: 0, description: '本方案选中且命中该锚点的媒体数；同一媒体命中多个锚点时各锚点分别计数', example: 2 }) selectedCount!: number;
+}
 export class PlanLineDto {
   @ApiProperty() mediaKey!: string;
   @ApiProperty({ enum: ['bus', 'metro'] }) kind!: 'bus' | 'metro';
@@ -75,6 +86,7 @@ export class PlanSuccessDto {
   @ApiProperty({ type: ClientDto }) client!: ClientDto;
   @ApiProperty({ type: CampaignDto }) campaign!: CampaignDto;
   @ApiProperty({ type: [PlanLineDto] }) lines!: PlanLineDto[];
+  @ApiProperty({ type: [PlanAnchorDto], description: '本轮参与选点的锚点及各锚点的选中数' }) anchors!: PlanAnchorDto[];
   @ApiProperty({ minimum: 0, exclusiveMinimum: true }) billingMonths!: number;
   @ApiProperty({ minimum: 0 }) totalYuan!: number;
   @ApiProperty({ minimum: 0 }) remainingYuan!: number;
@@ -99,6 +111,7 @@ export class MetaIndustryDto {
   @ApiProperty() name!: string;
   @ApiProperty({ type: ClientDto }) client!: ClientDto;
   @ApiProperty({ type: CampaignDto }) campaign!: CampaignDto;
+  @ApiProperty({ type: [AnchorSummaryDto], description: '该行业全部锚点，用于切换行业后的预览；候选数为覆盖口径' }) anchors!: AnchorSummaryDto[];
 }
 export class BudgetDto {
   @ApiProperty({ example: 1000000 }) minYuan!: number;

@@ -131,6 +131,7 @@ test('all independent tools work; deterministic export scan blocks risky or iden
     const mapping = JSON.parse(readFileSync(process.env.BRAND_MAPPING_PATH, 'utf8'));
     const name = mapping.map[0].real;
     assert.equal((await api('/plan', { ...request, briefText: `${name}新品投放` })).status, 400);
+    assert.equal((await api('/plan', { ...request, strategyPreferences: [{ mediaKey: plan.lines[0].mediaKey, reason: `${name}的投放偏好`, evidenceRefs: plan.lines[0].evidenceRefs }] })).status, 400);
     assert.equal((await api('/plan/verify', { plan, campaign: plan.campaign, exportText: name })).body.exportAllowed, false);
   }
 });

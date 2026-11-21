@@ -114,6 +114,9 @@ export class DegradedDto {
   @ApiProperty({ example: '模型请求超时' }) reason!: string;
 }
 export class PipelineSuccessDto extends PlanSuccessDto {
+  @ApiProperty({ required: false, example: '围绕已核对的目标场景组织媒体分工' }) mediaObjective?: string;
+  @ApiProperty({ required: false, type: WindowFitDto }) windowFit?: WindowFitDto;
+  @ApiProperty({ required: false, type: MeasurementDto }) measurement?: MeasurementDto;
   @ApiProperty({ type: CopyDto }) copy!: CopyDto;
   @ApiProperty({ type: [CheckDto] }) checks!: CheckDto[];
   @ApiProperty({ type: [RoundDto] }) rounds!: RoundDto[];

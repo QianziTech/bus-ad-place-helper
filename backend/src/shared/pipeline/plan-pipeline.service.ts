@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PlanFailure, PlanRequest, PipelineSuccess, Round, Degraded, CandidatePool, PlanSuccess } from '../contracts';
+import { PlanFailure, PlanRequest, PipelineSuccess, Round, Degraded, CandidatePool, PlanSuccess, StrategyResult } from '../contracts';
 import { EngineService } from '../../engine/engine.service';
 import { RuntimeConfigService } from '../../config/runtime-config.service';
 import { BriefService } from '../../analysis/brief.service';
-import { StrategyService } from '../../analysis/strategy.service';
+import { StrategyAnalysis, StrategyService } from '../../analysis/strategy.service';
 import { CopyService } from '../../analysis/copy.service';
 import { VerifyService } from '../../analysis/verify.service';
 import { ContentScanService } from '../../analysis/content-scan.service';
@@ -33,6 +33,7 @@ export class PlanPipelineService {
     delete request.briefText;
     let pool: CandidatePool | undefined;
     let plan: PlanSuccess | undefined;
+    let strategyOutput: Partial<Pick<StrategyResult, 'mediaObjective' | 'windowFit' | 'measurement'>> = {};
     for (let round = 1; round <= 2; round++) {
       const started = Date.now();
       const candidateResult = this.engine.getCandidates(request, round === 2);
@@ -41,9 +42,10 @@ export class PlanPipelineService {
         return candidateResult;
       }
       pool = candidateResult;
-      const strategy = await this.strategy.recommend(request, pool, context).catch(error => ({ status: 'unavailable' as const, strategyPreferences: [], mediaObjective: '', requestReplan: false, rejected: [], requestedCount: 0, reason: failureReason(error) }));
+      const strategy: StrategyAnalysis = await this.strategy.recommend(request, pool, context).catch(error => ({ status: 'unavailable' as const, strategyPreferences: [], mediaObjective: '', requestReplan: false, rejected: [], requestedCount: 0, reason: failureReason(error) }));
       if (strategy.status === 'unavailable' && !degraded.some(item => item.stage === 'strategy')) degraded.push({ stage: 'strategy', reason: strategy.reason || '媒体偏好不可用' });
       request.strategyPreferences = strategy.status === 'ok' ? strategy.strategyPreferences : [];
+      strategyOutput = { mediaObjective: strategy.mediaObjective, ...(strategy.windowFit ? { windowFit: strategy.windowFit } : {}), ...(strategy.measurement ? { measurement: strategy.measurement } : {}) };
       const result = this.engine.generate(request, pool);
       if (result.status !== 'ok') return result;
       plan = result;
@@ -63,7 +65,8 @@ export class PlanPipelineService {
       return { ...result, status: 'unavailable' as const, reason: failureReason(error) };
     });
     if (verification.status === 'unavailable') degraded.push({ stage: 'verify', reason: verification.reason || '模型核验不可用' });
-    return { ...plan, copy: copy.copy, checks: verification.checks, rounds, degraded, exportAllowed: verification.exportAllowed,
+    return { ...plan, ...(strategyOutput.mediaObjective ? { mediaObjective: strategyOutput.mediaObjective } : {}), ...(strategyOutput.windowFit ? { windowFit: strategyOutput.windowFit } : {}), ...(strategyOutput.measurement ? { measurement: strategyOutput.measurement } : {}),
+      copy: copy.copy, checks: verification.checks, rounds, degraded, exportAllowed: verification.exportAllowed,
       trace: [...plan.trace, ...rounds.map(round => ({ step: `analysis.round.${round.round}`, message: `候选 ${round.candidateCount}，偏好 ${round.preferredCount}，接受 ${round.acceptedCount}，拒绝 ${round.rejected.length}`, elapsedMs: round.elapsedMs })), ...verification.trace] };
   }
 }
