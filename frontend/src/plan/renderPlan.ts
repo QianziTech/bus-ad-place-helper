@@ -274,6 +274,7 @@ ${head}
     <thead><tr><th>线路 / 点位</th><th>媒体类别</th><th>形式 / 出口</th><th class="num">数量</th><th class="num">单位估算（含制作）</th><th class="num">行合计</th></tr></thead>
     <tbody>${methodRows}</tbody>
   </table>
+  <p class="note" style="margin-top:10px">报价一节保留两位小数，便于按「数量 × 单位估算 = 行合计」「Σ 行合计 = 估算总额」逐项验算；其余章节按一位小数显示。</p>
   <div class="split" style="margin-top:24px">
     <div>
       <table class="summary-table">
