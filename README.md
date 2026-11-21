@@ -1,6 +1,16 @@
-# 动线运筹
+# 动线运筹 · 提案工作台
 
-面向公交车身和地铁出入口的投放提案后端。规则引擎计算库存、组合、报价与施工批次；分析模块提供需求拆解、媒体偏好、文案和核验。所有报价使用区间刊例及预算估算，客户使用代称。
+面向公交车身和地铁出入口的投放提案工作台与离线 HTML 交付。规则引擎计算库存、组合、报价与施工批次；分析模块提供需求拆解、媒体偏好、文案和核验。所有报价使用区间刊例及预算估算，客户使用代称。
+
+前端为 Vue 3 + Vite + Ant Design Vue，位于 `frontend/`；预览、全屏演示与下载文件共用 `frontend/src/plan/renderPlan.ts` 一个渲染器，输出纯原生 HTML + 内联 CSS，断网可双击打开、明细可展开。
+
+```powershell
+pnpm --dir frontend install
+pnpm --dir frontend dev        # 开发：http://127.0.0.1:5173，/api 代理到 3000
+pnpm --dir frontend build      # 产出 frontend/dist，后端会直接托管
+```
+
+页面入口：`#/` 工作台（四项输入 + 可选客户需求，一次生成跑完五阶段，右侧预览、全屏演示、下载）、`#/brief` Brief 拆解、`#/settings` 运行配置、`#/api-tools` 能力目录（只读 `GET /api/openapi.json`）。
 
 ## 启动后端
 
