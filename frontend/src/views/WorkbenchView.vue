@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { message } from 'ant-design-vue'
 import { state, workbench, generate, currentSuccess, currentFailure, loadBaseline, restoreAi, clearCompare, setCampaignOverride } from '../state/workbench'
 import { loadMeta, loadConfig } from '../state/workbench'
 import { buildVm } from '../plan/buildVm'
-import { downloadPlan, type BlockingItem } from '../export/download'
+import { downloadPlan, blockingItems, type BlockingItem } from '../export/download'
 import { humanLocation } from '../plan/locations'
 import { renderPlan } from '../plan/renderPlan'
 import type { CampaignOverride, PipelineSuccess } from '../plan/types'
@@ -27,6 +27,11 @@ const pipeline = computed<PipelineSuccess | null>(() => (state.result && state.r
 const vm = computed(() => {
   const plan = currentSuccess.value
   return plan ? buildVm({ plan, meta: state.meta, mode: state.mode }) : null
+})
+const downloadBlocked = computed(() => Boolean(vm.value && !vm.value.exportAllowed))
+/** 成案后自动列出阻断项，不必先点下载；点「返回修改」只收起清单，按钮仍禁用。 */
+watch(vm, next => {
+  blocked.value = next && !next.exportAllowed ? blockingItems(next) : []
 })
 const fullscreenHtml = computed(() => (vm.value ? renderPlan(vm.value, { appendix: false, fullscreen: true }) : ''))
 const downloadTitle = computed(() => {
@@ -197,7 +202,7 @@ onMounted(() => window.addEventListener('keydown', onKey))
         <span class="spacer" style="flex: 1" />
         <a-space>
           <a-button size="small" :disabled="!vm" @click="openFullscreen">全屏演示（F）</a-button>
-          <a-button type="primary" size="small" :disabled="!vm" :title="downloadTitle" @click="handleDownload">下载 HTML</a-button>
+          <a-button type="primary" size="small" :disabled="!vm || downloadBlocked" :title="downloadTitle" @click="handleDownload">下载 HTML</a-button>
         </a-space>
       </div>
       <PreviewFrame :vm="vm" :highlight="highlight" />
@@ -235,7 +240,7 @@ onMounted(() => window.addEventListener('keydown', onKey))
       <iframe class="demo" :srcdoc="fullscreenHtml" style="flex: 1; width: 100%; border: none" title="全屏演示" sandbox="allow-same-origin" />
       <div style="position: fixed; left: 20px; bottom: 16px; font-size: 12px; color: var(--ink-3)">1–6 跳节 · PageDown/PageUp 翻节 · Esc 退出 · D 下载</div>
       <a-space style="position: fixed; right: 20px; bottom: 20px">
-        <a-button @click="handleDownload" :disabled="!vm">下载（D）</a-button>
+        <a-button @click="handleDownload" :disabled="!vm || downloadBlocked">下载（D）</a-button>
         <a-button @click="fullscreen = false">退出（Esc）</a-button>
       </a-space>
     </div>
