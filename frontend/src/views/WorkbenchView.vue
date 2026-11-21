@@ -172,7 +172,7 @@ onMounted(() => window.addEventListener('keydown', onKey))
         <StageProgress :stages="state.stages" />
       </div>
 
-      <div class="panel-block" v-if="pipeline">
+      <div class="panel-block" v-if="pipeline && state.prevSuccess">
         <h4>本次变化</h4>
         <DiffPanel :diff="state.diff" @focus="focusLine" @clear="clearCompare" />
       </div>
@@ -188,6 +188,11 @@ onMounted(() => window.addEventListener('keydown', onKey))
 
     <div class="preview-wrap">
       <StatusBanner :failure="currentFailure" />
+      <div v-if="state.showBaseline" class="status-bar">
+        <a-tag color="orange">基础分配</a-tag>
+        本次展示为基础分配（未含 AI 偏好），用于对照 AI 参与前后的取舍差异。
+        <a style="margin-left: 8px; cursor: pointer" @click="restoreAi">恢复 AI 方案</a>
+      </div>
       <div class="preview-toolbar">
         <span class="spacer" style="flex: 1" />
         <a-space>
