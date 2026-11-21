@@ -160,8 +160,14 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
       <p class="note" style="margin-top:10px">不同线路的历史覆盖人次按平台 250 米网格口径分别统计，不可相加，本方案不以该数作为触达承诺。来源：${h(vm.busLines.find(line => line.traffic)?.traffic?.source || '可视化平台 2023-05 历史数据')}。</p>`
     : '<p class="muted">本次未选公交，地铁暂无对应历史覆盖数据。</p>'
 
+  // 行金额 = 数量 × 单位估算；单位估算 = 月刊例中值 × 计费月数（四舍五入）+ 行内制作费 / 数量。
   const methodRows = vm.lines
-    .map(line => `<tr><td>${h(line.name)}</td><td>${h(line.kind === 'bus' ? '公交车身' : '地铁出入口')}</td><td>${h(line.variant)}</td><td class="num">${line.quantity}</td><td class="num">${h(wanRange(line.monthlyLowYuan, line.monthlyHighYuan))} × ${vm.billingMonths} 月</td><td class="num">${h(w(line.lineTotalYuan))}</td></tr>`)
+    .map(line => {
+      const unitEstimate = Math.round(line.lineTotalYuan / line.quantity)
+      const monthlyMid = Math.round((line.monthlyLowYuan + line.monthlyHighYuan) / 2)
+      const detail = `${wanRange(line.monthlyLowYuan, line.monthlyHighYuan)} × ${vm.billingMonths} 月 + 制作`
+      return `<tr><td>${h(line.name)}</td><td>${h(line.kind === 'bus' ? '公交车身' : '地铁出入口')}</td><td>${h(line.variant)}</td><td class="num">${line.quantity}</td><td class="num" data-src="${h(`月刊例中值 ${w(monthlyMid)} × ${vm.billingMonths} 月 + 制作费 ${w(line.productionYuan)}`)}">${h(w(unitEstimate))}<br><small>${h(detail)}</small></td><td class="num">${h(w(line.lineTotalYuan))}</td></tr>`
+    })
     .join('')
 
   return `<!doctype html>
