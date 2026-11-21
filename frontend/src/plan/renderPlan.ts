@@ -118,18 +118,23 @@ function checksBlock(vm: PlanVm) {
 
 function appendixBlock(vm: PlanVm) {
   const offLine = vm.mode === 'off'
-  const rows: [string, string][] = []
-  rows.push(['模式', offLine ? '本次未执行 AI 分析，库存、数量与金额均由本地确定性引擎计算，文案为模板。' : `当前模式 ${vm.mode}，各阶段结果见下表。`])
-  if (!offLine) {
-    rows.push(['策略', vm.rounds.length
-      ? vm.rounds.map(round => `第 ${round.round} 轮：候选 ${round.candidateCount}，偏好 ${round.preferredCount}，采纳 ${round.acceptedCount}，被拒 ${round.rejected.length}${round.requestReplan ? '（触发重排）' : ''}`).join('；')
-      : '本次未返回分轮记录。'])
+  const summary = `本次 AI 决策记录 · ${h(vm.mode)} · ${vm.rounds.length} 轮`
+  if (offLine) {
+    return `<details class="appendix"><summary>${summary}</summary>
+    <p>本次未执行 AI 分析，库存、数量与金额均由本地确定性引擎计算，文案为模板。</p>
+  </details>`
   }
+  const briefText = vm.request.briefText?.trim()
+  const rows: [string, string][] = []
+  rows.push(['需求拆解', briefText ? `使用自拟需求（${briefText.length} 字），已合并进生效 Campaign；未覆盖要素沿用行业预置。` : '未提供自拟需求，Campaign 取行业预置。'])
+  rows.push(['策略', vm.rounds.length
+    ? vm.rounds.map(round => `第 ${round.round} 轮：候选 ${round.candidateCount}，偏好 ${round.preferredCount}，采纳 ${round.acceptedCount}，被拒 ${round.rejected.length}${round.requestReplan ? '（触发重排）' : ''}`).join('；')
+    : '本次未返回分轮记录。'])
   rows.push(['引擎', vm.trace.slice(0, 8).map(step => `${step.step}：${copyText(step.message, 90)}`).join('；') || '未返回引擎 trace。'])
   rows.push(['文案', `本次文案来源：${vm.copy.source === 'llm' ? '模型生成' : vm.copy.source === 'mock' ? '离线回放' : '模板'}。所选资源、金额与数字直接取方案数据。`])
   rows.push(['核验', `共 ${vm.checks.length} 项检查，其中阻断 ${vm.checks.filter(item => item.status === 'fail').length} 项。`])
-  if (!offLine) rows.push(['降级', vm.degraded.length ? vm.degraded.map(item => `${item.stage}：${item.reason}`).join('；') : '各阶段均正常'])
-  return `<details class="appendix"><summary>本次 AI 决策记录 · ${h(vm.mode)} · ${vm.rounds.length} 轮</summary>
+  rows.push(['降级', vm.degraded.length ? vm.degraded.map(item => `${item.stage}：${item.reason}`).join('；') : '各阶段均正常'])
+  return `<details class="appendix"><summary>${summary}</summary>
     <table class="appendix-table">${rows.map(([key, value]) => `<tr><td class="k">${h(key)}</td><td>${h(value)}</td></tr>`).join('')}</table>
   </details>`
 }
