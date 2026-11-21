@@ -1,17 +1,28 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Check } from '../plan/types'
+import { humanLocation } from '../plan/locations'
 
 const props = defineProps<{ checks: Check[]; traceCount: number }>()
 const emit = defineEmits<{ (event: 'focus', ref: string): void }>()
 
+/** 确定性扫描会把同一段文案在 plan/campaign/copy 多处各命中一次，展示时按「项+结论+位置」去重。 */
+const checks = computed(() => {
+  const seen = new Set<string>()
+  return props.checks.filter(item => {
+    const key = `${item.element}|${item.message}|${humanLocation(item.location).replace(/需求细节|生效 Campaign/g, 'campaign')}`
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+})
 const counts = computed(() => ({
-  pass: props.checks.filter(item => item.status === 'pass').length,
-  warn: props.checks.filter(item => item.status === 'warn').length,
-  fail: props.checks.filter(item => item.status === 'fail').length,
+  pass: checks.value.filter(item => item.status === 'pass').length,
+  warn: checks.value.filter(item => item.status === 'warn').length,
+  fail: checks.value.filter(item => item.status === 'fail').length,
 }))
 const icon = (status: Check['status']) => (status === 'pass' ? '✓' : status === 'warn' ? '!' : '✗')
-const blocking = computed(() => props.checks.some(item => item.status === 'fail' && item.blocking))
+const blocking = computed(() => checks.value.some(item => item.status === 'fail' && item.blocking))
 </script>
 
 <template>
@@ -25,7 +36,7 @@ const blocking = computed(() => props.checks.some(item => item.status === 'fail'
           <b>{{ check.element }}</b> {{ check.message }}
           <div v-if="check.suggestion" class="caption">建议：{{ check.suggestion }}</div>
         </span>
-        <span class="caption">{{ check.evidenceRefs?.length || 0 }} 证据</span>
+        <span class="caption">{{ humanLocation(check.location) }} · {{ check.evidenceRefs?.length || 0 }} 证据</span>
       </div>
       <p v-if="blocking" class="caption" style="color: var(--danger)">存在阻断项，下载已禁用。</p>
       <p class="caption" style="margin-top: 8px">追溯 AI 决策：{{ traceCount }} 条 trace，详见导出附录 S7。</p>

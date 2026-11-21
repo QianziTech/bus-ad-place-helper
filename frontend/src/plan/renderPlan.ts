@@ -226,6 +226,7 @@ ${head}
         <thead><tr><th>锚点</th><th>站点</th><th class="num">公交候选</th><th class="num">地铁候选</th><th class="num">本方案选中</th></tr></thead>
         <tbody>${vm.anchors.map(anchor => `<tr><td>${h(anchor.areaName)}</td><td>${h(anchor.station || '—')}</td><td class="num">${anchor.busCount ?? '—'}</td><td class="num">${anchor.metroCount ?? '—'}</td><td class="num">${anchor.selectedCount}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">本轮未提供锚点元数据。</td></tr>'}</tbody>
       </table>
+      <p class="note" style="margin-top:10px">候选数为平台 1.2 km 覆盖关系的条数，不是可售量；同一媒体键命中多个锚点时在各锚点分别计数，跨锚点相加不等于清单行数之和。</p>
     </div>
     <div class="card">
       <h3>口径对照</h3>

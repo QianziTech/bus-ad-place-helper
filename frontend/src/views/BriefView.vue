@@ -3,6 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { message } from 'ant-design-vue'
 import { api } from '../api/client'
 import { state, workbench, industryMeta, setCampaignOverride, loadMeta } from '../state/workbench'
+import { localScan } from '../plan/sanitize'
 import type { BriefResult, CampaignOverride, BriefSample } from '../plan/types'
 
 const samples = ref<BriefSample[]>([])
@@ -34,13 +35,9 @@ function selectSample(sample: BriefSample) {
   runLocalScan()
 }
 
-/** 本地确定性扫描：实名与成交价形态，命中当场提示，不进上下文。 */
+/** 本地扫描只看成交价与单价形态；实名由服务端在提交时扫描（黑名单不进前端产物）。 */
 function runLocalScan() {
-  const hits: string[] = []
-  if (/(成交价|实付|折后价|到手价)/.test(text.value)) hits.push('疑似成交价表述')
-  if (/\d+(?:\.\d+)?\s*(?:万|千)?\s*元?\s*[/／每]\s*(?:辆|台|口|块)/.test(text.value)) hits.push('疑似非区间单价')
-  if (/农夫山泉|招商银行|汤臣倍健|和睦家|迪士尼/.test(text.value)) hits.push('疑似真实企业名')
-  localHits.value = hits
+  localHits.value = localScan(text.value)
 }
 
 watch(text, runLocalScan)
@@ -147,7 +144,7 @@ onMounted(async () => {
             placeholder="粘贴 4A 邮件，或自拟一段需求（行业仍从上方选择）" />
           <p class="caption" style="margin-top: 8px">
             <template v-if="localHits.length">● 检测到：{{ localHits.join('、') }}，已拦下，请修改后再拆解</template>
-            <template v-else>● 未检测到实名与成交价</template>
+            <template v-else>● 未检测到成交价形态；实名由服务端在提交时校验</template>
           </p>
           <a-space style="margin-top: 8px">
             <a-button type="primary" :loading="parsing" @click="parse">拆解为 campaign</a-button>

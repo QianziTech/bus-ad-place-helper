@@ -5,6 +5,7 @@ import { state, workbench, generate, currentSuccess, currentFailure, loadBaselin
 import { loadMeta, loadConfig } from '../state/workbench'
 import { buildVm } from '../plan/buildVm'
 import { downloadPlan, type BlockingItem } from '../export/download'
+import { humanLocation } from '../plan/locations'
 import { renderPlan } from '../plan/renderPlan'
 import type { CampaignOverride, PipelineSuccess } from '../plan/types'
 import ControlPanel from '../components/ControlPanel.vue'
@@ -25,7 +26,7 @@ const elapsed = ref(0)
 const pipeline = computed<PipelineSuccess | null>(() => (state.result && state.result.status === 'ok' ? state.result : null))
 const vm = computed(() => {
   const plan = currentSuccess.value
-  return plan ? buildVm({ plan: plan as PipelineSuccess, meta: state.meta, mode: state.mode }) : null
+  return plan ? buildVm({ plan, meta: state.meta, mode: state.mode }) : null
 })
 const fullscreenHtml = computed(() => (vm.value ? renderPlan(vm.value, { appendix: false, fullscreen: true }) : ''))
 const downloadTitle = computed(() => {
@@ -166,7 +167,7 @@ onMounted(() => window.addEventListener('keydown', onKey))
         <span class="spacer" style="flex: 1" />
         <a-space>
           <a-button size="small" :disabled="!vm" @click="openFullscreen">全屏演示（F）</a-button>
-          <a-button type="primary" size="small" :disabled="!vm || !vm.exportAllowed" :title="downloadTitle" @click="handleDownload">下载 HTML</a-button>
+          <a-button type="primary" size="small" :disabled="!vm" :title="downloadTitle" @click="handleDownload">下载 HTML</a-button>
         </a-space>
       </div>
       <PreviewFrame :vm="vm" :highlight="highlight" />
@@ -203,7 +204,7 @@ onMounted(() => window.addEventListener('keydown', onKey))
     <div v-if="fullscreen" style="position: fixed; inset: 0; background: #fff; z-index: 20; display: flex; flex-direction: column">
       <iframe :srcdoc="fullscreenHtml" style="flex: 1; width: 100%; border: none" title="全屏演示" sandbox="allow-same-origin" />
       <a-space style="position: fixed; right: 20px; bottom: 20px">
-        <a-button @click="handleDownload" :disabled="!vm || !vm.exportAllowed">下载（D）</a-button>
+        <a-button @click="handleDownload" :disabled="!vm">下载（D）</a-button>
         <a-button @click="fullscreen = false">退出（Esc）</a-button>
       </a-space>
     </div>
@@ -211,7 +212,7 @@ onMounted(() => window.addEventListener('keydown', onKey))
     <div v-if="blocked.length" class="status-bar error" style="position: fixed; left: 400px; right: 0; bottom: 0; z-index: 15">
       <b>导出被拦截 {{ blocked.length }} 处</b>
       <div v-for="(item, index) in blocked" :key="index" style="margin-top: 4px">
-        ✗ {{ item.element }}｜{{ item.location || '方案文案' }}｜{{ item.message }}<template v-if="item.suggestion">　建议改为「{{ item.suggestion }}」</template>
+        ✗ {{ item.element }}｜{{ item.location }}｜{{ item.message }}<template v-if="item.suggestion">　建议：{{ item.suggestion }}</template>
       </div>
       <a-space style="margin-top: 8px">
         <a-button size="small" @click="blocked = []">返回修改</a-button>

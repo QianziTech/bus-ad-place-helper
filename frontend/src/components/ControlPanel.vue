@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { message } from 'ant-design-vue'
 import { workbench, state, windowVerified } from '../state/workbench'
+import { localScan } from '../plan/sanitize'
 
 const industryItems = computed(() => state.meta?.industries || [])
 const presets = computed(() => state.meta?.budget.presetsYuan || [1000000, 2000000, 5000000])
@@ -12,10 +13,11 @@ const budgetWan = computed({
 const minWan = computed(() => Math.round((state.meta?.budget.minYuan || 1000000) / 10000))
 const maxWan = computed(() => Math.round((state.meta?.budget.maxYuan || 5000000) / 10000))
 const mediaList = computed(() => (state.meta?.media || ['bus', 'metro']).map(kind => ({
-  kind,
+  value: kind,
   label: kind === 'bus' ? '公交车身' : '地铁出入口',
 })))
 const windows = computed(() => state.meta?.windows || [])
+const briefHits = computed(() => localScan(workbench.briefText))
 
 function toggleMedia(checked: string[]) {
   if (!checked.length) {
@@ -141,8 +143,11 @@ function applyWindow(start: string, end: string) {
       <h4>客户需求（可选）</h4>
       <a-textarea v-model:value="workbench.briefText" :rows="3" :maxlength="2000" show-count
         placeholder="粘贴 4A 邮件或一句话需求，例如「6–8 月在徐汇、静安做新品试饮」" />
-      <p class="caption">
-        有内容时随生成一起提交，仅影响 Campaign。<a style="cursor: pointer" @click="goBrief">去 Brief 页 →</a>
+      <p class="caption" :style="briefHits.length ? 'color: var(--danger)' : ''">
+        <template v-if="briefHits.length">● 检测到{{ briefHits.join('、') }}，命中原文不会进入方案</template>
+        <template v-else-if="workbench.briefText.trim()">● 未检测到实名与成交价</template>
+        <template v-else>有内容时随生成一起提交，仅影响 Campaign。</template>
+        <a style="cursor: pointer; margin-left: 4px" @click="goBrief">去 Brief 页 →</a>
       </p>
     </section>
 

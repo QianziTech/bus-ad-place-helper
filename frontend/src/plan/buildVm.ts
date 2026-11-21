@@ -195,14 +195,20 @@ function normalizeLines(lines: PlanLine[]): PlanVmLine[] {
     .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'metro' ? -1 : 1) || b.lineTotalYuan - a.lineTotalYuan)
 }
 
+export type RenderablePlan = PlanSuccess & Partial<Pick<PipelineSuccess, 'copy' | 'checks' | 'rounds' | 'degraded' | 'exportAllowed'>>
+
 export function buildVm(input: {
-  plan: PipelineSuccess
+  plan: RenderablePlan
   meta: { industries: MetaIndustry[] } | null
   anchorsById?: Record<string, Anchor>
   mode: 'off' | 'mock' | 'live'
 }): PlanVm {
   const { plan, meta, mode } = input
-  const copy = plan.copy
+  // /api/plan 的基础分配没有 copy/checks/rounds/degraded，统一回退，保证同一渲染器可用。
+  const copy = plan.copy || { headline: '', brandContext: '', strategyLine: '', selectionRationale: '', assumptionEcho: '', source: 'template' as const }
+  const rounds = plan.rounds || []
+  const degraded = plan.degraded || []
+  const checks = plan.checks || []
   const lines = normalizeLines(plan.lines)
   const metaIndustry = meta?.industries.find(item => item.id === plan.request.industry)
   let anchors = anchorFromMeta(metaIndustry, input.anchorsById)
@@ -270,7 +276,7 @@ export function buildVm(input: {
     strategySource:
       mode === 'off'
         ? '本次取舍 基础分配（确定性规则）'
-        : `本次取舍 AI 参与（${mode === 'mock' ? 'mock 回放' : 'live'}）· ${plan.rounds.length} 轮 · ${plan.rounds.reduce((sum, item) => sum + item.acceptedCount, 0)} 条偏好被采纳 / ${plan.rounds.reduce((sum, item) => sum + item.rejected.length, 0)} 条被拒`,
+        : `本次取舍 AI 参与（${mode === 'mock' ? 'mock 回放' : 'live'}）· ${rounds.length} 轮 · ${rounds.reduce((sum, item) => sum + item.acceptedCount, 0)} 条偏好被采纳 / ${rounds.reduce((sum, item) => sum + item.rejected.length, 0)} 条被拒`,
     lines,
     anchors,
     anchorNotice: anchors.some(anchor => anchor.busCount === null && anchor.metroCount === null) ? '后端未提供锚点的候选计数，本页只显示本方案选中数。' : null,
@@ -291,9 +297,9 @@ export function buildVm(input: {
     shares,
     assumptions: plan.assumptions || [],
     notices: plan.notices || [],
-    checks: plan.checks || [],
-    rounds: plan.rounds || [],
-    degraded: plan.degraded || [],
+    checks,
+    rounds,
+    degraded,
     trace: (plan.trace || []).map(step => ({ step: step.step, message: step.message, elapsedMs: step.elapsedMs })),
     mode,
     exportAllowed: plan.exportAllowed !== false && !(plan.checks || []).some(check => check.blocking && check.status === 'fail'),

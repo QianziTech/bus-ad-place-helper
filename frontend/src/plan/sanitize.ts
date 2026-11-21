@@ -28,3 +28,13 @@ export function copyText(value: unknown, maxLen = 400): string {
   const text = plainText(value)
   return text.length > maxLen ? `${text.slice(0, maxLen)}…` : text
 }
+
+/**
+ * 客户需求的本地扫描：只查成交价与点位单价形态，不内置任何企业名——实名黑名单只在服务端
+ * （`data/internal/brand_mapping.json`），前端打包产物不得包含真实客户名。
+ */
+const PRICE_PATTERN = /(成交价|实付|折后价|到手价|优惠价|折扣价)\s*[:：]?\s*\d+|\d+(?:\.\d+)?\s*(?:万|千)?\s*元?\s*[/／每]\s*(?:辆|台|块|口|月)/
+export function localScan(text: string): string[] {
+  if (!text || !text.trim()) return []
+  return PRICE_PATTERN.test(text) ? ['疑似成交价或非区间单价'] : []
+}

@@ -16,6 +16,7 @@ const reasonText: Record<RejectionReason, string> = {
 const prefs = computed<StrategyPreference[]>(() => props.result?.strategyPreferences || [])
 const rejectedCount = computed(() => prefs.value.filter(item => item.disposition?.startsWith('rejected:')).length)
 const rounds = computed(() => props.result?.rounds || [])
+const windowFitLabel: Record<string, string> = { aligned: '对齐', risk: '风险', unknown: '待确认' }
 const title = computed(() => {
   if (!props.result) return 'AI 决策'
   const roundsText = rounds.value.length > 1 ? ` · ${rounds.value.length} 轮` : ''
@@ -50,7 +51,7 @@ const title = computed(() => {
 
         <div v-if="result.windowFit" class="caption" style="margin-top: 10px">
           <b>档期贴合</b>
-          <a-tag :color="result.windowFit.status === 'risk' ? 'orange' : result.windowFit.status === 'aligned' ? 'green' : 'default'" style="margin-left: 6px">{{ result.windowFit.status }}</a-tag>
+          <a-tag :color="result.windowFit.status === 'risk' ? 'orange' : result.windowFit.status === 'aligned' ? 'green' : 'default'" style="margin-left: 6px">{{ windowFitLabel[result.windowFit.status] || result.windowFit.status }}</a-tag>
           {{ result.windowFit.reason }}
         </div>
         <div v-if="result.measurement" class="caption" style="margin-top: 6px">
