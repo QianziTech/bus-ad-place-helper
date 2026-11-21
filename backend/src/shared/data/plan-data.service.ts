@@ -18,7 +18,8 @@ export class PlanDataService {
       catch (error) { throw new Error(`无法读取 ${name}.json：${error instanceof Error ? error.message : '无效 JSON'}`); }
     };
     const data = { bus: read('bus'), metro: read('metro'), pricing: read('pricing'), briefs: read('briefs'), coverage: read('coverage'),
-      traffic: read('traffic', { byMediaKey: {} }), trajectories: read('traj', { crs: 'GCJ02', source: '缺省', byLineName: {} }) };
+      traffic: read('traffic', { byMediaKey: {} }), trajectories: read('traj', { crs: 'GCJ02', source: '缺省', byLineName: {} }),
+      snapshots: existsSync(resolve(root, 'snapshots.json')) ? read('snapshots') : { dates: [], freeByKey: {} } };
     validatePlanData(data);
     this.data = data;
   }

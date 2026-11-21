@@ -42,6 +42,20 @@ def build_trajectories(source, bus_media):
             "byLineName": by_line}
 
 
+def build_snapshots(source, modules):
+    """周截面参考：把 52 期周一单日空位转成按 mediaKey 对齐的数组，只用于库存预览，不作整段库存。"""
+    path = source / "processed/availability.json"
+    if not path.exists():
+        return {"dates": [], "freeByKey": {}}
+    raw = load(path)
+    dates = sorted(raw)
+    free_by_key = {}
+    for kind in ("bus", "metro"):
+        for key in modules[kind]["mediaByKey"]:
+            free_by_key[key] = [raw[date].get(key) for date in dates]
+    return {"dates": dates, "freeByKey": free_by_key}
+
+
 def build(source, output):
     index = load(source / "processed/media_index.json")
     seed = load(source / "seed/industries.json")["industries"]
@@ -129,15 +143,16 @@ def build(source, output):
                        "source": f"资料包 07-媒体刊例价.xlsx 第 {line} 行；应用架构与接口首版报价口径", "assumptions": assumptions}
     traffic = {"byMediaKey": {k: v for k, v in traffic["byMediaKey"].items() if k in modules["bus"]["mediaByKey"]}}
     traj = build_trajectories(source, modules["bus"]["mediaByKey"])
+    snapshots = build_snapshots(source, modules)
     output.mkdir(parents=True, exist_ok=True)
     files = {**modules, "pricing": {"pricesByMediaKey": prices}, "briefs": {"industries": industries},
-             "coverage": {"anchorsById": coverage}, "traffic": traffic, "traj": traj}
+             "coverage": {"anchorsById": coverage}, "traffic": traffic, "traj": traj, "snapshots": snapshots}
     for name, content in files.items():
         (output / f"{name}.json").write_text(json.dumps(content, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     report = {"media": {k: len(v["mediaByKey"]) for k, v in modules.items()},
               "windows": {k: len(v["windows"]) for k, v in modules.items()}, "anchors": len(coverage),
               "prices": len(prices), "traffic": len(traffic["byMediaKey"]),
-              "traj": len(traj["byLineName"]), "unmatched": unmatched}
+              "traj": len(traj["byLineName"]), "snapshots": len(snapshots["dates"]), "unmatched": unmatched}
     (output / "data-notes.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "unmatched"}, ensure_ascii=False))
     print(f"未匹配/歧义记录 {len(unmatched)} 条，见 data-notes.json；无库存与刊例的媒体不会报价")

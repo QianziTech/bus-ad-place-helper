@@ -183,4 +183,19 @@ export function validatePlanData(value: unknown): asserts value is PlanData {
     }
     if (item.lengthKm !== undefined) number(item.lengthKm, `${path}.lengthKm`, false, Number.MIN_VALUE);
   }
+  const snapshots = value.snapshots ?? { dates: [], freeByKey: {} };
+  object(snapshots, 'snapshots');
+  requireValue(Array.isArray(snapshots.dates), 'snapshots.dates', '必须是数组');
+  const dates = new Set<string>();
+  for (const [index, date] of snapshots.dates.entries()) {
+    requireValue(isPlanDate(date) && !dates.has(date), `snapshots.dates[${index}]`, '必须是 2027 年内有效且不重复的日期');
+    dates.add(date);
+  }
+  object(snapshots.freeByKey, 'snapshots.freeByKey');
+  for (const [key, values] of Object.entries(snapshots.freeByKey)) {
+    const path = `snapshots.freeByKey.${key}`;
+    requireValue(mediaKeys.has(key), path, '引用未知媒体');
+    requireValue(Array.isArray(values) && values.length === snapshots.dates.length, path, '必须与采样日期同长');
+    values.forEach((item, index) => { if (item !== null) number(item, `${path}[${index}]`); });
+  }
 }
