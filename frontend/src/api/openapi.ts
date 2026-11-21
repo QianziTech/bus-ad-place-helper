@@ -90,7 +90,7 @@ export async function loadOpenApi(): Promise<ApiTool[]> {
         description: op.description,
         tags: op.tags || [],
         method: method.toUpperCase(),
-        path: `/api${path}`,
+        path: path.startsWith('/api') ? path : `/api${path}`,
         input,
         outputs,
       })
