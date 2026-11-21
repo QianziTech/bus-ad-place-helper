@@ -51,7 +51,8 @@ function applySuggestion(text: string) {
         @click="() => { workbench.startDate = win.startDate; workbench.endDate = win.endDate; generate() }">{{ win.startDate }} ~ {{ win.endDate }}</a-tag>
     </div>
   </div>
-  <div v-else-if="state.result && state.result.status === 'ok' && state.result.degraded?.length" class="status-bar warning">
+  <!-- off 模式下策略与成稿按设计跳过，不算降级告警。 -->
+  <div v-else-if="state.result && state.result.status === 'ok' && state.mode !== 'off' && state.result.degraded?.length" class="status-bar warning">
     <a-tag color="orange">AI 已降级</a-tag>
     <span v-for="item in state.result.degraded" :key="item.stage">{{ item.stage }}：{{ item.reason }}　</span>
     <span class="caption">方案照常可读可导出。</span>

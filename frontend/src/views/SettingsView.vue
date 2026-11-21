@@ -86,7 +86,7 @@ async function test() {
       const fixtures = result.fixtures as { covered: number; total: number }
       testResult.value = { ok: true, summary: `回放覆盖 ${fixtures.covered}/${fixtures.total} 行业` }
     } else if (result.ok) {
-      testResult.value = { ok: true, summary: `ok · ${result.latencyMs} ms · 模型回显 ${result.modelEcho || '—'}` }
+      testResult.value = { ok: true, summary: `ok · ${result.latencyMs} ms · 模型回显 ${result.modelEcho || '—'} · 本次测试已产生一次真实调用与费用` }
     } else {
       testResult.value = { ok: false, summary: `${result.code || '失败'} · ${result.message || ''}` }
     }

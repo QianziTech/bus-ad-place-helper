@@ -128,7 +128,7 @@ function appendixBlock(vm: PlanVm) {
   rows.push(['引擎', vm.trace.slice(0, 8).map(step => `${step.step}：${copyText(step.message, 90)}`).join('；') || '未返回引擎 trace。'])
   rows.push(['文案', `本次文案来源：${vm.copy.source === 'llm' ? '模型生成' : vm.copy.source === 'mock' ? '离线回放' : '模板'}。所选资源、金额与数字直接取方案数据。`])
   rows.push(['核验', `共 ${vm.checks.length} 项检查，其中阻断 ${vm.checks.filter(item => item.status === 'fail').length} 项。`])
-  rows.push(['降级', vm.degraded.length ? vm.degraded.map(item => `${item.stage}：${item.reason}`).join('；') : '各阶段均正常'])
+  if (!offLine) rows.push(['降级', vm.degraded.length ? vm.degraded.map(item => `${item.stage}：${item.reason}`).join('；') : '各阶段均正常'])
   return `<details class="appendix"><summary>本次 AI 决策记录 · ${h(vm.mode)} · ${vm.rounds.length} 轮</summary>
     <table class="appendix-table">${rows.map(([key, value]) => `<tr><td class="k">${h(key)}</td><td>${h(value)}</td></tr>`).join('')}</table>
   </details>`
@@ -198,7 +198,7 @@ ${head}
     <div class="kpi"><b>${h(vm.total.text)}</b><small>估算总额</small></div>
     <div class="kpi"><b>${h(vm.remaining.text)}</b><small>预算余量</small></div>
   </div>
-  <p class="note" style="margin-top:16px">${h(vm.brandContextSource)} · 报价按刊例区间中值估算，详见 §6。${vm.degraded.length ? '本次部分 AI 阶段降级，页面结构与结果不受影响。' : ''}</p>
+  <p class="note" style="margin-top:16px">${h(vm.brandContextSource)} · 报价按刊例区间中值估算，详见 §6。${vm.degraded.length && vm.mode !== 'off' ? '本次部分 AI 阶段降级，页面结构与结果不受影响。' : ''}</p>
 </section>
 
 <section id="s2">
