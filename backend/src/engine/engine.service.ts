@@ -1,7 +1,8 @@
 import { BadRequestException, Inject, Injectable, Optional } from '@nestjs/common';
-import { Campaign, Candidate, CandidatePool, Client, Industry, InventoryWindow, MediaKind, PlanAnchor, PlanFailure, PlanLine, PlanRequest, PlanResult, RejectionReason, StrategyPreference, TraceStep } from '../shared/contracts';
+import { Campaign, Candidate, CandidatePool, Client, Industry, InventoryDetail, MediaKind, PlanAnchor, PlanFailure, PlanLine, PlanRequest, PlanResult, RejectionReason, StrategyPreference, TraceStep } from '../shared/contracts';
 import { PlanDataService } from '../shared/data/plan-data.service';
 import { ScheduleService } from './schedule.service';
+import { KIND_LABELS, offlineResolution, SOURCE_LABELS, kindStatus, previewRows, type InventoryResolution, type KindInventory } from '../inventory/resolution';
 
 const kinds: MediaKind[] = ['bus', 'metro'];
 const labels = { bus: '公交', metro: '地铁' };
@@ -58,24 +59,20 @@ export class EngineService {
     return campaign;
   }
 
-  getCandidates(request: PlanRequest, expanded = false): CandidatePool | PlanFailure {
+  /** 不传库存解析结果时只使用已归档完整档期，用于不查实时库存的调用路径。 */
+  getCandidates(request: PlanRequest, expanded = false, resolution?: InventoryResolution): CandidatePool | PlanFailure {
     const data = this.planData.data;
     const industry = data.briefs.industries.find(item => item.id === request.industry);
     if (!industry) return failure('missing_data', '所选行业没有已配置的客户需求。', ['选择已有行业或补充需求资料。']);
     const selectedKinds = kinds.filter(kind => request.media.includes(kind));
     if (!selectedKinds.length) throw new BadRequestException('至少选择一种投放媒体');
     const campaign = this.campaign(industry, request);
-    const windows = new Map<MediaKind, InventoryWindow>();
-    for (const kind of selectedKinds) {
-      const window = data[kind].windows.find(item => item.startDate === request.startDate && item.endDate === request.endDate);
-      if (window) windows.set(kind, window);
-    }
-    const missingWindows = selectedKinds.filter(kind => !windows.has(kind));
-    if (missingWindows.length) return failure('missing_window', `${missingWindows.map(kind => labels[kind]).join('、')}缺少 ${request.startDate} 至 ${request.endDate} 的完整库存档期。`, ['选择已核对的完整档期。', '单选已有完整档期的媒体，或补充该档期库存。']);
-    const billingMonths = windows.get(selectedKinds[0])!.billingMonths;
-    const inconsistentBilling = [...windows.values()].some(window => window.billingMonths !== billingMonths);
-    const queriedAt = [...windows.values()].sort((a, b) => Date.parse(a.queriedAt) - Date.parse(b.queriedAt))[0].queriedAt;
+    const inventory = resolution ?? offlineResolution(data, selectedKinds, request);
+    const detail: InventoryDetail = { startDate: request.startDate, endDate: request.endDate, billingMonths: inventory.billingMonths, billingStatus: inventory.billingStatus, kinds: inventory.kinds.map(kindStatus) };
+    const byKind = new Map<MediaKind, KindInventory>(inventory.kinds.map(kind => [kind.kind, kind]));
+    const pendingBilling = inventory.billingMonths === null;
     const notices: string[] = [];
+    if (pendingBilling) notices.push('该档期计费月数尚未确认，报价暂按 1 个计费月估算，计费口径待确认。');
     const evidence = new Map<string, Evidence>();
     const add = (key: string, partial: Evidence) => {
       const previous = evidence.get(key) ?? { anchorIds: [], evidenceRefs: [], reasons: [], sources: [] };
@@ -87,7 +84,7 @@ export class EngineService {
       return areaLimits.some(limit => [ref.id, anchor.areaName, anchor.station].some(name => limit.includes(name)));
     }) : industry.anchors;
     const unresolvedArea = areaLimits.length > 0 && allowedAnchors.length === 0;
-    if (unresolvedArea) return failure('missing_data', '活动明确限定的投放区域无法对应已核对锚点，区域覆盖待核对。', ['补充该区域的独立覆盖依据，或调整区域约束后重算。']);
+    if (unresolvedArea) return { ...failure('missing_data', '活动明确限定的投放区域无法对应已核对锚点，区域覆盖待核对。', ['补充该区域的独立覆盖依据，或调整区域约束后重算。']), inventory: detail };
     const activeAnchors = allowedAnchors;
     for (const ref of activeAnchors) {
       const anchor = data.coverage.anchorsById[ref.id];
@@ -104,32 +101,55 @@ export class EngineService {
       if (areaLimits.length && !evidence.has(key)) continue;
       add(key, { anchorIds: [], evidenceRefs: [`traffic:${key}:${reference.period}`], reasons: [`${reference.period} 公交历史画像可支持人群匹配，不代表当前客流或目的地覆盖。`], sources: [reference.source] });
     }
+    const unavailable = selectedKinds.filter(kind => {
+      const resolved = byKind.get(kind);
+      return !resolved || (resolved.source !== 'hongdou' && resolved.source !== 'archive');
+    });
+    if (unavailable.length) {
+      const reasons = unavailable.map(kind => {
+        const resolved = byKind.get(kind);
+        if (resolved?.source === 'snapshot') {
+          const missingSamples = Object.entries(resolved.sampleByKey ?? {}).filter(([key, dates]) => evidence.has(key) && !dates.length).map(([key]) => key);
+          const scope = `区间内周一截面（${resolved.sampleDates?.join('、') ?? '—'}）参考空位${missingSamples.length ? `，${missingSamples.length} 个媒体缺样` : ''}，整段库存待核对`;
+          return `${labels[kind]}${SOURCE_LABELS[resolved.source]}：${scope}`;
+        }
+        return `${labels[kind]}${SOURCE_LABELS[resolved?.source ?? 'missing']}：${resolved?.reason ?? '缺整段库存'}`;
+      });
+      const preview = previewRows(data, inventory, [...evidence.keys()]);
+      return { ...failure('missing_window', `${unavailable.map(kind => labels[kind]).join('、')}缺少 ${request.startDate} 至 ${request.endDate} 的完整库存档期。${reasons.join('；')}。`, ['选择已核对的完整档期。', '单选已有完整档期的媒体，或补充该档期库存。']),
+        inventory: { ...detail, ...(preview.length ? { preview } : {}) } };
+    }
+    const billingMonths = inventory.billingMonths!;
+    const inconsistentBilling = inventory.billingMismatch;
+    const queriedAt = selectedKinds.map(kind => byKind.get(kind)!.queriedAt!).sort((a, b) => Date.parse(a) - Date.parse(b))[0];
+    // 计费口径未确认时按 1 个计费月给出参考金额，响应与界面标注「计费待确认」。
+    const priceMonths = pendingBilling ? 1 : billingMonths;
     const allCandidates: Candidate[] = [];
     const excluded: CandidatePool['excluded'] = [];
     const blockers: { kind: MediaKind; status: 'missing_data' | 'no_inventory'; message: string }[] = [];
     let missingCouldChangeBudget = inconsistentBilling;
     if (inconsistentBilling) blockers.push({ kind: selectedKinds[0], status: 'missing_data', message: '公交与地铁完整档期的计费月数不一致' });
     for (const kind of selectedKinds) {
-      const window = windows.get(kind)!;
+      const resolvedKind = byKind.get(kind)!;
       const entries = [...evidence.entries()].filter(([key]) => data[kind].mediaByKey[key]);
       let knownZero = 0;
       let missing = 0;
       let priced = 0;
       for (const [key, item] of entries) {
-        const inventory = window.inventoryByKey[key];
+        const stock = resolvedKind.inventoryByKey[key];
         const price = data.pricing.pricesByMediaKey[key];
-        if (inventory?.freeCount === 0) {
+        if (stock?.freeCount === 0) {
           knownZero++;
           excluded.push({ mediaKey: key, reason: 'no_stock' });
           continue;
         }
-        if (inventory?.freeCount == null || !price) {
+        if (stock?.freeCount == null || !price) {
           missing++;
           missingCouldChangeBudget = true;
           excluded.push({ mediaKey: key, reason: 'invalid_evidence' });
           continue;
         }
-        const unitEstimateYuan = Math.round((price.monthlyLowYuan + price.monthlyHighYuan) / 2 * billingMonths) + price.productionYuan;
+        const unitEstimateYuan = Math.round((price.monthlyLowYuan + price.monthlyHighYuan) / 2 * priceMonths) + price.productionYuan;
         if (!Number.isSafeInteger(unitEstimateYuan) || unitEstimateYuan <= 0) {
           missing++;
           missingCouldChangeBudget = true;
@@ -140,10 +160,10 @@ export class EngineService {
         allCandidates.push({
           mediaKey: key, kind, name: media.lineName, levelName: media.levelName,
           ...(media.total === undefined ? {} : { total: media.total }), ...(media.mediaForm === undefined ? {} : { mediaForm: media.mediaForm }), ...(media.exit === undefined ? {} : { exit: media.exit }),
-          freeCount: inventory.freeCount, ...(inventory.contractCount === undefined ? {} : { contractCount: inventory.contractCount }), ...(inventory.reservedCount === undefined ? {} : { reservedCount: inventory.reservedCount }),
+          freeCount: stock.freeCount, ...(stock.contractCount === undefined ? {} : { contractCount: stock.contractCount }), ...(stock.reservedCount === undefined ? {} : { reservedCount: stock.reservedCount }),
           monthlyLowYuan: price.monthlyLowYuan, monthlyHighYuan: price.monthlyHighYuan, productionYuan: price.productionYuan, unitEstimateYuan,
           anchorIds: item.anchorIds, evidenceRefs: item.evidenceRefs, reasons: item.reasons,
-          sources: unique([...item.sources, `${kind}.json：${request.startDate} 至 ${request.endDate} 完整档期，查询于 ${window.queriedAt}`, `pricing.json：${price.source}`]),
+          sources: unique([...item.sources, `${kind}.json：${request.startDate} 至 ${request.endDate} ${SOURCE_LABELS[resolvedKind.source]}，查询于 ${resolvedKind.queriedAt ?? '—'}`, `pricing.json：${price.source}`]),
           assumptions: price.assumptions,
           ...(data.traffic.byMediaKey[key] ? { trafficReference: structuredClone(data.traffic.byMediaKey[key]) } : {}),
           ...(data.trajectories.byLineName[media.lineName]
@@ -157,9 +177,9 @@ export class EngineService {
       else if (!priced) blockers.push({ kind, status: 'missing_data', message: `${labels[kind]}缺少已核对库存或有效刊例，无法形成可报价候选` });
       if (missing && priced) notices.push(`${labels[kind]}有 ${missing} 个候选的库存或刊例待核对，当前报价仅采用已核对候选。`);
     }
-    if (blockers.length) return failure(blockers.some(item => item.status === 'no_inventory') ? 'no_inventory' : 'missing_data', blockers.map(item => item.message).join('；') + '。', ['单选具备库存与刊例的媒体。', '调整档期，或补充缺失库存和刊例。']);
+    if (blockers.length) return { ...failure(blockers.some(item => item.status === 'no_inventory') ? 'no_inventory' : 'missing_data', blockers.map(item => item.message).join('；') + '。', ['单选具备库存与刊例的媒体。', '调整档期，或补充缺失库存和刊例。']), inventory: detail };
     const minimum = selectedKinds.reduce((sum, kind) => sum + Math.min(...allCandidates.filter(candidate => candidate.kind === kind).map(candidate => candidate.unitEstimateYuan)), 0);
-    if (minimum > request.budgetYuan) return failure(missingCouldChangeBudget ? 'missing_data' : 'over_budget', missingCouldChangeBudget ? '已核对组合超过预算，但仍有库存或刊例待核对，暂不能断言最低组合超预算。' : `已核对的最低媒体组合估算为 ${minimum} 元，超过预算上限 ${request.budgetYuan} 元。`, ['提高预算上限，或改为单一媒体。', ...(missingCouldChangeBudget ? ['先补齐候选库存和刊例。'] : [])]);
+    if (minimum > request.budgetYuan) return { ...failure(missingCouldChangeBudget ? 'missing_data' : 'over_budget', missingCouldChangeBudget ? '已核对组合超过预算，但仍有库存或刊例待核对，暂不能断言最低组合超预算。' : `已核对的最低媒体组合估算为 ${minimum} 元，超过预算上限 ${request.budgetYuan} 元。`, ['提高预算上限，或改为单一媒体。', ...(missingCouldChangeBudget ? ['先补齐候选库存和刊例。'] : [])]), inventory: detail };
     let candidates = allCandidates;
     if (!expanded) {
       const profiles = allCandidates.filter(candidate => candidate.anchorIds.length === 0).sort((a, b) => this.profileScore(b, campaign) - this.profileScore(a, campaign) || baseOrder(a, b));
@@ -173,7 +193,7 @@ export class EngineService {
       if (profiles.length > initialProfiles.size) notices.push('首轮保留全部行业 POI 候选和匹配度靠前的 8 个圈外画像候选；扩选轮纳入其余有证据候选。');
     }
     if (candidates.some(candidate => candidate.trafficReference)) notices.push('公交历史画像按原月份展示，仅作人群参考；不同线路历史覆盖人次不相加为方案触达。');
-    return { status: 'ok', request: structuredClone(request), client: publicClient(industry.client), campaign, candidates: candidates.sort(baseOrder), anchors: this.summarizeAnchors(activeAnchors), billingMonths, queriedAt, notices, excluded };
+    return { status: 'ok', request: structuredClone(request), client: publicClient(industry.client), campaign, candidates: candidates.sort(baseOrder), anchors: this.summarizeAnchors(activeAnchors), billingMonths: priceMonths, queriedAt, notices, excluded, inventory: detail };
   }
 
   private profileScore(candidate: Candidate, campaign: Campaign) {
@@ -276,6 +296,7 @@ export class EngineService {
     trace.push({ step: 'schedule', message: `按最终数量编排 ${schedule.batches.length} 批，排期状态 ${schedule.status}。` });
     return {
       status: 'ok', request: structuredClone(request), client: resolved.client, campaign: resolved.campaign, lines, anchors, billingMonths: resolved.billingMonths,
+      billingStatus: resolved.inventory.billingStatus, inventory: resolved.inventory,
       totalYuan, remainingYuan: request.budgetYuan - totalYuan, queriedAt: resolved.queriedAt, schedule,
       assumptions: unique(['客户为代称，客户背景与 Campaign 均为提案假设。', '报价采用刊例区间中值估算，单位制作费仅计一次；不含客户折扣、税费及真实成交价。', ...candidates.filter(candidate => quantities.has(candidate.mediaKey)).flatMap(candidate => candidate.assumptions)]),
       notices: resolved.notices, trace, ...(preferences.length ? { strategyPreferences: preferences } : {}),

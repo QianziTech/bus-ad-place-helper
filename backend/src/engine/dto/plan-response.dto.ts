@@ -87,6 +87,33 @@ export class TraceStepDto {
 export class AppliedStrategyPreferenceDto extends StrategyPreferenceDto {
   @ApiProperty({ enum: ['accepted', 'rejected:unknown_media', 'rejected:no_stock', 'rejected:over_budget', 'rejected:premium_exceeded', 'rejected:invalid_evidence'] }) disposition!: string;
 }
+export class InventoryKindStatusDto {
+  @ApiProperty({ enum: ['bus', 'metro'] }) kind!: 'bus' | 'metro';
+  @ApiProperty({ enum: ['hongdou', 'archive', 'snapshot', 'missing'], example: 'hongdou', description: '该媒体本次库存来源' }) source!: string;
+  @ApiProperty({ example: '红豆实时查询' }) sourceLabel!: string;
+  @ApiPropertyOptional({ format: 'date-time', description: '实时或归档的实际查询时间，周截面来源省略' }) queriedAt?: string;
+  @ApiPropertyOptional({ format: 'date', isArray: true, description: '周截面参考参与的周一采样日期' }) sampleDates?: string[];
+  @ApiProperty({ type: Number, nullable: true, description: '已确认计费月数；周截面或待核对时为 null' }) billingMonths!: number | null;
+  @ApiPropertyOptional({ description: '回退或待核对的原因' }) reason?: string;
+}
+export class InventoryPreviewRowDto {
+  @ApiProperty() mediaKey!: string;
+  @ApiProperty({ enum: ['bus', 'metro'] }) kind!: 'bus' | 'metro';
+  @ApiProperty() name!: string;
+  @ApiProperty() levelName!: string;
+  @ApiPropertyOptional() mediaForm?: string;
+  @ApiPropertyOptional() exit?: string;
+  @ApiProperty({ type: Number, nullable: true, description: '可用采样日的最小空位数；缺样为 null' }) freeCount!: number | null;
+  @ApiPropertyOptional({ format: 'date', isArray: true }) sampleDates?: string[];
+}
+export class InventoryDetailDto {
+  @ApiProperty({ format: 'date' }) startDate!: string;
+  @ApiProperty({ format: 'date' }) endDate!: string;
+  @ApiProperty({ type: Number, nullable: true }) billingMonths!: number | null;
+  @ApiProperty({ enum: ['confirmed', 'pending'], description: '计费口径是否已确认' }) billingStatus!: string;
+  @ApiProperty({ type: [InventoryKindStatusDto] }) kinds!: InventoryKindStatusDto[];
+  @ApiPropertyOptional({ type: [InventoryPreviewRowDto], description: '存在周截面参考时返回可售空位参考值，仅用于库存预览' }) preview?: InventoryPreviewRowDto[];
+}
 export class PlanSuccessDto {
   @ApiProperty({ enum: ['ok'] }) status!: 'ok';
   @ApiProperty({ type: CreatePlanDto }) request!: CreatePlanDto;
@@ -95,6 +122,8 @@ export class PlanSuccessDto {
   @ApiProperty({ type: [PlanLineDto] }) lines!: PlanLineDto[];
   @ApiProperty({ type: [PlanAnchorDto], description: '本轮参与选点的锚点及各锚点的选中数' }) anchors!: PlanAnchorDto[];
   @ApiProperty({ minimum: 0, exclusiveMinimum: true }) billingMonths!: number;
+  @ApiProperty({ enum: ['confirmed', 'pending'], description: '计费口径是否已确认；pending 时报价为按 1 个计费月的参考估算' }) billingStatus!: string;
+  @ApiProperty({ type: InventoryDetailDto, description: '本次库存来源、查询时间与计费口径' }) inventory!: InventoryDetailDto;
   @ApiProperty({ minimum: 0 }) totalYuan!: number;
   @ApiProperty({ minimum: 0 }) remainingYuan!: number;
   @ApiProperty({ format: 'date-time' }) queriedAt!: string;
@@ -108,6 +137,7 @@ export class PlanFailureDto {
   @ApiProperty({ enum: ['missing_window', 'missing_data', 'no_inventory', 'over_budget'] }) status!: PlanFailure['status'];
   @ApiProperty() message!: string;
   @ApiProperty({ type: [String] }) suggestions!: string[];
+  @ApiPropertyOptional({ type: InventoryDetailDto, description: '库存来源与周截面参考；缺整段库存时随失败返回' }) inventory?: InventoryDetailDto;
 }
 export class MissingWindowDto extends PlanFailureDto { @ApiProperty({ enum: ['missing_window'] }) declare status: 'missing_window'; }
 export class MissingDataDto extends PlanFailureDto { @ApiProperty({ enum: ['missing_data'] }) declare status: 'missing_data'; }

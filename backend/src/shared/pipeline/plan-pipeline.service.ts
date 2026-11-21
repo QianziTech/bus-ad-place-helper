@@ -9,11 +9,13 @@ import { VerifyService } from '../../analysis/verify.service';
 import { ContentScanService } from '../../analysis/content-scan.service';
 import { failureReason } from '../../analysis/llm.client';
 import { templateCopy } from '../../analysis/copy.service';
+import { InventoryService } from '../../inventory/inventory.service';
 
 @Injectable()
 export class PlanPipelineService {
   constructor(private readonly engine: EngineService, private readonly config: RuntimeConfigService, private readonly brief: BriefService,
-    private readonly strategy: StrategyService, private readonly copy: CopyService, private readonly verify: VerifyService, private readonly scan: ContentScanService) {}
+    private readonly strategy: StrategyService, private readonly copy: CopyService, private readonly verify: VerifyService, private readonly scan: ContentScanService,
+    private readonly inventory: InventoryService) {}
   async generate(input: PlanRequest): Promise<PipelineSuccess | PlanFailure> {
     const context = this.config.context();
     const request = structuredClone(input);
@@ -31,12 +33,14 @@ export class PlanPipelineService {
     }
     // Raw text is consumed once; it is never sent with subsequent model calls.
     delete request.briefText;
+    // 一轮请求只解析一次库存，两轮候选共用同一批整段库存与查询时间。
+    const resolution = await this.inventory.resolve(request);
     let pool: CandidatePool | undefined;
     let plan: PlanSuccess | undefined;
     let strategyOutput: Partial<Pick<StrategyResult, 'mediaObjective' | 'windowFit' | 'measurement'>> = {};
     for (let round = 1; round <= 2; round++) {
       const started = Date.now();
-      const candidateResult = this.engine.getCandidates(request, round === 2);
+      const candidateResult = this.engine.getCandidates(request, round === 2, resolution);
       if (candidateResult.status !== 'ok') {
         if (plan) break;
         return candidateResult;

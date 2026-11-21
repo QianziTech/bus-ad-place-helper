@@ -15,6 +15,28 @@ export interface Media { kind: MediaKind; resourceId: number; lineName: string; 
 export interface Inventory { freeCount: number | null; contractCount?: number; reservedCount?: number }
 export interface InventoryWindow { startDate: string; endDate: string; queriedAt: string; billingMonths: number; inventoryByKey: Record<string, Inventory> }
 export interface MediaData { mediaByKey: Record<string, Media>; windows: InventoryWindow[] }
+export type InventorySource = 'hongdou' | 'archive' | 'snapshot' | 'missing';
+export interface InventoryKindStatus {
+  kind: MediaKind;
+  source: InventorySource;
+  sourceLabel: string;
+  queriedAt?: string;
+  sampleDates?: string[];
+  billingMonths: number | null;
+  reason?: string;
+}
+/** 未成案时随响应返回的库存参考：整段查询失败的媒体按区间内周一截面给出参考空位。 */
+export interface InventoryPreviewRow {
+  mediaKey: string; kind: MediaKind; name: string; levelName: string;
+  mediaForm?: string; exit?: string; freeCount: number | null; sampleDates?: string[];
+}
+export interface InventoryDetail {
+  startDate: string; endDate: string;
+  billingMonths: number | null;
+  billingStatus: 'confirmed' | 'pending';
+  kinds: InventoryKindStatus[];
+  preview?: InventoryPreviewRow[];
+}
 export interface Price { monthlyLowYuan: number; monthlyHighYuan: number; productionYuan: number; source: string; assumptions: string[] }
 export interface CoverageCandidate { mediaKey: string; relation: string; source: string; distanceM?: number }
 export interface Anchor { areaName: string; station: string; role: 'businessArea' | 'landmark'; coord: { lng: number; lat: number; exit: string; source: string }; candidates: CoverageCandidate[] }
@@ -24,7 +46,9 @@ export interface Trajectory { crs?: string; lengthKm?: number; bbox?: number[]; 
 export interface TrajectorySet { crs: string; source: string; period?: string; note?: string; byLineName: Record<string, Trajectory> }
 export interface AnchorSummary { id: string; areaName: string; station: string; role: 'businessArea' | 'landmark'; rationale: string; candidateCounts: { bus: number; metro: number } }
 export interface PlanAnchor extends AnchorSummary { selectedCount: number }
-export interface PlanData { bus: MediaData; metro: MediaData; pricing: { pricesByMediaKey: Record<string, Price> }; briefs: { industries: Industry[] }; coverage: { anchorsById: Record<string, Anchor> }; traffic: { byMediaKey: Record<string, TrafficReference> }; trajectories: TrajectorySet }
+/** 周截面参考：每期周一按 mediaKey 记录 freeCount，保持日期与数值同序。 */
+export interface SnapshotData { dates: string[]; freeByKey: Record<string, (number | null)[]> }
+export interface PlanData { bus: MediaData; metro: MediaData; pricing: { pricesByMediaKey: Record<string, Price> }; briefs: { industries: Industry[] }; coverage: { anchorsById: Record<string, Anchor> }; traffic: { byMediaKey: Record<string, TrafficReference> }; trajectories: TrajectorySet; snapshots?: SnapshotData }
 export type RejectionReason = 'unknown_media' | 'no_stock' | 'over_budget' | 'premium_exceeded' | 'invalid_evidence';
 export interface StrategyPreference { mediaKey: string; reason: string; evidenceRefs: string[]; disposition?: 'accepted' | `rejected:${RejectionReason}` }
 export interface PlanRequest { industry: IndustryId; budgetYuan: number; media: MediaKind[]; startDate: string; endDate: string; campaignOverride?: CampaignOverride; strategyPreferences?: StrategyPreference[]; briefText?: string }
@@ -34,13 +58,13 @@ export interface Candidate {
   monthlyLowYuan: number; monthlyHighYuan: number; productionYuan: number; unitEstimateYuan: number;
   anchorIds: string[]; evidenceRefs: string[]; reasons: string[]; sources: string[]; assumptions: string[]; trafficReference?: TrafficReference; trajectory?: Trajectory;
 }
-export interface PlanFailure { status: 'missing_window' | 'missing_data' | 'no_inventory' | 'over_budget'; message: string; suggestions: string[] }
-export interface CandidatePool { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; candidates: Candidate[]; anchors: AnchorSummary[]; billingMonths: number; queriedAt: string; notices: string[]; excluded: { mediaKey: string; reason: RejectionReason }[] }
+export interface PlanFailure { status: 'missing_window' | 'missing_data' | 'no_inventory' | 'over_budget'; message: string; suggestions: string[]; inventory?: InventoryDetail }
+export interface CandidatePool { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; candidates: Candidate[]; anchors: AnchorSummary[]; billingMonths: number; queriedAt: string; notices: string[]; excluded: { mediaKey: string; reason: RejectionReason }[]; inventory: InventoryDetail }
 export interface PlanLine extends Omit<Candidate, 'anchorIds' | 'assumptions'> { quantity: number; lineTotalYuan: number; preferredByAi?: boolean }
 export interface ScheduleBatch { no: number; nightDate: string; mediaKeys: string[]; quantity: number; cumulative: number; publishStartDate: string; risk: string | null }
 export interface Schedule { status: 'ok' | 'unavailable' | 'capacity_short'; singleNightCap: number; batches: ScheduleBatch[]; rainBufferNights: number; compensationBufferQty: number; notes: string[]; assumptions: string[] }
 export interface TraceStep { step: string; message: string; evidenceRefs?: string[]; elapsedMs?: number }
-export interface PlanSuccess { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; lines: PlanLine[]; anchors: PlanAnchor[]; billingMonths: number; totalYuan: number; remainingYuan: number; queriedAt: string; schedule: Schedule; assumptions: string[]; notices: string[]; trace: TraceStep[]; strategyPreferences?: StrategyPreference[] }
+export interface PlanSuccess { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; lines: PlanLine[]; anchors: PlanAnchor[]; billingMonths: number; billingStatus: 'confirmed' | 'pending'; totalYuan: number; remainingYuan: number; queriedAt: string; schedule: Schedule; assumptions: string[]; notices: string[]; trace: TraceStep[]; strategyPreferences?: StrategyPreference[]; inventory: InventoryDetail }
 export type PlanResult = PlanSuccess | PlanFailure;
 export interface Check { element: string; status: 'pass' | 'warn' | 'fail'; message: string; evidenceRefs: string[]; blocking?: boolean; location?: string; suggestion?: string }
 export interface PlanCopy { headline: string; brandContext: string; strategyLine: string; selectionRationale: string; assumptionEcho: string; source: 'llm' | 'mock' | 'template' }

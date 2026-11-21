@@ -23,6 +23,8 @@ import { PlanPipelineService } from '../src/shared/pipeline/plan-pipeline.servic
 import { AnalysisContext, Campaign, INDUSTRIES, PlanData, PlanRequest, PlanSuccess } from '../src/shared/contracts';
 import { buildContext } from '../src/shared/pipeline/context-builder';
 import { assertPlan } from '../src/analysis/analysis.controller';
+import { HongdouInventoryService } from '../src/inventory/hongdou.client';
+import { InventoryService } from '../src/inventory/inventory.service';
 
 const request: PlanRequest = { industry: 'food', budgetYuan: 1000000, media: ['bus'], startDate: '2027-07-01', endDate: '2027-07-31' };
 function testData(): PlanData {
@@ -57,7 +59,8 @@ function setup(mode: 'off' | 'mock' | 'live' = 'mock', client = new LlmClient())
   const strategy = new StrategyService(engine, config, client, scan);
   const copy = new CopyService(config, client, scan);
   const verify = new VerifyService(config, client, scan);
-  const pipeline = new PlanPipelineService(engine, config, brief, strategy, copy, verify, scan);
+  const inventory = new InventoryService(data, new HongdouInventoryService(), { online: false });
+  const pipeline = new PlanPipelineService(engine, config, brief, strategy, copy, verify, scan, inventory);
   return { dir, config, scan, data, engine, brief, strategy, copy, verify, pipeline, cleanup: () => rmSync(dir, { recursive: true, force: true }) };
 }
 
