@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { loadOpenApi, toolsAsMarkdown, type ApiTool } from '../api/openapi'
 import { state } from '../state/workbench'
+import { analysisModeText } from '../plan/buildVm'
 
 const tools = ref<ApiTool[]>([])
 const error = ref('')
@@ -66,18 +67,18 @@ function statusSummary(tool: ApiTool) {
   <div class="app-page">
     <div class="page-narrow">
       <div class="page-head">
-        <h2>对外能力目录</h2>
-        <p>数据源只有 GET /api/openapi.json，不维护手写清单。当前模式 {{ state.mode }}；分析类接口在 off 下返回 disabled。</p>
+        <h2>接口说明</h2>
+        <p>查看可用接口、输入参数和返回结果。当前：{{ analysisModeText(state.mode) }}。</p>
       </div>
-      <div v-if="loading" class="caption">正在读取 /api/openapi.json…</div>
+      <div v-if="loading" class="caption">正在加载接口说明…</div>
       <div v-else-if="error" class="status-bar error">
-        后端未启动或文档不可读，无法读取 /api/openapi.json：{{ error }}
+        接口说明加载失败：{{ error }}
         <div class="suggestions"><a-button size="small" @click="load">重试</a-button></div>
       </div>
       <template v-else>
         <a-space style="margin-bottom: 14px">
-          <a-button size="small" @click="copyMarkdown">{{ copied ? '已复制' : '复制 Markdown 能力清单' }}</a-button>
-          <a-button size="small" @click="openDocs">打开 Swagger 试调</a-button>
+          <a-button size="small" @click="copyMarkdown">{{ copied ? '已复制' : '复制接口清单' }}</a-button>
+          <a-button size="small" @click="openDocs">在线调试</a-button>
         </a-space>
         <div v-for="[tag, list] in groups" :key="tag" class="entry-card" style="margin-bottom: 14px">
           <h3>{{ tagLabel[tag] || tag }}（{{ list.length }}）</h3>
@@ -103,7 +104,6 @@ function statusSummary(tool: ApiTool) {
             </template>
           </a-table>
         </div>
-        <p class="caption">新增 controller 方法后刷新本页即出现；删除 DTO 的 @ApiProperty 后该字段从输入列表消失。</p>
       </template>
     </div>
   </div>

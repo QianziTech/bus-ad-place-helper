@@ -4,7 +4,7 @@
  */
 import { PLAN_CSS } from './plan.css'
 import { escapeHtml as h, copyText } from './sanitize'
-import { wanRange, yuanText, windowText, dateTimeText, type PlanVm, type PlanVmAnchor, type PlanVmLine } from './buildVm'
+import { analysisModeText, wanRange, yuanText, windowText, dateTimeText, type PlanVm, type PlanVmAnchor, type PlanVmLine } from './buildVm'
 
 const w = (yuan: number) => yuanText(yuan)
 const wan = (yuan: number) => `${Math.round(yuan / 1000) / 10} 万`
@@ -44,12 +44,12 @@ function anchorCard(anchor: PlanVmAnchor) {
 }
 
 function lineRow(line: PlanVmLine, anchorNames: string[], highlight: string | null) {
-  const star = line.preferredByAi ? '<span class="star" title="AI 偏好入选">★ </span>' : ''
-  const src = `freeCount ${line.freeCount}${line.total !== undefined ? ` / 总量 ${line.total}` : ''}`
+  const star = line.preferredByAi ? '<span class="star" title="AI 推荐资源">★ </span>' : ''
+  const src = `本档期可售 ${line.freeCount}${line.total !== undefined ? ` / 总量 ${line.total}` : ''}`
   const details = [
     line.reasons.length ? `<p><b>入选理由</b></p><ul>${line.reasons.map(item => `<li>${h(item)}</li>`).join('')}</ul>` : '',
     line.sources.length ? `<p><b>来源</b></p><ul>${line.sources.map(item => `<li>${h(item)}</li>`).join('')}</ul>` : '',
-    anchorNames.length ? `<p>命中锚点：${h(anchorNames.join('、'))}</p>` : '',
+    anchorNames.length ? `<p>关联商圈：${h(anchorNames.join('、'))}</p>` : '',
     line.kind === 'bus'
       ? line.traffic
         ? `<p><b>2023-05 历史覆盖 ${line.traffic.coveragePv !== undefined ? line.traffic.coveragePv.toLocaleString('zh-CN') : '暂无数据'} 人次</b>${line.traffic.ageGroups?.length ? `<br>年龄分布 ${line.traffic.ageGroups.map(group => `${h(group.label)} ${group.percent}%`).join(' · ')}` : ''}<br><span class="muted">${h(line.traffic.source)} · 仅作人群参考，不与其它线路相加</span></p>`
@@ -125,27 +125,27 @@ function checksBlock(vm: PlanVm) {
   const pass = vm.checks.filter(item => item.status === 'pass').length
   const warn = vm.checks.filter(item => item.status === 'warn').length
   const fail = vm.checks.filter(item => item.status === 'fail').length
-  return `<p class="note">核验 ${pass} 通过 · ${warn} 待看 · ${fail} 已阻断</p><ul class="checks">${items}</ul>`
+  return `<p class="note">方案检查：${pass} 通过 · ${warn} 待确认 · ${fail} 未通过</p><ul class="checks">${items}</ul>`
 }
 
 function appendixBlock(vm: PlanVm) {
   const offLine = vm.mode === 'off'
-  const summary = `本次 AI 决策记录 · ${h(vm.mode)} · ${vm.rounds.length} 轮`
+  const summary = `生成记录 · ${h(analysisModeText(vm.mode))} · ${vm.rounds.length} 轮`
   if (offLine) {
     return `<details class="appendix"><summary>${summary}</summary>
-    <p>本次未执行 AI 分析，库存、数量与金额均由本地确定性引擎计算，文案为模板。</p>
+    <p>本次按库存和预算规则生成方案，使用模板文案，未使用 AI 分析。</p>
   </details>`
   }
   const briefText = vm.request.briefText?.trim()
   const rows: [string, string][] = []
-  rows.push(['需求拆解', briefText ? `使用自拟需求（${briefText.length} 字），已合并进生效 Campaign；未覆盖要素沿用行业预置。` : '未提供自拟需求，Campaign 取行业预置。'])
+  rows.push(['客户需求', briefText ? `已采用补充需求（${briefText.length} 字），未提及的内容沿用行业预置。` : '使用行业预置需求。'])
   rows.push(['策略', vm.rounds.length
-    ? vm.rounds.map(round => `第 ${round.round} 轮：候选 ${round.candidateCount}，偏好 ${round.preferredCount}，采纳 ${round.acceptedCount}，被拒 ${round.rejected.length}${round.requestReplan ? '（触发重排）' : ''}`).join('；')
+    ? vm.rounds.map(round => `第 ${round.round} 轮：候选 ${round.candidateCount}，推荐 ${round.preferredCount}，采用 ${round.acceptedCount}，未采用 ${round.rejected.length}${round.requestReplan ? '（继续调整）' : ''}`).join('；')
     : '本次未返回分轮记录。'])
-  rows.push(['引擎', vm.trace.slice(0, 8).map(step => `${step.step}：${copyText(step.message, 90)}`).join('；') || '未返回引擎 trace。'])
-  rows.push(['文案', `本次文案来源：${vm.copy.source === 'llm' ? '模型生成' : vm.copy.source === 'mock' ? '离线回放' : '模板'}。所选资源、金额与数字直接取方案数据。`])
-  rows.push(['核验', `共 ${vm.checks.length} 项检查，其中阻断 ${vm.checks.filter(item => item.status === 'fail').length} 项。`])
-  rows.push(['降级', vm.degraded.length ? vm.degraded.map(item => `${item.stage}：${item.reason}`).join('；') : '各阶段均正常'])
+  rows.push(['计算记录', vm.trace.slice(0, 8).map(step => `${step.step}：${copyText(step.message, 90)}`).join('；') || '暂无计算记录。'])
+  rows.push(['文案', `来源：${vm.brandContextSource}。数量与金额取自方案计算结果。`])
+  rows.push(['方案检查', `共 ${vm.checks.length} 项检查，${vm.checks.filter(item => item.status === 'fail').length} 项未通过。`])
+  rows.push(['备用处理', vm.degraded.length ? vm.degraded.map(item => `${item.stage}：${item.reason}`).join('；') : '无'])
   return `<details class="appendix"><summary>${summary}</summary>
     <table class="appendix-table">${rows.map(([key, value]) => `<tr><td class="k">${h(key)}</td><td>${h(value)}</td></tr>`).join('')}</table>
   </details>`
@@ -158,7 +158,7 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
   const anchorWork = vm.anchors.slice(0, 6)
   const risks = vm.assumptions.slice(0, 5)
   const nav = [
-    ['s1', '1 主张'], ['s2', '2 策略'], ['s3', '3 媒介'], ['s4', '4 清单'], ['s5', '5 排期'], ['s6', '6 报价'],
+    ['s1', '1 概览'], ['s2', '2 需求'], ['s3', '3 推荐理由'], ['s4', '4 资源清单'], ['s5', '5 排期'], ['s6', '6 报价'],
   ]
   const head = options.fullscreen
     ? ''
@@ -168,10 +168,7 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
     .map(item => `<div class="bar"><span>${h(item.label)}</span><span class="track"><span class="fill${item.kind === 'metro' ? ' alt' : ''}" style="display:block;width:${Math.max(2, item.pct)}%;height:100%"></span></span><span>${h(w(item.yuan))} · ${item.pct}%</span></div>`)
     .join('')
 
-  const checkSummary = (() => {
-    const fail = vm.checks.filter(item => item.status === 'fail').length
-    return fail ? `<div class="risk bad">有 ${fail} 项核验为阻断级，导出已禁用：请按附录核验清单修改后再下载。</div>` : ''
-  })()
+  const checkSummary = vm.exportAllowed ? '' : '<div class="risk bad">下载前请先按检查提示修改文案。</div>'
 
   const s65Traffic = vm.busLines.length
     ? `<div class="cards" style="grid-template-columns:repeat(2,1fr)">${vm.busLines.slice(0, 4).map(line => `<div class="card"><h3>${h(line.name)}</h3><small>${line.traffic?.coveragePv !== undefined ? `2023-05 历史覆盖 ${line.traffic.coveragePv.toLocaleString('zh-CN')} 人次` : '暂无数据'}${line.traffic?.ageGroups?.length ? `<br>${line.traffic.ageGroups.map(group => `${h(group.label)} ${group.percent}%`).join(' · ')}` : ''}</small></div>`).join('')}</div>
@@ -215,50 +212,50 @@ ${head}
     <div class="kpi"><b>${h(vm.total.text)}</b><small>估算总额</small></div>
     <div class="kpi"><b>${h(vm.remaining.text)}</b><small>预算余量</small></div>
   </div>
-  <p class="note" style="margin-top:16px">${h(vm.brandContextSource)} · 报价按刊例区间中值估算，详见 §6。${vm.degraded.length && vm.mode !== 'off' ? '本次部分 AI 阶段降级，页面结构与结果不受影响。' : ''}</p>
+  <p class="note" style="margin-top:16px">${vm.mode === 'mock' ? '演示方案 · ' : ''}报价按刊例区间中值估算，详见报价明细。</p>
 </section>
 
 <section id="s2">
-  <h2>品牌与 campaign 理解</h2>
-  <p class="note">${h(vm.brandContextSource)}</p>
+  <h2>投放需求</h2>
+  <p class="note">Campaign 假设书</p>
   <div class="split">
     <div>
-      <p>${h(copyText(vm.copy.brandContext, 320) || '本案客户背景与 Campaign 为本方提案假设，用于演示引擎能力，非客户指定。')}</p>
+      <p>${h(copyText(vm.copy.brandContext, 320) || '客户背景与活动目标为提案假设，需与客户确认。')}</p>
       <table class="brief">
         <tr><th>① 客户</th><td>${h(`${vm.client.code} · ${vm.client.alias}`)}<br><small>${h(`${vm.client.category} · ${vm.client.scale}`)}</small></td></tr>
         <tr><th>② 生意目标</th><td>${h(campaign.businessGoal)}</td></tr>
-        <tr><th>③ campaign</th><td>${h(`${campaign.name}（主目标：${campaign.primaryGoal}）`)}</td></tr>
+        <tr><th>③ 投放活动</th><td>${h(`${campaign.name}（主目标：${campaign.primaryGoal}）`)}</td></tr>
         <tr><th>④ 人群</th><td>${h(campaign.audience)}</td></tr>
         <tr><th>⑤ 时间与预算</th><td>${h(`${campaign.window.start} ~ ${campaign.window.end} · 建议 ${Math.round(campaign.budgetHintYuan / 10000)} 万（本次上限 ${chips.budget}）`)}</td></tr>
         <tr><th>⑥ 媒体范围</th><td>${h(campaign.mediaScope.map(kind => (kind === 'bus' ? '公交' : '地铁')).join(' + '))}${vm.copy.strategyLine ? ` · ${h(copyText(vm.copy.strategyLine, 60))}` : ''}</td></tr>
         <tr><th>⑦ 成功衡量</th><td>${h(`${campaign.successMetric.kpi}；${campaign.successMetric.proof}`)}</td></tr>
       </table>
-      <p class="note" style="margin-top:12px">本方案 §3 回应 ②③④ · §5 回应 ⑤ · §6 回应 ⑤⑦。客户以代称呈现，方案不含真实企业名与线下点位信息。</p>
+      <p class="note" style="margin-top:12px">目标与人群见推荐理由，档期见投放排期，预算见估算报价。客户以代称呈现。</p>
     </div>
     <div>
-      ${anchorWork.length ? `<div class="cards" style="grid-template-columns:1fr 1fr">${anchorWork.map(anchorCard).join('')}</div>` : `<div class="card"><p class="muted">${h(vm.anchorNotice || '本轮未提供锚点元数据。')}</p></div>`}
+      ${anchorWork.length ? `<div class="cards" style="grid-template-columns:1fr 1fr">${anchorWork.map(anchorCard).join('')}</div>` : `<div class="card"><p class="muted">${h(vm.anchorNotice || '暂无商圈资料。')}</p></div>`}
     </div>
   </div>
 </section>
 
 <section id="s3">
-  <h2>媒介策略</h2>
+  <h2>推荐理由</h2>
   <p>${h(copyText(vm.copy.selectionRationale, 300) || '公交承担面覆盖与补量，地铁集中核心商圈出入口；具体取舍见清单与来源。')}</p>
-  <p class="note">${h(vm.strategySource)}</p>
+  <details><summary>查看推荐过程</summary><p>${h(vm.strategySource)}</p></details>
   <div class="split wide" style="margin-top:20px">
     <div>
-      <h3>锚点命中汇总</h3>
+      <h3>目标商圈与推荐资源</h3>
       <table class="data">
-        <thead><tr><th>锚点</th><th>站点</th><th class="num">公交候选</th><th class="num">地铁候选</th><th class="num">本方案选中</th></tr></thead>
-        <tbody>${vm.anchors.map(anchor => `<tr><td>${h(anchor.areaName)}</td><td>${h(anchor.station || '—')}</td><td class="num">${anchor.busCount ?? '—'}</td><td class="num">${anchor.metroCount ?? '—'}</td><td class="num">${anchor.selectedCount}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">本轮未提供锚点元数据。</td></tr>'}</tbody>
+        <thead><tr><th>商圈</th><th>站点</th><th class="num">公交候选</th><th class="num">地铁候选</th><th class="num">已选资源</th></tr></thead>
+        <tbody>${vm.anchors.map(anchor => `<tr><td>${h(anchor.areaName)}</td><td>${h(anchor.station || '—')}</td><td class="num">${anchor.busCount ?? '—'}</td><td class="num">${anchor.metroCount ?? '—'}</td><td class="num">${anchor.selectedCount}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">暂无商圈资料。</td></tr>'}</tbody>
       </table>
-      <p class="note" style="margin-top:10px">候选数为平台 1.2 km 覆盖关系的条数，不是可售量；同一媒体键命中多个锚点时在各锚点分别计数，跨锚点相加不等于清单行数之和。</p>
+      <p class="note" style="margin-top:10px">候选来自周边 1.2 km 覆盖分析，不代表可售数量。同一资源可能关联多个商圈，各商圈数量不可直接相加。</p>
     </div>
     <div class="card">
-      <h3>口径对照</h3>
+      <h3>资源与库存来源</h3>
       <p style="font-size:14px;margin-bottom:6px"><b>周边线路</b><br><span class="muted">可视化平台 1.2 km 覆盖分析，回答「附近有哪些线路」。</span></p>
-      <p style="font-size:14px;margin:0"><b>可售量</b><br><span class="muted">红豆 freeCount，核对档期 ${h(windowText(vm.startDate, vm.endDate))}，查询于 ${h(vm.queriedAtText)}。</span></p>
-      <p class="note" style="margin-top:10px">两者不是同一集合：候选来自平台，可售来自红豆，方案只在两者都有依据时成行。</p>
+      <p style="font-size:14px;margin:0"><b>可售量</b><br><span class="muted">红豆媒体库，核对档期 ${h(windowText(vm.startDate, vm.endDate))}，查询于 ${h(vm.queriedAtText)}。</span></p>
+      <p class="note" style="margin-top:10px">所选资源同时具备推荐依据与档期库存。</p>
     </div>
   </div>
 </section>
@@ -269,11 +266,11 @@ ${head}
   ${listTable(vm.busLines, vm.anchors, highlight)}
   <h3 style="margin-top:32px">地铁出入口（${vm.metroLines.length} 个出口 · ${vm.metroPointCount} 个）</h3>
   ${listTable(vm.metroLines, vm.anchors, highlight)}
-  <p class="note" style="margin-top:12px">数量上限取该档期 freeCount；未在表中的候选为未核对或无价，不参与计价。${vm.lines.some(line => line.preferredByAi) ? '<span class="star">★</span> = 由 AI 偏好入选，其余为基础分配。' : ''}</p>
+  <p class="note" style="margin-top:12px">建议数量不超过所选档期可售量；报价仅包含表内资源。${vm.lines.some(line => line.preferredByAi) ? '<span class="star">★</span> 表示 AI 推荐资源。' : ''}</p>
 </section>
 
 <section id="s5">
-  <h2>排期与上线次序</h2>
+  <h2>投放排期</h2>
   <div class="tl"><b>${h(windowText(vm.startDate, vm.endDate))}</b><br><small>${vm.billingPending ? '计费口径待确认（报价按 1 个计费月参考估算）' : `${vm.billingMonths} 个计费月`} · ${h(inventoryLine(vm))}</small></div>
   <h3 style="margin-top:12px">上线批次（夜间施工，单晚上限 ${vm.schedule.singleNightCap} 台 / 口）</h3>
   ${scheduleBlock(vm)}
@@ -308,30 +305,30 @@ ${head}
 </section>
 
 <section id="s65">
-  <h2>效果与衡量</h2>
-  <h3>覆盖口径</h3>
+  <h2>历史客流参考与效果衡量</h2>
+  <h3>历史覆盖参考</h3>
   ${s65Traffic}
   <div class="two-col" style="margin-top:24px">
     <div>
-      <h3>结果 KPI</h3>
+      <h3>效果指标</h3>
       <p>${h(campaign.successMetric.kpi)}</p>
       <p class="note">以客户假设书为准，AI 建议口径仅作参考。</p>
       ${vm.measurement ? `<p class="note">AI 建议口径：${h(copyText(vm.measurement.kpi, 160))}</p>` : ''}
       ${vm.copy.assumptionEcho ? `<p class="note">假设书回应：${h(copyText(vm.copy.assumptionEcho, 200))}</p>` : ''}
     </div>
     <div>
-      <h3>取证方式</h3>
+      <h3>衡量方式</h3>
       <ul class="col-list">${campaign.successMetric.proof.split(/[+、；;，,]/).filter(Boolean).map(item => `<li>${h(item.trim())}</li>`).join('')}</ul>
     </div>
   </div>
 </section>
 
 <section id="s66">
-  <h2>风险与承诺</h2>
+  <h2>执行安排与待确认事项</h2>
   ${vm.schedule?.status === 'capacity_short' ? `<div class="risk">档期产能不足：${h(vm.schedule.notes[0] || '请延长档期或减少数量')}</div>` : ''}
   <div class="two-col">
     <div>
-      <h3>本次承诺</h3>
+      <h3>执行安排（待确认）</h3>
       <ul class="col-list">
         <li>${vm.schedule.batches.length} 批夜间施工，单晚上限 ${vm.schedule.singleNightCap} 台 / 口</li>
         <li>预留 ${vm.schedule.rainBufferNights} 个雨天顺延夜</li>
@@ -341,7 +338,7 @@ ${head}
       </ul>
     </div>
     <div>
-      <h3>本次不做</h3>
+      <h3>费用与效果说明</h3>
       <ul class="col-list">
         ${(risks.length ? risks : ['不承诺当期曝光与人流', '不承诺转化率与到店量']).map(item => `<li>${h(item)}</li>`).join('')}
         <li>不含素材制作与创意，折扣与税票按客户协议另议</li>
@@ -350,7 +347,7 @@ ${head}
   </div>
   <div class="two-col" style="margin-top:24px">
     <div>
-      <h3>核验结果</h3>
+      <h3>方案检查</h3>
       ${checksBlock(vm)}
     </div>
     <div>
@@ -364,8 +361,8 @@ ${head}
 <section id="s7">
   <h2>数据声明</h2>
   <p>库存来源：红豆媒体库。本方案核对档期 ${h(vm.startDate)} 至 ${h(vm.endDate)}，查询日期 ${h(vm.queriedAtText)}，占用随合同变化。</p>
-  <p>投放锚点为商圈级。坐标与覆盖线路来自可视化平台，站点身份与可售量核对红豆库存。锚点用于说明投放范围。</p>
-  <p>品牌为我方提案假设，用于演示引擎能力，非客户指定。</p>
+  <p>商圈与周边线路依据可视化平台，站点与可售量依据红豆媒体库。</p>
+  <p>客户背景与活动目标为我方提案假设，非客户指定。</p>
   ${vm.notices.length ? `<ul class="col-list" style="margin-top:12px">${vm.notices.map(item => `<li>${h(item)}</li>`).join('')}</ul>` : ''}
   ${options.appendix ? appendixBlock(vm) : ''}
 </section>
@@ -373,7 +370,7 @@ ${head}
 <footer class="doc-foot">
   <p>动线运筹 v1.0 · 生成于 ${h(vm.generatedAt)} · 数据核对 ${h(vm.queriedAtText)}</p>
   <p>客户一律以代称呈现；报价为刊例区间中值估算，不含真实成交价。</p>
-  <p>路径：红豆媒体库 → 可视化平台覆盖分析 → 红豆可售 → 组合成案，链路证据见 §3 与各明细展开项。</p>
+  <p>推荐依据见「推荐理由」，数据来源可展开资源明细查看。</p>
 </footer>
 </main>
 </body></html>`

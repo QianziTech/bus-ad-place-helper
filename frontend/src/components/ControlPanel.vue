@@ -31,7 +31,7 @@ const mappingMissing = computed(() => {
 
 function toggleMedia(checked: string[]) {
   if (!checked.length) {
-    message.warning('至少保留一种媒体')
+    message.warning('请至少选择一种媒体')
     return
   }
   workbench.media = checked as ('bus' | 'metro')[]
@@ -79,14 +79,12 @@ function applyWindow(start: string, end: string) {
           <small>{{ item.client.alias }}</small>
         </div>
       </div>
-      <p v-if="!industryItems.length" class="caption">{{ state.metaError || '尚无行业预置，等待后端 /api/meta。' }}</p>
-      <p v-else class="caption">切换行业只改参数，不自动重算。</p>
+      <p v-if="!industryItems.length" class="caption">{{ state.metaError ? '行业资料加载失败，请刷新重试。' : '正在加载行业资料…' }}</p>
     </section>
 
     <section>
-      <h4>投放对象</h4>
+      <h4>投放媒体</h4>
       <a-checkbox-group :value="workbench.media" :options="mediaList" @update:value="toggleMedia" />
-      <p class="caption">至少选择一种。取消最后一项会保留原值并提示。</p>
     </section>
 
     <section>
@@ -119,11 +117,11 @@ function applyWindow(start: string, end: string) {
           @update:value="setBudgetWan"
         />
       </div>
-      <p class="caption">语义为上限：成案总额只需 ≤ 该值，允许有余量；{{ minWan }}–{{ maxWan }} 万元。</p>
+      <p class="caption">支持 {{ minWan }}–{{ maxWan }} 万元。</p>
     </section>
 
     <section>
-      <h4>档期</h4>
+      <h4>投放档期</h4>
       <div class="chips">
         <span
           v-for="win in windows"
@@ -145,27 +143,22 @@ function applyWindow(start: string, end: string) {
       />
       <p class="caption" style="display: flex; gap: 8px; align-items: center">
         <a-tag :color="windowTag.color">{{ windowTag.text }}</a-tag>
-        <span v-if="windows.length === 0">暂无已核对完整档期的窗口，仍可提交以验证失败语义。</span>
-        <span v-else>与档期完全相等才算已核对，其余标待核对。</span>
+        <span v-if="windowVerified()">已有完整档期库存。</span>
+        <span v-else-if="windows.length">暂无该完整档期库存，可选择上方已核对档期。</span>
+        <span v-else>暂无完整档期库存，请先核对。</span>
       </p>
     </section>
 
     <section>
-      <h4>客户需求（可选）</h4>
+      <h4>补充需求（可选）</h4>
       <a-textarea v-model:value="workbench.briefText" :rows="3" :maxlength="2000" show-count
-        placeholder="粘贴 4A 邮件或一句话需求，例如「6–8 月在徐汇、静安做新品试饮」" />
+        placeholder="例如：重点覆盖徐汇商圈，面向通勤人群" />
       <p class="caption" :style="briefHits.length ? 'color: var(--danger)' : ''">
-        <template v-if="briefHits.length">● 检测到{{ briefHits.join('、') }}，命中原文不会进入方案</template>
-        <template v-else-if="state.scanHits.length">● 服务端已拦截：{{ state.scanHits.map(hit => hit.message).join('；') }}</template>
-        <template v-else-if="mappingMissing">● 服务端未加载内部品牌映射，实名无法校验，请勿视为已通过</template>
-        <template v-else-if="workbench.briefText.trim()">● 未检测到成交价形态；实名由服务端在提交时判定</template>
-        <template v-else>有内容时随生成一起提交，仅影响 Campaign。</template>
-        <a style="cursor: pointer; margin-left: 4px" @click="goBrief">去 Brief 页 →</a>
+        <template v-if="briefHits.length">请修改以下表述：{{ briefHits.join('、') }}。</template>
+        <template v-else-if="state.scanHits.length">请按提示修改后重新生成。</template>
+        <template v-else-if="mappingMissing">客户实名尚未完成检查，请使用客户代称。</template>
+        <a style="cursor: pointer; margin-left: 4px" @click="goBrief">整理完整需求 →</a>
       </p>
     </section>
-
-    <div class="caption" style="margin-top: 14px">
-      库存口径：红豆 freeCount；价格口径：资料包 07 区间中值；预算为上限，允许余量。
-    </div>
   </div>
 </template>

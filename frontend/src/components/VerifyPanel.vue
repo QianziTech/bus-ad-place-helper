@@ -10,7 +10,7 @@ const emit = defineEmits<{ (event: 'focus', ref: string): void }>()
 const checks = computed(() => {
   const seen = new Set<string>()
   return props.checks.filter(item => {
-    const key = `${item.element}|${item.message}|${humanLocation(item.location).replace(/需求细节|生效 Campaign/g, 'campaign')}`
+    const key = `${item.element}|${item.message}|${humanLocation(item.location).replace(/需求细节|本次需求/g, 'campaign')}`
     if (seen.has(key)) return false
     seen.add(key)
     return true
@@ -27,8 +27,8 @@ const blocking = computed(() => checks.value.some(item => item.status === 'fail'
 
 <template>
   <a-collapse ghost size="small">
-    <a-collapse-panel key="verify" :header="`核验 · ${counts.pass} 通过 · ${counts.warn} 待看 · ${counts.fail} 已阻断`">
-      <p v-if="!checks.length" class="caption">本阶段只执行确定性扫描，未返回核验项。</p>
+    <a-collapse-panel key="verify" :header="`方案检查 · ${counts.pass} 通过 · ${counts.warn} 待确认 · ${counts.fail} 未通过`">
+      <p v-if="!checks.length" class="caption">暂无检查结果。</p>
       <div v-for="(check, index) in checks" :key="`${check.element}-${index}`" class="check-row"
         style="cursor: pointer" @click="check.evidenceRefs?.length && emit('focus', check.evidenceRefs[0])">
         <span class="mark" :class="check.status">{{ icon(check.status) }}</span>
@@ -38,8 +38,8 @@ const blocking = computed(() => checks.value.some(item => item.status === 'fail'
         </span>
         <span class="caption">{{ humanLocation(check.location) }} · {{ check.evidenceRefs?.length || 0 }} 证据</span>
       </div>
-      <p v-if="blocking" class="caption" style="color: var(--danger)">存在阻断项，下载已禁用。</p>
-      <p class="caption" style="margin-top: 8px">追溯 AI 决策：{{ traceCount }} 条 trace，详见导出附录 S7。</p>
+      <p v-if="blocking" class="caption" style="color: var(--danger)">请先修改提示中的文案，再下载方案。</p>
+      <p class="caption" style="margin-top: 8px">{{ traceCount }} 条生成记录，详见方案附录。</p>
     </a-collapse-panel>
   </a-collapse>
 </template>

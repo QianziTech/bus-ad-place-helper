@@ -3,7 +3,7 @@ import { computed, onMounted } from 'vue'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import { loadConfig, loadMeta, industryMeta, state } from './state/workbench'
 import { useRoute } from './router'
-import { dateTimeText } from './plan/buildVm'
+import { analysisModeText, dateTimeText } from './plan/buildVm'
 import WorkbenchView from './views/WorkbenchView.vue'
 import BriefView from './views/BriefView.vue'
 import SettingsView from './views/SettingsView.vue'
@@ -39,9 +39,9 @@ onMounted(async () => {
 
 const tabs = [
   { key: '/', label: '工作台' },
-  { key: '/brief', label: 'Brief 拆解' },
+  { key: '/brief', label: '客户需求' },
   { key: '/settings', label: '运行配置' },
-  { key: '/api-tools', label: '能力目录' },
+  { key: '/api-tools', label: '接口说明' },
 ] as const
 const go = (key: string) => { location.hash = key }
 </script>
@@ -60,7 +60,7 @@ const go = (key: string) => { location.hash = key }
           <a-button v-for="tab in tabs" :key="tab.key" type="link" size="small"
             :style="{ fontWeight: path === tab.key ? 650 : 400, color: path === tab.key ? 'var(--primary)' : 'var(--ink-3)' }"
             @click="go(tab.key)">{{ tab.label }}</a-button>
-          <a-tag :color="modeColor" style="cursor: pointer" @click="go('/settings')">AI: {{ state.mode }}</a-tag>
+          <a-tag :color="modeColor" style="cursor: pointer" @click="go('/settings')">{{ analysisModeText(state.mode) }}</a-tag>
         </a-space>
       </header>
       <div class="app-body">

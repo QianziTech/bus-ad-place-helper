@@ -18,10 +18,10 @@ const rejectedCount = computed(() => prefs.value.filter(item => item.disposition
 const rounds = computed(() => props.result?.rounds || [])
 const windowFitLabel: Record<string, string> = { aligned: '对齐', risk: '风险', unknown: '待确认' }
 const title = computed(() => {
-  if (!props.result) return 'AI 决策'
+  if (!props.result) return '推荐理由'
   const roundsText = rounds.value.length > 1 ? ` · ${rounds.value.length} 轮` : ''
-  const status = props.mode === 'off' ? '未开启' : props.mode === 'mock' ? '回放' : '已参与'
-  return `AI 决策 · ${props.mode}${roundsText} · ${status}`
+  const status = props.mode === 'off' ? '基础方案' : props.mode === 'mock' ? '演示样例' : 'AI 推荐'
+  return `推荐理由 · ${status}${roundsText}`
 })
 </script>
 
@@ -29,14 +29,14 @@ const title = computed(() => {
   <a-collapse ghost size="small">
     <a-collapse-panel key="ai" :header="title">
       <template v-if="mode === 'off'">
-        <p class="caption">当前模式未开启 AI 分析，方案为基础分配 + 模板文案。</p>
+        <p class="caption">当前方案按规则生成，未使用 AI 推荐。</p>
       </template>
       <template v-else-if="!result">
-        <p class="caption">生成本轮方案后显示偏好与处置。</p>
+        <p class="caption">生成方案后查看推荐理由与采用情况。</p>
       </template>
       <template v-else>
         <p v-if="result.mediaObjective" style="font-size: 13px; margin: 0 0 8px"><b>媒体任务</b> {{ result.mediaObjective }}</p>
-        <div class="caption" style="margin-bottom: 4px">偏好排序 · 被拒 {{ rejectedCount }}</div>
+        <div class="caption" style="margin-bottom: 4px">推荐资源 · 未采用 {{ rejectedCount }} 项</div>
         <div v-for="(item, index) in prefs" :key="item.mediaKey" class="ai-pref">
           <span class="idx">{{ index + 1 }}</span>
           <span style="flex: 1; min-width: 0">
@@ -47,10 +47,10 @@ const title = computed(() => {
             {{ item.disposition === 'accepted' ? '✓ 已分配' : item.disposition?.startsWith('rejected:') ? `✗ ${reasonText[item.disposition.slice(9) as RejectionReason] || '已拒'}` : '— 未采纳' }}
           </span>
         </div>
-        <p v-if="!prefs.length" class="caption">本轮没有有效偏好，引擎按基础顺序分配。</p>
+        <p v-if="!prefs.length" class="caption">本次未采用 AI 推荐，按规则选择资源。</p>
 
         <div v-if="result.windowFit" class="caption" style="margin-top: 10px">
-          <b>档期贴合</b>
+          <b>档期匹配</b>
           <a-tag :color="result.windowFit.status === 'risk' ? 'orange' : result.windowFit.status === 'aligned' ? 'green' : 'default'" style="margin-left: 6px">{{ windowFitLabel[result.windowFit.status] || result.windowFit.status }}</a-tag>
           {{ result.windowFit.reason }}
         </div>
@@ -59,15 +59,15 @@ const title = computed(() => {
         </div>
 
         <div v-if="rounds.length > 1" class="caption" style="margin-top: 10px">
-          <b>回环记录</b>
+          <b>生成记录</b>
           <div v-for="round in rounds" :key="round.round">
-            第 {{ round.round }} 轮 · 候选 {{ round.candidateCount }} · 采纳 {{ round.acceptedCount }} · {{ Math.round(round.elapsedMs) }} ms{{ round.requestReplan ? ' · 触发重排' : ' · 收敛' }}
+            第 {{ round.round }} 轮 · 候选 {{ round.candidateCount }} · 采用 {{ round.acceptedCount }} · {{ Math.round(round.elapsedMs) }} ms{{ round.requestReplan ? ' · 继续调整' : ' · 已完成' }}
           </div>
         </div>
 
         <a-space style="margin-top: 12px" wrap>
-          <a-button size="small" @click="emit('baseline')">只看基础分配</a-button>
-          <a-button size="small" type="link" @click="emit('restore')">恢复 AI 方案</a-button>
+          <a-button size="small" @click="emit('baseline')">查看基础方案</a-button>
+          <a-button size="small" type="link" @click="emit('restore')">返回 AI 方案</a-button>
         </a-space>
       </template>
     </a-collapse-panel>

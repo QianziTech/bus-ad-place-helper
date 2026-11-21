@@ -35,13 +35,12 @@ const sections = [
       <a-button v-for="[id, label] in sections" :key="id" size="small" @click="scrollToSection(id)">{{ label }}</a-button>
     </a-space>
     <span class="spacer" style="flex: 1" />
-    <span class="caption">预览即导出：与下载文件同一渲染器</span>
   </div>
   <div class="preview-frame">
     <div v-if="!vm" class="empty-state">
       <span class="mark">▤</span>
-      <div>选择四项参数后生成方案</div>
-      <small>一次点击跑完 候选 → AI 筛选 → 引擎复核 → 成稿 → 核验</small>
+      <div>设置投放条件，生成推荐方案</div>
+      <small>查看推荐资源、排期和估算报价</small>
     </div>
     <div v-else class="doc-scale" :style="zoom === '100' ? { width: '1600px' } : { width: '100%' }" style="height: 100%">
       <iframe class="preview" :srcdoc="html" title="方案预览" sandbox="allow-same-origin" />

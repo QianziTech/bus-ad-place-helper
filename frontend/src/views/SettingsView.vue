@@ -70,7 +70,7 @@ async function save() {
     const next = await api.putConfig(payload)
     applyConfig(next)
     testResult.value = null
-    message.success('已保存并热应用：下一次生成生效')
+    message.success('已保存，下次生成方案时生效')
   } catch (error) {
     message.error(error instanceof Error ? error.message : '保存失败')
   } finally {
@@ -103,22 +103,22 @@ async function test() {
     <div class="page-narrow">
       <div class="page-head">
         <h2>运行配置</h2>
-        <p>分析模式与模型连接持久化在服务端 data/config/runtime.json，保存即时热应用。API Key 只写不读。</p>
+        <p>设置方案生成方式与 AI 连接，保存后生效。</p>
       </div>
       <div v-if="loadError" class="status-bar error">{{ loadError }}</div>
       <div class="entry-card">
         <h3>分析模式</h3>
         <a-radio-group v-model:value="form.mode">
-          <a-radio value="off">off</a-radio>
-          <a-radio value="mock">mock</a-radio>
-          <a-radio value="live">live</a-radio>
+          <a-radio value="off">规则生成</a-radio>
+          <a-radio value="mock">离线演示</a-radio>
+          <a-radio value="live">在线 AI</a-radio>
         </a-radio-group>
-        <p class="caption">off：仅确定性引擎与导出扫描 · mock：离线回放 · live：真实调用模型</p>
+        <p class="caption">规则生成不使用 AI；离线演示使用预置样例。</p>
         <p v-if="form.mode === 'live'" class="caption" style="color: var(--warn)">当前为真实调用，会产生外部请求与费用。</p>
       </div>
 
       <div class="entry-card" style="margin-top: 14px">
-        <h3>LLM 连接</h3>
+        <h3>AI 连接</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
           <label class="caption">Provider<a-input v-model:value="form.provider" size="small" /></label>
           <label class="caption">Model<a-input v-model:value="form.model" size="small" placeholder="claude-sonnet-5-5" /></label>
@@ -128,7 +128,7 @@ async function test() {
           <label class="caption">重试<a-input-number v-model:value="form.retries" :min="0" :max="1" size="small" style="width: 100%" /></label>
           <label class="caption">温度<a-input-number v-model:value="form.temperature" :min="0" :max="2" :step="0.1" size="small" style="width: 100%" /></label>
           <label class="caption" style="display: flex; align-items: end; gap: 8px">
-            <a-checkbox v-model:checked="form.includeHistoricalProfiles">历史画像进上下文</a-checkbox>
+            <a-checkbox v-model:checked="form.includeHistoricalProfiles">使用历史人群画像</a-checkbox>
           </label>
         </div>
         <a-space style="margin-top: 12px">
@@ -140,18 +140,20 @@ async function test() {
       </div>
 
       <div class="entry-card" style="margin-top: 14px">
-        <h3>上下文边界</h3>
-        <ul class="caption" style="margin: 0; padding-left: 18px; line-height: 1.9">
-          <li>注入：客户代称、campaign 七要素、候选证据、本次四项输入。</li>
-          <li>不注入：真实企业名与门店、API Key、其它行业数据、成交价。</li>
-          <li>历史画像开关只控制该项是否进上下文；其余三项恒开。</li>
-        </ul>
-        <p class="caption" style="margin-top: 8px">来源：{{ config?.source || '—' }} · 更新时间 {{ config ? new Date(config.updatedAt).toLocaleString('zh-CN') : '—' }}</p>
+        <details>
+          <summary>AI 使用哪些资料</summary>
+          <ul class="caption" style="margin: 0; padding-left: 18px; line-height: 1.9">
+            <li>使用客户代称、投放需求、候选资源依据和本次投放条件。</li>
+            <li>不发送真实企业名、API Key、其他行业数据及成交价。</li>
+            <li>历史人群画像可按需开启。</li>
+          </ul>
+          <p class="caption" style="margin-top: 8px">来源：{{ config?.source || '—' }} · 更新时间 {{ config ? new Date(config.updatedAt).toLocaleString('zh-CN') : '—' }}</p>
+        </details>
       </div>
 
       <a-space style="margin-top: 14px">
         <a-button type="primary" :loading="saving" @click="save">保存</a-button>
-        <a-button @click="() => { form.mode = 'mock'; form.includeHistoricalProfiles = true }">恢复环境变量默认</a-button>
+        <a-button @click="() => { form.mode = 'mock'; form.includeHistoricalProfiles = true }">使用演示设置</a-button>
       </a-space>
     </div>
   </div>

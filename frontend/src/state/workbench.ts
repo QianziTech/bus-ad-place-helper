@@ -14,11 +14,11 @@ export interface StageState {
 }
 
 const stageDefaults: StageState[] = [
-  { key: 'candidates', label: '候选', status: 'idle', detail: '' },
-  { key: 'strategy', label: 'AI 筛选', status: 'idle', detail: '' },
-  { key: 'engine', label: '引擎复核', status: 'idle', detail: '' },
-  { key: 'copy', label: '成稿', status: 'idle', detail: '' },
-  { key: 'verify', label: '核验', status: 'idle', detail: '' },
+  { key: 'candidates', label: '查找资源', status: 'idle', detail: '' },
+  { key: 'strategy', label: '选择资源', status: 'idle', detail: '' },
+  { key: 'engine', label: '核算数量与报价', status: 'idle', detail: '' },
+  { key: 'copy', label: '整理方案', status: 'idle', detail: '' },
+  { key: 'verify', label: '检查方案', status: 'idle', detail: '' },
 ]
 
 export const workbench = reactive({
@@ -144,17 +144,17 @@ function fillStageDetails(result: PipelineResult) {
   const metroCount = result.lines.filter(line => line.kind === 'metro').length
   markStage('candidates', 'done', `${first?.candidateCount ?? result.lines.length} 条候选（公交 ${busCount} · 地铁 ${metroCount}）`)
   const skipped = result.degraded?.some(item => item.stage === 'strategy')
-  if (state.mode === 'off') markStage('strategy', 'skipped', '已跳过（模式 off）')
-  else if (skipped) markStage('strategy', 'failed', `降级：${result.degraded?.find(item => item.stage === 'strategy')?.reason || '不可用'}`)
-  else markStage('strategy', 'done', `采用 ${rounds.reduce((sum, item) => sum + item.acceptedCount, 0)} 条偏好 · ${rounds.reduce((sum, item) => sum + item.rejected.length, 0)} 项被拒`)
+  if (state.mode === 'off') markStage('strategy', 'skipped', '使用规则推荐')
+  else if (skipped) markStage('strategy', 'failed', `已使用基础方案：${result.degraded?.find(item => item.stage === 'strategy')?.reason || 'AI 暂不可用'}`)
+  else markStage('strategy', 'done', `采用 ${rounds.reduce((sum, item) => sum + item.acceptedCount, 0)} 项推荐 · ${rounds.reduce((sum, item) => sum + item.rejected.length, 0)} 项未采用`)
   markStage('engine', 'done', `${result.lines.reduce((sum, line) => sum + line.quantity, 0)} 台/个 · ${(result.totalYuan / 10000).toFixed(1)} 万（余量 ${(result.remainingYuan / 10000).toFixed(1)} 万）`)
-  if (state.mode === 'off') markStage('copy', 'skipped', '已跳过（模式 off）')
-  else if (result.degraded?.some(item => item.stage === 'copy')) markStage('copy', 'failed', `降级：${result.degraded.find(item => item.stage === 'copy')?.reason}`)
-  else markStage('copy', result.copy?.source === 'template' ? 'done' : 'done', result.copy?.source === 'template' ? '模板文案' : '标题与 4 段文案')
+  if (state.mode === 'off') markStage('copy', 'skipped', '使用模板文案')
+  else if (result.degraded?.some(item => item.stage === 'copy')) markStage('copy', 'failed', `已使用模板文案：${result.degraded.find(item => item.stage === 'copy')?.reason}`)
+  else markStage('copy', 'done', result.copy?.source === 'template' ? '模板文案' : '方案文案已完成')
   const pass = result.checks.filter(item => item.status === 'pass').length
   const warn = result.checks.filter(item => item.status === 'warn').length
   const fail = result.checks.filter(item => item.status === 'fail').length
-  markStage('verify', fail ? 'failed' : 'done', `${pass} 通过 · ${warn} 待看 · ${fail} 已阻断`)
+  markStage('verify', fail ? 'failed' : 'done', `${pass} 通过 · ${warn} 待确认 · ${fail} 未通过`)
 }
 
 export async function generate() {

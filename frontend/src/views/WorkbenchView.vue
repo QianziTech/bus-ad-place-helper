@@ -36,7 +36,7 @@ const liveVm = computed(() => {
   return plan ? buildVm({ plan, meta: state.meta, mode: state.mode }) : null
 })
 const downloadBlocked = computed(() => Boolean(vm.value && !vm.value.exportAllowed))
-/** 成案后自动列出阻断项，不必先点下载；点「返回修改」只收起清单，按钮仍禁用。 */
+/** 成案后自动列出阻断项；收起提示后下载仍禁用。 */
 watch(vm, next => {
   blocked.value = next && !next.exportAllowed ? blockingItems(next) : []
 })
@@ -45,8 +45,8 @@ const fullscreenHtml = computed(() => (vm.value ? renderPlan(vm.value, { appendi
 const inventory = computed(() => liveVm.value?.inventory || null)
 const downloadTitle = computed(() => {
   if (!vm.value) return '未生成'
-  if (!vm.value.exportAllowed) return '存在阻断项，请先修改文案'
-  return ''
+  if (!vm.value.exportAllowed) return '请先修改提示中的文案'
+  return '下载后可离线查看'
 })
 
 onMounted(async () => {
@@ -69,7 +69,7 @@ function focusRef(ref: string) {
 
 function create() {
   if (!workbench.media.length) {
-    message.warning('至少保留一种媒体')
+    message.warning('请至少选择一种媒体')
     return
   }
   blocked.value = []
@@ -102,7 +102,7 @@ const campaignFields = computed(() => {
   if (!campaign) return []
   const draft = drawerDraft.value
   return [
-    { key: 'name', label: '③ campaign', value: draft.name ?? campaign.name, editable: true },
+    { key: 'name', label: '③ 投放活动', value: draft.name ?? campaign.name, editable: true },
     { key: 'businessGoal', label: '② 生意目标', value: draft.businessGoal ?? campaign.businessGoal, editable: true },
     { key: 'audience', label: '④ 人群', value: draft.audience ?? campaign.audience, editable: true },
     { key: 'primaryGoal', label: '③ 主目标', value: draft.primaryGoal ?? campaign.primaryGoal, editable: false },
@@ -121,7 +121,7 @@ function saveDrawer() {
   }
   setCampaignOverride(Object.keys(merged).length ? (merged as CampaignOverride) : undefined)
   drawerOpen.value = false
-  message.info('Campaign 已更新，请重新生成')
+  message.info('需求已更新，请重新生成方案')
 }
 
 function resetDrawer() {
@@ -173,17 +173,20 @@ onMounted(() => window.addEventListener('keydown', onKey))
         <a-space style="margin-top: 8px" wrap>
           <a-button size="small" @click="openDrawer">需求细节</a-button>
           <a-button size="small" :disabled="!pipeline" @click="state.showBaseline ? restoreAi() : loadBaseline()">
-            {{ state.showBaseline ? '恢复 AI 方案' : '只看基础分配' }}
+            {{ state.showBaseline ? '返回 AI 方案' : '查看基础方案' }}
           </a-button>
         </a-space>
-        <p class="caption" style="margin-top: 6px">
-          上次生成耗时 {{ state.lastQueryMs }} ms<template v-if="state.showBaseline"> · 当前展示基础分配（未含 AI 偏好）</template>
-        </p>
+        <p class="caption" style="margin-top: 6px">修改投放条件后，请重新生成方案。</p>
       </div>
 
       <div class="panel-block">
-        <h4>生成过程</h4>
-        <StageProgress :stages="state.stages" />
+        <p v-if="state.loading" class="caption" role="status">正在生成方案…</p>
+        <a-collapse v-if="state.loading || state.result || state.networkError || state.scanHits.length" ghost size="small">
+          <a-collapse-panel key="generation" header="生成记录">
+            <StageProgress :stages="state.stages" />
+            <p v-if="state.lastQueryMs" class="caption">上次生成用时 {{ (state.lastQueryMs / 1000).toFixed(1) }} 秒</p>
+          </a-collapse-panel>
+        </a-collapse>
       </div>
 
       <div class="panel-block" v-if="(pipeline && state.prevSuccess) || state.showBaseline">
@@ -203,9 +206,9 @@ onMounted(() => window.addEventListener('keydown', onKey))
     <div class="preview-wrap">
       <StatusBanner :failure="currentFailure" />
       <div v-if="state.showBaseline" class="status-bar">
-        <a-tag color="orange">基础分配</a-tag>
-        本次展示为基础分配（未含 AI 偏好），用于对照 AI 参与前后的取舍差异。
-        <a style="margin-left: 8px; cursor: pointer" @click="restoreAi">恢复 AI 方案</a>
+        <a-tag color="orange">基础方案</a-tag>
+        当前方案未采用 AI 推荐。
+        <a style="margin-left: 8px; cursor: pointer" @click="restoreAi">返回 AI 方案</a>
       </div>
       <div v-if="inventory" class="preview-toolbar inventory-bar">
         <InventoryStatus :inventory="inventory" compact />
@@ -214,18 +217,18 @@ onMounted(() => window.addEventListener('keydown', onKey))
         <span class="spacer" style="flex: 1" />
         <a-space>
           <a-button size="small" :disabled="!vm" @click="openFullscreen">全屏演示（F）</a-button>
-          <a-button type="primary" size="small" :disabled="!vm || downloadBlocked" :title="downloadTitle" @click="handleDownload">下载 HTML</a-button>
+          <a-button type="primary" size="small" :disabled="!vm || downloadBlocked" :title="downloadTitle" @click="handleDownload">下载方案（HTML）</a-button>
         </a-space>
       </div>
       <div style="position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column">
         <PreviewFrame :vm="vm" :highlight="highlight" />
         <div v-if="currentFailure && vm" class="preview-stale" aria-hidden="true">
-          <span>{{ failureTitle(currentFailure.status) }}：上一版方案保留只读，修改参数后重新生成。</span>
+          <span>{{ failureTitle(currentFailure.status) }}，当前显示上次方案。请调整条件后重新生成。</span>
         </div>
       </div>
     </div>
 
-    <a-drawer v-model:open="drawerOpen" title="Campaign 需求细节" width="520">
+    <a-drawer v-model:open="drawerOpen" title="投放需求" width="520">
       <div v-if="drawerPreset" style="display: flex; flex-direction: column; gap: 14px">
         <div class="caption">① 客户（只读）：{{ drawerAnchor?.client.code }} · {{ drawerAnchor?.client.alias }}（{{ drawerAnchor?.client.category }}）</div>
         <div v-for="field in campaignFields" :key="field.key">
@@ -250,7 +253,7 @@ onMounted(() => window.addEventListener('keydown', onKey))
           <a-button @click="resetDrawer">恢复行业预置</a-button>
         </a-space>
       </div>
-      <p v-else class="caption">尚无行业预置。</p>
+      <p v-else class="caption">暂无行业参考需求。</p>
     </a-drawer>
 
     <div v-if="fullscreen" style="position: fixed; inset: 0; background: #fff; z-index: 20; display: flex; flex-direction: column">
@@ -263,12 +266,12 @@ onMounted(() => window.addEventListener('keydown', onKey))
     </div>
 
     <div v-if="blocked.length" class="status-bar error" style="position: fixed; left: 400px; right: 0; bottom: 0; z-index: 15">
-      <b>导出被拦截 {{ blocked.length }} 处</b>
+      <b>下载前需修改 {{ blocked.length }} 处文案</b>
       <div v-for="(item, index) in blocked" :key="index" style="margin-top: 4px">
         ✗ {{ item.element }}｜{{ item.location }}｜{{ item.message }}<template v-if="item.suggestion">　建议：{{ item.suggestion }}</template>
       </div>
       <a-space style="margin-top: 8px">
-        <a-button size="small" @click="blocked = []">返回修改</a-button>
+        <a-button size="small" @click="blocked = []">收起提示</a-button>
       </a-space>
     </div>
   </div>
