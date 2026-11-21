@@ -31,7 +31,7 @@ function testData(): PlanData {
     successMetric: { kpi: '扫码量', proof: '上下刊照片' }, constraints: ['不承诺收益', '不出现疗效承诺'] };
   const data: PlanData = { bus: { mediaByKey: {}, windows: [{ startDate: request.startDate, endDate: request.endDate, queriedAt: '2026-11-21T00:00:00Z', billingMonths: 1, inventoryByKey: {} }] }, metro: { mediaByKey: {}, windows: [] },
     pricing: { pricesByMediaKey: {} }, briefs: { industries: INDUSTRIES.map((id, index) => ({ id, name: `${id} 测试行业`, client: { code: `T${index}`, alias: `某${id}客户`, category: `${id}品类`, scale: '测试规模' }, campaign: { ...structuredClone(campaign), id: `T${index}-C1` }, anchors: [{ id: 'anchor-one', rationale: '明确模拟覆盖' }] })) },
-    coverage: { anchorsById: { 'anchor-one': { areaName: '模拟商圈', station: '模拟站', role: 'businessArea', coord: { lng: 121, lat: 31, exit: '1', source: 'test-only' }, candidates: [] } } }, traffic: { byMediaKey: {} } };
+    coverage: { anchorsById: { 'anchor-one': { areaName: '模拟商圈', station: '模拟站', role: 'businessArea', coord: { lng: 121, lat: 31, exit: '1', source: 'test-only' }, candidates: [] } } }, traffic: { byMediaKey: {} }, trajectories: { crs: 'GCJ02', source: 'test-only', byLineName: {} } };
   for (let index = 0; index < 12; index++) {
     const key = `bus|${index}|车身`;
     data.bus.mediaByKey[key] = { kind: 'bus', resourceId: index, lineName: `模拟${index}路`, levelName: 'A+', mediaForm: '车身' };

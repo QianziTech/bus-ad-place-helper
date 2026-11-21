@@ -165,4 +165,22 @@ export function validatePlanData(value: unknown): asserts value is PlanData {
       }
     }
   }
+  const trajectories = (value as any).trajectories ?? { crs: 'GCJ02', byLineName: {} };
+  object(trajectories, 'trajectories');
+  requireValue(trajectories.crs === 'GCJ02', 'trajectories.crs', '必须是 GCJ02（BD09 需先转换）');
+  object(trajectories.byLineName, 'trajectories.byLineName');
+  const busLines = new Set<string>(Object.values(value.bus.mediaByKey).map((media: any) => String(media?.lineName)));
+  for (const [name, item] of Object.entries(trajectories.byLineName)) {
+    const path = `trajectories.byLineName.${name}`;
+    requireValue(busLines.has(name), path, '必须对应已登记的公交线路名');
+    object(item, path);
+    requireValue(Array.isArray(item.polyline) && item.polyline.length >= 2, `${path}.polyline`, '至少需要两个点');
+    for (const [index, point] of item.polyline.entries()) {
+      requireValue(Array.isArray(point) && point.length === 2, `${path}.polyline[${index}]`, '必须是 [经度, 纬度]');
+      number(point[0], `${path}.polyline[${index}][0]`, false, 100);
+      number(point[1], `${path}.polyline[${index}][1]`, false, 20);
+      requireValue(point[0] <= 130 && point[1] <= 55, `${path}.polyline[${index}]`, '超出中国境内经纬度范围');
+    }
+    if (item.lengthKm !== undefined) number(item.lengthKm, `${path}.lengthKm`, false, Number.MIN_VALUE);
+  }
 }

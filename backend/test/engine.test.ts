@@ -43,6 +43,7 @@ function data(): PlanData {
       [preferred]: { period: '2023-05', source: '公交历史参考', coveragePv: 20000, ageGroups: [{ label: '18-40', percent: 80 }] },
       [expensive]: { period: '2023-05', source: '公交历史参考', coveragePv: 15000 },
     } },
+    trajectories: { crs: 'GCJ02', source: 'test-only', byLineName: { '1 路': { lengthKm: 1.2, polyline: [[121.47, 31.23], [121.48, 31.24]] } } },
   };
 }
 function engine(input = data(), schedule = new ScheduleService()) { return new EngineService({ data: input } as PlanDataService, schedule); }

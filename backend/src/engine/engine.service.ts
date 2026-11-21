@@ -146,6 +146,9 @@ export class EngineService {
           sources: unique([...item.sources, `${kind}.json：${request.startDate} 至 ${request.endDate} 完整档期，查询于 ${window.queriedAt}`, `pricing.json：${price.source}`]),
           assumptions: price.assumptions,
           ...(data.traffic.byMediaKey[key] ? { trafficReference: structuredClone(data.traffic.byMediaKey[key]) } : {}),
+          ...(data.trajectories.byLineName[media.lineName]
+            ? { trajectory: { crs: data.trajectories.crs, ...data.trajectories.byLineName[media.lineName] } }
+            : {}),
         });
         priced++;
       }

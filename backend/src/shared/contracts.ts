@@ -19,9 +19,12 @@ export interface Price { monthlyLowYuan: number; monthlyHighYuan: number; produc
 export interface CoverageCandidate { mediaKey: string; relation: string; source: string; distanceM?: number }
 export interface Anchor { areaName: string; station: string; role: 'businessArea' | 'landmark'; coord: { lng: number; lat: number; exit: string; source: string }; candidates: CoverageCandidate[] }
 export interface TrafficReference { period: string; source: string; coveragePv?: number; ageGroups?: { label: string; percent: number }[] }
+/** 线路走向：经度在前，GCJ02，已按 12 m 容差简化。同一线路的多种媒体形式共用一份。 */
+export interface Trajectory { crs?: string; lengthKm?: number; bbox?: number[]; polyline: [number, number][] }
+export interface TrajectorySet { crs: string; source: string; period?: string; note?: string; byLineName: Record<string, Trajectory> }
 export interface AnchorSummary { id: string; areaName: string; station: string; role: 'businessArea' | 'landmark'; rationale: string; candidateCounts: { bus: number; metro: number } }
 export interface PlanAnchor extends AnchorSummary { selectedCount: number }
-export interface PlanData { bus: MediaData; metro: MediaData; pricing: { pricesByMediaKey: Record<string, Price> }; briefs: { industries: Industry[] }; coverage: { anchorsById: Record<string, Anchor> }; traffic: { byMediaKey: Record<string, TrafficReference> } }
+export interface PlanData { bus: MediaData; metro: MediaData; pricing: { pricesByMediaKey: Record<string, Price> }; briefs: { industries: Industry[] }; coverage: { anchorsById: Record<string, Anchor> }; traffic: { byMediaKey: Record<string, TrafficReference> }; trajectories: TrajectorySet }
 export type RejectionReason = 'unknown_media' | 'no_stock' | 'over_budget' | 'premium_exceeded' | 'invalid_evidence';
 export interface StrategyPreference { mediaKey: string; reason: string; evidenceRefs: string[]; disposition?: 'accepted' | `rejected:${RejectionReason}` }
 export interface PlanRequest { industry: IndustryId; budgetYuan: number; media: MediaKind[]; startDate: string; endDate: string; campaignOverride?: CampaignOverride; strategyPreferences?: StrategyPreference[]; briefText?: string }
@@ -29,7 +32,7 @@ export interface Candidate {
   mediaKey: string; kind: MediaKind; name: string; levelName: string; mediaForm?: string; exit?: string; total?: number;
   freeCount: number; contractCount?: number; reservedCount?: number;
   monthlyLowYuan: number; monthlyHighYuan: number; productionYuan: number; unitEstimateYuan: number;
-  anchorIds: string[]; evidenceRefs: string[]; reasons: string[]; sources: string[]; assumptions: string[]; trafficReference?: TrafficReference;
+  anchorIds: string[]; evidenceRefs: string[]; reasons: string[]; sources: string[]; assumptions: string[]; trafficReference?: TrafficReference; trajectory?: Trajectory;
 }
 export interface PlanFailure { status: 'missing_window' | 'missing_data' | 'no_inventory' | 'over_budget'; message: string; suggestions: string[] }
 export interface CandidatePool { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; candidates: Candidate[]; anchors: AnchorSummary[]; billingMonths: number; queriedAt: string; notices: string[]; excluded: { mediaKey: string; reason: RejectionReason }[] }

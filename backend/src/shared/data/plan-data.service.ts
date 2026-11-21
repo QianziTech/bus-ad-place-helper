@@ -11,13 +11,14 @@ export class PlanDataService {
   constructor(@Optional() @Inject('PLAN_DATA_DIR') directory?: string) {
     const candidates = [resolve(process.cwd(), 'data'), resolve(process.cwd(), '../data'), resolve(__dirname, '../../../../data'), resolve(__dirname, '../../../../../data')];
     const root = directory ?? process.env.PLAN_DATA_DIR ?? candidates.find(path => existsSync(resolve(path, 'briefs.json'))) ?? candidates[0];
-    const read = (name: string, optional = false): unknown => {
+    const read = (name: string, fallback?: unknown): unknown => {
       const path = resolve(root, `${name}.json`);
-      if (optional && !existsSync(path)) return { byMediaKey: {} };
+      if (fallback !== undefined && !existsSync(path)) return structuredClone(fallback);
       try { return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, '')); }
       catch (error) { throw new Error(`无法读取 ${name}.json：${error instanceof Error ? error.message : '无效 JSON'}`); }
     };
-    const data = { bus: read('bus'), metro: read('metro'), pricing: read('pricing'), briefs: read('briefs'), coverage: read('coverage'), traffic: read('traffic', true) };
+    const data = { bus: read('bus'), metro: read('metro'), pricing: read('pricing'), briefs: read('briefs'), coverage: read('coverage'),
+      traffic: read('traffic', { byMediaKey: {} }), trajectories: read('traj', { crs: 'GCJ02', source: '缺省', byLineName: {} }) };
     validatePlanData(data);
     this.data = data;
   }

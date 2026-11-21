@@ -30,6 +30,12 @@ export class AnchorSummaryDto {
 export class PlanAnchorDto extends AnchorSummaryDto {
   @ApiProperty({ minimum: 0, description: '本方案选中且命中该锚点的媒体数；同一媒体命中多个锚点时各锚点分别计数', example: 2 }) selectedCount!: number;
 }
+export class TrajectoryDto {
+  @ApiProperty({ enum: ['GCJ02'], description: '坐标系；BD09 源数据已转换' }) crs?: string;
+  @ApiPropertyOptional({ minimum: 0, description: '线路里程，公里（按轨迹逐段累加）' }) lengthKm?: number;
+  @ApiProperty({ description: '[经度, 纬度] 数组，已按 12 m 容差简化，不用于优于 50 m 的测距', example: [[121.4894, 31.2453], [121.4894, 31.2443]] })
+  polyline!: number[][];
+}
 export class PlanLineDto {
   @ApiProperty() mediaKey!: string;
   @ApiProperty({ enum: ['bus', 'metro'] }) kind!: 'bus' | 'metro';
@@ -51,6 +57,7 @@ export class PlanLineDto {
   @ApiProperty({ type: [String] }) reasons!: string[];
   @ApiProperty({ type: [String] }) sources!: string[];
   @ApiPropertyOptional({ type: TrafficReferenceDto }) trafficReference?: TrafficReferenceDto;
+  @ApiPropertyOptional({ type: TrajectoryDto, description: '线路走向；同线路不同媒体形式共用一份' }) trajectory?: TrajectoryDto;
   @ApiPropertyOptional() preferredByAi?: boolean;
 }
 export class ScheduleBatchDto {

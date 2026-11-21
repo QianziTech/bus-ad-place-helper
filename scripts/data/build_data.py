@@ -17,6 +17,31 @@ def aliases(name):
     return result - {""}
 
 
+def build_trajectories(source, bus_media):
+    """线路轨迹：红豆线路名 → 简化折线（GCJ02）。只保留可售公交线路，媒体形式共用一份。"""
+    path = source / "processed/traj.json"
+    if not path.exists():
+        return {"crs": "GCJ02", "source": "缺省（未运行 fetch_traj.py）", "byLineName": {}}
+    raw = load(path)
+    if raw.get("crs") != "GCJ02":
+        raise ValueError("轨迹数据集坐标系必须为 GCJ02，先运行 fetch_traj.py --reproject")
+    by_line = {}
+    sellable = {row["lineName"] for row in bus_media.values()}
+    alias_to_line = {a: ln for ln in sellable for a in aliases(ln)}
+    for name, row in (raw.get("items") or {}).items():
+        line = row.get("polyline") or []
+        if len(line) < 2:
+            continue
+        # 联运线（1006/1016）在库存里是一个键，轨迹侧拆成了两个，按别名回收
+        target = name if name in sellable else alias_to_line.get(name)
+        if not target:
+            continue
+        by_line[target] = {"lengthKm": row.get("lengthKm"), "bbox": row.get("bbox"), "polyline": line}
+    return {"crs": "GCJ02", "source": raw.get("source"), "period": "2027-12 线路走向（不随档期变化）",
+            "note": "源为平台 getLineJson（BD09）；已转 GCJ02；折线按 12 m 容差简化，不用于优于 50 m 的测距",
+            "byLineName": by_line}
+
+
 def build(source, output):
     index = load(source / "processed/media_index.json")
     seed = load(source / "seed/industries.json")["industries"]
@@ -103,14 +128,16 @@ def build(source, output):
         prices[key] = {"monthlyLowYuan": low, "monthlyHighYuan": high, "productionYuan": production,
                        "source": f"资料包 07-媒体刊例价.xlsx 第 {line} 行；应用架构与接口首版报价口径", "assumptions": assumptions}
     traffic = {"byMediaKey": {k: v for k, v in traffic["byMediaKey"].items() if k in modules["bus"]["mediaByKey"]}}
+    traj = build_trajectories(source, modules["bus"]["mediaByKey"])
     output.mkdir(parents=True, exist_ok=True)
     files = {**modules, "pricing": {"pricesByMediaKey": prices}, "briefs": {"industries": industries},
-             "coverage": {"anchorsById": coverage}, "traffic": traffic}
+             "coverage": {"anchorsById": coverage}, "traffic": traffic, "traj": traj}
     for name, content in files.items():
         (output / f"{name}.json").write_text(json.dumps(content, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     report = {"media": {k: len(v["mediaByKey"]) for k, v in modules.items()},
               "windows": {k: len(v["windows"]) for k, v in modules.items()}, "anchors": len(coverage),
-              "prices": len(prices), "traffic": len(traffic["byMediaKey"]), "unmatched": unmatched}
+              "prices": len(prices), "traffic": len(traffic["byMediaKey"]),
+              "traj": len(traj["byLineName"]), "unmatched": unmatched}
     (output / "data-notes.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "unmatched"}, ensure_ascii=False))
     print(f"未匹配/歧义记录 {len(unmatched)} 条，见 data-notes.json；无库存与刊例的媒体不会报价")
