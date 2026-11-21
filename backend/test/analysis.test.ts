@@ -143,6 +143,22 @@ test('independent verification scans copy and export text, allowing negative con
   await assert.rejects(() => s.brief.parse('内部测试实名希望投放广告', 'food'));
 });
 
+test('verification reports each finding once instead of repeating merged campaignOverrides', async t => {
+  const s = setup('off'); t.after(s.cleanup);
+  const text = '实付 4.6 万/辆';
+  const base = s.engine.generate(request); assert.equal(base.status, 'ok'); if (base.status !== 'ok') return;
+  const once = await s.verify.verify(base, base.campaign);
+  assert.equal(once.checks.filter(check => check.location && check.message.includes('成交价')).length, 0);
+  const overridden = s.engine.generate({ ...request, campaignOverride: { businessGoal: text } }); assert.equal(overridden.status, 'ok'); if (overridden.status !== 'ok') return;
+  const repeated = await s.verify.verify(overridden, overridden.campaign);
+  const hits = repeated.checks.filter(check => check.location && check.message.includes('成交价'));
+  assert.equal(hits.length, 1);
+  assert.ok(hits[0].location!.startsWith('output.plan.campaign.businessGoal'), hits[0].location);
+  // An independently supplied campaign is still scanned.
+  const other = await s.verify.verify(base, { ...base.campaign, businessGoal: text });
+  assert.equal(other.checks.filter(check => check.location && check.message.includes('成交价')).length, 1);
+});
+
 test('invalid and duplicate model preferences are rejected with evidence reasons', async t => {
   class InvalidClient extends LlmClient {
     override async complete<T>(): Promise<T> { return { strategyPreferences: [

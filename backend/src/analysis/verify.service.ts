@@ -40,7 +40,12 @@ export function deterministicChecks(plan: PlanSuccess, campaign: Campaign): Chec
 export class VerifyService {
   constructor(private readonly config: RuntimeConfigService, private readonly llm: LlmClient, private readonly scan: ContentScanService) {}
   async verify(plan: PlanSuccess, campaign: Campaign = plan.campaign, copy?: Partial<PlanCopy>, exportText?: string, context = this.config.context()): Promise<VerifyResult> {
-    const scanned = this.scan.scan({ plan, campaign, copy, exportText }, 'output');
+    // campaignOverride is merged into plan.campaign, so scanning it again would repeat the same finding.
+    const payload = plan.request?.campaignOverride ? { ...plan, request: { ...plan.request, campaignOverride: undefined } } : plan;
+    const targets: Record<string, unknown> = { plan: payload };
+    // A distinct campaign argument carries text the merged plan does not; an identical one is already covered.
+    if (campaign && JSON.stringify(campaign) !== JSON.stringify(plan.campaign)) targets.campaign = campaign;
+    const scanned = this.scan.scan({ ...targets, copy, exportText }, 'output');
     const checks = [...deterministicChecks(plan, campaign), ...(scanned.some(check => check.element === '实名扫描') ? [] : [this.scan.mappingCheck()]), ...scanned];
     const trace: VerifyResult['trace'] = [{ step: 'verify.scan', message: '已执行确定性实名、成交价形态与合规扫描', evidenceRefs: ['rule:real-name', 'rule:price-wording', 'rule:compliance'] }];
     let status: VerifyResult['status'] = context.mode === 'off' ? 'disabled' : 'ok';
