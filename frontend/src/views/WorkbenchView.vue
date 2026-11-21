@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { message } from 'ant-design-vue'
 import { state, workbench, generate, currentSuccess, currentFailure, loadBaseline, restoreAi, clearCompare, setCampaignOverride } from '../state/workbench'
 import { loadMeta, loadConfig } from '../state/workbench'
-import { buildVm } from '../plan/buildVm'
+import { buildVm, failureTitle } from '../plan/buildVm'
 import { downloadPlan, blockingItems, type BlockingItem } from '../export/download'
 import { humanLocation } from '../plan/locations'
 import { renderPlan } from '../plan/renderPlan'
@@ -205,7 +205,12 @@ onMounted(() => window.addEventListener('keydown', onKey))
           <a-button type="primary" size="small" :disabled="!vm || downloadBlocked" :title="downloadTitle" @click="handleDownload">下载 HTML</a-button>
         </a-space>
       </div>
-      <PreviewFrame :vm="vm" :highlight="highlight" />
+      <div style="position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column">
+        <PreviewFrame :vm="vm" :highlight="highlight" />
+        <div v-if="currentFailure && vm" class="preview-stale" aria-hidden="true">
+          <span>{{ failureTitle(currentFailure.status) }}：上一版方案保留只读，修改参数后重新生成。</span>
+        </div>
+      </div>
     </div>
 
     <a-drawer v-model:open="drawerOpen" title="Campaign 需求细节" width="520">

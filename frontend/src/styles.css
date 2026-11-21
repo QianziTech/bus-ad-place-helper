@@ -78,6 +78,15 @@ a { color: var(--primary); }
 }
 .preview-frame { flex: 1; min-height: 0; overflow: auto; padding: 16px; }
 .preview-frame iframe { width: 100%; height: 100%; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+/* 失败时不清空上一版方案，只压一层半透明遮罩并提示原因。 */
+.preview-stale {
+  position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: center;
+  background: rgba(244, 245, 246, 0.4); pointer-events: none;
+}
+.preview-stale span {
+  margin-top: 28px; padding: 8px 14px; border-radius: var(--radius); font-size: 13px;
+  background: rgba(166, 56, 46, 0.92); color: #fff; box-shadow: 0 4px 14px rgba(26, 29, 33, 0.18);
+}
 .doc-scale { max-width: 1600px; margin: 0 auto; transform-origin: top center; }
 .empty-state {
   height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;

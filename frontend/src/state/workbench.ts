@@ -54,7 +54,9 @@ let controller: AbortController | null = null
 
 export const currentSuccess = computed<PlanSuccess | null>(() => {
   if (state.showBaseline && state.baseline) return state.baseline
-  return state.result && state.result.status === 'ok' ? state.result : null
+  if (state.result && state.result.status === 'ok') return state.result
+  // 失败时不清空上一版方案，只加遮罩提示，避免演示时白屏。
+  return state.prevSuccess
 })
 export const currentFailure = computed<PlanFailure | null>(() => {
   if (state.showBaseline && state.baseline) return null
