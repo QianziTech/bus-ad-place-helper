@@ -28,7 +28,7 @@ const summary = (diff: DiffEntry[]) => ({
     </div>
     <p v-if="diff.length > 10" class="caption">查看全部 {{ diff.length }} 项：切换到方案文档逐行核对。</p>
     <p v-if="!diff.length" class="caption">
-      {{ mode === 'baseline' ? '本次 AI 偏好未改变任何一行的数量：AI 只做了媒体分工判断，分配仍按规则顺序。' : '本次与上一次成功结果没有差异。' }}
+      {{ mode === 'baseline' ? '本次 AI 偏好与基础分配结果一致：没有行的数量发生变化。' : '本次与上一次成功结果没有差异。' }}
     </p>
   </div>
 </template>
