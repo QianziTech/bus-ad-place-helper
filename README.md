@@ -10,7 +10,7 @@ pnpm --dir frontend dev        # 开发：http://127.0.0.1:5173，/api 代理到
 pnpm --dir frontend build      # 产出 frontend/dist，后端会直接托管
 ```
 
-页面入口：`#/` 工作台（四项输入 + 可选客户需求，一次生成跑完五阶段，右侧预览、全屏演示、下载）、`#/brief` Brief 拆解、`#/settings` 运行配置、`#/api-tools` 能力目录（只读 `GET /api/openapi.json`）。
+页面入口：`#/` 工作台（行业、媒体、档期三项必填 + 可选客户需求，一次生成跑完五阶段，右侧预览、全屏演示、下载）、`#/brief` Brief 拆解、`#/settings` 运行配置、`#/api-tools` 能力目录（只读 `GET /api/openapi.json`）。预算不在生成区：一次生成覆盖 100–500 万元，成品卷首的滑块按 1 万元切换，100／200／500 万可直接点选；预览、全屏与下载的 HTML 共用同一份内嵌结果，切换不请求后端。
 
 ## 启动后端
 
@@ -32,18 +32,19 @@ pnpm --dir backend test
 
 ## 第一个请求
 
-当前真实完整档期为 **2027-06-01 至 2027-06-30**，计费月数为 1。使用下列请求即可生成公交与地铁组合；预算是上限，允许余量。
+当前真实完整档期为 **2027-06-01 至 2027-06-30**，计费月数为 1。省略 `budgetYuan` 时一次返回 100–500 万元全区间；给出时只算该金额、保持单预算契约。下面是省略预算、取默认建议金额的公交与地铁组合（预算是上限，允许余量）。
 
 ```powershell
 $proposal = @{
   industry = 'food'
-  budgetYuan = 2000000
   media = @('bus', 'metro')
   startDate = '2027-06-01'
   endDate = '2027-06-30'
 } | ConvertTo-Json
 Invoke-RestMethod http://127.0.0.1:3000/api/plan/generate -Method Post -ContentType 'application/json' -Body $proposal
 ```
+
+响应含 `budgetOptions`（401 档逐档清单与金额）、`mediaByKey`（跨档共用的线路与证据）、`budget.defaultYuan`（建议档，不可成案时为最近可行档）与 `defaultPlan`（该档完整成案）；`/api/plan` 仍只接受显式 `budgetYuan`。
 
 `/api/meta` 提供五个行业、建议 Campaign 和可用档期。`/api/plan` 提供基础方案，`/api/plan/generate` 同步返回成案明细及 `copy/checks/rounds/degraded/exportAllowed`。工作台通过 `POST /api/plan/jobs` 提交同样的请求，用返回的 `id` 轮询 `GET /api/plan/jobs/{id}`，完成后从 `result` 读取成案结果。任务存在当前后端进程内，完成后保留 5 分钟。Brief 拆解、策略、文案、核验均有独立接口，精确字段以 OpenAPI 为准。
 
