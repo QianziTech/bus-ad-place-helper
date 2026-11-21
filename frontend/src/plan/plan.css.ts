@@ -29,7 +29,7 @@ small,.note{font-size:13px;line-height:1.6;color:var(--ink-3)}
 .chip.on{border-color:var(--primary);color:var(--primary);background:var(--primary-wash)}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:28px 0 0}
 .kpi{background:var(--bg);padding:18px 20px}
-.kpi b{display:block;font:600 40px/1.15 "PingFang SC","Microsoft YaHei UI",sans-serif;letter-spacing:-.02em}
+.kpi b{display:block;font:600 56px/1.1 "PingFang SC","Microsoft YaHei UI",sans-serif;letter-spacing:-.02em}
 .kpi b em{font-style:normal;font-size:16px;font-weight:400;margin-left:4px;color:var(--ink-2)}
 .kpi small{display:block;margin-top:4px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:48px}
