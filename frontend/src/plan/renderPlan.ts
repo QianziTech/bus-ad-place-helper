@@ -88,8 +88,9 @@ function scheduleBlock(vm: PlanVm) {
       return `<tr><td>${batch.no}</td><td>${h(batch.nightDate.slice(5))} 夜</td><td>${h(names)}</td><td class="num">${batch.quantity}</td><td class="num">${batch.cumulative}</td><td>${h(`${batch.publishStartDate} 08:00`)}</td></tr>`
     })
     .join('')
+  const neededNights = Math.ceil(vm.quantity / Math.max(1, schedule.singleNightCap))
   const capacity = schedule.status === 'capacity_short'
-    ? `<div class="risk">当前产能不足以在档期内排完 ${vm.quantity} 台：请延长档期或减少数量。</div>`
+    ? `<div class="risk">当前产能 ${schedule.batches.length} 夜 < 所需 ${neededNights} 夜：请延长档期或减少 ${Math.max(1, vm.quantity - schedule.batches.reduce((sum, batch) => sum + batch.quantity, 0))} 台。</div>`
     : ''
   return `${capacity}
   <table class="data batch">
@@ -160,13 +161,15 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
       <p class="note" style="margin-top:10px">不同线路的历史覆盖人次按平台 250 米网格口径分别统计，不可相加，本方案不以该数作为触达承诺。来源：${h(vm.busLines.find(line => line.traffic)?.traffic?.source || '可视化平台 2023-05 历史数据')}。</p>`
     : '<p class="muted">本次未选公交，地铁暂无对应历史覆盖数据。</p>'
 
-  // 行金额 = 数量 × 单位估算；单位估算 = 月刊例中值 × 计费月数（四舍五入）+ 行内制作费 / 数量。
+  // 行金额 = 数量 × 单位估算；单位估算 = 月刊例中值 × 计费月数 + 行内制作费 / 数量。
+  // 报价一节统一保留两位，保证「数量 × 单位估算 = 行合计」「Σ行合计 = 估算总额」现场可直接验算。
+  const money2 = (yuan: number) => `¥${(Math.round(yuan / 100) / 100).toFixed(2)} 万`
   const methodRows = vm.lines
     .map(line => {
-      const unitEstimate = Math.round(line.lineTotalYuan / line.quantity)
+      const unitEstimate = line.lineTotalYuan / line.quantity
       const monthlyMid = Math.round((line.monthlyLowYuan + line.monthlyHighYuan) / 2)
       const detail = `${wanRange(line.monthlyLowYuan, line.monthlyHighYuan)} × ${vm.billingMonths} 月 + 制作`
-      return `<tr><td>${h(line.name)}</td><td>${h(line.kind === 'bus' ? '公交车身' : '地铁出入口')}</td><td>${h(line.variant)}</td><td class="num">${line.quantity}</td><td class="num" data-src="${h(`月刊例中值 ${w(monthlyMid)} × ${vm.billingMonths} 月 + 制作费 ${w(line.productionYuan)}`)}">${h(w(unitEstimate))}<br><small>${h(detail)}</small></td><td class="num">${h(w(line.lineTotalYuan))}</td></tr>`
+      return `<tr><td>${h(line.name)}</td><td>${h(line.kind === 'bus' ? '公交车身' : '地铁出入口')}</td><td>${h(line.variant)}</td><td class="num">${line.quantity}</td><td class="num" data-src="${h(`月刊例中值 ${w(monthlyMid)} × ${vm.billingMonths} 月 + 制作费 ${w(line.productionYuan)}`)}">${h(money2(unitEstimate))}<br><small>${h(detail)}</small></td><td class="num">${h(money2(line.lineTotalYuan))}</td></tr>`
     })
     .join('')
 
@@ -269,11 +272,11 @@ ${head}
   <div class="split" style="margin-top:24px">
     <div>
       <table class="summary-table">
-        <tr><td>媒体费小计</td><td class="num">${h(w(vm.totalMediaFeeYuan))}</td></tr>
-        <tr><td>制作费小计</td><td class="num">${h(w(vm.totalProductionYuan))}</td></tr>
-        <tr><td><b>估算总额</b></td><td class="num"><b>${h(w(vm.total.yuan))}</b></td></tr>
-        <tr><td>预算上限</td><td class="num">${h(w(vm.request.budgetYuan))}</td></tr>
-        <tr><td>余量</td><td class="num">${h(w(vm.remaining.yuan))}</td></tr>
+        <tr><td>媒体费小计</td><td class="num">${h(money2(vm.totalMediaFeeYuan))}</td></tr>
+        <tr><td>制作费小计</td><td class="num">${h(money2(vm.totalProductionYuan))}</td></tr>
+        <tr><td><b>估算总额</b></td><td class="num"><b>${h(money2(vm.total.yuan))}</b></td></tr>
+        <tr><td>预算上限</td><td class="num">${h(money2(vm.request.budgetYuan))}</td></tr>
+        <tr><td>余量</td><td class="num">${h(money2(vm.remaining.yuan))}</td></tr>
       </table>
       <h3 style="margin-top:24px">媒体占比</h3>
       ${shares || '<p class="muted">本方案没有计入媒体费的行。</p>'}
@@ -294,6 +297,8 @@ ${head}
     <div>
       <h3>结果 KPI</h3>
       <p>${h(campaign.successMetric.kpi)}</p>
+      <p class="note">以客户假设书为准，AI 建议口径仅作参考。</p>
+      ${vm.measurement ? `<p class="note">AI 建议口径：${h(copyText(vm.measurement.kpi, 160))}</p>` : ''}
       ${vm.copy.assumptionEcho ? `<p class="note">假设书回应：${h(copyText(vm.copy.assumptionEcho, 200))}</p>` : ''}
     </div>
     <div>
@@ -305,6 +310,7 @@ ${head}
 
 <section id="s66">
   <h2>风险与承诺</h2>
+  ${vm.schedule?.status === 'capacity_short' ? `<div class="risk">档期产能不足：${h(vm.schedule.notes[0] || '请延长档期或减少数量')}</div>` : ''}
   <div class="two-col">
     <div>
       <h3>本次承诺</h3>
@@ -312,6 +318,7 @@ ${head}
         <li>${vm.schedule.batches.length} 批夜间施工，单晚上限 ${vm.schedule.singleNightCap} 台 / 口</li>
         <li>预留 ${vm.schedule.rainBufferNights} 个雨天顺延夜</li>
         <li>误一补二预留 ${vm.schedule.compensationBufferQty} 台（依 4A 框架）</li>
+        ${vm.schedule.status === 'capacity_short' ? `<li>产能不足：需延长档期或减少 ${Math.max(1, vm.quantity - vm.schedule.batches.reduce((sum, batch) => sum + batch.quantity, 0))} 台</li>` : ''}
         <li>上刊当日报照片（带报头日期），下刊 5 个工作日报照片</li>
       </ul>
     </div>

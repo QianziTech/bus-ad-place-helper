@@ -80,6 +80,8 @@ export interface PlanVm {
   checks: Check[]
   rounds: Round[]
   degraded: Degraded[]
+  /** 策略阶段给出的衡量建议；S6.5 与 campaign 口径并列展示，campaign 为最终口径。 */
+  measurement?: { kpi: string; proof: string }
   trace: { step: string; message: string; elapsedMs?: number }[]
   mode: 'off' | 'mock' | 'live'
   exportAllowed: boolean
@@ -195,7 +197,7 @@ function normalizeLines(lines: PlanLine[]): PlanVmLine[] {
     .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'metro' ? -1 : 1) || b.lineTotalYuan - a.lineTotalYuan)
 }
 
-export type RenderablePlan = PlanSuccess & Partial<Pick<PipelineSuccess, 'copy' | 'checks' | 'rounds' | 'degraded' | 'exportAllowed'>>
+export type RenderablePlan = PlanSuccess & Partial<Pick<PipelineSuccess, 'copy' | 'checks' | 'rounds' | 'degraded' | 'exportAllowed' | 'measurement'>>
 
 export function buildVm(input: {
   plan: RenderablePlan
@@ -300,6 +302,7 @@ export function buildVm(input: {
     checks,
     rounds,
     degraded,
+    measurement: plan.measurement,
     trace: (plan.trace || []).map(step => ({ step: step.step, message: step.message, elapsedMs: step.elapsedMs })),
     mode,
     exportAllowed: plan.exportAllowed !== false && !(plan.checks || []).some(check => check.blocking && check.status === 'fail'),
