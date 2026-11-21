@@ -3,6 +3,7 @@ import { computed, onMounted } from 'vue'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import { loadConfig, loadMeta, industryMeta, state } from './state/workbench'
 import { useRoute } from './router'
+import { dateTimeText } from './plan/buildVm'
 import WorkbenchView from './views/WorkbenchView.vue'
 import BriefView from './views/BriefView.vue'
 import SettingsView from './views/SettingsView.vue'
@@ -52,7 +53,7 @@ const go = (key: string) => { location.hash = key }
       <header class="app-bar">
         <span class="brand">动线运筹 · 提案工作台</span>
         <span class="meta-line">
-          {{ industryMeta()?.name || '' }}<template v-if="state.result && state.result.status === 'ok'"> · 已生成 · 库存核对 {{ state.result.queriedAt }}</template>
+          {{ industryMeta()?.name || '' }}<template v-if="state.result && state.result.status === 'ok'"> · 已生成 · 库存核对 {{ dateTimeText(state.result.queriedAt) }}</template>
         </span>
         <span class="spacer" />
         <a-space size="middle">

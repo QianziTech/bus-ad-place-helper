@@ -71,6 +71,7 @@ export interface PlanVm {
   startDate: string
   endDate: string
   queriedAt: string
+  queriedAtText: string
   schedule: Schedule
   totalMediaFeeYuan: number
   totalProductionYuan: number
@@ -106,6 +107,14 @@ const wanRange = (low: number, high: number) => `${Math.round(low / 1000) / 10}�
 export function windowText(start: string, end: string): string {
   if (!start || !end) return '—'
   return start === end ? start : `${start} ~ ${end.slice(5)}`
+}
+
+/** 后端返回带时区的 ISO 时间，页面统一显示为本机 `YYYY-MM-DD HH:mm`。 */
+export function dateTimeText(value: string | number): string {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return String(value || '—')
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`
 }
 
 export function industryName(meta: { industries: MetaIndustry[] } | null, id: string): string {
@@ -293,6 +302,7 @@ export function buildVm(input: {
     startDate: plan.request.startDate,
     endDate: plan.request.endDate,
     queriedAt: plan.queriedAt,
+    queriedAtText: dateTimeText(plan.queriedAt),
     schedule: plan.schedule,
     totalMediaFeeYuan: mediaFee,
     totalProductionYuan: productionFee,
@@ -306,7 +316,7 @@ export function buildVm(input: {
     trace: (plan.trace || []).map(step => ({ step: step.step, message: step.message, elapsedMs: step.elapsedMs })),
     mode,
     exportAllowed: plan.exportAllowed !== false && !(plan.checks || []).some(check => check.blocking && check.status === 'fail'),
-    generatedAt: new Date().toLocaleString('zh-CN', { hour12: false }),
+    generatedAt: dateTimeText(Date.now()),
   }
 }
 

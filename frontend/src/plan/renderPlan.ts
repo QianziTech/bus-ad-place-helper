@@ -221,7 +221,7 @@ ${head}
         <tr><th>⑥ 媒体范围</th><td>${h(campaign.mediaScope.map(kind => (kind === 'bus' ? '公交' : '地铁')).join(' + '))}${vm.copy.strategyLine ? ` · ${h(copyText(vm.copy.strategyLine, 60))}` : ''}</td></tr>
         <tr><th>⑦ 成功衡量</th><td>${h(`${campaign.successMetric.kpi}；${campaign.successMetric.proof}`)}</td></tr>
       </table>
-      <p class="note" style="margin-top:12px">本方案 §3 回应 ②③④ · §5 回应 ⑤ · §6 回应 ⑤⑦。客户以代称呈现，方案不含真实企业名与门店信息。</p>
+      <p class="note" style="margin-top:12px">本方案 §3 回应 ②③④ · §5 回应 ⑤ · §6 回应 ⑤⑦。客户以代称呈现，方案不含真实企业名与线下点位信息。</p>
     </div>
     <div>
       ${anchorWork.length ? `<div class="cards" style="grid-template-columns:1fr 1fr">${anchorWork.map(anchorCard).join('')}</div>` : `<div class="card"><p class="muted">${h(vm.anchorNotice || '本轮未提供锚点元数据。')}</p></div>`}
@@ -245,7 +245,7 @@ ${head}
     <div class="card">
       <h3>口径对照</h3>
       <p style="font-size:14px;margin-bottom:6px"><b>周边线路</b><br><span class="muted">可视化平台 1.2 km 覆盖分析，回答「附近有哪些线路」。</span></p>
-      <p style="font-size:14px;margin:0"><b>可售量</b><br><span class="muted">红豆 freeCount，核对档期 ${h(windowText(vm.startDate, vm.endDate))}，查询于 ${h(vm.queriedAt)}。</span></p>
+      <p style="font-size:14px;margin:0"><b>可售量</b><br><span class="muted">红豆 freeCount，核对档期 ${h(windowText(vm.startDate, vm.endDate))}，查询于 ${h(vm.queriedAtText)}。</span></p>
       <p class="note" style="margin-top:10px">两者不是同一集合：候选来自平台，可售来自红豆，方案只在两者都有依据时成行。</p>
     </div>
   </div>
@@ -262,7 +262,7 @@ ${head}
 
 <section id="s5">
   <h2>排期与上线次序</h2>
-  <div class="tl"><b>${h(windowText(vm.startDate, vm.endDate))}</b><br><small>${vm.billingMonths} 个计费月 · 库存核对于 ${h(vm.queriedAt)}</small></div>
+  <div class="tl"><b>${h(windowText(vm.startDate, vm.endDate))}</b><br><small>${vm.billingMonths} 个计费月 · 库存核对于 ${h(vm.queriedAtText)}</small></div>
   <h3 style="margin-top:12px">上线批次（夜间施工，单晚上限 ${vm.schedule.singleNightCap} 台 / 口）</h3>
   ${scheduleBlock(vm)}
   <p class="note">本方案展示计划投放档期；实际施工与上刊由签约后的执行流程确认。</p>
@@ -350,7 +350,7 @@ ${head}
 
 <section id="s7">
   <h2>数据声明</h2>
-  <p>库存来源：红豆媒体库。本方案核对档期 ${h(vm.startDate)} 至 ${h(vm.endDate)}，查询日期 ${h(vm.queriedAt)}，占用随合同变化。</p>
+  <p>库存来源：红豆媒体库。本方案核对档期 ${h(vm.startDate)} 至 ${h(vm.endDate)}，查询日期 ${h(vm.queriedAtText)}，占用随合同变化。</p>
   <p>投放锚点为商圈级。坐标与覆盖线路来自可视化平台，站点身份与可售量核对红豆库存。锚点用于说明投放范围。</p>
   <p>品牌为我方提案假设，用于演示引擎能力，非客户指定。</p>
   ${vm.notices.length ? `<ul class="col-list" style="margin-top:12px">${vm.notices.map(item => `<li>${h(item)}</li>`).join('')}</ul>` : ''}
@@ -358,7 +358,7 @@ ${head}
 </section>
 
 <footer class="doc-foot">
-  <p>动线运筹 v1.0 · 生成于 ${h(vm.generatedAt)} · 数据核对 ${h(vm.queriedAt)}</p>
+  <p>动线运筹 v1.0 · 生成于 ${h(vm.generatedAt)} · 数据核对 ${h(vm.queriedAtText)}</p>
   <p>客户一律以代称呈现；报价为刊例区间中值估算，不含真实成交价。</p>
   <p>路径：红豆媒体库 → 可视化平台覆盖分析 → 红豆可售 → 组合成案，链路证据见 §3 与各明细展开项。</p>
 </footer>
