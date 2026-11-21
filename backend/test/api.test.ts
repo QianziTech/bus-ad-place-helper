@@ -59,6 +59,17 @@ test('real June data: five industries, three media combinations and four budgets
         assert.equal(line.lineTotalYuan, line.quantity * Math.round((line.monthlyLowYuan + line.monthlyHighYuan) / 2 * plan.billingMonths) + line.productionYuan);
       }
       if (mode === 'off') assert.deepEqual(plan.degraded.map(item => item.stage).sort(), ['copy', 'strategy']);
+      // 锚点元数据随行业给出；计划中的 selectedCount 不超过该锚点的候选总数。
+      assert.ok(plan.anchors.length > 0);
+      for (const anchor of plan.anchors) {
+        assert.equal(typeof anchor.areaName, 'string');
+        assert.ok(anchor.selectedCount >= 0 && anchor.selectedCount <= anchor.candidateCounts.bus + anchor.candidateCounts.metro);
+      }
+      if (mode === 'off') {
+        assert.equal(plan.mediaObjective, undefined);
+      } else {
+        assert.equal(typeof plan.mediaObjective, 'string');
+      }
     }
   }
 });
