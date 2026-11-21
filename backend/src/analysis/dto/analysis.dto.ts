@@ -1,9 +1,9 @@
-import { ApiProperty, getSchemaPath, OmitType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, getSchemaPath, OmitType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsArray, IsIn, IsInt, IsObject, IsOptional, IsString, Max, MaxLength, Min, MinLength, ValidateNested } from 'class-validator';
-import { Campaign, Check, INDUSTRIES, IndustryId, PipelineSuccess, PlanCopy, PlanFailure, PlanSuccess } from '../../shared/contracts';
-import { CampaignDto, CampaignOverrideDto, CreatePlanDto, StrategyPreferenceDto } from '../../engine/dto/create-plan.dto';
-import { PlanFailureDto, PlanSuccessDto } from '../../engine/dto/plan-response.dto';
+import { Campaign, Check, INDUSTRIES, IndustryId, PipelineSuccess, PipelineRangeSuccess, PlanCopy, PlanFailure, PlanSuccess } from '../../shared/contracts';
+import { CampaignDto, CampaignOverrideDto, CreatePlanDto, GeneratePlanDto, StrategyPreferenceDto } from '../../engine/dto/create-plan.dto';
+import { AnchorSummaryDto, AppliedStrategyPreferenceDto, BudgetDto, ClientDto, InventoryDetailDto, PlanFailureDto, PlanSuccessDto, ScheduleDto, TrafficReferenceDto, TrajectoryDto } from '../../engine/dto/plan-response.dto';
 
 export class ParseBriefDto {
   @ApiProperty({ example: '客户：某饮料品牌；主目标：认知；人群：通勤人群；媒体：公交', maxLength: 2000 }) @IsString() @MinLength(1) @MaxLength(2000) text!: string;
@@ -123,9 +123,96 @@ export class PipelineSuccessDto extends PlanSuccessDto {
   @ApiProperty({ type: [DegradedDto] }) degraded!: DegradedDto[];
   @ApiProperty({ example: true }) exportAllowed!: boolean;
 }
+export class OptionLineDto {
+  @ApiProperty() mediaKey!: string;
+  @ApiProperty({ minimum: 1 }) quantity!: number;
+  @ApiProperty({ description: 'quantity × 该媒体单位估算', minimum: 1 }) lineTotalYuan!: number;
+  @ApiPropertyOptional() preferredByAi?: boolean;
+}
+export class SelectedAnchorDto {
+  @ApiProperty({ example: 'food-人民广场' }) anchorId!: string;
+  @ApiProperty({ minimum: 0 }) selectedCount!: number;
+}
+export class BudgetOptionDto {
+  @ApiProperty({ example: 2000000 }) budgetYuan!: number;
+  @ApiProperty({ enum: ['ok', 'missing_window', 'missing_data', 'no_inventory', 'over_budget'] }) status!: string;
+  @ApiPropertyOptional({ example: '最低可报价组合超过预算上限' }) message?: string;
+  @ApiPropertyOptional({ type: [String] }) suggestions?: string[];
+  @ApiPropertyOptional({ type: [OptionLineDto], description: '可行档位的成案行；媒体静态信息见 mediaByKey' }) lines?: OptionLineDto[];
+  @ApiPropertyOptional({ type: [SelectedAnchorDto] }) selectedAnchors?: SelectedAnchorDto[];
+  @ApiPropertyOptional({ type: ScheduleDto }) schedule?: ScheduleDto;
+  @ApiPropertyOptional({ minimum: 0 }) totalYuan?: number;
+  @ApiPropertyOptional({ minimum: 0 }) remainingYuan?: number;
+  @ApiPropertyOptional({ type: [String], description: '相对上一可行金额的线路增减、金额差异、批次变化与余量原因' }) analysis?: string[];
+}
+export class OptionMediaDto {
+  @ApiProperty() mediaKey!: string;
+  @ApiProperty({ enum: ['bus', 'metro'] }) kind!: 'bus' | 'metro';
+  @ApiProperty() name!: string;
+  @ApiProperty() levelName!: string;
+  @ApiPropertyOptional() mediaForm?: string;
+  @ApiPropertyOptional() exit?: string;
+  @ApiPropertyOptional({ minimum: 0 }) total?: number;
+  @ApiProperty({ minimum: 1 }) freeCount!: number;
+  @ApiPropertyOptional({ minimum: 0 }) contractCount?: number;
+  @ApiPropertyOptional({ minimum: 0 }) reservedCount?: number;
+  @ApiProperty({ description: '单位月刊例下限，元', minimum: 0 }) monthlyLowYuan!: number;
+  @ApiProperty({ description: '单位月刊例上限，元', minimum: 0 }) monthlyHighYuan!: number;
+  @ApiProperty({ description: '单位制作费，元；行内制作费按数量相乘', minimum: 0 }) productionUnitYuan!: number;
+  @ApiProperty({ description: '单位估算，含完整档期月价与单位制作费，元', minimum: 1 }) unitEstimateYuan!: number;
+  @ApiProperty({ type: [String] }) anchorIds!: string[];
+  @ApiProperty({ type: [String] }) evidenceRefs!: string[];
+  @ApiProperty({ type: [String] }) reasons!: string[];
+  @ApiProperty({ type: [String] }) sources!: string[];
+  @ApiProperty({ type: [String] }) assumptions!: string[];
+  @ApiPropertyOptional({ type: TrafficReferenceDto }) trafficReference?: TrafficReferenceDto;
+  @ApiPropertyOptional({ type: TrajectoryDto }) trajectory?: TrajectoryDto;
+}
+export class RangeAnchorDto extends AnchorSummaryDto {
+  @ApiPropertyOptional({ description: '锚点代表点（GCJ-02），用于离线示意图' }) coord?: { lng: number; lat: number; exit: string; source: string };
+}
+/** 全区间结果的共用部分：客户、Campaign、档期、分析元数据与逐档结果。 */
+export class PlanRangeBaseDto {
+  @ApiProperty({ enum: ['ok'] }) status!: 'ok';
+  @ApiProperty({ type: GeneratePlanDto }) request!: GeneratePlanDto;
+  @ApiProperty({ type: ClientDto }) client!: ClientDto;
+  @ApiProperty({ type: CampaignDto }) campaign!: CampaignDto;
+  @ApiProperty({ minimum: 0, exclusiveMinimum: true }) billingMonths!: number;
+  @ApiProperty({ enum: ['confirmed', 'pending'] }) billingStatus!: string;
+  @ApiProperty({ type: InventoryDetailDto }) inventory!: InventoryDetailDto;
+  @ApiProperty({ format: 'date-time' }) queriedAt!: string;
+  @ApiProperty({ type: [RangeAnchorDto] }) anchors!: RangeAnchorDto[];
+  @ApiProperty({ type: BudgetDto }) budget!: BudgetDto;
+  @ApiProperty({ type: [BudgetOptionDto], description: '按金额升序，覆盖 100–500 万元每 1 万元' }) budgetOptions!: BudgetOptionDto[];
+  @ApiProperty({ type: Object, description: '跨档共用的媒体静态信息，以 mediaKey 为键' }) mediaByKey!: Record<string, OptionMediaDto>;
+  @ApiProperty({ type: [String] }) assumptions!: string[];
+  @ApiProperty({ type: [String] }) notices!: string[];
+  @ApiProperty({ type: [TraceDto] }) trace!: TraceDto[];
+  @ApiPropertyOptional({ type: [AppliedStrategyPreferenceDto] }) strategyPreferences?: AppliedStrategyPreferenceDto[];
+  @ApiProperty({ type: CopyDto }) copy!: CopyDto;
+  @ApiProperty({ type: [CheckDto] }) checks!: CheckDto[];
+  @ApiProperty({ type: [RoundDto] }) rounds!: RoundDto[];
+  @ApiProperty({ type: [DegradedDto] }) degraded!: DegradedDto[];
+  @ApiProperty({ example: true }) exportAllowed!: boolean;
+  @ApiPropertyOptional({ example: '围绕已核对的目标场景组织媒体分工' }) mediaObjective?: string;
+  @ApiPropertyOptional({ type: WindowFitDto }) windowFit?: WindowFitDto;
+  @ApiPropertyOptional({ type: MeasurementDto }) measurement?: MeasurementDto;
+}
+export class PipelineRangeSuccessDto extends PlanRangeBaseDto {
+  @ApiProperty({ example: '食品饮料' }) industryName!: string;
+  @ApiProperty({ type: PipelineSuccessDto, description: '默认金额的完整成案，滑块初始位置直接渲染' }) defaultPlan!: PipelineSuccessDto;
+}
 export const pipelineResultSchema = {
   oneOf: [
     { $ref: getSchemaPath(PipelineSuccessDto) },
+    ...['missing_window', 'missing_data', 'no_inventory', 'over_budget'].map(status => ({
+      allOf: [{ $ref: getSchemaPath(PlanFailureDto) }, { type: 'object' as const, properties: { status: { type: 'string' as const, enum: [status] } } }],
+    })),
+  ],
+};
+export const pipelineRangeResultSchema = {
+  oneOf: [
+    { $ref: getSchemaPath(PipelineRangeSuccessDto) },
     ...['missing_window', 'missing_data', 'no_inventory', 'over_budget'].map(status => ({
       allOf: [{ $ref: getSchemaPath(PlanFailureDto) }, { type: 'object' as const, properties: { status: { type: 'string' as const, enum: [status] } } }],
     })),
@@ -136,7 +223,7 @@ export class PlanJobAcceptedDto {
 }
 export class PlanJobDto extends PlanJobAcceptedDto {
   @ApiProperty({ enum: ['running', 'completed', 'failed'] }) status!: 'running' | 'completed' | 'failed';
-  @ApiProperty({ required: false, ...pipelineResultSchema }) result?: PipelineSuccess | PlanFailure;
+  @ApiProperty({ required: false, ...pipelineRangeResultSchema }) result?: PipelineSuccess | PipelineRangeSuccess | PlanFailure;
   @ApiProperty({ required: false, example: '方案生成失败，请重试' }) message?: string;
 }
 export class StrategyRequestDto extends OmitType(CreatePlanDto, ['budgetYuan'] as const) {

@@ -13,7 +13,8 @@ import { CopyService } from './copy.service';
 import { VerifyService } from './verify.service';
 import { BriefResultDto, BriefSamplesDto, CopyPlanDto, CopyResultDto, ParseBriefDto, PipelineSuccessDto, StrategyRequestDto, StrategyResultDto, VerifyPlanDto, VerifyResultDto,
   BriefDisabledDto, BriefUnavailableDto, StrategyDisabledDto, StrategyUnavailableDto, CopyDisabledDto, CopyUnavailableDto, VerifyDisabledDto, VerifyUnavailableDto,
-  pipelineResultSchema, PlanJobAcceptedDto, PlanJobDto } from './dto/analysis.dto';
+  pipelineResultSchema, pipelineRangeResultSchema, PlanJobAcceptedDto, PlanJobDto, PipelineRangeSuccessDto } from './dto/analysis.dto';
+import { GeneratePlanDto } from '../engine/dto/create-plan.dto';
 
 const response = (success: typeof BriefResultDto | typeof CopyResultDto | typeof StrategyResultDto | typeof VerifyResultDto) => {
   const disabled = success === BriefResultDto ? BriefDisabledDto : success === CopyResultDto ? CopyDisabledDto : success === StrategyResultDto ? StrategyDisabledDto : VerifyDisabledDto;
@@ -37,7 +38,7 @@ export function assertPlan(plan: PlanSuccess, campaign?: Campaign): void {
 }
 
 @ApiTags('analysis')
-@ApiExtraModels(BriefResultDto, StrategyResultDto, CopyResultDto, VerifyResultDto, BriefDisabledDto, BriefUnavailableDto, StrategyDisabledDto, StrategyUnavailableDto, CopyDisabledDto, CopyUnavailableDto, VerifyDisabledDto, VerifyUnavailableDto, PipelineSuccessDto, PlanFailureDto)
+@ApiExtraModels(BriefResultDto, StrategyResultDto, CopyResultDto, VerifyResultDto, BriefDisabledDto, BriefUnavailableDto, StrategyDisabledDto, StrategyUnavailableDto, CopyDisabledDto, CopyUnavailableDto, VerifyDisabledDto, VerifyUnavailableDto, PipelineSuccessDto, PipelineRangeSuccessDto, PlanFailureDto)
 @ApiBadRequestResponse({ description: '请求参数无效或需求原文包含实名、成交价' })
 @Controller()
 export class AnalysisController {
@@ -53,12 +54,12 @@ export class AnalysisController {
   compose(@Body() body: CopyPlanDto) { assertPlan(body.plan, body.campaign); return this.copy.compose(body.plan, body.campaign, body.checks); }
   @Post('plan/verify') @HttpCode(200) @ApiOperation({ operationId: 'verifyPlan', summary: '核验成案并扫描文案及导出正文，返回导出许可' }) @ApiOkResponse({ schema: response(VerifyResultDto) })
   check(@Body() body: VerifyPlanDto) { assertPlan(body.plan, body.campaign); return this.verify.verify(body.plan, body.campaign, body.copy, body.exportText); }
-  @Post('plan/generate') @HttpCode(200) @ApiOperation({ operationId: 'generatePlanPipeline', summary: '一次执行候选、策略、成案、文案、核验五阶段' })
-  @ApiOkResponse({ schema: pipelineResultSchema })
-  generate(@Body() body: CreatePlanDto) { return this.pipeline.generate(body); }
+  @Post('plan/generate') @HttpCode(200) @ApiOperation({ operationId: 'generatePlanPipeline', summary: '一次执行候选、策略、成案、文案、核验五阶段；省略 budgetYuan 时覆盖 100–500 万元全区间' })
+  @ApiOkResponse({ schema: { oneOf: [pipelineRangeResultSchema.oneOf[0], ...pipelineResultSchema.oneOf] } })
+  generate(@Body() body: GeneratePlanDto) { return this.pipeline.generate(body); }
   @Post('plan/jobs') @HttpCode(202) @ApiOperation({ operationId: 'startPlanJob', summary: '提交后台成案任务' })
   @ApiAcceptedResponse({ type: PlanJobAcceptedDto })
-  startJob(@Body() body: CreatePlanDto): PlanJobAcceptedDto { return this.jobs.start(body); }
+  startJob(@Body() body: GeneratePlanDto): PlanJobAcceptedDto { return this.jobs.start(body); }
   @Get('plan/jobs/:id') @Header('Cache-Control', 'no-store') @ApiOperation({ operationId: 'getPlanJob', summary: '读取成案任务状态及结果' })
   @ApiOkResponse({ type: PlanJobDto }) @ApiNotFoundResponse({ description: '任务不存在或已过期' })
   getJob(@Param('id') id: string): PlanJobDto { return this.jobs.get(id); }

@@ -106,7 +106,8 @@ function applyDate() {
 function applyBudget() {
   const budget = draft.value.budgetHintYuan ?? preset.value?.budgetHintYuan
   if (!budget) return
-  workbench.budgetWan = Math.round(budget / 10000)
+  // 预算滑块在成品内；建议预算作为 Campaign 建议值带回工作台，生成时由后端归入区间。
+  workbench.campaignOverride = { ...(workbench.campaignOverride || {}), budgetHintYuan: budget }
   message.success('已采纳建议预算')
 }
 

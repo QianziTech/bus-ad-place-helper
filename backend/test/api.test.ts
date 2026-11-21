@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { createApplication } from '../src/main';
-import { PipelineSuccess } from '../src/shared/contracts';
+import { PipelineRangeSuccess, PipelineSuccess } from '../src/shared/contracts';
 import { PlanPipelineService } from '../src/shared/pipeline/plan-pipeline.service';
 
 let app: NestExpressApplication;
@@ -74,6 +74,53 @@ test('real June data: five industries, three media combinations and four budgets
       }
     }
   }
+});
+
+test('omitting budgetYuan returns the whole 100–500万 range without extra stock or copy calls', async () => {
+  for (const mode of ['off', 'mock']) {
+    await api('/config', { mode }, 'PUT');
+    const { budgetYuan: _budget, ...rangeRequest } = request;
+    const started = performance.now();
+    const result = await api('/plan/generate', rangeRequest);
+    assert.equal(result.status, 200);
+    assert.ok(performance.now() - started < (mode === 'off' ? 3000 : 4000), `${mode} range generation`);
+    const range = result.body as PipelineRangeSuccess;
+    assert.equal(range.status, 'ok');
+    assert.deepEqual(range.budget, { minYuan: 1000000, maxYuan: 5000000, stepYuan: 10000, presetsYuan: [1000000, 2000000, 5000000], defaultYuan: 2000000 });
+    assert.equal(range.budgetOptions.length, 401);
+    assert.equal(range.budgetOptions[0].budgetYuan, 1000000);
+    assert.equal(range.budgetOptions.at(-1)!.budgetYuan, 5000000);
+    assert.equal(range.copy.source, mode === 'off' ? 'template' : 'mock');
+    assert.equal(range.rounds.length >= 1 && range.rounds.length <= 2, true);
+    assert.equal(range.defaultPlan.status, 'ok');
+    assert.equal(range.defaultPlan.request.budgetYuan, range.budget.defaultYuan);
+    assert.equal(range.defaultPlan.totalYuan, range.budgetOptions.find(item => item.budgetYuan === range.budget.defaultYuan)!.totalYuan);
+    assert.equal(range.defaultPlan.copy.source, range.copy.source);
+    const mediaKeys = Object.keys(range.mediaByKey);
+    assert.ok(mediaKeys.length > 0 && mediaKeys.length <= 60, `${mode} shared media must stay compact`);
+    for (const option of range.budgetOptions) {
+      assert.ok(Number.isInteger(option.budgetYuan) && option.budgetYuan >= 1000000 && option.budgetYuan <= 5000000);
+      if (option.status !== 'ok') continue;
+      assert.ok(option.totalYuan! <= option.budgetYuan);
+      assert.equal(option.remainingYuan, option.budgetYuan - option.totalYuan!);
+      assert.equal(option.totalYuan, option.lines!.reduce((sum, line) => sum + line.lineTotalYuan, 0));
+      for (const line of option.lines!) {
+        const media = range.mediaByKey[line.mediaKey];
+        assert.ok(media, `${mode} ${option.budgetYuan} ${line.mediaKey}`);
+        assert.ok(line.quantity > 0 && line.quantity <= media.freeCount);
+        assert.equal(line.lineTotalYuan, line.quantity * media.unitEstimateYuan);
+      }
+      assert.ok(option.analysis!.length > 0);
+    }
+    // 100／200／500 万在同一轮结果中可切换，且金额越大总额不减。
+    const totals = [1000000, 2000000, 5000000].map(budgetYuan => range.budgetOptions.find(item => item.budgetYuan === budgetYuan)!);
+    assert.ok(totals.every(item => item.status === 'ok'));
+    assert.ok(totals[0].totalYuan! < totals[1].totalYuan! && totals[1].totalYuan! < totals[2].totalYuan!);
+    assert.ok(range.budgetOptions.some(item => item.status !== 'ok') === false, `${mode} June data must stay feasible across the range`);
+    // 全区间响应不需要第二次候选扩展或额外模型调用：文案与核验只出一次。
+    assert.equal(range.checks.length > 0, true);
+  }
+  await api('/config', { mode: 'mock' }, 'PUT');
 });
 
 test('HTTP validates real dates, nested fields and invalid requests; missing windows remain business responses', async () => {
@@ -188,7 +235,7 @@ test('OpenAPI discovers synchronous and background operations without API keys',
   const operations = Object.values(schema.paths).flatMap((path: any) => Object.values(path).map((operation: any) => operation.operationId));
   assert.deepEqual(operations.sort(), ['getMeta', 'generatePlan', 'generatePlanPipeline', 'parseBrief', 'recommendStrategy', 'verifyPlan', 'composeCopy', 'getBriefSamples', 'getConfig', 'putConfig', 'testConfig', 'startPlanJob', 'getPlanJob'].sort());
   assert.equal(schema.paths['/api/plan'].post.responses['200'].content['application/json'].schema.oneOf.length, 5);
-  assert.equal(schema.paths['/api/plan/generate'].post.responses['200'].content['application/json'].schema.oneOf.length, 5);
+  assert.equal(schema.paths['/api/plan/generate'].post.responses['200'].content['application/json'].schema.oneOf.length, 6);
   assert.ok(schema.paths['/api/brief/parse'].post.responses['200'].content['application/json'].schema.oneOf.length >= 3);
   assert.equal(JSON.stringify(schema).includes('"apiKey"'), false);
   assert.ok(Object.keys(schema.components.schemas.CreatePlanDto.properties).includes('campaignOverride'));

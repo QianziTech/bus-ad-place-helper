@@ -31,12 +31,12 @@ export class ScheduleService {
     }
     const start = Date.parse(`${request.startDate}T00:00:00Z`) / dayMs;
     const end = Date.parse(`${request.endDate}T00:00:00Z`) / dayMs;
-    const compensationNights = Math.ceil(this.compensation / this.cap);
-    const lastNight = end - 1 - this.rain - compensationNights;
-    const availableNights = Math.max(0, lastNight - start + 1);
+    // 正排：首批施工夜赶在档期首日之前完成，发布期从档期首日 08:00 起算；
+    // 雨天顺延夜留在档期内，否则顺延即出档，缓冲形同虚设。
+    const firstNight = start - 1;
     const total = lines.reduce((sum, line) => sum + line.quantity, 0);
-    const nights = Math.min(Math.ceil(total / this.cap), availableNights);
-    const firstNight = Math.max(start, lastNight - nights + 1);
+    const available = Math.max(0, end - start + 1 - this.rain);
+    const nights = Math.min(Math.ceil(total / this.cap), available);
     // 同权重时地铁先上；随后优先覆盖核心锚点。
     const pending = lines.map(line => ({ ...line, remaining: line.quantity })).sort((a, b) =>
       campaign.mediaBias[b.kind] - campaign.mediaBias[a.kind]
@@ -67,10 +67,10 @@ export class ScheduleService {
       for (const batch of result.batches) batch.risk = '档期产能不足，部分数量无法按期上线';
     }
     if (result.batches.length) {
-      const publishDate = result.batches[result.batches.length - 1].publishStartDate;
-      result.notes.push(`多批施工时，统一发布期以最后一批 ${publishDate} 08:00 起算；计费月数沿用已核对库存窗口，实际合同起算需确认。`);
+      const publishDate = result.batches[0].publishStartDate;
+      result.notes.push(`首批 ${result.batches[0].nightDate} 夜间施工，${publishDate} 08:00 起算；预留 ${this.rain} 个雨天顺延夜在档期内，实际合同起算需确认。`);
     }
-    result.notes.push('从档期结束日倒排施工夜，末尾保留雨天与补刊备用夜；备用产能不计入已选数量和报价。');
+    result.notes.push('从档期首日正排施工夜，夜晚施工、次日 08:00 起算；备用产能不计入已选数量和报价。');
     return result;
   }
 }

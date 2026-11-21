@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { state, workbench, generate } from '../state/workbench'
+import { state, workbench, generate, selectBudget } from '../state/workbench'
 import type { PlanFailure } from '../plan/types'
 import { failureTitle } from '../plan/buildVm'
 import InventoryStatus from './InventoryStatus.vue'
@@ -28,7 +28,11 @@ function applySuggestion(text: string) {
     workbench.media = ['bus']
   } else {
     const budget = text.match(/(\d+(?:\.\d+)?)\s*万/)
-    if (budget) workbench.budgetWan = Math.round(Number(budget[1]))
+    // 预算建议直接切到本轮已生成的档位，不重新请求。
+    if (budget && state.range) {
+      selectBudget(Math.round(Number(budget[1])) * 10000)
+      return
+    }
   }
   if (state.meta?.windows[0]) {
     workbench.startDate = state.meta.windows[0].startDate

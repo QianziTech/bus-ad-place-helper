@@ -6,13 +6,6 @@ import { workbench, state, windowVerified } from '../state/workbench'
 import { localScan } from '../plan/sanitize'
 
 const industryItems = computed(() => state.meta?.industries || [])
-const presets = computed(() => state.meta?.budget.presetsYuan || [1000000, 2000000, 5000000])
-const budgetWan = computed({
-  get: () => workbench.budgetWan,
-  set: (value: number) => { workbench.budgetWan = value },
-})
-const minWan = computed(() => Math.round((state.meta?.budget.minYuan || 1000000) / 10000))
-const maxWan = computed(() => Math.round((state.meta?.budget.maxYuan || 5000000) / 10000))
 const mediaList = computed(() => (state.meta?.media || ['bus', 'metro']).map(kind => ({
   value: kind,
   label: kind === 'bus' ? '公交车身' : '地铁出入口',
@@ -35,10 +28,6 @@ function toggleMedia(checked: string[]) {
     return
   }
   workbench.media = checked as ('bus' | 'metro')[]
-}
-
-function setBudgetWan(value: number) {
-  workbench.budgetWan = Math.min(maxWan.value, Math.max(minWan.value, Math.round(value)))
 }
 
 const windowTag = computed(() => {
@@ -85,39 +74,7 @@ function applyWindow(start: string, end: string) {
     <section>
       <h4>投放媒体</h4>
       <a-checkbox-group :value="workbench.media" :options="mediaList" @update:value="toggleMedia" />
-    </section>
-
-    <section>
-      <h4>预算上限</h4>
-      <div class="chips">
-        <span
-          v-for="preset in presets"
-          :key="preset"
-          class="chip-btn"
-          :class="{ active: budgetWan === Math.round(preset / 10000) }"
-          @click="setBudgetWan(preset / 10000)"
-        >{{ Math.round(preset / 10000) }} 万</span>
-      </div>
-      <div class="budget-row">
-        <a-input-number
-          v-model:value="budgetWan"
-          :min="minWan"
-          :max="maxWan"
-          :precision="0"
-          :step="5"
-          addon-after="万元"
-          style="width: 150px"
-        />
-        <a-slider
-          :value="budgetWan"
-          :min="minWan"
-          :max="maxWan"
-          :step="5"
-          style="flex: 1"
-          @update:value="setBudgetWan"
-        />
-      </div>
-      <p class="caption">支持 {{ minWan }}–{{ maxWan }} 万元。</p>
+      <p class="caption">预算在生成后于成品卷首拖动切换，100–500 万元按 1 万元推演。</p>
     </section>
 
     <section>

@@ -1,7 +1,7 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { ArrayMaxSize, ArrayMinSize, ArrayUnique, IsArray, IsIn, IsInt, IsNotEmpty, IsNumber, IsObject, IsString, Max, MaxLength, Min, Validate, ValidateIf, ValidateNested, ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
-import { Campaign, CampaignOverride, INDUSTRIES, IndustryId, MediaKind, PlanRequest, StrategyPreference } from '../../shared/contracts';
+import { Campaign, CampaignOverride, INDUSTRIES, IndustryId, MediaKind, PlanRequest, PipelineRequest, StrategyPreference } from '../../shared/contracts';
 import { isPlanDate } from '../../shared/data/plan-data';
 
 @ValidatorConstraint({ name: 'planDate', async: false })
@@ -129,4 +129,10 @@ export class CreatePlanDto implements PlanRequest {
 
   @ApiPropertyOptional({ maxLength: 2000, description: '可选需求原文，流水线解析为 Campaign；敏感文本由服务端扫描', example: '希望增加通勤人群对新品的认知。' })
   @ValidateIf((_o, value) => value !== undefined) @IsString() @MaxLength(2000) briefText?: string;
+}
+
+/** 流水线请求：省略 budgetYuan 时一次生成 100–500 万元全区间。显式给出时保持单预算契约。 */
+export class GeneratePlanDto extends OmitType(CreatePlanDto, ['budgetYuan'] as const) implements PipelineRequest {
+  @ApiPropertyOptional({ minimum: 1000000, maximum: 5000000, example: 2000000, description: '省略时按滑块全区间生成；给出时只算该金额' })
+  @ValidateIf((_o, value) => value !== undefined) @IsInt() @Min(1000000) @Max(5000000) budgetYuan?: number;
 }

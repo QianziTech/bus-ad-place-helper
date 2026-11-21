@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable, Optional } from '@nestjs/common';
-import { Campaign, Candidate, CandidatePool, Client, Industry, InventoryDetail, MediaKind, PlanAnchor, PlanFailure, PlanLine, PlanRequest, PlanResult, RejectionReason, StrategyPreference, TraceStep } from '../shared/contracts';
+import { BudgetOption, BudgetOptions, Campaign, Candidate, CandidatePool, Client, Industry, InventoryDetail, MediaKind, OptionMedia, PipelineRangeSuccess, PlanAnchor, PlanFailure, PlanLine, PlanRangeBase, PlanRequest, PlanResult, PlanSuccess, PipelineRequest, RejectionReason, StrategyPreference, TraceStep } from '../shared/contracts';
 import { PlanDataService } from '../shared/data/plan-data.service';
 import { ScheduleService } from './schedule.service';
 import { KIND_LABELS, offlineResolution, SOURCE_LABELS, kindStatus, previewRows, type InventoryResolution, type KindInventory } from '../inventory/resolution';
@@ -7,6 +7,8 @@ import { KIND_LABELS, offlineResolution, SOURCE_LABELS, kindStatus, previewRows,
 const kinds: MediaKind[] = ['bus', 'metro'];
 const labels = { bus: '公交', metro: '地铁' };
 export interface EngineOptions { premiumRatio?: number }
+/** 成品预算滑块：100–500 万元，步长 1 万元，100／200／500 万为直达刻度。 */
+export const BUDGET_RANGE: BudgetOptions = { minYuan: 1_000_000, maxYuan: 5_000_000, stepYuan: 10_000, presetsYuan: [1_000_000, 2_000_000, 5_000_000], defaultYuan: 2_000_000 };
 const unique = <T>(values: T[]) => [...new Set(values)];
 const keyOrder = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
 const baseOrder = (a: Candidate, b: Candidate) => b.anchorIds.length - a.anchorIds.length || a.unitEstimateYuan - b.unitEstimateYuan || keyOrder(a.mediaKey, b.mediaKey);
@@ -16,6 +18,12 @@ function publicClient(client: Client): Client {
   return { code: client.code, alias: client.alias, category: client.category, scale: client.scale, ...(client.channelNote === undefined ? {} : { channelNote: client.channelNote }) };
 }
 function failure(status: PlanFailure['status'], message: string, suggestions: string[] = []): PlanFailure { return { status, message, suggestions }; }
+
+/** 候选 → 跨档共用媒体信息；数量与行合计留在各档 budgetOptions 里。 */
+function optionMedia(candidate: Candidate): OptionMedia {
+  const { productionYuan, ...rest } = candidate;
+  return { ...rest, productionUnitYuan: productionYuan };
+}
 
 @Injectable()
 export class EngineService {
@@ -32,7 +40,7 @@ export class EngineService {
     for (const kind of kinds) for (const window of data[kind].windows) windows.set(`${window.startDate}/${window.endDate}`, { startDate: window.startDate, endDate: window.endDate });
     return {
       industries: data.briefs.industries.map(item => ({ id: item.id, name: item.name, client: publicClient(item.client), campaign: structuredClone(item.campaign), anchors: this.summarizeAnchors(item.anchors) })),
-      media: kinds, budget: { minYuan: 1000000, maxYuan: 5000000, presetsYuan: [1000000, 2000000, 5000000] },
+      media: kinds, budget: { minYuan: BUDGET_RANGE.minYuan, maxYuan: BUDGET_RANGE.maxYuan, stepYuan: BUDGET_RANGE.stepYuan, presetsYuan: BUDGET_RANGE.presetsYuan },
       windows: [...windows.values()].sort((a, b) => keyOrder(a.startDate, b.startDate) || keyOrder(a.endDate, b.endDate)),
     };
   }
@@ -210,6 +218,131 @@ export class EngineService {
   generate(request: PlanRequest, pool?: CandidatePool): PlanResult {
     const resolved = pool ?? this.getCandidates(request);
     if (resolved.status !== 'ok') return resolved;
+    return this.assemble(request, resolved);
+  }
+
+  /**
+   * 一次生成覆盖滑块全区间：候选、库存、刊例与策略偏好只算一次，
+   * 每个 1 万元金额点沿用同一分配规则，逐档给出清单、排期与预算分析。
+   */
+  generateRange(request: PipelineRequest, pool: CandidatePool): { status: 'ok'; range: PlanRangeBase; defaultPlan: PlanSuccess } | PlanFailure {
+    const options: BudgetOption[] = [];
+    const selectedKeys = new Set<string>();
+    let previous: PlanSuccess | undefined;
+    let lastChange: { plan: PlanSuccess; budgetYuan: number } | undefined;
+    let firstFailure: PlanFailure | undefined;
+    let low: PlanSuccess | undefined;
+    const outlineOf = (plan: PlanSuccess) => plan.lines.map(line => `${line.mediaKey}:${line.quantity}`).sort().join('|');
+    for (let budgetYuan = BUDGET_RANGE.minYuan; budgetYuan <= BUDGET_RANGE.maxYuan; budgetYuan += BUDGET_RANGE.stepYuan) {
+      const plan = this.assemble({ ...request, budgetYuan }, pool);
+      if (plan.status !== 'ok') {
+        firstFailure ??= plan;
+        options.push({ budgetYuan, status: plan.status, message: plan.message, suggestions: plan.suggestions });
+        continue;
+      }
+      const option: BudgetOption = {
+        budgetYuan, status: 'ok', totalYuan: plan.totalYuan, remainingYuan: plan.remainingYuan, schedule: plan.schedule,
+        lines: plan.lines.map(line => ({ mediaKey: line.mediaKey, quantity: line.quantity, lineTotalYuan: line.lineTotalYuan, ...(line.preferredByAi ? { preferredByAi: true } : {}) })),
+        selectedAnchors: plan.anchors.filter(anchor => anchor.selectedCount > 0).map(anchor => ({ anchorId: anchor.id, selectedCount: anchor.selectedCount })),
+        analysis: this.budgetAnalysis(previous, plan, lastChange),
+      };
+      low ??= plan;
+      for (const line of plan.lines) selectedKeys.add(line.mediaKey);
+      // 记录最近一次组合真正变化的档位，供后续档位对比，避免每档只写「+1 万」。
+      if (!lastChange || outlineOf(lastChange.plan) !== outlineOf(plan)) lastChange = { plan, budgetYuan };
+      options.push(option);
+      previous = plan;
+    }
+    // 整个区间都不可成案时才沿用现有失败状态；部分金额不可行仍返回全区间，失败金额保留原因。
+    if (!low) return firstFailure!;
+    // 共用媒体信息只收录任一金额实际用到的资源，不把整个候选池打进响应。
+    const mediaByKey: Record<string, OptionMedia> = {};
+    for (const candidate of pool.candidates) if (selectedKeys.has(candidate.mediaKey)) mediaByKey[candidate.mediaKey] = optionMedia(candidate);
+    const defaultYuan = this.defaultBudget(request, options);
+
+    // 默认金额取自可行档，assemble 结果必然可行；不可行档已在上面记入 budgetOptions。
+    const defaultPlan = (defaultYuan === low.request.budgetYuan ? low : this.assemble({ ...request, budgetYuan: defaultYuan }, pool)) as PlanSuccess;
+    const anchors = pool.anchors.map(anchor => ({
+      ...anchor, ...(this.planData.data.coverage.anchorsById[anchor.id]?.coord ? { coord: structuredClone(this.planData.data.coverage.anchorsById[anchor.id].coord) } : {}),
+    }));
+    return {
+      status: 'ok',
+      defaultPlan,
+      range: {
+        status: 'ok', request: { ...structuredClone(request) }, client: low.client, campaign: low.campaign,
+        billingMonths: low.billingMonths, billingStatus: low.billingStatus, inventory: low.inventory, queriedAt: low.queriedAt,
+        assumptions: low.assumptions, notices: low.notices, trace: low.trace, ...(low.strategyPreferences ? { strategyPreferences: low.strategyPreferences } : {}),
+        // defaultYuan 取实际采用的默认金额（建议预算归入区间后的最近可行档），供滑块定位。
+        anchors, budget: { ...structuredClone(BUDGET_RANGE), defaultYuan }, budgetOptions: options, mediaByKey,
+      },
+    };
+  }
+
+  /** 默认金额取 Campaign 建议预算归入区间并取整万元；不可成案时取最近可行金额，同距取较低值。 */
+  private defaultBudget(request: PipelineRequest, options: BudgetOption[]): number {
+    const hint = request.campaignOverride?.budgetHintYuan ?? this.industryCampaign(request)?.budgetHintYuan ?? BUDGET_RANGE.defaultYuan;
+    const clamped = Math.min(BUDGET_RANGE.maxYuan, Math.max(BUDGET_RANGE.minYuan, hint));
+    const snapped = BUDGET_RANGE.minYuan + Math.round((clamped - BUDGET_RANGE.minYuan) / BUDGET_RANGE.stepYuan) * BUDGET_RANGE.stepYuan;
+    const feasible = options.filter(option => option.status === 'ok');
+    if (!feasible.length) return snapped;
+    if (options.find(option => option.budgetYuan === snapped)?.status === 'ok') return snapped;
+    return feasible.reduce((best, option) => {
+      const distance = Math.abs(option.budgetYuan - snapped);
+      const bestDistance = Math.abs(best.budgetYuan - snapped);
+      return distance < bestDistance || (distance === bestDistance && option.budgetYuan < best.budgetYuan) ? option : best;
+    }).budgetYuan;
+  }
+
+  private industryCampaign(request: PipelineRequest) {
+    return this.planData.data.briefs.industries.find(item => item.id === request.industry)?.campaign;
+  }
+
+  /** 用同轮真实结果解释本档相对上一档的线路增减、金额差异、覆盖取舍与余量原因。 */
+  private budgetAnalysis(previous: PlanSuccess | undefined, plan: PlanSuccess, lastChange?: { plan: PlanSuccess; budgetYuan: number }): string[] {
+    const label = (origin: PlanSuccess, mediaKey: string) => {
+      const media = origin.lines.find(item => item.mediaKey === mediaKey);
+      return media ? `${media.kind === 'bus' ? '公交' : '地铁'} ${media.name}` : mediaKey;
+    };
+    const wan = (yuan: number) => `${(Math.round(yuan / 1000) / 10).toFixed(1)} 万`;
+    const total = plan.totalYuan;
+    if (!previous) {
+      return [`区间下限 ${wan(plan.request.budgetYuan)}：按最低媒体组合起步，余量 ${wan(plan.remainingYuan)}。`,
+        `本档共 ${plan.lines.length} 条资源，分配总额 ${wan(total)}。`];
+    }
+    const outline = (item: PlanSuccess) => item.lines.map(line => `${line.mediaKey}:${line.quantity}`).sort().join('|');
+    const unchanged = outline(previous) === outline(plan);
+    // 1 万元步长内的多数档位与上一档完全相同：只说余量变化，不重复「线路与数量不变」。
+    if (unchanged) return [`与 ${wan(previous.request.budgetYuan)} 相比线路与数量不变，余量 ${wan(previous.remainingYuan)}→${wan(plan.remainingYuan)}。`];
+    // 有变化时与上一次变化档对比，避免每档都只写「+1 万」的增量噪声。
+    const base = lastChange && outline(lastChange.plan) !== outline(plan) ? lastChange.plan : previous;
+    const baseBudget = base === previous ? previous.request.budgetYuan : lastChange!.budgetYuan;
+    const before = new Map(base.lines.map(line => [line.mediaKey, line.quantity]));
+    const after = new Map(plan.lines.map(line => [line.mediaKey, line.quantity]));
+    const added = [...after.keys()].filter(key => !before.has(key));
+    const removed = [...before.keys()].filter(key => !after.has(key));
+    const changed = [...after.entries()].filter(([key, quantity]) => before.has(key) && before.get(key) !== quantity);
+    const parts: string[] = [`较 ${wan(baseBudget)} 增加 ${wan(plan.request.budgetYuan - baseBudget)}：`];
+    if (added.length) parts.push(`新增 ${added.map(key => `${label(plan, key)} ×${after.get(key)}`).join('、')}`);
+    if (removed.length) parts.push(`${added.length ? '；同时' : ''}退出 ${removed.map(key => `${label(base, key)} ×${before.get(key)}`).join('、')}`);
+    if (changed.length) parts.push(`${added.length || removed.length ? '；其余' : ''}${changed.slice(0, 4).map(([key, quantity]) => `${label(plan, key)} ${before.get(key)}→${quantity}`).join('、')}${changed.length > 4 ? ` 等 ${changed.length} 项` : ''}`);
+    const delta = plan.totalYuan - base.totalYuan;
+    const analysis = [parts.join('') + `；总额 ${delta >= 0 ? '+' : '-'}${wan(Math.abs(delta))}。`];
+    const beforeAnchors = new Set(base.anchors.filter(anchor => anchor.selectedCount > 0).map(anchor => anchor.id));
+    const afterAnchors = plan.anchors.filter(anchor => anchor.selectedCount > 0);
+    const entered = afterAnchors.filter(anchor => !beforeAnchors.has(anchor.id));
+    const left = base.anchors.filter(anchor => anchor.selectedCount > 0 && !plan.anchors.find(item => item.id === anchor.id && item.selectedCount > 0));
+    if (entered.length || left.length) analysis.push(['覆盖取舍：', entered.length ? `纳入 ${entered.map(anchor => anchor.areaName).join('、')}` : '', left.length ? `退出 ${left.map(anchor => anchor.areaName).join('、')}` : ''].filter(Boolean).join(' '));
+    if (base.schedule.batches.length !== plan.schedule.batches.length) analysis.push(`施工批次由 ${base.schedule.batches.length} 批变为 ${plan.schedule.batches.length} 批。`);
+    const cheapest = Math.min(...plan.lines.map(line => line.unitEstimateYuan));
+    // 余量不足以再加一个最便宜单位是常态；只有「够加却加不进去」才说明受库存而非预算限制。
+    if (plan.remainingYuan >= cheapest) {
+      const exhausted = plan.lines.every(line => line.quantity >= line.freeCount);
+      analysis.push(`余量 ${wan(plan.remainingYuan)} 仍可覆盖 ${Math.floor(plan.remainingYuan / cheapest)} 个最低单位（${wan(cheapest)}），${exhausted ? '但本轮入选资源本档期可售量已用尽，数量不再增加' : '数量按溢价上限与证据规则继续向下分配'}。`);
+    }
+    return analysis;
+  }
+  /** 单预算分配：候选池已确定时只做策略核对、数量、计价与排期。 */
+  private assemble(request: PlanRequest, resolved: CandidatePool): PlanResult {
     const candidates = [...resolved.candidates].sort(baseOrder);
     const selectedKinds = kinds.filter(kind => request.media.includes(kind));
     const quantities = new Map<string, number>();

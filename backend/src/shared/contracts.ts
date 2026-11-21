@@ -52,6 +52,8 @@ export interface PlanData { bus: MediaData; metro: MediaData; pricing: { pricesB
 export type RejectionReason = 'unknown_media' | 'no_stock' | 'over_budget' | 'premium_exceeded' | 'invalid_evidence';
 export interface StrategyPreference { mediaKey: string; reason: string; evidenceRefs: string[]; disposition?: 'accepted' | `rejected:${RejectionReason}` }
 export interface PlanRequest { industry: IndustryId; budgetYuan: number; media: MediaKind[]; startDate: string; endDate: string; campaignOverride?: CampaignOverride; strategyPreferences?: StrategyPreference[]; briefText?: string }
+/** 流水线请求：省略 budgetYuan 时按滑块全区间生成。 */
+export type PipelineRequest = Omit<PlanRequest, 'budgetYuan'> & { budgetYuan?: number };
 export interface Candidate {
   mediaKey: string; kind: MediaKind; name: string; levelName: string; mediaForm?: string; exit?: string; total?: number;
   freeCount: number; contractCount?: number; reservedCount?: number;
@@ -71,6 +73,47 @@ export interface PlanCopy { headline: string; brandContext: string; strategyLine
 export interface Round { round: number; candidateCount: number; preferredCount: number; acceptedCount: number; rejected: { mediaKey: string; reason: RejectionReason }[]; requestReplan: boolean; elapsedMs: number }
 export interface Degraded { stage: 'brief' | 'strategy' | 'copy' | 'verify'; reason: string }
 export interface PipelineSuccess extends PlanSuccess { copy: PlanCopy; checks: Check[]; rounds: Round[]; degraded: Degraded[]; exportAllowed: boolean; mediaObjective?: string; windowFit?: { status: 'aligned' | 'risk' | 'unknown'; reason: string; evidenceRefs: string[] }; measurement?: { kpi: string; proof: string } }
+/** 预算滑块刻度与默认金额；100–500 万元按 1 万元步长。 */
+export interface BudgetOptions { minYuan: number; maxYuan: number; stepYuan: number; presetsYuan: number[]; defaultYuan: number }
+/** 跨档共用的媒体静态信息：线路、点位、报价依据、证据、轨迹与客流参考，不随预算变化。 */
+export interface OptionMedia {
+  mediaKey: string; kind: MediaKind; name: string; levelName: string; mediaForm?: string; exit?: string; total?: number;
+  freeCount: number; contractCount?: number; reservedCount?: number;
+  monthlyLowYuan: number; monthlyHighYuan: number; productionUnitYuan: number; unitEstimateYuan: number;
+  anchorIds: string[]; evidenceRefs: string[]; reasons: string[]; sources: string[]; assumptions: string[]; trafficReference?: TrafficReference; trajectory?: Trajectory;
+}
+/** 单个预算上限下的成案行：数量与金额随预算变化，其余字段取 mediaByKey。 */
+export interface OptionLine { mediaKey: string; quantity: number; lineTotalYuan: number; preferredByAi?: boolean }
+/** 单个预算上限的成案结果；不可行时给出对应失败状态与原因。 */
+export interface BudgetOption {
+  budgetYuan: number;
+  status: 'ok' | PlanFailure['status'];
+  message?: string;
+  suggestions?: string[];
+  lines?: OptionLine[];
+  /** 仅列出该金额下命中的锚点及其选中数。 */
+  selectedAnchors?: { anchorId: string; selectedCount: number }[];
+  schedule?: Schedule;
+  totalYuan?: number;
+  remainingYuan?: number;
+  /** 该金额相对上一可行金额的线路增减、金额差异、批次变化与余量原因。 */
+  analysis?: string[];
+}
+export interface RangeAnchor extends AnchorSummary { coord?: { lng: number; lat: number; exit: string; source: string } }
+/** 引擎产出的全区间结果：共用客户、Campaign、库存与逐档结果。 */
+export interface PlanRangeBase {
+  status: 'ok'; request: PipelineRequest; client: Client; campaign: Campaign;
+  billingMonths: number; billingStatus: 'confirmed' | 'pending'; inventory: InventoryDetail; queriedAt: string;
+  anchors: RangeAnchor[]; budget: BudgetOptions; budgetOptions: BudgetOption[]; mediaByKey: Record<string, OptionMedia>;
+  assumptions: string[]; notices: string[]; trace: TraceStep[]; strategyPreferences?: StrategyPreference[];
+}
+/** 省略 budgetYuan 时的流水线结果：默认金额的完整成案 + 逐档结果，一次生成后滑块切换不再请求。 */
+export interface PipelineRangeSuccess extends Omit<PipelineSuccess, 'request' | 'lines' | 'anchors' | 'schedule' | 'totalYuan' | 'remainingYuan'>, Omit<PlanRangeBase, 'status'> {
+  request: PipelineRequest;
+  industryName: string;
+  /** 默认金额对应的完整成案；滑块初始位置直接渲染它。 */
+  defaultPlan: PipelineSuccess;
+}
 export interface AnalysisContext { mode: AnalysisMode; deadline: number; config: RuntimeConfig }
 export interface RuntimeConfig { mode: AnalysisMode; llm: { provider: string; baseUrl: string; model: string; timeoutMs: number; retries: number; temperature: number; apiKey?: string }; includeHistoricalProfiles: boolean; updatedAt: string; source: 'file' | 'environment' }
 export interface StrategyResult { status: 'ok' | 'disabled' | 'unavailable'; strategyPreferences: StrategyPreference[]; mediaObjective: string; requestReplan: boolean; replanReason?: string; windowFit?: { status: 'aligned' | 'risk' | 'unknown'; reason: string; evidenceRefs: string[] }; measurement?: { kpi: string; proof: string }; reason?: string }

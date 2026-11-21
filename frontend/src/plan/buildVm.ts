@@ -30,6 +30,8 @@ export interface PlanVmLine {
   preferredByAi: boolean
   anchorIds: string[]
   traffic?: TrafficReference
+  /** 线路走向；同一线路多种媒体形式共用一份。 */
+  trajectory?: { crs?: string; lengthKm?: number; polyline: [number, number][] }
 }
 
 export interface PlanVmAnchor {
@@ -207,6 +209,7 @@ function normalizeLines(lines: PlanLine[]): PlanVmLine[] {
       preferredByAi: Boolean(line.preferredByAi),
       anchorIds: [],
       traffic: line.trafficReference,
+      ...(line.trajectory ? { trajectory: line.trajectory } : {}),
     }))
     .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'metro' ? -1 : 1) || b.lineTotalYuan - a.lineTotalYuan)
 }
@@ -231,19 +234,22 @@ export function buildVm(input: {
   if (!anchors.length) anchors = fallbackAnchors(plan)
   const planAnchors: PlanAnchor[] = plan.anchors || []
   if (planAnchors.length) {
-    anchors = planAnchors.map(item => ({
-      id: item.id,
-      areaName: item.areaName,
-      station: item.station,
-      role: item.role,
-      rationale: item.rationale,
-      busCount: item.candidateCounts?.bus ?? null,
-      metroCount: item.candidateCounts?.metro ?? null,
-      selectedCount: item.selectedCount ?? 0,
-      coord: input.anchorsById?.[item.id]?.coord
-        ? { lng: input.anchorsById[item.id].coord.lng, lat: input.anchorsById[item.id].coord.lat, exit: input.anchorsById[item.id].coord.exit }
-        : undefined,
-    }))
+    anchors = planAnchors.map(item => {
+      // 全区间结果在锚点上直接带代表点；单预算结果从数据层补。
+      const coord = (item as PlanAnchor & { coord?: { lng: number; lat: number; exit: string; source: string } }).coord
+        ?? input.anchorsById?.[item.id]?.coord
+      return {
+        id: item.id,
+        areaName: item.areaName,
+        station: item.station,
+        role: item.role,
+        rationale: item.rationale,
+        busCount: item.candidateCounts?.bus ?? null,
+        metroCount: item.candidateCounts?.metro ?? null,
+        selectedCount: item.selectedCount ?? 0,
+        coord: coord ? { lng: coord.lng, lat: coord.lat, exit: coord.exit } : undefined,
+      }
+    })
   }
   // 选中数按覆盖证据（coverage:<anchorId>:<mediaKey>）归属，避免同名商圈误并。
   for (const anchor of anchors) {

@@ -253,7 +253,7 @@ test('known campaign area constraints require geographic evidence and do not tre
   assert.equal(unknownArea.status, 'missing_data');
 });
 
-test('schedules allocate all quantities with nightly caps, cumulative totals and next-day publishing', () => {
+test('schedules allocate the whole window forward from the day before start with nightly caps', () => {
   const result = engine(data(), new ScheduleService({ singleNightCap: 4 })).generate(request());
   ok(result);
   assert.equal(result.schedule.status, 'ok');
@@ -264,8 +264,11 @@ test('schedules allocate all quantities with nightly caps, cumulative totals and
     cumulative += batch.quantity;
     assert.equal(batch.cumulative, cumulative);
     assert.equal(Date.parse(batch.publishStartDate) - Date.parse(batch.nightDate), 86400000);
-    assert.ok(batch.nightDate >= dates.startDate && batch.publishStartDate <= dates.endDate);
+    // 正排：首批施工夜在档期首日前一晚，发布起算不晚于档期首日，批次不越出档期。
+    assert.ok(batch.nightDate < dates.endDate && batch.publishStartDate <= dates.endDate);
   }
+  assert.equal(result.schedule.batches[0].nightDate, '2027-06-30');
+  assert.equal(result.schedule.batches[0].publishStartDate, dates.startDate);
   assert.equal(result.schedule.batches[0].mediaKeys[0], metro);
   assert.equal(result.schedule.rainBufferNights, 2);
   assert.equal(result.schedule.compensationBufferQty, 2);

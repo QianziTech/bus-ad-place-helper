@@ -106,6 +106,9 @@ export interface PlanRequest {
   briefText?: string
 }
 
+/** 流水线请求：省略 budgetYuan 时由后端一次生成 100–500 万元全区间。 */
+export type PipelineRequest = Omit<PlanRequest, 'budgetYuan'> & { budgetYuan?: number }
+
 export interface Candidate {
   mediaKey: string
   kind: MediaKind
@@ -127,6 +130,8 @@ export interface Candidate {
   sources: string[]
   assumptions: string[]
   trafficReference?: TrafficReference
+  /** 线路走向；同一线路多种媒体形式共用一份。后端有数据时才返回。 */
+  trajectory?: { crs?: string; lengthKm?: number; bbox?: number[]; polyline: [number, number][] }
 }
 
 export interface PlanLine extends Omit<Candidate, 'anchorIds' | 'assumptions'> {
@@ -283,6 +288,67 @@ export interface PipelineSuccess extends PlanSuccess {
 }
 
 export type PipelineResult = PipelineSuccess | PlanFailure
+
+/** 预算滑块刻度：100–500 万元，步长 1 万元，100／200／500 万为直达刻度。 */
+export interface BudgetOptions { minYuan: number; maxYuan: number; stepYuan: number; presetsYuan: number[]; defaultYuan: number }
+
+export interface OptionMedia {
+  mediaKey: string
+  kind: MediaKind
+  name: string
+  levelName: string
+  mediaForm?: string
+  exit?: string
+  total?: number
+  freeCount: number
+  contractCount?: number
+  reservedCount?: number
+  monthlyLowYuan: number
+  monthlyHighYuan: number
+  productionUnitYuan: number
+  unitEstimateYuan: number
+  anchorIds: string[]
+  evidenceRefs: string[]
+  reasons: string[]
+  sources: string[]
+  assumptions: string[]
+  trafficReference?: TrafficReference
+  trajectory?: { crs?: string; lengthKm?: number; bbox?: number[]; polyline: [number, number][] }
+}
+
+export interface OptionLine { mediaKey: string; quantity: number; lineTotalYuan: number; preferredByAi?: boolean }
+
+export interface BudgetOption {
+  budgetYuan: number
+  status: 'ok' | PlanStatus
+  message?: string
+  suggestions?: string[]
+  lines?: OptionLine[]
+  selectedAnchors?: { anchorId: string; selectedCount: number }[]
+  schedule?: Schedule
+  totalYuan?: number
+  remainingYuan?: number
+  analysis?: string[]
+}
+
+/** 全区间结果里的锚点：后端只给摘要与代表点，selectedCount 由当前档位推出。 */
+export interface RangeAnchor extends Omit<PlanAnchor, 'selectedCount'> {
+  selectedCount: number
+  coord?: { lng: number; lat: number; exit: string; source: string }
+}
+
+/** 省略 budgetYuan 的全区间结果：共用字段 + defaultPlan 完整成案 + 逐档结果。 */
+export interface PipelineRangeSuccess extends Omit<PipelineSuccess, 'request' | 'lines' | 'totalYuan' | 'remainingYuan' | 'schedule'> {
+  request: PipelineRequest
+  industryName: string
+  budget: BudgetOptions
+  budgetOptions: BudgetOption[]
+  mediaByKey: Record<string, OptionMedia>
+  anchors: RangeAnchor[]
+  defaultPlan: PipelineSuccess
+}
+
+export type PipelineResponse = PipelineSuccess | PipelineRangeSuccess | PlanFailure
 
 export interface MetaIndustry {
   id: IndustryId

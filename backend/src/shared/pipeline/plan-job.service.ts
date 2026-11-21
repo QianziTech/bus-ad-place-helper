@@ -1,11 +1,12 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
-import { PipelineSuccess, PlanFailure, PlanRequest } from '../contracts';
+import { PipelineSuccess, PipelineRangeSuccess, PlanFailure, PipelineRequest } from '../contracts';
 import { PlanPipelineService } from './plan-pipeline.service';
 
+type PlanResultBody = PipelineSuccess | PipelineRangeSuccess | PlanFailure;
 type PlanJob = { id: string } & (
   { status: 'running' }
-  | { status: 'completed'; result: PipelineSuccess | PlanFailure }
+  | { status: 'completed'; result: PlanResultBody }
   | { status: 'failed'; message: string }
 );
 
@@ -18,7 +19,7 @@ export class PlanJobService {
 
   constructor(private readonly pipeline: PlanPipelineService) {}
 
-  start(input: PlanRequest): { id: string } {
+  start(input: PipelineRequest): { id: string } {
     const id = randomUUID();
     this.jobs.set(id, { id, status: 'running' });
     void this.generate(id, input);
@@ -31,7 +32,7 @@ export class PlanJobService {
     return job;
   }
 
-  private async generate(id: string, input: PlanRequest): Promise<void> {
+  private async generate(id: string, input: PipelineRequest): Promise<void> {
     try {
       const result = await this.pipeline.generate(input);
       this.jobs.set(id, { id, status: 'completed', result });

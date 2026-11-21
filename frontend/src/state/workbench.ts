@@ -1,10 +1,12 @@
-/** 工作台状态：参数、meta、两次结果、失败、五阶段与降级。所有请求走同一 composable。 */
+/** 工作台状态：参数、meta、本轮全区间结果、当前金额、失败、五阶段与降级。所有请求走同一 composable。 */
 import { computed, reactive, ref } from 'vue'
 import { api, ApiError, type ScanHit } from '../api/client'
 import type {
-  CampaignOverride, IndustryId, MediaKind, Meta, MetaIndustry, PipelineResult, PlanSuccess, PlanFailure,
+  CampaignOverride, IndustryId, MediaKind, Meta, MetaIndustry, PipelineResponse, PipelineRangeSuccess, PipelineSuccess,
+  PlanSuccess, PlanFailure,
 } from '../plan/types'
 import { diffLines, failureTitle, type DiffEntry } from '../plan/buildVm'
+import { initialBudget, planForBudget } from '../plan/range'
 
 export interface StageState {
   key: 'candidates' | 'strategy' | 'engine' | 'copy' | 'verify'
@@ -23,7 +25,6 @@ const stageDefaults: StageState[] = [
 
 export const workbench = reactive({
   industry: 'food' as IndustryId,
-  budgetWan: 200,
   media: ['bus', 'metro'] as MediaKind[],
   startDate: '',
   endDate: '',
@@ -36,7 +37,11 @@ export const state = reactive({
   metaError: '',
   mode: 'mock' as 'off' | 'mock' | 'live',
   loading: false,
-  result: null as PipelineResult | null,
+  result: null as PipelineResponse | null,
+  /** 本轮全区间结果；成品内滑块只读它，不再发请求。 */
+  range: null as PipelineRangeSuccess | null,
+  /** 成品当前金额（元）；默认由建议预算归入区间后取最近可行值。 */
+  selectedYuan: 2000000,
   prevSuccess: null as PlanSuccess | null,
   failure: null as PlanFailure | null,
   networkError: '',
@@ -52,14 +57,21 @@ export const state = reactive({
 
 let controller: AbortController | null = null
 
+/** 本轮结果在当前金额下的完整成案；不可成案时为 null，原因由 currentOption 提供。 */
 export const currentSuccess = computed<PlanSuccess | null>(() => {
   if (state.showBaseline && state.baseline) return state.baseline
-  if (state.result && state.result.status === 'ok') return state.result
+  if (state.range) return planForBudget(state.range, state.selectedYuan)
+  if (state.result && state.result.status === 'ok' && 'lines' in state.result) return state.result as PipelineSuccess
   // 失败时不清空上一版方案，只加遮罩提示，避免演示时白屏。
   return state.prevSuccess
 })
+/** 当前金额的档位结果；不可成案时带 status / message / suggestions。 */
+export const currentOption = computed(() => state.range?.budgetOptions.find(option => option.budgetYuan === state.selectedYuan) || null)
 export const currentFailure = computed<PlanFailure | null>(() => {
   if (state.showBaseline && state.baseline) return null
+  if (state.range && currentOption.value && currentOption.value.status !== 'ok') {
+    return { status: currentOption.value.status as PlanFailure['status'], message: currentOption.value.message || '该金额没有可行组合', suggestions: currentOption.value.suggestions || [] }
+  }
   return state.result && state.result.status !== 'ok' ? state.result : null
 })
 
@@ -120,10 +132,10 @@ function markStage(key: StageState['key'], status: StageState['status'], detail 
   }
 }
 
+/** 生成请求不再带预算：后端一次返回 100–500 万元全区间。 */
 function buildRequest() {
   const payload: Record<string, unknown> = {
     industry: workbench.industry,
-    budgetYuan: Math.round(workbench.budgetWan) * 10000,
     media: [...workbench.media],
     startDate: workbench.startDate,
     endDate: workbench.endDate,
@@ -133,21 +145,25 @@ function buildRequest() {
   return payload
 }
 
-function fillStageDetails(result: PipelineResult) {
+function fillStageDetails(result: PipelineResponse) {
   if (result.status !== 'ok') {
     markStage('engine', 'failed', failureTitle(result.status))
     return
   }
+  const range = 'budgetOptions' in result ? result : null
+  const current = currentSuccess.value
   const rounds = result.rounds || []
   const first = rounds[0]
-  const busCount = result.lines.filter(line => line.kind === 'bus').length
-  const metroCount = result.lines.filter(line => line.kind === 'metro').length
-  markStage('candidates', 'done', `${first?.candidateCount ?? result.lines.length} 条候选（公交 ${busCount} · 地铁 ${metroCount}）`)
+  const busCount = current?.lines.filter(line => line.kind === 'bus').length ?? 0
+  const metroCount = current?.lines.filter(line => line.kind === 'metro').length ?? 0
+  markStage('candidates', 'done', `${first?.candidateCount ?? (current?.lines.length ?? 0)} 条候选（公交 ${busCount} · 地铁 ${metroCount}）`)
   const skipped = result.degraded?.some(item => item.stage === 'strategy')
   if (state.mode === 'off') markStage('strategy', 'skipped', '使用规则推荐')
   else if (skipped) markStage('strategy', 'failed', `已使用基础方案：${result.degraded?.find(item => item.stage === 'strategy')?.reason || 'AI 暂不可用'}`)
   else markStage('strategy', 'done', `采用 ${rounds.reduce((sum, item) => sum + item.acceptedCount, 0)} 项推荐 · ${rounds.reduce((sum, item) => sum + item.rejected.length, 0)} 项未采用`)
-  markStage('engine', 'done', `${result.lines.reduce((sum, line) => sum + line.quantity, 0)} 台/个 · ${(result.totalYuan / 10000).toFixed(1)} 万（余量 ${(result.remainingYuan / 10000).toFixed(1)} 万）`)
+  markStage('engine', 'done', range
+    ? `已生成 ${range.budgetOptions.filter(option => option.status === 'ok').length}/${range.budgetOptions.length} 个金额档 · 当前 ${(state.selectedYuan / 10000).toFixed(0)} 万（余量 ${((current?.remainingYuan ?? 0) / 10000).toFixed(1)} 万）`
+    : `${current?.lines.reduce((sum, line) => sum + line.quantity, 0) ?? 0} 台/个 · ${((current?.totalYuan ?? 0) / 10000).toFixed(1)} 万（余量 ${((current?.remainingYuan ?? 0) / 10000).toFixed(1)} 万）`)
   if (state.mode === 'off') markStage('copy', 'skipped', '使用模板文案')
   else if (result.degraded?.some(item => item.stage === 'copy')) markStage('copy', 'failed', `已使用模板文案：${result.degraded.find(item => item.stage === 'copy')?.reason}`)
   else markStage('copy', 'done', result.copy?.source === 'template' ? '模板文案' : '方案文案已完成')
@@ -173,12 +189,14 @@ export async function generate() {
     if (requestController.signal.aborted) return
     const elapsed = Math.round(performance.now() - started)
     state.lastQueryMs = elapsed
-    if (state.result && state.result.status === 'ok') state.prevSuccess = state.result
+    if (currentSuccess.value) state.prevSuccess = currentSuccess.value
     state.result = result
+    state.range = result.status === 'ok' && 'budgetOptions' in result ? result : null
+    if (state.range) state.selectedYuan = initialBudget(state.range)
     state.baseline = null
     state.showBaseline = false
     if (result.status === 'ok') {
-      state.diff = diffLines(state.prevSuccess, result)
+      state.diff = diffLines(state.prevSuccess, currentSuccess.value)
       state.failure = null
       state.generatedAt = Date.now()
     } else {
@@ -206,16 +224,28 @@ export async function generate() {
   }
 }
 
-/** 「只看基础分配」：同一参数走 /api/plan（不带 strategyPreferences）。 */
+/** 成品内切换金额：只读本轮结果，不发请求、不重算。 */
+export function selectBudget(budgetYuan: number) {
+  if (!state.range) return
+  const option = state.range.budgetOptions.find(item => item.budgetYuan === budgetYuan)
+  if (!option) return
+  state.selectedYuan = budgetYuan
+  state.showBaseline = false
+  state.baseline = null
+  state.diff = diffLines(state.prevSuccess, planForBudget(state.range, budgetYuan))
+  state.failure = option.status === 'ok' ? null : { status: option.status as PlanFailure['status'], message: option.message || '该金额没有可行组合', suggestions: option.suggestions || [] }
+}
+
+/** 「只看基础分配」：同一参数走 /api/plan（不带 strategyPreferences），预算取当前金额。 */
 export async function loadBaseline() {
-  if (!state.result || state.result.status !== 'ok') return
+  if (!currentSuccess.value) return
   try {
-    const request = { ...buildRequest() }
+    const request = { ...buildRequest(), budgetYuan: state.selectedYuan }
     const baseline = await api.plan(request)
-    if (baseline.status === 'ok') {
-      state.baseline = baseline
+    if (baseline.status === 'ok' && 'lines' in baseline) {
+      state.baseline = baseline as PlanSuccess
       state.showBaseline = true
-      state.diff = diffLines(state.result, baseline)
+      state.diff = diffLines(currentSuccess.value, state.baseline)
     }
   } catch (error) {
     state.networkError = error instanceof Error ? error.message : '基础分配请求失败'
@@ -225,11 +255,11 @@ export async function loadBaseline() {
 export function restoreAi() {
   state.showBaseline = false
   state.baseline = null
-  state.diff = diffLines(state.prevSuccess, state.result && state.result.status === 'ok' ? state.result : null)
+  state.diff = diffLines(state.prevSuccess, state.range ? planForBudget(state.range, state.selectedYuan) : null)
 }
 
 export function clearCompare() {
-  state.prevSuccess = state.result && state.result.status === 'ok' ? state.result : null
+  state.prevSuccess = state.range ? planForBudget(state.range, state.selectedYuan) : (state.result && state.result.status === 'ok' && 'lines' in state.result ? state.result as PipelineSuccess : null)
   state.diff = []
 }
 

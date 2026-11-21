@@ -1,4 +1,4 @@
-import type { Meta, PlanFailure, PipelineResult, PublicConfig } from '../plan/types'
+import type { Meta, PipelineResponse, PublicConfig } from '../plan/types'
 
 export class ApiError extends Error {
   constructor(message: string, readonly status?: number, readonly body?: unknown) {
@@ -24,7 +24,7 @@ export interface ScanHit {
 
 type PlanJob =
   | { status: 'running' }
-  | { status: 'completed'; result: PipelineResult }
+  | { status: 'completed'; result: PipelineResponse }
   | { status: 'failed'; message: string }
 
 async function request<T>(path: string, init: RequestInit = {}, signal?: AbortSignal): Promise<T> {
@@ -49,7 +49,7 @@ export const api = {
   meta(signal?: AbortSignal) {
     return request<Meta>('/meta', { method: 'GET' }, signal)
   },
-  async generate(body: Record<string, unknown>, signal?: AbortSignal): Promise<PipelineResult> {
+  async generate(body: Record<string, unknown>, signal?: AbortSignal): Promise<PipelineResponse> {
     const { id } = await request<{ id: string }>('/plan/jobs', { method: 'POST', body: JSON.stringify(body) }, signal)
     for (;;) {
       const job = await request<PlanJob>(`/plan/jobs/${encodeURIComponent(id)}`, {}, signal)
@@ -59,7 +59,7 @@ export const api = {
     }
   },
   plan(body: Record<string, unknown>, signal?: AbortSignal) {
-    return request<PipelineResult | PlanFailure>('/plan', { method: 'POST', body: JSON.stringify(body) }, signal)
+    return request<PipelineResponse>('/plan', { method: 'POST', body: JSON.stringify(body) }, signal)
   },
   verify(body: Record<string, unknown>) {
     return request<{ status: string; checks: unknown[]; exportAllowed?: boolean }>('/plan/verify', { method: 'POST', body: JSON.stringify(body) })

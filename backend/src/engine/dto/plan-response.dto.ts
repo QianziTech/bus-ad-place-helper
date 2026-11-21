@@ -153,7 +153,9 @@ export class MetaIndustryDto {
 export class BudgetDto {
   @ApiProperty({ example: 1000000 }) minYuan!: number;
   @ApiProperty({ example: 5000000 }) maxYuan!: number;
+  @ApiProperty({ example: 10000, description: '滑块步长，元' }) stepYuan!: number;
   @ApiProperty({ type: [Number], example: [1000000, 2000000, 5000000] }) presetsYuan!: number[];
+  @ApiPropertyOptional({ example: 2000000, description: '默认展示金额；建议金额不可成案时为最近可行金额。仅全区间生成结果带此字段' }) defaultYuan?: number;
 }
 export class InventoryDatesDto {
   @ApiProperty({ format: 'date' }) startDate!: string;
