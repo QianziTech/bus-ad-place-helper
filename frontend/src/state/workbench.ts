@@ -160,15 +160,17 @@ function fillStageDetails(result: PipelineResult) {
 export async function generate() {
   if (!workbench.media.length) return
   controller?.abort()
-  controller = new AbortController()
+  const requestController = new AbortController()
+  controller = requestController
   state.loading = true
   state.networkError = ''
   state.scanHits = []
   resetStages()
-  markStage('candidates', 'running', '读取档期库存与刊例…')
+  markStage('candidates', 'running', '正在后台生成方案…')
   const started = performance.now()
   try {
-    const result = await api.generate(buildRequest(), controller.signal)
+    const result = await api.generate(buildRequest(), requestController.signal)
+    if (requestController.signal.aborted) return
     const elapsed = Math.round(performance.now() - started)
     state.lastQueryMs = elapsed
     if (state.result && state.result.status === 'ok') state.prevSuccess = state.result
@@ -185,7 +187,7 @@ export async function generate() {
     }
     fillStageDetails(result)
   } catch (error) {
-    if (error instanceof DOMException && error.name === 'AbortError') return
+    if (requestController.signal.aborted) return
     if (error instanceof ApiError && error.scanChecks.length) {
       // 入口拦截：原文命中实名或成交价，展示替换建议并保留原文供修改。
       state.scanHits = error.scanChecks
@@ -197,7 +199,10 @@ export async function generate() {
     markStage('candidates', 'failed', state.networkError)
     state.stages.filter(stage => stage.status === 'idle').forEach(stage => { stage.status = 'skipped' })
   } finally {
-    state.loading = false
+    if (controller === requestController) {
+      controller = null
+      state.loading = false
+    }
   }
 }
 

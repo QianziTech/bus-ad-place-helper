@@ -1,0 +1,1 @@
+export const ANALYSIS_TIMEOUT_MS = 120_000;

@@ -1,17 +1,19 @@
-import { BadRequestException, Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiExtraModels, ApiOkResponse, ApiOperation, ApiTags, getSchemaPath } from '@nestjs/swagger';
+import { BadRequestException, Body, Controller, Get, Header, HttpCode, Param, Post } from '@nestjs/common';
+import { ApiAcceptedResponse, ApiBadRequestResponse, ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, getSchemaPath } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
 import { Campaign, PlanSuccess } from '../shared/contracts';
 import { CreatePlanDto, CampaignDto } from '../engine/dto/create-plan.dto';
 import { PlanFailureDto } from '../engine/dto/plan-response.dto';
 import { PlanPipelineService } from '../shared/pipeline/plan-pipeline.service';
+import { PlanJobService } from '../shared/pipeline/plan-job.service';
 import { BriefService } from './brief.service';
 import { StrategyService } from './strategy.service';
 import { CopyService } from './copy.service';
 import { VerifyService } from './verify.service';
 import { BriefResultDto, BriefSamplesDto, CopyPlanDto, CopyResultDto, ParseBriefDto, PipelineSuccessDto, StrategyRequestDto, StrategyResultDto, VerifyPlanDto, VerifyResultDto,
-  BriefDisabledDto, BriefUnavailableDto, StrategyDisabledDto, StrategyUnavailableDto, CopyDisabledDto, CopyUnavailableDto, VerifyDisabledDto, VerifyUnavailableDto } from './dto/analysis.dto';
+  BriefDisabledDto, BriefUnavailableDto, StrategyDisabledDto, StrategyUnavailableDto, CopyDisabledDto, CopyUnavailableDto, VerifyDisabledDto, VerifyUnavailableDto,
+  pipelineResultSchema, PlanJobAcceptedDto, PlanJobDto } from './dto/analysis.dto';
 
 const response = (success: typeof BriefResultDto | typeof CopyResultDto | typeof StrategyResultDto | typeof VerifyResultDto) => {
   const disabled = success === BriefResultDto ? BriefDisabledDto : success === CopyResultDto ? CopyDisabledDto : success === StrategyResultDto ? StrategyDisabledDto : VerifyDisabledDto;
@@ -39,7 +41,8 @@ export function assertPlan(plan: PlanSuccess, campaign?: Campaign): void {
 @ApiBadRequestResponse({ description: '请求参数无效或需求原文包含实名、成交价' })
 @Controller()
 export class AnalysisController {
-  constructor(private readonly brief: BriefService, private readonly strategy: StrategyService, private readonly copy: CopyService, private readonly verify: VerifyService, private readonly pipeline: PlanPipelineService) {}
+  constructor(private readonly brief: BriefService, private readonly strategy: StrategyService, private readonly copy: CopyService, private readonly verify: VerifyService,
+    private readonly pipeline: PlanPipelineService, private readonly jobs: PlanJobService) {}
   @Get('brief/samples') @ApiTags('brief') @ApiOperation({ operationId: 'getBriefSamples', summary: '读取与 mock 回放同源的五行业参考需求' }) @ApiOkResponse({ type: BriefSamplesDto })
   samples() { return this.brief.samples(); }
   @Post('brief/parse') @HttpCode(200) @ApiTags('brief') @ApiOperation({ operationId: 'parseBrief', summary: '拆解脱敏需求，仅保留原文明示字段' }) @ApiOkResponse({ schema: response(BriefResultDto) })
@@ -51,6 +54,12 @@ export class AnalysisController {
   @Post('plan/verify') @HttpCode(200) @ApiOperation({ operationId: 'verifyPlan', summary: '核验成案并扫描文案及导出正文，返回导出许可' }) @ApiOkResponse({ schema: response(VerifyResultDto) })
   check(@Body() body: VerifyPlanDto) { assertPlan(body.plan, body.campaign); return this.verify.verify(body.plan, body.campaign, body.copy, body.exportText); }
   @Post('plan/generate') @HttpCode(200) @ApiOperation({ operationId: 'generatePlanPipeline', summary: '一次执行候选、策略、成案、文案、核验五阶段' })
-  @ApiOkResponse({ schema: { oneOf: [{ $ref: getSchemaPath(PipelineSuccessDto) }, ...['missing_window', 'missing_data', 'no_inventory', 'over_budget'].map(status => ({ allOf: [{ $ref: getSchemaPath(PlanFailureDto) }, { type: 'object' as const, properties: { status: { type: 'string' as const, enum: [status] } } }] }))] } })
+  @ApiOkResponse({ schema: pipelineResultSchema })
   generate(@Body() body: CreatePlanDto) { return this.pipeline.generate(body); }
+  @Post('plan/jobs') @HttpCode(202) @ApiOperation({ operationId: 'startPlanJob', summary: '提交后台成案任务' })
+  @ApiAcceptedResponse({ type: PlanJobAcceptedDto })
+  startJob(@Body() body: CreatePlanDto): PlanJobAcceptedDto { return this.jobs.start(body); }
+  @Get('plan/jobs/:id') @Header('Cache-Control', 'no-store') @ApiOperation({ operationId: 'getPlanJob', summary: '读取成案任务状态及结果' })
+  @ApiOkResponse({ type: PlanJobDto }) @ApiNotFoundResponse({ description: '任务不存在或已过期' })
+  getJob(@Param('id') id: string): PlanJobDto { return this.jobs.get(id); }
 }

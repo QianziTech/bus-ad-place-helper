@@ -22,6 +22,11 @@ export interface ScanHit {
   suggestion?: string
 }
 
+type PlanJob =
+  | { status: 'running' }
+  | { status: 'completed'; result: PipelineResult }
+  | { status: 'failed'; message: string }
+
 async function request<T>(path: string, init: RequestInit = {}, signal?: AbortSignal): Promise<T> {
   const response = await fetch(`/api${path}`, {
     ...init,
@@ -44,8 +49,14 @@ export const api = {
   meta(signal?: AbortSignal) {
     return request<Meta>('/meta', { method: 'GET' }, signal)
   },
-  generate(body: Record<string, unknown>, signal?: AbortSignal) {
-    return request<PipelineResult | PlanFailure>('/plan/generate', { method: 'POST', body: JSON.stringify(body) }, signal)
+  async generate(body: Record<string, unknown>, signal?: AbortSignal): Promise<PipelineResult> {
+    const { id } = await request<{ id: string }>('/plan/jobs', { method: 'POST', body: JSON.stringify(body) }, signal)
+    for (;;) {
+      const job = await request<PlanJob>(`/plan/jobs/${encodeURIComponent(id)}`, {}, signal)
+      if (job.status === 'completed') return job.result
+      if (job.status === 'failed') throw new ApiError(job.message)
+      await new Promise(resolve => window.setTimeout(resolve, 1000))
+    }
   },
   plan(body: Record<string, unknown>, signal?: AbortSignal) {
     return request<PipelineResult | PlanFailure>('/plan', { method: 'POST', body: JSON.stringify(body) }, signal)

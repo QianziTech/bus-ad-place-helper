@@ -1,9 +1,9 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, getSchemaPath, OmitType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsArray, IsIn, IsInt, IsObject, IsOptional, IsString, Max, MaxLength, Min, MinLength, ValidateNested } from 'class-validator';
-import { Campaign, Check, INDUSTRIES, IndustryId, PlanCopy, PlanSuccess } from '../../shared/contracts';
+import { Campaign, Check, INDUSTRIES, IndustryId, PipelineSuccess, PlanCopy, PlanFailure, PlanSuccess } from '../../shared/contracts';
 import { CampaignDto, CampaignOverrideDto, CreatePlanDto, StrategyPreferenceDto } from '../../engine/dto/create-plan.dto';
-import { PlanSuccessDto } from '../../engine/dto/plan-response.dto';
+import { PlanFailureDto, PlanSuccessDto } from '../../engine/dto/plan-response.dto';
 
 export class ParseBriefDto {
   @ApiProperty({ example: '客户：某饮料品牌；主目标：认知；人群：通勤人群；媒体：公交', maxLength: 2000 }) @IsString() @MinLength(1) @MaxLength(2000) text!: string;
@@ -122,6 +122,22 @@ export class PipelineSuccessDto extends PlanSuccessDto {
   @ApiProperty({ type: [RoundDto] }) rounds!: RoundDto[];
   @ApiProperty({ type: [DegradedDto] }) degraded!: DegradedDto[];
   @ApiProperty({ example: true }) exportAllowed!: boolean;
+}
+export const pipelineResultSchema = {
+  oneOf: [
+    { $ref: getSchemaPath(PipelineSuccessDto) },
+    ...['missing_window', 'missing_data', 'no_inventory', 'over_budget'].map(status => ({
+      allOf: [{ $ref: getSchemaPath(PlanFailureDto) }, { type: 'object' as const, properties: { status: { type: 'string' as const, enum: [status] } } }],
+    })),
+  ],
+};
+export class PlanJobAcceptedDto {
+  @ApiProperty({ format: 'uuid' }) id!: string;
+}
+export class PlanJobDto extends PlanJobAcceptedDto {
+  @ApiProperty({ enum: ['running', 'completed', 'failed'] }) status!: 'running' | 'completed' | 'failed';
+  @ApiProperty({ required: false, ...pipelineResultSchema }) result?: PipelineSuccess | PlanFailure;
+  @ApiProperty({ required: false, example: '方案生成失败，请重试' }) message?: string;
 }
 export class StrategyRequestDto extends OmitType(CreatePlanDto, ['budgetYuan'] as const) {
   @ApiProperty({ required: false, minimum: 1000000, maximum: 5000000, example: 2000000, description: '省略时使用行业 Campaign 建议预算，仍按预算上限筛选' })

@@ -11,7 +11,7 @@ const form = ref({
   provider: 'compatible',
   baseUrl: '',
   model: '',
-  timeoutMs: 8000,
+  timeoutMs: 120000,
   retries: 1,
   temperature: 0.2,
   apiKey: '',
@@ -124,7 +124,7 @@ async function test() {
           <label class="caption">Model<a-input v-model:value="form.model" size="small" placeholder="claude-sonnet-5-5" /></label>
           <label class="caption" style="grid-column: 1 / -1">Base URL<a-input v-model:value="form.baseUrl" size="small" /></label>
           <label class="caption" style="grid-column: 1 / -1">API Key<a-input-password v-model:value="form.apiKey" size="small" :placeholder="keyPreview" /></label>
-          <label class="caption">超时（ms）<a-input-number v-model:value="form.timeoutMs" :min="100" :max="8000" size="small" style="width: 100%" /></label>
+          <label class="caption">单次模型超时（ms）<a-input-number v-model:value="form.timeoutMs" :min="100" :max="120000" size="small" style="width: 100%" /></label>
           <label class="caption">重试<a-input-number v-model:value="form.retries" :min="0" :max="1" size="small" style="width: 100%" /></label>
           <label class="caption">温度<a-input-number v-model:value="form.temperature" :min="0" :max="2" :step="0.1" size="small" style="width: 100%" /></label>
           <label class="caption" style="display: flex; align-items: end; gap: 8px">

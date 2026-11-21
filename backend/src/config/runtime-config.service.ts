@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync, unlinkSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { AnalysisContext, RuntimeConfig } from '../shared/contracts';
+import { ANALYSIS_TIMEOUT_MS } from './analysis-timeout';
 
 export type ConfigInput = Partial<Omit<RuntimeConfig, 'llm' | 'updatedAt' | 'source'>> & { llm?: Partial<RuntimeConfig['llm']> };
 
@@ -16,7 +17,7 @@ export class RuntimeConfigService {
     const seeded: RuntimeConfig = {
       mode: (process.env.ANALYSIS_MODE || 'mock') as RuntimeConfig['mode'],
       llm: { provider: process.env.LLM_PROVIDER || 'compatible', baseUrl: process.env.LLM_BASE_URL || 'https://api.openai.com/v1',
-        model: process.env.LLM_MODEL || '', timeoutMs: Number(process.env.LLM_TIMEOUT_MS || 8000), retries: 1,
+        model: process.env.LLM_MODEL || '', timeoutMs: Number(process.env.LLM_TIMEOUT_MS || ANALYSIS_TIMEOUT_MS), retries: 1,
         temperature: 0.2, ...(process.env.LLM_API_KEY ? { apiKey: process.env.LLM_API_KEY } : {}) },
       includeHistoricalProfiles: true, updatedAt: new Date().toISOString(), source: 'environment',
     };
@@ -25,7 +26,7 @@ export class RuntimeConfigService {
   }
 
   snapshot(): RuntimeConfig { return structuredClone(this.current); }
-  context(): AnalysisContext { const config = this.snapshot(); return { mode: config.mode, config, deadline: Date.now() + 10000 }; }
+  context(): AnalysisContext { const config = this.snapshot(); return { mode: config.mode, config, deadline: Date.now() + ANALYSIS_TIMEOUT_MS }; }
   publicConfig() {
     const { apiKey, ...llm } = this.current.llm;
     return { ...this.current, llm: { ...llm, hasKey: !!apiKey, keyPreview: apiKey ? `****${apiKey.slice(-4)}` : '' } };
@@ -46,7 +47,7 @@ export class RuntimeConfigService {
     try { url = new URL(llm.baseUrl); } catch { throw new BadRequestException('baseUrl 必须为 HTTP(S) 地址'); }
     if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash) throw new BadRequestException('baseUrl 不能包含认证信息、查询参数或片段');
     if (typeof llm.provider !== 'string' || !llm.provider.trim() || typeof llm.model !== 'string' || (llm.apiKey !== undefined && typeof llm.apiKey !== 'string') ||
-        !Number.isInteger(llm.timeoutMs) || llm.timeoutMs < 100 || llm.timeoutMs > 8000 || !Number.isInteger(llm.retries) || llm.retries < 0 || llm.retries > 1 ||
+        !Number.isInteger(llm.timeoutMs) || llm.timeoutMs < 100 || llm.timeoutMs > ANALYSIS_TIMEOUT_MS || !Number.isInteger(llm.retries) || llm.retries < 0 || llm.retries > 1 ||
         !Number.isFinite(llm.temperature) || llm.temperature < 0 || llm.temperature > 2) throw new BadRequestException('模型配置参数无效');
     return { mode: config.mode, llm: { provider: llm.provider, baseUrl: llm.baseUrl.replace(/\/+$/, ''), model: llm.model, timeoutMs: llm.timeoutMs, retries: llm.retries, temperature: llm.temperature, ...(llm.apiKey ? { apiKey: llm.apiKey } : {}) }, includeHistoricalProfiles: config.includeHistoricalProfiles, updatedAt: config.updatedAt, source: config.source };
   }

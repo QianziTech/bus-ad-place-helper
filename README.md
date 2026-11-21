@@ -45,7 +45,7 @@ $proposal = @{
 Invoke-RestMethod http://127.0.0.1:3000/api/plan/generate -Method Post -ContentType 'application/json' -Body $proposal
 ```
 
-`/api/meta` 提供五个行业、建议 Campaign 和可用档期。`/api/plan` 提供基础方案，`/api/plan/generate` 返回成案明细及 `copy/checks/rounds/degraded/exportAllowed`。Brief 拆解、策略、文案、核验均有独立接口，精确字段以 OpenAPI 为准。
+`/api/meta` 提供五个行业、建议 Campaign 和可用档期。`/api/plan` 提供基础方案，`/api/plan/generate` 同步返回成案明细及 `copy/checks/rounds/degraded/exportAllowed`。工作台通过 `POST /api/plan/jobs` 提交同样的请求，用返回的 `id` 轮询 `GET /api/plan/jobs/{id}`，完成后从 `result` 读取成案结果。任务存在当前后端进程内，完成后保留 5 分钟。Brief 拆解、策略、文案、核验均有独立接口，精确字段以 OpenAPI 为准。
 
 合法请求的业务失败使用 HTTP 200：`missing_window`、`missing_data`、`no_inventory`、`over_budget`；非法输入为 HTTP 400。导出前用 `/api/plan/verify` 提交 `{plan, campaign, copy, exportText}`，前端须按 `exportAllowed` 阻止风险文案下载。
 
@@ -59,13 +59,13 @@ Invoke-RestMethod http://127.0.0.1:3000/api/config -Method Put -ContentType 'app
 
 - `off`：规则引擎、模板文案及确定性扫描；`degraded` 记录跳过的策略与成稿阶段。
 - `mock`：五行业同源离线样例，最多两轮扩选。
-- `live`：兼容 `chat/completions` 的模型 HTTP 服务；需配置 `llm.baseUrl/model/apiKey`。单次默认 8 秒、最多 1 次重试，整条流水线共享 10 秒期限，失败逐阶段降级。
+- `live` 使用兼容 `chat/completions` 的模型 HTTP 服务，需要配置 `llm.baseUrl/model/apiKey`。整条流水线共享 120 秒，单次请求和最多一次重试都受剩余时间限制。新配置的单次超时默认为 120 秒，已有配置可在设置页调整 `timeoutMs`。分析阶段失败时逐阶段降级。
 
-API Key 仅用于写入，读取只返回 `hasKey/keyPreview`，不进入 OpenAPI、提示词或方案。没有提供外部模型账号，当前验证使用本地 HTTP 替身，实际供应商的输出和时延仍需现场验证。
-
-红豆库存模块（`backend/src/inventory/`）使用 `HONGDOU_TOKEN`，或 `HONGDOU_USERNAME / HONGDOU_PASSWORD / HONGDOU_CLIENT_ID / HONGDOU_CLIENT_SECRET` 登录；`HONGDOU_TENANT_ID`（默认 `1`）、`HONGDOU_BASE_URL`、`HONGDOU_TIMEOUT_MS`（默认 `4000`）可选，`HONGDOU_ONLINE=off` 强制只读本地数据。未配置账号时不发起外网请求，`/api/plan` 与 `/api/plan/generate` 都回退到同区间归档；只有区间内周一截面时返回 `missing_window` 并附参考空位与采样日。
+API Key 仅用于写入，读取只返回 `hasKey/keyPreview`，不进入 OpenAPI、提示词或方案。自动化测试使用本地 HTTP 替身。
 
 可用环境变量：`PORT`、`HOST`、`CORS_ORIGIN`（逗号分隔）、`PLAN_DATA_DIR`、`LLM_CONFIG_PATH`、`ANALYSIS_MODE`、`LLM_PROVIDER`、`LLM_BASE_URL`、`LLM_MODEL`、`LLM_API_KEY`、`LLM_TIMEOUT_MS`、`SINGLE_NIGHT_CAP`、`STRATEGY_PREMIUM_RATIO`（默认 `0.1`，即 10%）。`.env.example` 只作说明，启动不会自动读取 `.env`。
+
+红豆库存模块（`backend/src/inventory/`）使用 `HONGDOU_TOKEN`，或 `HONGDOU_USERNAME / HONGDOU_PASSWORD / HONGDOU_CLIENT_ID / HONGDOU_CLIENT_SECRET` 登录；`HONGDOU_TENANT_ID`（默认 `1`）、`HONGDOU_BASE_URL`、`HONGDOU_TIMEOUT_MS`（默认 `4000`）可选，`HONGDOU_ONLINE=off` 强制只读本地数据。未配置账号时不发起外网请求，`/api/plan` 与 `/api/plan/generate` 都回退到同区间归档；只有区间内周一截面时返回 `missing_window` 并附参考空位与采样日。
 
 实名扫描通过 `BRAND_MAPPING_PATH` 读取内部 `{map:[{real,alias}]}`。当前工作区也会自动发现仓库相邻的 `../data/internal/brand_mapping.json`。该映射不进入交付仓库；独立部署需在本机配置。映射缺失时响应明确提示无法完成实名核验，不应将其当作已通过实名检查。
 

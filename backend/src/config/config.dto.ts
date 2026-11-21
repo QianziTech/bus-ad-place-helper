@@ -1,12 +1,13 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsIn, IsInt, IsNumber, IsObject, IsString, Max, MaxLength, Min, ValidateIf, ValidateNested } from 'class-validator';
+import { ANALYSIS_TIMEOUT_MS } from './analysis-timeout';
 
 export class LlmConfigInputDto {
   @ApiProperty({ required: false, example: 'compatible' }) @ValidateIf((_object, value) => value !== undefined) @IsString() @MaxLength(80) provider?: string;
   @ApiProperty({ required: false, example: 'https://api.openai.com/v1' }) @ValidateIf((_object, value) => value !== undefined) @IsString() @MaxLength(2048) baseUrl?: string;
   @ApiProperty({ required: false, example: 'configured-model' }) @ValidateIf((_object, value) => value !== undefined) @IsString() @MaxLength(200) model?: string;
-  @ApiProperty({ required: false, example: 8000, minimum: 100, maximum: 8000 }) @ValidateIf((_object, value) => value !== undefined) @IsInt() @Min(100) @Max(8000) timeoutMs?: number;
+  @ApiProperty({ required: false, example: ANALYSIS_TIMEOUT_MS, minimum: 100, maximum: ANALYSIS_TIMEOUT_MS }) @ValidateIf((_object, value) => value !== undefined) @IsInt() @Min(100) @Max(ANALYSIS_TIMEOUT_MS) timeoutMs?: number;
   @ApiProperty({ required: false, example: 1, minimum: 0, maximum: 1 }) @ValidateIf((_object, value) => value !== undefined) @IsInt() @Min(0) @Max(1) retries?: number;
   @ApiProperty({ required: false, example: 0.2, minimum: 0, maximum: 2 }) @ValidateIf((_object, value) => value !== undefined) @IsNumber() @Min(0) @Max(2) temperature?: number;
   @ApiHideProperty() @ValidateIf((_object, value) => value !== undefined) @IsString() @MaxLength(4096) apiKey?: string;
@@ -20,7 +21,7 @@ export class PublicLlmConfigDto {
   @ApiProperty({ example: 'compatible' }) provider!: string;
   @ApiProperty({ example: 'https://api.openai.com/v1' }) baseUrl!: string;
   @ApiProperty({ example: 'configured-model' }) model!: string;
-  @ApiProperty({ example: 8000, minimum: 100, maximum: 8000 }) timeoutMs!: number;
+  @ApiProperty({ example: ANALYSIS_TIMEOUT_MS, minimum: 100, maximum: ANALYSIS_TIMEOUT_MS }) timeoutMs!: number;
   @ApiProperty({ example: 1, minimum: 0, maximum: 1 }) retries!: number;
   @ApiProperty({ example: 0.2 }) temperature!: number;
   @ApiProperty({ example: true }) hasKey!: boolean;

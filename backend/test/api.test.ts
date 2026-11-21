@@ -3,9 +3,11 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
+import { setTimeout as delay } from 'node:timers/promises';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { createApplication } from '../src/main';
 import { PipelineSuccess } from '../src/shared/contracts';
+import { PlanPipelineService } from '../src/shared/pipeline/plan-pipeline.service';
 
 let app: NestExpressApplication;
 let base: string;
@@ -88,8 +90,9 @@ test('HTTP validates real dates, nested fields and invalid requests; missing win
 });
 
 test('configuration switches immediately, masks keys and reports unavailable live without blocking plans', async () => {
-  const changed = await api('/config', { mode: 'off', llm: { apiKey: 'integration-secret-1234' } }, 'PUT');
+  const changed = await api('/config', { mode: 'off', llm: { apiKey: 'integration-secret-1234', timeoutMs: 120000 } }, 'PUT');
   assert.equal(changed.status, 200);
+  assert.equal(changed.body.llm.timeoutMs, 120000);
   assert.equal(changed.body.llm.hasKey, true);
   assert.equal(changed.body.llm.keyPreview, '****1234');
   assert.equal(JSON.stringify(changed.body).includes('integration-secret'), false);
@@ -97,7 +100,7 @@ test('configuration switches immediately, masks keys and reports unavailable liv
   const ignoredPreference = (await api('/plan', { ...request, strategyPreferences: [{ mediaKey: 'unknown', reason: 'should not be applied when off', evidenceRefs: ['unknown'] }] })).body;
   assert.deepEqual(ignoredPreference.strategyPreferences ?? [], []);
   assert.ok(ignoredPreference.lines.every((line: any) => !line.preferredByAi));
-  for (const invalid of [{ mode: null }, { llm: null }, { llm: { model: null } }, { includeHistoricalProfiles: null }]) {
+  for (const invalid of [{ mode: null }, { llm: null }, { llm: { model: null } }, { llm: { timeoutMs: 120001 } }, { includeHistoricalProfiles: null }]) {
     assert.equal((await api('/config', invalid, 'PUT')).status, 400);
   }
   for (const [path, body] of [['/brief/parse', { text: '增加品牌认知', industry: 'food' }], ['/plan/strategy', request]] as const) {
@@ -147,10 +150,43 @@ test('all independent tools work; deterministic export scan blocks risky or iden
   }
 });
 
-test('OpenAPI discovers eleven stable operations and failure states without API keys', async () => {
+test('background generation returns a job before the plan is ready', async t => {
+  const pipeline = app.get(PlanPipelineService);
+  const generate = pipeline.generate.bind(pipeline);
+  let release = () => {};
+  const gate = new Promise<void>(resolve => { release = resolve; });
+  t.mock.method(pipeline, 'generate', async (input: Parameters<typeof generate>[0]) => {
+    await gate;
+    return generate(input);
+  });
+  assert.equal((await api('/plan/jobs', { ...request, budgetYuan: 1 })).status, 400);
+  assert.equal((await api('/plan/jobs', { ...request, briefText: '成交价 4.6 万元每辆' })).status, 400);
+  assert.equal((await api('/plan/jobs/unknown')).status, 404);
+  let jobUrl: string;
+  try {
+    const submitted = await api('/plan/jobs', request);
+    assert.equal(submitted.status, 202);
+    assert.ok(submitted.body.id);
+    jobUrl = `/plan/jobs/${submitted.body.id}`;
+    assert.deepEqual((await api(jobUrl)).body, { id: submitted.body.id, status: 'running' });
+  } finally {
+    release();
+  }
+  let job = await api(jobUrl);
+  for (let attempt = 0; job.body.status === 'running' && attempt < 100; attempt++) {
+    await delay(10);
+    job = await api(jobUrl);
+  }
+  assert.equal(job.status, 200);
+  assert.equal(job.body.status, 'completed');
+  assert.equal(job.body.result.status, 'ok');
+  assert.equal(job.body.result.copy.source, 'mock');
+});
+
+test('OpenAPI discovers synchronous and background operations without API keys', async () => {
   const schema = (await api('/openapi.json')).body;
   const operations = Object.values(schema.paths).flatMap((path: any) => Object.values(path).map((operation: any) => operation.operationId));
-  assert.deepEqual(operations.sort(), ['getMeta', 'generatePlan', 'generatePlanPipeline', 'parseBrief', 'recommendStrategy', 'verifyPlan', 'composeCopy', 'getBriefSamples', 'getConfig', 'putConfig', 'testConfig'].sort());
+  assert.deepEqual(operations.sort(), ['getMeta', 'generatePlan', 'generatePlanPipeline', 'parseBrief', 'recommendStrategy', 'verifyPlan', 'composeCopy', 'getBriefSamples', 'getConfig', 'putConfig', 'testConfig', 'startPlanJob', 'getPlanJob'].sort());
   assert.equal(schema.paths['/api/plan'].post.responses['200'].content['application/json'].schema.oneOf.length, 5);
   assert.equal(schema.paths['/api/plan/generate'].post.responses['200'].content['application/json'].schema.oneOf.length, 5);
   assert.ok(schema.paths['/api/brief/parse'].post.responses['200'].content['application/json'].schema.oneOf.length >= 3);
