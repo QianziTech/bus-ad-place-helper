@@ -22,7 +22,7 @@ export interface RenderOptions {
   budgetYuan?: number
 }
 
-const SLOTS: SlotName[] = ['chips', 'kpis', 'note', 's2anchors', 's3table', 's4', 's5', 's6', 'analysis', 'map', 's65', 's66']
+const SLOTS: SlotName[] = ['chips', 'kpis', 'note', 's2window', 's2anchors', 's3table', 's4', 's5', 's6', 'analysis', 'map', 's65', 's66']
 
 function appendixBlock(vm: PlanVm): string {
   const summary = `生成记录 · ${h(analysisModeText(vm.mode))} · ${vm.rounds.length} 轮`
@@ -39,34 +39,18 @@ function appendixBlock(vm: PlanVm): string {
     : '本次未返回分轮记录。'])
   rows.push(['计算记录', vm.trace.slice(0, 8).map(step => `${step.step}：${copyText(step.message, 90)}`).join('；') || '暂无计算记录。'])
   rows.push(['文案', `来源：${vm.brandContextSource}。数量与金额取自方案计算结果。`])
-  rows.push(['方案检查', `共 ${vm.checks.length} 项检查，${vm.checks.filter(item => item.status === 'fail').length} 项未通过。`])
+  rows.push(['方案检查', `共 ${vm.checks.length} 项，${vm.checks.filter(item => item.status === 'fail' && item.blocking).length} 项阻断；明细见工作台核验面板。`])
   rows.push(['备用处理', vm.degraded.length ? vm.degraded.map(item => `${item.stage}：${item.reason}`).join('；') : '无'])
   return `<details class="appendix"><summary>${summary}</summary>
     <table class="appendix-table">${rows.map(([key, value]) => `<tr><td class="k">${h(key)}</td><td>${h(value)}</td></tr>`).join('')}</table>
   </details>`
 }
 
-function checksBlock(vm: PlanVm): string {
-  if (!vm.checks.length) return '<p class="muted">本次未返回核验结果。</p>'
-  const icon = { pass: '✓', warn: '!', fail: '✗' } as const
-  const items = vm.checks
-    .map(check => {
-      const refs = check.evidenceRefs?.length ? `<small class="muted">证据 ${h(check.evidenceRefs.slice(0, 3).join(' · '))}</small>` : ''
-      const fix = check.suggestion ? `<br><span class="muted">建议：${h(check.suggestion)}</span>` : ''
-      return `<li><span class="mark ${check.status}">${icon[check.status]}</span><span>${h(check.element)} ${h(check.message)}${fix}</span>${refs}</li>`
-    })
-    .join('')
-  const pass = vm.checks.filter(item => item.status === 'pass').length
-  const warn = vm.checks.filter(item => item.status === 'warn').length
-  const fail = vm.checks.filter(item => item.status === 'fail').length
-  return `<p class="note">方案检查：${pass} 通过 · ${warn} 待确认 · ${fail} 未通过</p><ul class="checks">${items}</ul>`
-}
-
 export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
   const highlight = options.highlight ?? null
   const campaign = vm.campaign
   const nav = [
-    ['s1', '1 概览'], ['s2', '2 需求'], ['s3', '3 推荐理由'], ['s4', '4 资源清单'], ['s5', '5 排期'], ['s6', '6 报价'], ['s7map', '7 覆盖图'],
+    ['s1', '1 概览'], ['s2', '2 需求'], ['s3', '3 推荐理由'], ['s4', '4 资源清单'], ['s5', '5 排期'], ['s6', '6 报价'], ['s7map', '7 覆盖图'], ['s65', '8 效果'],
   ]
   const head = options.fullscreen
     ? ''
@@ -77,7 +61,7 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
   const slots: Record<SlotName, string> = range
     ? buildSlots(range, budgetYuan, highlight)
     : buildSlots(rangeDataFor(vm), budgetYuan, highlight)
-  const slot = (name: SlotName) => `<div data-slot="${name}">${slots[name]}</div>`
+  const slot = (name: SlotName) => `<div data-slot="${name}"${name === 'kpis' ? ' class="kpis"' : name === 'chips' ? ' class="chips"' : ''}>${slots[name]}</div>`
 
   const slider = range
     ? `<div class="budget-slider" role="group" aria-label="预算推演">
@@ -156,8 +140,8 @@ ${head}
         <tr><th>② 生意目标</th><td>${h(campaign.businessGoal)}</td></tr>
         <tr><th>③ 投放活动</th><td>${h(`${campaign.name}（主目标：${campaign.primaryGoal}）`)}</td></tr>
         <tr><th>④ 人群</th><td>${h(campaign.audience)}</td></tr>
-        <tr><th>⑤ 时间与预算</th><td>${h(`${campaign.window.start} ~ ${campaign.window.end} · 建议 ${Math.round(campaign.budgetHintYuan / 10000)} 万`)}</td></tr>
-        <tr><th>⑥ 媒体范围</th><td>${h(campaign.mediaScope.map(kind => (kind === 'bus' ? '公交' : '地铁')).join(' + '))}${vm.copy.strategyLine ? ` · ${h(copyText(vm.copy.strategyLine, 60))}` : ''}</td></tr>
+        <tr><th>⑤ 时间与预算</th><td>${slot('s2window')}</td></tr>
+        <tr><th>⑥ 媒体范围</th><td>${h(campaign.mediaScope.map(kind => (kind === 'bus' ? '公交' : '地铁')).join(' + '))}</td></tr>
         <tr><th>⑦ 成功衡量</th><td>${h(`${campaign.successMetric.kpi}；${campaign.successMetric.proof}`)}</td></tr>
       </table>
       <p class="note" style="margin-top:12px">目标与人群见推荐理由，档期见投放排期，预算见估算报价。客户以代称呈现。</p>
@@ -220,7 +204,6 @@ ${head}
       <p>${h(campaign.successMetric.kpi)}</p>
       <p class="note">以客户假设书为准，AI 建议口径仅作参考。</p>
       ${vm.measurement ? `<p class="note">AI 建议口径：${h(copyText(vm.measurement.kpi, 160))}</p>` : ''}
-      ${vm.copy.assumptionEcho ? `<p class="note">假设书回应：${h(copyText(vm.copy.assumptionEcho, 200))}</p>` : ''}
     </div>
     <div>
       <h3>衡量方式</h3>
@@ -232,16 +215,6 @@ ${head}
 <section id="s66">
   <h2>执行安排与待确认事项</h2>
   ${slot('s66')}
-  <div class="two-col" style="margin-top:24px">
-    <div>
-      <h3>方案检查</h3>
-      ${checksBlock(vm)}
-    </div>
-    <div>
-      <h3>行业约束</h3>
-      <ul class="col-list">${campaign.constraints.map(item => `<li>${h(item)}</li>`).join('')}</ul>
-    </div>
-  </div>
   ${vm.exportAllowed ? '' : '<div class="risk bad">下载前请先按检查提示修改文案。</div>'}
 </section>
 

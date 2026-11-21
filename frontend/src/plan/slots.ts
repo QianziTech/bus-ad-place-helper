@@ -27,7 +27,7 @@ export interface RangeData {
   industryName: string
 }
 
-export type SlotName = 'chips' | 'kpis' | 'note' | 's2anchors' | 's3table' | 's4' | 's5' | 's6' | 'analysis' | 'map' | 's65' | 's66'
+export type SlotName = 'chips' | 'kpis' | 'note' | 's2window' | 's2anchors' | 's3table' | 's4' | 's5' | 's6' | 'analysis' | 'map' | 's65' | 's66'
 
 /** 返回某金额下的全部动态区块；金额不可成案时只有 note（原因）有内容。 */
 export function buildSlots(data: RangeData, budgetYuan: number, highlight?: string | null): Record<SlotName, string> {
@@ -48,7 +48,7 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   }
   const windowText = (start: string, end: string) => (!start || !end ? '—' : start === end ? start : `${start} ~ ${end.slice(5)}`)
   const mediaLabel = (kind: string) => (kind === 'bus' ? '公交车身' : '地铁出入口')
-  const empty: Record<SlotName, string> = { chips: '', kpis: '', note: '', s2anchors: '', s3table: '', s4: '', s5: '', s6: '', analysis: '', map: '', s65: '', s66: '' }
+  const empty: Record<SlotName, string> = { chips: '', kpis: '', note: '', s2window: '', s2anchors: '', s3table: '', s4: '', s5: '', s6: '', analysis: '', map: '', s65: '', s66: '' }
   const option = data.budgetOptions.filter(item => item.budgetYuan === budgetYuan)[0]
   if (!option) return empty
   if (option.status !== 'ok' || !option.lines || !option.schedule) {
@@ -60,7 +60,7 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
     const source = media(key)
     if (!item || !source) return null
     return { mediaKey: key, kind: source.kind, name: source.name, levelName: source.levelName, mediaForm: source.mediaForm, exit: source.exit, total: source.total,
-      freeCount: source.freeCount, monthlyLowYuan: source.monthlyLowYuan, monthlyHighYuan: source.monthlyHighYuan,
+      freeCount: source.freeCount, contractCount: source.contractCount, reservedCount: source.reservedCount, monthlyLowYuan: source.monthlyLowYuan, monthlyHighYuan: source.monthlyHighYuan,
       productionYuan: source.productionUnitYuan * item.quantity, unitEstimateYuan: source.unitEstimateYuan,
       quantity: item.quantity, lineTotalYuan: item.lineTotalYuan, reasons: source.reasons || [], sources: source.sources || [],
       anchorIds: source.anchorIds || [], traffic: source.trafficReference, trajectory: source.trajectory, preferredByAi: Boolean(item.preferredByAi) }
@@ -81,7 +81,14 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   const row = (line: NonNullable<ReturnType<typeof lineOf>>) => {
     const star = line.preferredByAi ? '<span class="star" title="AI 推荐资源">★ </span>' : ''
     const anchorNames = anchors.filter(anchor => anchor.selectedCount > 0 && line.anchorIds.indexOf(anchor.id) >= 0).map(anchor => anchor.areaName)
+    // 库存四态写进展开区：手机上没有 hover，关键数字必须有一处落点。
+    const stockLine = `可售 ${line.freeCount}${line.contractCount !== undefined ? ` · 合同 ${line.contractCount}` : ''}${line.reservedCount !== undefined ? ` · 预定 ${line.reservedCount}` : ''}${line.total !== undefined ? ` · 总量 ${line.total}` : ''}`
+    const leftOver = line.total !== undefined ? line.total - line.quantity : undefined
+    const leftNote = leftOver !== undefined && leftOver > 0 ? `本方案采用 ${line.quantity}，其余 ${leftOver} 台未订，留作同档期的替换与备损缓冲。` : ''
+    const pct = option.totalYuan ? Math.round((line.lineTotalYuan / option.totalYuan) * 1000) / 10 : 0
+    const load = pct >= 30 ? `<span class="load">主承重 ${pct}%</span>` : ''
     const details = [
+      `<p><b>库存</b>　${esc(stockLine)}${leftNote ? `<br><span class="muted">${esc(leftNote)}</span>` : ''}</p>`,
       line.reasons.length ? `<p><b>入选理由</b></p><ul>${line.reasons.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : '',
       line.sources.length ? `<p><b>来源</b></p><ul>${line.sources.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : '',
       anchorNames.length ? `<p>关联商圈：${esc(anchorNames.join('、'))}</p>` : '',
@@ -93,24 +100,37 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
     ].filter(Boolean).join('')
     const cls = highlight === line.mediaKey ? ' class="hl"' : ''
     return `<tr${cls} data-key="${esc(line.mediaKey)}">
-    <td><details><summary>${star}${esc(line.name)}</summary>${details}</details></td>
-    <td>${esc(variant(line))}</td>
-    <td>${esc(levelLabel(line.levelName))}</td>
-    <td class="num" data-src="${esc(`本档期可售 ${line.freeCount}${line.total !== undefined ? ` / 总量 ${line.total}` : ''}`)}">${line.freeCount}</td>
-    <td class="num">${line.quantity}</td>
-    <td class="num">${wanRange(line.monthlyLowYuan, line.monthlyHighYuan)}</td>
-    <td class="num">${esc(`¥${line.productionYuan.toLocaleString('zh-CN')}`)}</td>
-    <td class="num"><b>${esc(wanMoney(line.lineTotalYuan))}</b></td>
+    <td data-label="线路 / 站点"><details><summary>${star}${esc(line.name)}</summary>${details}</details></td>
+    <td data-label="形式 / 出口">${esc(variant(line))}</td>
+    <td data-label="等级">${esc(levelLabel(line.levelName))}</td>
+    <td class="num" data-label="可售 / 总量" data-src="${esc(stockLine)}">${line.freeCount}${line.total !== undefined ? ` / ${line.total}` : ''}</td>
+    <td class="num" data-label="数量">${line.quantity}</td>
+    <td class="num" data-label="月价（区间）">${wanRange(line.monthlyLowYuan, line.monthlyHighYuan)}</td>
+    <td class="num" data-label="制作费">${esc(`¥${line.productionYuan.toLocaleString('zh-CN')}`)}</td>
+    <td class="num" data-label="行合计"><b>${esc(wanMoney(line.lineTotalYuan))}</b>${load}</td>
   </tr>`
   }
   const table = (subset: typeof lines) => subset.length
-    ? `<table class="data"><thead><tr><th>线路 / 站点</th><th>形式 / 出口</th><th>等级</th><th class="num">可售</th><th class="num">数量</th><th class="num">月价（区间）</th><th class="num">制作费</th><th class="num">行合计</th></tr></thead><tbody>${subset.map(row).join('')}</tbody></table>`
+    ? `<table class="data"><thead><tr><th>线路 / 站点</th><th>形式 / 出口</th><th>等级</th><th class="num">可售 / 总量</th><th class="num">数量</th><th class="num">月价（区间）</th><th class="num">制作费</th><th class="num">行合计</th></tr></thead><tbody>${subset.map(row).join('')}</tbody></table>`
     : '<p class="muted">本次没有该类媒体入选。</p>'
 
   const chips = `<span class="chip on">${esc(data.industryName)}</span>
     <span class="chip">预算上限 ${esc(`${budgetYuan / 10000} 万`)}</span>
     <span class="chip">${esc(data.campaign.mediaScope.map(kind => (kind === 'bus' ? '公交车身' : '地铁出入口')).join(' + '))}</span>
     <span class="chip">${esc(windowText(data.inventory.startDate, data.inventory.endDate))}</span>`
+  // 假设书⑤：本次档期以实际核对档期为准；与建议窗口不同时补一行接续说明与月度成本。
+  const start = data.inventory.startDate || ''
+  const end = data.inventory.endDate || ''
+  const suggested = data.campaign.window
+  const months = Math.max(1, data.billingMonths || 1)
+  const monthlyCost = total / months
+  const differs = suggested && (suggested.start !== start || suggested.end !== end)
+  const monthCount = (from: string, to: string) => {
+    const a = new Date(`${from}T00:00:00`), b = new Date(`${to}T00:00:00`)
+    return Math.max(1, (b.getFullYear() - a.getFullYear()) * 12 + b.getMonth() - a.getMonth() + 1)
+  }
+  const restMonths = differs ? Math.max(0, monthCount(suggested.start, suggested.end) - months) : 0
+  const s2window = `<div class="win"><b>${esc(start && end ? `${start} ~ ${end}` : '档期待确认')}</b><span>${esc(data.billingStatus === 'pending' ? '计费口径待确认' : `${months} 个投放月`)} · 上限 ${esc(`${budgetYuan / 10000} 万`)}</span>${differs ? `<br><small>建议窗口 ${esc(`${suggested.start} ~ ${suggested.end}`)}；本次先投 ${esc(`${start} ~ ${end}`)}${restMonths ? `，余下 ${restMonths} 个月可续投，按本档单价约 ${esc(wanMoney(monthlyCost))}／月` : ''}</small>` : ''}</div>`
   const kpis = `<div class="kpi"><b>${quantity}<em>台 / 个</em></b><small>媒体单位</small></div>
     <div class="kpi"><b>${busLines.length + metroLines.length}<em>条 / 个</em></b><small>公交线路 · 地铁出口</small></div>
     <div class="kpi"><b>${esc(wanMoney(total))}</b><small>估算总额</small></div>
@@ -125,12 +145,12 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
         ${anchor.rationale ? `<p class="note" style="margin-top:6px">${esc(copyText(anchor.rationale, 120))}</p>` : ''}${coord}</div>`
     }).join('')}</div>`
     : '<div class="card"><p class="muted">暂无商圈资料。</p></div>'
-  const s3table = `<table class="data"><thead><tr><th>商圈</th><th>站点</th><th class="num">公交候选</th><th class="num">地铁候选</th><th class="num">已选资源</th></tr></thead><tbody>${anchors.map(anchor => `<tr><td>${esc(anchor.areaName)}</td><td>${esc(anchor.station || '—')}</td><td class="num">${anchor.candidateCounts ? anchor.candidateCounts.bus : '—'}</td><td class="num">${anchor.candidateCounts ? anchor.candidateCounts.metro : '—'}</td><td class="num">${anchor.selectedCount}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">暂无商圈资料。</td></tr>'}</tbody></table>`
+  const s3table = `<table class="data"><thead><tr><th>商圈</th><th>站点</th><th class="num">公交候选</th><th class="num">地铁候选</th><th class="num">已选资源</th></tr></thead><tbody>${anchors.map(anchor => `<tr><td data-label="商圈">${esc(anchor.areaName)}</td><td data-label="站点">${esc(anchor.station || '—')}</td><td class="num" data-label="公交候选">${anchor.candidateCounts ? anchor.candidateCounts.bus : '—'}</td><td class="num" data-label="地铁候选">${anchor.candidateCounts ? anchor.candidateCounts.metro : '—'}</td><td class="num" data-label="已选资源">${anchor.selectedCount}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">暂无商圈资料。</td></tr>'}</tbody></table>`
   const s4 = `<h3 style="margin-top:20px">公交车身（${busLines.length} 条线路 · ${busLines.reduce((sum, line) => sum + line.quantity, 0)} 台）</h3>
   ${table(busLines)}
   <h3 style="margin-top:32px">地铁出入口（${metroLines.length} 个出口 · ${metroLines.reduce((sum, line) => sum + line.quantity, 0)} 个）</h3>
   ${table(metroLines)}
-  <p class="note" style="margin-top:12px">建议数量不超过所选档期可售量；报价仅包含表内资源。${lines.some(line => line.preferredByAi) ? '<span class="star">★</span> 表示 AI 推荐资源。' : ''}</p>`
+  <p class="note" style="margin-top:12px">数量不超过该档期可售量；未订到的空位留在同一档期内，可作替换与备损。行合计占总额 30% 以上的资源标为「主承重」，单点延误影响较大。${lines.some(line => line.preferredByAi) ? '<span class="star">★</span> 表示 AI 推荐资源。' : ''}</p>`
   const schedule = option.schedule
   const inventoryLine = data.inventory.kinds.map(item => {
     const label = item.kind === 'bus' ? '公交' : '地铁'
@@ -152,6 +172,13 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   <p class="note" style="margin-top:12px">首批 ${schedule.batches.length ? schedule.batches[0].nightDate : '—'} 夜间施工，${schedule.batches.length ? schedule.batches[0].publishStartDate : '—'} 08:00 起算；已预留 ${schedule.rainBufferNights} 个雨天顺延夜在档期内 · 误一补二预留 ${schedule.compensationBufferQty} 台。本方案计划 ${schedule.batches.length} 批。</p>
   <p class="note">本方案展示计划投放档期；实际施工与上刊由签约后的执行流程确认。</p>${capacity}`
 
+  // 预算使用率与加投弹性：余量对比最低单位价，告诉客户还能不能再加一个单位。
+  const cheapest = lines.reduce((min, line) => (line.unitEstimateYuan < min ? line.unitEstimateYuan : min), Number.POSITIVE_INFINITY)
+  const usage = budgetYuan ? Math.round((total / budgetYuan) * 1000) / 10 : 0
+  const addable = Number.isFinite(cheapest) && cheapest > 0 ? Math.floor(remaining / cheapest) : 0
+  const usageLine = `已用 ${usage}%，余量 ${wanMoney(remaining)}` + (addable > 0
+    ? `，还可加 ${addable} 个最低单位（${wanMoney(cheapest)}／单位）。`
+    : `，低于最低单位价（${Number.isFinite(cheapest) ? wanMoney(cheapest) : '—'}），当前金额下无可加投单位。`)
   const methodRows = lines.map(line => {
     const unitEstimate = line.lineTotalYuan / line.quantity
     const monthlyMid = Math.round((line.monthlyLowYuan + line.monthlyHighYuan) / 2)
@@ -167,7 +194,7 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
     return { kind, label: kind === 'bus' ? '公交车身' : '地铁出入口', total, fee, production, pct: option.totalYuan ? Math.round((total / option.totalYuan!) * 1000) / 10 : 0 }
   }).filter(item => item.total > 0).map(item => `<div class="bar"><span>${esc(item.label)}</span><span class="track"><span class="fill${item.kind === 'metro' ? ' alt' : ''}" style="display:block;width:${Math.max(2, item.pct)}%;height:100%"></span></span><span>${esc(wanMoney(item.total))} · ${item.pct}%（含制作 ${esc(wanMoney(item.production))}）</span></div>`).join('')
   const s6 = `<table class="data"><thead><tr><th>线路 / 点位</th><th>媒体类别</th><th>形式 / 出口</th><th class="num">数量</th><th class="num">单位估算（含制作）</th><th class="num">行合计</th></tr></thead><tbody>${methodRows}</tbody></table>
-  <p class="note" style="margin-top:10px">报价一节保留两位小数，便于按「数量 × 单位估算 = 行合计」「Σ 行合计 = 估算总额」逐项验算；其余章节按一位小数显示。</p>
+  <p class="note" style="margin-top:10px">单位估算 = 月刊例区间中值 × 计费月数 + 单位制作费，报价一节保留两位小数，便于按「数量 × 单位估算 = 行合计」「Σ 行合计 = 估算总额」逐项验算；其余章节按一位小数显示。因计入制作费，同一预算下可购台数略低于只按媒体费的测算。</p>
   <div class="split" style="margin-top:24px"><div>
       <table class="summary-table">
         <tr><td>媒体费小计</td><td class="num">${esc(money2(totalMedia))}</td></tr>
@@ -176,6 +203,7 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
         <tr><td>预算上限</td><td class="num">${esc(money2(budgetYuan))}</td></tr>
         <tr><td>余量</td><td class="num">${esc(money2(remaining))}</td></tr>
       </table>
+      <p class="note" style="margin-top:8px">${esc(usageLine)}</p>
       <h3 style="margin-top:24px">媒体占比（按行合计，含制作）</h3>
       ${shares || '<p class="muted">本方案没有计入媒体费的行。</p>'}
     </div><div class="card"><h3>计费假设</h3>
@@ -214,11 +242,25 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   })()
 
   const s65 = busLines.length
-    ? `<div class="cards" style="grid-template-columns:repeat(2,1fr)">${busLines.slice(0, 4).map(line => `<div class="card"><h3>${esc(line.name)}</h3><small>${line.traffic && line.traffic.coveragePv !== undefined ? `2023-05 历史覆盖 ${line.traffic.coveragePv.toLocaleString('zh-CN')} 人次` : '暂无数据'}${line.traffic && line.traffic.ageGroups && line.traffic.ageGroups.length ? `<br>${line.traffic.ageGroups.map(group => `${esc(group.label)} ${group.percent}%`).join(' · ')}` : ''}</small></div>`).join('')}</div>
-      <p class="note" style="margin-top:10px">不同线路的历史覆盖人次按平台 250 米网格口径分别统计，不可相加，本方案不以该数作为触达承诺。来源：${esc((busLines.filter(line => line.traffic)[0] || { traffic: { source: '可视化平台 2023-05 历史数据' } }).traffic!.source)}。</p>`
+    ? `${(() => {
+      const perLine = busLines.map(line => {
+        const cov = line.traffic && line.traffic.coveragePv
+        // 覆盖是整条线路口径，因此成本也用该行合计（本档期全部台数）来除，才是可比的千人成本。
+        return { line, cov, cpm: cov ? Math.round((line.lineTotalYuan * 1000 / cov) * 10) / 10 : undefined }
+      })
+      const cards = perLine.slice(0, 6).map(item => `<div class="card"><h3>${esc(item.line.name)}</h3><small>${item.cov ? `2023-05 历史覆盖 ${item.cov.toLocaleString('zh-CN')} 人次` : '暂无历史覆盖数据'}${item.line.traffic && item.line.traffic.ageGroups && item.line.traffic.ageGroups.length ? `<br>${item.line.traffic.ageGroups.map(group => `${esc(group.label)} ${group.percent}%`).join(' · ')}` : ''}${item.cpm ? `<br><b>单线 CPM 约 ${item.cpm} 元 / 千次</b>` : ''}</small></div>`).join('')
+      return `<div class="cards" style="grid-template-columns:repeat(2,1fr)">${cards}</div>
+      <p class="note" style="margin-top:10px">单线 CPM = 该线 2023-05 历史覆盖 ÷ 该行行合计成本，衡量「多少钱买一次千次覆盖」，只作量级参考，不可跨线相加或用方案合计求 CPM。不同线路的历史覆盖人次按平台 250 米网格口径分别统计，不构成触达承诺。来源：${esc((busLines.filter(line => line.traffic)[0] || { traffic: { source: '可视化平台 2023-05 历史数据' } }).traffic!.source)}。</p>`
+    })()}`
     : '<p class="muted">本次未选公交，地铁暂无对应历史覆盖数据。</p>'
 
   const risks = data.assumptions.slice(0, 5)
+  // 行业约束里的内部合规清单不外泄：只把「不得 X」类条款翻成一句正面承诺，原句留在工作台核验面板。
+  const compliance = data.campaign.constraints
+    .filter(item => /不得|禁止|须/.test(item))
+    .map(item => item.replace(/；|;|。/g, '，').replace(/不得使用/g, '不使用').replace(/不得出现/g, '不出现').replace(/不得涉及/g, '不涉及').replace(/不得承诺/g, '不承诺').replace(/不得(?:使用|出现|涉及|承诺)?/g, '不').replace(/禁止/g, '不').replace(/须/g, '附带').replace(/^，|，$/g, '').trim())
+    .filter(Boolean)
+  const complianceLine = compliance.length ? `本方案按行业合规要求处理：${esc(compliance.join('；'))}。` : ''
   const s66 = `${schedule.status === 'capacity_short' ? `<div class="risk">档期产能不足：${esc(schedule.notes[0] || '请延长档期或减少数量')}</div>` : ''}
   <div class="two-col"><div><h3>执行安排（待确认）</h3><ul class="col-list">
         <li>${schedule.batches.length} 批夜间施工，单晚上限 ${schedule.singleNightCap} 台 / 口</li>
@@ -228,9 +270,8 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
         <li>上刊当日报照片（带报头日期），下刊 5 个工作日报照片</li></ul></div>
     <div><h3>费用与效果说明</h3><ul class="col-list">
         ${(risks.length ? risks : ['不承诺当期曝光与人流', '不承诺转化率与到店量']).map(item => `<li>${esc(item)}</li>`).join('')}
-        <li>不含素材制作与创意，折扣与税票按客户协议另议</li></ul></div></div>
-  <div class="two-col" style="margin-top:24px"><div><h3>行业约束</h3>
-      <ul class="col-list">${data.campaign.constraints.map(item => `<li>${esc(item)}</li>`).join('')}</ul></div></div>`
+        <li>不含素材制作与创意，折扣与票税按客户协议另议</li></ul></div></div>
+  ${complianceLine ? `<p class="note" style="margin-top:16px">${complianceLine}</p>` : ''}`
 
-  return { chips, kpis, note, s2anchors, s3table, s4, s5, s6, analysis, map, s65, s66 }
+  return { chips, kpis, note, s2window, s2anchors, s3table, s4, s5, s6, analysis, map, s65, s66 }
 }

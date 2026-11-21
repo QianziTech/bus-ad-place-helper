@@ -224,7 +224,7 @@ export function buildVm(input: {
 }): PlanVm {
   const { plan, meta, mode } = input
   // /api/plan 的基础分配没有 copy/checks/rounds/degraded，统一回退，保证同一渲染器可用。
-  const copy = plan.copy || { headline: '', brandContext: '', strategyLine: '', selectionRationale: '', assumptionEcho: '', source: 'template' as const }
+  const copy = plan.copy || { headline: '', brandContext: '', strategyLine: '', selectionRationale: '', source: 'template' as const }
   const rounds = plan.rounds || []
   const degraded = plan.degraded || []
   const checks = plan.checks || []

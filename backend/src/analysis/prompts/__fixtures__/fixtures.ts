@@ -33,6 +33,5 @@ export function strategyFixture(pool: CandidatePool): StrategyResult {
 export function copyFixture(plan: PlanSuccess): PlanCopy {
   return { headline: headlines[plan.request.industry], brandContext: `${plan.client.alias}面向${plan.campaign.audience}。本次以${plan.campaign.primaryGoal}为主目标，服务于${plan.campaign.businessGoal}。`,
     strategyLine: plan.request.media.length === 2 ? '地铁承接重点场景，公交补充城市动线覆盖。' : plan.request.media[0] === 'bus' ? '公交沿通勤动线承接场景认知与活动响应。' : '地铁围绕已核对目的地承接活动响应。',
-    selectionRationale: '按成案媒体已有的覆盖与人群证据说明选择理由。历史参考仅用于人群判断，不能替代地理覆盖。',
-    assumptionEcho: `客户以代称呈现；生意目标、主目标和人群沿用当前假设书；档期、预算与媒体以成案为准；以${plan.campaign.successMetric.kpi}衡量，并用${plan.campaign.successMetric.proof}取证。`, source: 'mock' };
+    selectionRationale: '按成案媒体已有的覆盖与人群证据说明选择理由。历史参考仅用于人群判断，不能替代地理覆盖。', source: 'mock' };
 }

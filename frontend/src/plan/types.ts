@@ -256,7 +256,8 @@ export interface PlanCopy {
   brandContext: string
   strategyLine: string
   selectionRationale: string
-  assumptionEcho: string
+  /** 已停用：后端不再生成，交付件不渲染。 */
+  assumptionEcho?: string
   source: 'llm' | 'mock' | 'template'
 }
 

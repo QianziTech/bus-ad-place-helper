@@ -21,15 +21,23 @@ export function deterministicChecks(plan: PlanSuccess, campaign: Campaign): Chec
   const remainingOk = plan.remainingYuan === plan.request.budgetYuan - plan.totalYuan;
   const budgetOk = lineTotal === plan.totalYuan && plan.totalYuan <= plan.request.budgetYuan && inventoryOk && lineAmountsOk && remainingOk;
   const publish = plan.schedule.batches.at(-1)?.publishStartDate;
-  const windowOk = !!publish && publish <= campaign.window.start && plan.request.endDate >= campaign.window.end;
+  // 建议窗口（campaign.window）只是我方建议：本次档期（request 起止）才是承诺，二者不一致只提示不阻断。
+  const windowOk = !!publish && publish <= plan.request.startDate;
+  const windowDiffers = campaign.window.start !== plan.request.startDate || campaign.window.end !== plan.request.endDate;
+  const remainingMonths = (() => {
+    const a = new Date(`${campaign.window.start}T00:00:00`); const b = new Date(`${campaign.window.end}T00:00:00`)
+    const r1 = new Date(`${plan.request.startDate}T00:00:00`); const r2 = new Date(`${plan.request.endDate}T00:00:00`)
+    const months = (x: Date, y: Date) => Math.max(1, (y.getFullYear() - x.getFullYear()) * 12 + y.getMonth() - x.getMonth() + 1)
+    return Math.max(0, months(a, b) - months(r1, r2))
+  })()
   const mediaOk = plan.request.media.every(kind => plan.lines.some(line => line.kind === kind));
   return [
     { element: '①', status: plan.client.alias.startsWith('某') ? 'pass' : 'warn', message: '客户按代称、品类与规模呈现，真实身份不作为方案依据', evidenceRefs: [`client:${plan.client.code}`] },
     { element: '②', status: campaign.businessGoal.trim() ? 'pass' : 'warn', message: campaign.businessGoal ? '生意目标已记录为提案假设，尚不能证明实际业务增长' : '缺少生意目标', evidenceRefs: [campaignRef('businessGoal')] },
     { element: '③', status: campaign.primaryGoal ? 'pass' : 'warn', message: '活动主目标沿用当前确认的 Campaign', evidenceRefs: [campaignRef('primaryGoal')] },
     { element: '④', status: plan.lines.some(line => line.trafficReference) ? 'pass' : 'warn', message: plan.lines.some(line => line.trafficReference) ? '部分媒体有历史人群参考，不代表当前触达或精确客群覆盖' : '目标人群已描述，但所选媒体缺少独立历史人群参考', evidenceRefs: [campaignRef('audience'), ...lineRefs] },
-    { element: '⑤', status: budgetOk && windowOk ? 'pass' : 'warn',
-      message: !budgetOk ? !lineAmountsOk ? '行金额与单位估算乘数量不一致，请复核' : !remainingOk ? '预算余量与预算上限减成案总额不一致，请复核' : '成案预算、行金额合计或数量库存需复核' : !publish ? '成案缺少发布起算日，活动档期待确认' : !windowOk ? `实际发布起算日 ${publish}，活动开始 ${campaign.window.start}；请核对活动覆盖与结束日期` : '预算与库存受上限约束，成案发布期覆盖活动窗口',
+    { element: '⑤', status: budgetOk && windowOk && !windowDiffers ? 'pass' : 'warn',
+      message: !budgetOk ? !lineAmountsOk ? '行金额与单位估算乘数量不一致，请复核' : !remainingOk ? '预算余量与预算上限减成案总额不一致，请复核' : '成案预算、行金额合计或数量库存需复核' : !publish ? '成案缺少发布起算日，本次档期待确认' : !windowOk ? `发布起算日 ${publish} 晚于本次档期起点 ${plan.request.startDate}，首日会有空窗，建议把首批施工提前` : windowDiffers ? `本次档期 ${plan.request.startDate} 至 ${plan.request.endDate} 已覆盖；建议窗口 ${campaign.window.start} 至 ${campaign.window.end}${remainingMonths ? `，余下 ${remainingMonths} 个月可续投，需客户确认接续成本` : '，需客户确认接续安排'}` : '预算与库存受上限约束，发布期覆盖整个投放档期',
       evidenceRefs: [`plan:budget:${plan.request.budgetYuan}:total:${plan.totalYuan}:remaining:${plan.remainingYuan}`, campaignRef('window'), ...lineRefs, ...plan.schedule.batches.map(batch => `schedule:${batch.no}:${batch.publishStartDate}:quantity:${batch.quantity}`), `data:${plan.queriedAt}`] },
     { element: '⑥', status: mediaOk ? 'pass' : 'warn', message: mediaOk ? '所选媒体类型均有成案明细与来源' : '请求的媒体范围未被完整覆盖', evidenceRefs: [campaignRef('mediaScope'), ...lineRefs] },
     { element: '⑦', status: campaign.successMetric.kpi && campaign.successMetric.proof ? 'pass' : 'warn', message: 'KPI 与交付取证分别记录，方案不承诺未验证的业绩', evidenceRefs: [campaignRef('successMetric')] },

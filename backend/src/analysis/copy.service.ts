@@ -10,7 +10,7 @@ export function templateCopy(plan: PlanSuccess, campaign = plan.campaign): PlanC
   return { headline: `${campaign.primaryGoal}场景媒体提案`, brandContext: `${plan.client.alias}的本次方案围绕${campaign.primaryGoal}目标展开。客户背景与活动目标为提案假设。`,
     strategyLine: '按活动目标与已核对证据安排媒体分工，库存与预算由规则引擎核算。',
     selectionRationale: '优先采用有覆盖或历史人群依据的候选，具体选择与来源见成案明细。',
-    assumptionEcho: '客户、生意目标、活动目标、人群、时间预算、媒体与衡量方法按当前假设书逐项回应，缺少依据处需补充确认。', source: 'template' };
+    assumptionEcho: '', source: 'template' };
 }
 
 @Injectable()
@@ -26,9 +26,10 @@ export class CopyService {
       if (!raw || typeof raw !== 'object') throw new Error('invalid');
       const copy = { ...fallback };
       const missing: string[] = [];
-      for (const slot of ['headline', 'brandContext', 'strategyLine', 'selectionRationale', 'assumptionEcho'] as const) {
+      const limits: Record<'headline' | 'brandContext' | 'strategyLine' | 'selectionRationale', number> = { headline: 18, brandContext: 90, strategyLine: 60, selectionRationale: 120 };
+      for (const slot of ['headline', 'brandContext', 'strategyLine', 'selectionRationale'] as const) {
         const value = raw[slot];
-        if (typeof value !== 'string' || !value.trim() || value.length > (slot === 'headline' ? 18 : 800) || (context.mode === 'live' && /\d|[一二三四五六七八九十百千万]+\s*(?:辆|台|元|批|夜)/.test(value))) { missing.push(slot); continue; }
+        if (typeof value !== 'string' || !value.trim() || value.length > limits[slot] || (context.mode === 'live' && /\d|[一二三四五六七八九十百千万]+\s*(?:辆|台|元|批|夜)/.test(value))) { missing.push(slot); continue; }
         copy[slot] = value.trim();
       }
       copy.source = missing.length ? 'template' : context.mode === 'mock' ? 'mock' : 'llm';

@@ -23,7 +23,7 @@ export class CopyDto {
   @ApiProperty({ example: '客户背景与活动目标为提案假设。' }) brandContext!: string;
   @ApiProperty({ example: '围绕已核对的目标场景组织媒体分工。' }) strategyLine!: string;
   @ApiProperty({ example: '选择依据见媒体证据。' }) selectionRationale!: string;
-  @ApiProperty({ example: '客户与目标沿用假设书，预算按请求上限。' }) assumptionEcho!: string;
+  @ApiPropertyOptional({ description: '已停用：服务端不再生成该槽位，仅为兼容旧调用方保留', example: '' }) assumptionEcho?: string;
   @ApiProperty({ enum: ['llm', 'mock', 'template'], example: 'template' }) source!: string;
 }
 export class PlanAnalysisDto {

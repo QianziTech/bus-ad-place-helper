@@ -14,6 +14,16 @@ const reasonText: Record<RejectionReason, string> = {
 }
 
 const prefs = computed<StrategyPreference[]>(() => props.result?.strategyPreferences || [])
+/** 媒体键只用于内部对照：面板显示线路名与形式，键放在 title 里作证据。 */
+function labelOf(mediaKey: string): string {
+  const result = props.result
+  if (!result) return '未识别资源'
+  const line = result.lines.find(item => item.mediaKey === mediaKey)
+  if (line) return `${line.name}${line.mediaForm ? ` · ${line.mediaForm}` : line.exit ? ` · ${line.exit}` : ''}`
+  const media = (result as { mediaByKey?: Record<string, { name: string; mediaForm?: string; exit?: string }> }).mediaByKey?.[mediaKey]
+  if (media) return `${media.name}${media.mediaForm ? ` · ${media.mediaForm}` : media.exit ? ` · ${media.exit}` : ''}`
+  return '未识别资源'
+}
 const rejectedCount = computed(() => prefs.value.filter(item => item.disposition?.startsWith('rejected:')).length)
 const rounds = computed(() => props.result?.rounds || [])
 const windowFitLabel: Record<string, string> = { aligned: '对齐', risk: '风险', unknown: '待确认' }
@@ -41,7 +51,7 @@ const title = computed(() => {
           <span class="idx">{{ index + 1 }}</span>
           <span style="flex: 1; min-width: 0">
             <span style="display: block">{{ item.reason }}</span>
-            <span class="key">{{ item.mediaKey }} · 证据 {{ item.evidenceRefs.length }}</span>
+            <span class="key" :title="item.mediaKey" :data-key="item.mediaKey">{{ labelOf(item.mediaKey) }} · 证据 {{ item.evidenceRefs.length }}</span>
           </span>
           <span class="disp" :class="item.disposition === 'accepted' ? 'ok' : 'no'">
             {{ item.disposition === 'accepted' ? '✓ 已分配' : item.disposition?.startsWith('rejected:') ? `✗ ${reasonText[item.disposition.slice(9) as RejectionReason] || '已拒'}` : '— 未采纳' }}

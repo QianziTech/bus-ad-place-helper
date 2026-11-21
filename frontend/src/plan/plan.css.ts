@@ -88,6 +88,12 @@ table.appendix-table td.k{width:7em;color:var(--ink-2);font-weight:600}
 [data-src]{position:relative}
 [data-src]::after{content:attr(data-src);position:absolute;left:0;bottom:100%;background:#1a1d21;color:#fff;font-size:12px;font-weight:400;padding:3px 7px;border-radius:4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s;z-index:9}
 [data-src]:hover::after{opacity:1}
+@media (hover:none){[data-src]::after{display:none}}
+.load{display:inline-block;margin-left:8px;font-size:11px;font-weight:600;color:var(--accent)}
+.win{line-height:1.7}
+.win b{font-size:15px}
+.win span{color:var(--ink-2);font-size:13px}
+.win small{display:block;color:var(--ink-3)}
 .hl{outline:2px solid var(--accent);outline-offset:2px;background:#fdf0e9}
 .budget-slider{border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px 12px;margin-top:20px;background:var(--canvas)}
 .budget-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
@@ -103,6 +109,47 @@ table.appendix-table td.k{width:7em;color:var(--ink-2);font-weight:600}
 .map-legend .legend-item{display:inline-flex;align-items:center;gap:6px}
 .map-legend i{width:14px;height:4px;border-radius:2px;display:inline-block}
 @media (max-width:1500px){.doc{padding:0 48px}header.doc-head,nav.sections{padding-left:48px;padding-right:48px}}
-@media (max-width:1100px){.split,.split.wide,.kpis,.cards,.two-col{grid-template-columns:1fr}.kpi b{font-size:32px}header.doc-head,nav.sections{padding-left:24px;padding-right:24px}.doc{padding:0 24px 40px}}
-@media print{header.doc-head,nav.sections{position:static}section{break-inside:avoid}}
+@media (max-width:1100px){.split,.split.wide,.cards,.two-col{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(4,1fr)}.kpi{padding:12px 10px}.kpi b{font-size:30px}header.doc-head,nav.sections{padding-left:24px;padding-right:24px}.doc{padding:0 24px 40px}}
+/* ---- 打印：A4 纵向，headless Chromium 与手动打印共用 ---- */
+@page{size:A4 portrait;margin:14mm 12mm}
+@media print{
+  .doc{width:auto;max-width:none;padding:0}
+  header.doc-head{position:static;padding:0 0 10px}
+  nav.sections{display:none}
+  table.data{font-size:10.5pt}
+  table.data th{position:static;background:#f2f3f4}
+  thead{display:table-header-group}
+  tr,.card,.kpi,.risk,.ok-block{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  section{padding:16px 0;break-inside:auto}
+  details>*{display:block!important}
+  /* 关闭态的 details 内容被 content-visibility 隐藏，只改子元素 display 会溢出到后续行。 */
+  details::details-content{content-visibility:visible!important;display:block!important}
+  details summary{list-style:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+/* ---- 移动端：页眉导航不再常驻，表格转卡片 ---- */
+@media (max-width:760px){
+  header.doc-head{position:static;padding:14px 16px;flex-direction:column;align-items:flex-start;gap:4px}
+  nav.sections{position:static;padding:10px 16px;flex-wrap:nowrap;overflow-x:auto;gap:16px}
+  nav.sections a{white-space:nowrap;padding:8px 0;min-height:44px;display:inline-flex;align-items:center}
+  .doc{padding:0 16px 40px}
+  h1{font-size:28px} h2{font-size:22px}
+  .lede{font-size:15px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .kpi{padding:12px 14px} .kpi b{font-size:26px}
+  details summary{min-height:44px;display:flex;align-items:center;padding:2px 0}
+  table.data,table.data tbody,table.data tr,table.data td{display:block;width:auto}
+  table.data thead{display:none}
+  table.data tr{border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px;margin:0 0 12px}
+  table.data td{border:none;padding:3px 0;display:flex;gap:10px;font-size:14px}
+  table.data td::before{content:attr(data-label);flex:none;width:6.8em;color:var(--ink-3);font-size:12px}
+  table.data td:first-child{display:block;font-size:17px;font-weight:600;padding-bottom:6px}
+  table.data td:first-child::before{display:none}
+  table.data td.num{text-align:left}
+}
+/* ---- 桌面：表头偏移到粘性页眉之下 + 投屏放大 ---- */
+:root{--head-h:127px}
+table.data th{top:var(--head-h)}
+@media (min-width:1700px){.kpi b{font-size:64px}}
 `

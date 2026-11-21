@@ -69,7 +69,8 @@ export interface TraceStep { step: string; message: string; evidenceRefs?: strin
 export interface PlanSuccess { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; lines: PlanLine[]; anchors: PlanAnchor[]; billingMonths: number; billingStatus: 'confirmed' | 'pending'; totalYuan: number; remainingYuan: number; queriedAt: string; schedule: Schedule; assumptions: string[]; notices: string[]; trace: TraceStep[]; strategyPreferences?: StrategyPreference[]; inventory: InventoryDetail }
 export type PlanResult = PlanSuccess | PlanFailure;
 export interface Check { element: string; status: 'pass' | 'warn' | 'fail'; message: string; evidenceRefs: string[]; blocking?: boolean; location?: string; suggestion?: string }
-export interface PlanCopy { headline: string; brandContext: string; strategyLine: string; selectionRationale: string; assumptionEcho: string; source: 'llm' | 'mock' | 'template' }
+/** assumptionEcho 已停用：为兼容既有调用方保留可选字段，服务端不再生成，交付件不渲染。 */
+export interface PlanCopy { headline: string; brandContext: string; strategyLine: string; selectionRationale: string; assumptionEcho?: string; source: 'llm' | 'mock' | 'template' }
 export interface Round { round: number; candidateCount: number; preferredCount: number; acceptedCount: number; rejected: { mediaKey: string; reason: RejectionReason }[]; requestReplan: boolean; elapsedMs: number }
 export interface Degraded { stage: 'brief' | 'strategy' | 'copy' | 'verify'; reason: string }
 export interface PipelineSuccess extends PlanSuccess { copy: PlanCopy; checks: Check[]; rounds: Round[]; degraded: Degraded[]; exportAllowed: boolean; mediaObjective?: string; windowFit?: { status: 'aligned' | 'risk' | 'unknown'; reason: string; evidenceRefs: string[] }; measurement?: { kpi: string; proof: string } }
