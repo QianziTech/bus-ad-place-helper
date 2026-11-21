@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+data/config/runtime.json
+data/config/*.tmp
+data/internal/
+*.log
+coverage/

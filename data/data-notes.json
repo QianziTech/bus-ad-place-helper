@@ -1,0 +1,5700 @@
+{
+  "media": {
+    "bus": 431,
+    "metro": 861
+  },
+  "windows": {
+    "bus": 1,
+    "metro": 1
+  },
+  "anchors": 29,
+  "prices": 1285,
+  "traffic": 397,
+  "unmatched": [
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "沪嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "301路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "41路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "304路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "24路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "974路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "109路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "869路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "36路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "112路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "112路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "e乘巴士006路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "都市观光旅游1线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "旅游2线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "旅游1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "805路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "都市观光旅游2线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "46路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "芦潮港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "146路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "986路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "沪塘专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "南申专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "隧道八线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "108路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "108路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "大桥一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "104路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "312路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "738路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "19路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "934路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-人民广场",
+      "lineName": "51路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "205路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "76路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "93路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "138路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "830路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "754路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "50路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "957路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "946路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "923路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "703路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "122路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "303路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "徐闵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "721路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "808路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "87路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "186路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "徐闵夜宵专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "92路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "隧道夜宵一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "252路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "909路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "456路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "704路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "855路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "44路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "56路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "342路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "48路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "718路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "720路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "沪松专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "704路B线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "徐川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "120路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "733路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "956路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "178路大站车",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "326路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "827路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "72路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "776路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-徐家汇",
+      "lineName": "857路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "328路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "48路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "113路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "76路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "323路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "321路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "57路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "40路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "44路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "93路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "327路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "830路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "45路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "138路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "88路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "923路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-静安寺",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "40路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "959路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "210路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "767路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "107路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "876路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "312路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "322路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "申方专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "沪嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "新嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "46路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "849路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "41路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "702路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "332路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "862路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "79路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "869路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "510路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "321路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "951路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-上海马戏城",
+      "lineName": "206路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "947路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "309路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "67路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "252路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "765路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "829路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "909路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "754路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "13路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "54路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "88路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "737路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "519路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "857路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "946路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "776路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "323路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "923路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "44路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "846路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "216路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "966路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "321路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "319路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-隆德路",
+      "lineName": "951路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "92路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "虹桥枢纽5路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "709路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "186路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "七宝2路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "87路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "748路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "市域机场线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "189路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "虹桥枢纽4路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "91路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "196路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "735路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "莘虹快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "虹桥枢纽10路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "food-七宝",
+      "lineName": "虹桥枢纽5路B线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "866路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "旅游1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "都市观光旅游1线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "旅游2线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "都市观光旅游3线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "305路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "65路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "805路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "307路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "都市观光旅游2线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "旅游10线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "隧道八线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "868路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "317路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "930路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "11路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "都市观光旅游5线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "135路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "芦潮港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "隧道夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "934路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "313路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "陆家嘴金融城2路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "陆家嘴金融城1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "陆家嘴金融城3路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "870路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "939路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "24路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "715路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "306路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "220路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "66路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "929路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "314路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "339路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "338路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "陆家嘴金融城4路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-陆家嘴",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "104路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "24路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "304路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "738路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "323路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "76路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "57路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "206路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "88路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "40路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "113路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "45路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "830路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "138路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "93路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "328路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "327路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "321路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "48路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "112路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "112路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "301路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "41路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "146路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "沪嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "36路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京西路",
+      "lineName": "986路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "205路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "76路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "93路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "138路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "830路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "754路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "50路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "957路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "946路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "923路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "703路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "122路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "303路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "徐闵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "721路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "808路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "87路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "186路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "徐闵夜宵专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "92路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "隧道夜宵一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "252路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "909路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "456路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "704路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "855路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "44路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "56路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "342路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "48路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "718路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "720路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "沪松专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "704路B线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "徐川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "120路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "733路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "956路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "178路大站车",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "326路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "827路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "72路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "776路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-徐家汇",
+      "lineName": "857路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "405路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "307路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "325路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "61路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "嘉五线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "60路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "大桥五线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "854路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "139路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "59路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "966路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "133路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "申崇三线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "申崇三线区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "申崇七线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "申崇一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "申崇五线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "942路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "812路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "329路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "749路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "559路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "99路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "713路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "819路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "北安跨线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "723路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "80路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "842路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "90路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "1215路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "538路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "大桥三线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "8路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "959路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "406路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "310路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "554路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "142路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "14路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "115路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-五角场",
+      "lineName": "874路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "1251路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "855路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "158路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "1217路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "700路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "737路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "88路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "861路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "519路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "309路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "328路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "57路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "827路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "上青线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "829路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "808路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "72路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "1250路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-娄山关路",
+      "lineName": "54路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "46路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "芦潮港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "都市观光旅游1线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "旅游2线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "旅游1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "312路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "51路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "都市观光旅游2线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "e乘巴士006路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "930路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "108路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "318路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "108路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "隧道夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "934路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "805路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "112路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "112路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "109路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "14路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "隧道八线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "南申专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "781路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "135路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "旅游10线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "11路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "220路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "19路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "869路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "36路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "974路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "大桥一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "146路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "210路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "沪嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "沪塘专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "929路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "66路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "306路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "304路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "finance-南京东路",
+      "lineName": "都市观光旅游3线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "46路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "芦潮港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "都市观光旅游1线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "旅游2线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "旅游1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "312路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "51路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "都市观光旅游2线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "e乘巴士006路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "930路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "108路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "318路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "108路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "隧道夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "934路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "805路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "112路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "112路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "109路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "14路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "隧道八线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "南申专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "781路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "135路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "旅游10线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "11路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "220路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "19路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "869路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "36路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "974路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "大桥一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "146路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "210路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "沪嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "沪塘专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "929路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "66路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "306路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "304路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-南京东路",
+      "lineName": "都市观光旅游3线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "沪嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "301路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "41路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "304路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "24路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "974路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "109路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "869路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "36路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "112路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "112路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "e乘巴士006路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "都市观光旅游1线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "旅游2线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "旅游1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "805路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "都市观光旅游2线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "46路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "芦潮港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "146路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "986路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "沪塘专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "南申专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "隧道八线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "108路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "108路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "大桥一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "104路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "312路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "738路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "19路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "934路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-人民广场",
+      "lineName": "51路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "205路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "76路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "93路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "138路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "830路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "754路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "50路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "957路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "946路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "923路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "703路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "122路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "303路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "徐闵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "721路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "808路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "87路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "186路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "徐闵夜宵专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "92路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "隧道夜宵一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "252路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "909路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "456路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "704路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "855路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "44路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "56路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "342路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "48路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "718路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "720路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "沪松专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "704路B线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "徐川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "120路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "733路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "956路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "178路大站车",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "326路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "827路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "72路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "776路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-徐家汇",
+      "lineName": "857路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "205路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "303路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "45路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "301路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "733路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "72路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "徐川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "864路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "104路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "隧道夜宵一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "327路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "957路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "781路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "41路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "146路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "326路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "徐闵夜宵专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "456路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "111路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "734路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "滨江2路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "浦西滨江1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-打浦桥",
+      "lineName": "徐闵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "328路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "48路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "113路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "76路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "323路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "321路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "57路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "40路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "44路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "93路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "327路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "830路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "45路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "138路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "88路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "923路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-静安寺",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "947路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "309路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "67路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "252路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "765路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "829路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "909路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "754路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "13路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "54路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "88路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "737路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "519路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "857路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "946路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "776路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "323路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "923路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "44路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "846路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "216路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "966路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "321路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "319路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "health-隆德路",
+      "lineName": "951路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-杨高中路",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-杨高中路",
+      "lineName": "975路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-杨高中路",
+      "lineName": "陆家嘴金融城4路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-杨高中路",
+      "lineName": "浦东121路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-杨高中路",
+      "lineName": "59路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-杨高中路",
+      "lineName": "609路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-杨高中路",
+      "lineName": "607路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "827路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "76路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "44路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "138路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "754路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "855路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "113路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "328路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "72路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "830路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "93路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "946路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "48路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "205路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "149路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "923路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "50路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "186路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "隧道夜宵一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "122路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "徐闵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "957路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "303路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "857路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "776路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "808路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "909路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "252路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "956路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "87路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "703路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "56路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-交通大学",
+      "lineName": "342路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "700路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "e乘巴士010路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "上嘉线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "e乘巴士021路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "e乘巴士002路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "上青线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "149路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "827路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "737路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "158路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "519路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "57路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "328路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "865路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "809路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-红宝石路",
+      "lineName": "1217路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "112路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "112路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "738路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "104路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "36路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "206路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "304路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "24路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "19路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "68路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "950路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "109路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "301路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "沪嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "41路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "323路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "138路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "76路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "328路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "57路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "974路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "e乘巴士006路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "88路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "869路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "40路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "113路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "54路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "830路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-自然博物馆",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "975路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "陆家嘴金融城4路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "607路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "浦东121路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "浦东11路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "819路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "746路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "浦亭线(金山铁路亭林站-塘桥新路公交枢纽站)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "338路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "929路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "974路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "629路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "973路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "hospital-上海科技馆",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "浦东17路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "徐川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "浦东65路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "申川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "628路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "浦东13路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "615路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "632路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-川沙",
+      "lineName": "浦东11路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "1135路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "临港4路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "临港定制16线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "1077路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "自贸试验区洋山1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "申港3路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "临港5路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "申港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "1078路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-临港大道",
+      "lineName": "浦东29路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江6路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江3路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江9路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江5路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江4路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "1807路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江12路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江11路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江28路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松新枫线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江19路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江33路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江2路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江25路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江14路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "虹桥枢纽10路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "莲松专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江17路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "沪松专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江13路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江34路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松梅专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松莘线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-松江体育中心",
+      "lineName": "松江7路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "866路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "旅游1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "都市观光旅游1线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "旅游2线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "都市观光旅游3线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "305路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "65路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "805路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "307路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "都市观光旅游2线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "旅游10线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "隧道八线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "868路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "317路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "930路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "11路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "都市观光旅游5线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "135路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "芦潮港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "隧道夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "934路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "313路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "陆家嘴金融城2路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "陆家嘴金融城1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "陆家嘴金融城3路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "870路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "939路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "24路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "715路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "306路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "220路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "66路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "929路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "314路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "339路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "338路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "陆家嘴金融城4路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-陆家嘴",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "沪嘉专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "301路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "41路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "304路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "24路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "974路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "109路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "869路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "36路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "沪青高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "330路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "20路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "112路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "112路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "37路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "e乘巴士006路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "都市观光旅游1线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "旅游2线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "旅游1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "805路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "都市观光旅游2线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "46路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "芦潮港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "146路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "986路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "沪塘专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "南申专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "隧道八线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "108路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "108路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "大桥一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "315路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "21路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "15路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "104路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "26路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "312路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "738路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "19路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "934路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-人民广场",
+      "lineName": "51路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "781路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "324路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "23路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "318路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "南申专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "135路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "11路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "304路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "220路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "911路双层",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "320路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "805路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "911路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "隧道八线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "911路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "都市观光旅游2线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "都市观光旅游1线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "旅游1线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "42路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "930路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "934路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "24路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "715路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "109路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "沪朱高速快线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "108路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "108路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "沪商高速专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "上川专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "大桥一线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "71路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "123路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "146路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "71路[中运量]",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "浦东机场守航夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "芦潮港1路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "01路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "311路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "312路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "旅游10线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "929路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "66路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "旅游2线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "306路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "都市观光旅游3线(旧)",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "51路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "e乘巴士006路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "46路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "112路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "112路区间",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "沪塘专线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "64路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "36路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "869路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "933路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "974路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "隧道夜宵线",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "49路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "14路",
+      "reason": "not_in_inventory"
+    },
+    {
+      "anchorId": "park-豫园",
+      "lineName": "316路",
+      "reason": "not_in_inventory"
+    }
+  ]
+}

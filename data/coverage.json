@@ -1,0 +1,3749 @@
+{
+  "anchorsById": {
+    "food-人民广场": {
+      "areaName": "人民广场 · 南京东路商圈",
+      "station": "人民广场",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.471485,
+        "lat": 31.232506,
+        "exit": "10号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|311|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 209.4
+        },
+        {
+          "mediaKey": "bus|278|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 211.5
+        },
+        {
+          "mediaKey": "bus|244|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 564.6
+        },
+        {
+          "mediaKey": "bus|177|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 646.3
+        },
+        {
+          "mediaKey": "bus|532|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 666.2
+        },
+        {
+          "mediaKey": "bus|178|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 666.3
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 714.2
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 722.5
+        },
+        {
+          "mediaKey": "bus|330|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 728.4
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 802.0
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 888.6
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 959.3
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1022.0
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1065.1
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1086.3
+        },
+        {
+          "mediaKey": "bus|246|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1110.4
+        },
+        {
+          "mediaKey": "bus|245|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1118.5
+        },
+        {
+          "mediaKey": "metro|84|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|88|8号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|89|9号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|90|10号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|91|11号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|92|12号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|93|14号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|95|16号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|99|20号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        },
+        {
+          "mediaKey": "metro|1227|1B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-人民广场"
+        }
+      ]
+    },
+    "food-徐家汇": {
+      "areaName": "徐家汇商圈",
+      "station": "徐家汇",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.438632,
+        "lat": 31.192281,
+        "exit": "9号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|223|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 340.1
+        },
+        {
+          "mediaKey": "bus|142|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 341.6
+        },
+        {
+          "mediaKey": "bus|272|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 371.7
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 415.4
+        },
+        {
+          "mediaKey": "bus|173|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 415.7
+        },
+        {
+          "mediaKey": "bus|237|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|370|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.7
+        },
+        {
+          "mediaKey": "bus|531|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.7
+        },
+        {
+          "mediaKey": "bus|329|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.8
+        },
+        {
+          "mediaKey": "bus|296|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 518.8
+        },
+        {
+          "mediaKey": "bus|163|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 532.2
+        },
+        {
+          "mediaKey": "bus|165|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 663.5
+        },
+        {
+          "mediaKey": "bus|185|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.3
+        },
+        {
+          "mediaKey": "bus|275|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.4
+        },
+        {
+          "mediaKey": "bus|190|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.6
+        },
+        {
+          "mediaKey": "bus|130|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 869.1
+        },
+        {
+          "mediaKey": "bus|158|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 869.1
+        },
+        {
+          "mediaKey": "bus|313|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 958.9
+        },
+        {
+          "mediaKey": "metro|39|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-徐家汇"
+        },
+        {
+          "mediaKey": "metro|40|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-徐家汇"
+        },
+        {
+          "mediaKey": "metro|46|9号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-徐家汇"
+        },
+        {
+          "mediaKey": "metro|53|16号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-徐家汇"
+        }
+      ]
+    },
+    "food-静安寺": {
+      "areaName": "静安寺 · 南京西路西段",
+      "station": "静安寺",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.447638,
+        "lat": 31.223556,
+        "exit": "10号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|185|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 37.6
+        },
+        {
+          "mediaKey": "bus|200|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 245.4
+        },
+        {
+          "mediaKey": "bus|276|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 334.2
+        },
+        {
+          "mediaKey": "bus|272|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 516.1
+        },
+        {
+          "mediaKey": "bus|306|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 523.5
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 523.5
+        },
+        {
+          "mediaKey": "bus|315|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 716.4
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 930.2
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 948.9
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 958.9
+        },
+        {
+          "mediaKey": "metro|260|8号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-静安寺"
+        },
+        {
+          "mediaKey": "metro|1309|11号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-静安寺"
+        },
+        {
+          "mediaKey": "metro|1310|12号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-静安寺"
+        },
+        {
+          "mediaKey": "metro|1311|13A号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-静安寺"
+        },
+        {
+          "mediaKey": "metro|1312|13B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-静安寺"
+        }
+      ]
+    },
+    "food-上海马戏城": {
+      "areaName": "大宁商圈",
+      "station": "上海马戏城",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.4525,
+        "lat": 31.279989,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|184|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 185.5
+        },
+        {
+          "mediaKey": "bus|305|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 211.8
+        },
+        {
+          "mediaKey": "bus|298|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 554.8
+        },
+        {
+          "mediaKey": "bus|286|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 624.7
+        },
+        {
+          "mediaKey": "bus|229|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 631.1
+        },
+        {
+          "mediaKey": "bus|311|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 679.7
+        },
+        {
+          "mediaKey": "bus|308|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 679.8
+        },
+        {
+          "mediaKey": "bus|318|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 751.6
+        },
+        {
+          "mediaKey": "bus|281|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 764.0
+        },
+        {
+          "mediaKey": "bus|153|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 764.2
+        },
+        {
+          "mediaKey": "bus|194|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-上海马戏城；data/raw/geo/candidates.json",
+          "distanceM": 764.2
+        },
+        {
+          "mediaKey": "metro|128|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-上海马戏城"
+        },
+        {
+          "mediaKey": "metro|129|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-上海马戏城"
+        },
+        {
+          "mediaKey": "metro|130|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-上海马戏城"
+        },
+        {
+          "mediaKey": "metro|131|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-上海马戏城"
+        }
+      ]
+    },
+    "food-隆德路": {
+      "areaName": "曹家渡商圈",
+      "station": "隆德路",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.4232,
+        "lat": 31.231045,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|212|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 518.5
+        },
+        {
+          "mediaKey": "bus|285|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 526.4
+        },
+        {
+          "mediaKey": "bus|165|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 540.1
+        },
+        {
+          "mediaKey": "bus|156|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 560.5
+        },
+        {
+          "mediaKey": "bus|307|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 718.4
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 753.6
+        },
+        {
+          "mediaKey": "bus|200|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 817.8
+        },
+        {
+          "mediaKey": "bus|315|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 947.4
+        },
+        {
+          "mediaKey": "bus|306|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 1065.8
+        },
+        {
+          "mediaKey": "bus|310|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 1139.7
+        },
+        {
+          "mediaKey": "bus|276|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 1149.6
+        },
+        {
+          "mediaKey": "metro|955|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-隆德路"
+        },
+        {
+          "mediaKey": "metro|956|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-隆德路"
+        },
+        {
+          "mediaKey": "metro|957|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-隆德路"
+        },
+        {
+          "mediaKey": "metro|958|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-隆德路"
+        },
+        {
+          "mediaKey": "metro|959|5号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-隆德路"
+        }
+      ]
+    },
+    "food-七宝": {
+      "areaName": "七宝 · 购物中心带",
+      "station": "七宝",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.349793,
+        "lat": 31.155312,
+        "exit": "2号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|526|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-七宝；data/raw/geo/candidates.json",
+          "distanceM": 248.7
+        },
+        {
+          "mediaKey": "bus|158|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-七宝；data/raw/geo/candidates.json",
+          "distanceM": 255.8
+        },
+        {
+          "mediaKey": "bus|159|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-七宝；data/raw/geo/candidates.json",
+          "distanceM": 268.3
+        },
+        {
+          "mediaKey": "bus|263|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-七宝；data/raw/geo/candidates.json",
+          "distanceM": 584.5
+        },
+        {
+          "mediaKey": "bus|525|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 food-七宝；data/raw/geo/candidates.json",
+          "distanceM": 709.6
+        },
+        {
+          "mediaKey": "metro|787|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-七宝"
+        },
+        {
+          "mediaKey": "metro|788|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-七宝"
+        },
+        {
+          "mediaKey": "metro|789|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-七宝"
+        },
+        {
+          "mediaKey": "metro|790|5号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-七宝"
+        },
+        {
+          "mediaKey": "metro|791|6号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 food-七宝"
+        }
+      ]
+    },
+    "finance-陆家嘴": {
+      "areaName": "陆家嘴 · 张杨路商圈",
+      "station": "陆家嘴",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.502438,
+        "lat": 31.234945,
+        "exit": "10号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|192|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 21.4
+        },
+        {
+          "mediaKey": "bus|186|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 22.0
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 26.0
+        },
+        {
+          "mediaKey": "bus|178|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 48.6
+        },
+        {
+          "mediaKey": "bus|246|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 54.2
+        },
+        {
+          "mediaKey": "bus|169|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 66.2
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 90.6
+        },
+        {
+          "mediaKey": "bus|225|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 93.5
+        },
+        {
+          "mediaKey": "bus|532|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 513.0
+        },
+        {
+          "mediaKey": "bus|530|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 513.0
+        },
+        {
+          "mediaKey": "bus|475|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 651.5
+        },
+        {
+          "mediaKey": "bus|317|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 752.1
+        },
+        {
+          "mediaKey": "bus|414|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 752.1
+        },
+        {
+          "mediaKey": "bus|329|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 761.7
+        },
+        {
+          "mediaKey": "bus|196|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 773.6
+        },
+        {
+          "mediaKey": "bus|270|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 781.6
+        },
+        {
+          "mediaKey": "bus|326|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 806.5
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 806.6
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 806.7
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 807.4
+        },
+        {
+          "mediaKey": "bus|210|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 808.9
+        },
+        {
+          "mediaKey": "bus|141|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 815.7
+        },
+        {
+          "mediaKey": "bus|320|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 836.7
+        },
+        {
+          "mediaKey": "bus|412|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 859.8
+        },
+        {
+          "mediaKey": "bus|239|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1084.8
+        },
+        {
+          "mediaKey": "bus|266|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1087.1
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1144.9
+        },
+        {
+          "mediaKey": "bus|283|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1188.9
+        },
+        {
+          "mediaKey": "bus|243|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1189.0
+        },
+        {
+          "mediaKey": "bus|259|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1189.1
+        },
+        {
+          "mediaKey": "bus|338|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1189.3
+        },
+        {
+          "mediaKey": "metro|226|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|227|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|228|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|229|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|230|5号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|231|6号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|1305|8号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|1306|9A号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|1307|9B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-陆家嘴"
+        }
+      ]
+    },
+    "finance-南京西路": {
+      "areaName": "南京西路商圈",
+      "station": "南京西路",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.459424,
+        "lat": 31.229254,
+        "exit": "4号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|306|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 463.9
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 667.9
+        },
+        {
+          "mediaKey": "bus|272|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 732.7
+        },
+        {
+          "mediaKey": "bus|276|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 733.2
+        },
+        {
+          "mediaKey": "bus|185|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 740.8
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 871.7
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 880.5
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 945.5
+        },
+        {
+          "mediaKey": "bus|200|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 970.6
+        },
+        {
+          "mediaKey": "bus|330|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京西路；data/raw/geo/candidates.json",
+          "distanceM": 1156.2
+        },
+        {
+          "mediaKey": "metro|242|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-南京西路"
+        },
+        {
+          "mediaKey": "metro|247|9号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-南京西路"
+        }
+      ]
+    },
+    "finance-徐家汇": {
+      "areaName": "徐家汇商圈",
+      "station": "徐家汇",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.438632,
+        "lat": 31.192281,
+        "exit": "9号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|223|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 340.1
+        },
+        {
+          "mediaKey": "bus|142|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 341.6
+        },
+        {
+          "mediaKey": "bus|272|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 371.7
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 415.4
+        },
+        {
+          "mediaKey": "bus|173|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 415.7
+        },
+        {
+          "mediaKey": "bus|237|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|370|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.7
+        },
+        {
+          "mediaKey": "bus|531|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.7
+        },
+        {
+          "mediaKey": "bus|329|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.8
+        },
+        {
+          "mediaKey": "bus|296|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 518.8
+        },
+        {
+          "mediaKey": "bus|163|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 532.2
+        },
+        {
+          "mediaKey": "bus|165|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 663.5
+        },
+        {
+          "mediaKey": "bus|185|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.3
+        },
+        {
+          "mediaKey": "bus|275|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.4
+        },
+        {
+          "mediaKey": "bus|190|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.6
+        },
+        {
+          "mediaKey": "bus|130|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 869.1
+        },
+        {
+          "mediaKey": "bus|158|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 869.1
+        },
+        {
+          "mediaKey": "bus|313|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 958.9
+        },
+        {
+          "mediaKey": "metro|39|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-徐家汇"
+        },
+        {
+          "mediaKey": "metro|40|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-徐家汇"
+        },
+        {
+          "mediaKey": "metro|46|9号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-徐家汇"
+        },
+        {
+          "mediaKey": "metro|53|16号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-徐家汇"
+        }
+      ]
+    },
+    "finance-五角场": {
+      "areaName": "五角场商圈",
+      "station": "五角场",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.514917,
+        "lat": 31.298073,
+        "exit": "2号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|426|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 70.6
+        },
+        {
+          "mediaKey": "bus|110|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 205.4
+        },
+        {
+          "mediaKey": "bus|186|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 297.1
+        },
+        {
+          "mediaKey": "bus|305|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 297.3
+        },
+        {
+          "mediaKey": "bus|128|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 352.1
+        },
+        {
+          "mediaKey": "bus|284|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 551.2
+        },
+        {
+          "mediaKey": "bus|316|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 555.4
+        },
+        {
+          "mediaKey": "bus|140|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 555.8
+        },
+        {
+          "mediaKey": "bus|176|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-五角场；data/raw/geo/candidates.json",
+          "distanceM": 966.1
+        },
+        {
+          "mediaKey": "metro|840|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-五角场"
+        },
+        {
+          "mediaKey": "metro|841|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-五角场"
+        },
+        {
+          "mediaKey": "metro|843|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-五角场"
+        }
+      ]
+    },
+    "finance-娄山关路": {
+      "areaName": "虹桥艺术中心 · 虹桥商务区",
+      "station": "娄山关路",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.405093,
+        "lat": 31.211225,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|275|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-娄山关路；data/raw/geo/candidates.json",
+          "distanceM": 146.3
+        },
+        {
+          "mediaKey": "bus|212|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-娄山关路；data/raw/geo/candidates.json",
+          "distanceM": 146.8
+        },
+        {
+          "mediaKey": "bus|233|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-娄山关路；data/raw/geo/candidates.json",
+          "distanceM": 707.0
+        },
+        {
+          "mediaKey": "bus|307|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-娄山关路；data/raw/geo/candidates.json",
+          "distanceM": 710.8
+        },
+        {
+          "mediaKey": "bus|285|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-娄山关路；data/raw/geo/candidates.json",
+          "distanceM": 724.6
+        },
+        {
+          "mediaKey": "bus|156|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-娄山关路；data/raw/geo/candidates.json",
+          "distanceM": 737.7
+        },
+        {
+          "mediaKey": "bus|125|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-娄山关路；data/raw/geo/candidates.json",
+          "distanceM": 738.0
+        },
+        {
+          "mediaKey": "metro|1317|7号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-娄山关路"
+        }
+      ]
+    },
+    "finance-南京东路": {
+      "areaName": "南京东路商圈 · 外滩",
+      "station": "南京东路",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.482629,
+        "lat": 31.236151,
+        "exit": "4B号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|178|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 66.6
+        },
+        {
+          "mediaKey": "bus|532|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 76.0
+        },
+        {
+          "mediaKey": "bus|147|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 88.5
+        },
+        {
+          "mediaKey": "bus|530|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 88.5
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 88.7
+        },
+        {
+          "mediaKey": "bus|326|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 89.0
+        },
+        {
+          "mediaKey": "bus|177|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 89.1
+        },
+        {
+          "mediaKey": "bus|182|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 105.4
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 259.5
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 420.8
+        },
+        {
+          "mediaKey": "bus|246|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 461.8
+        },
+        {
+          "mediaKey": "bus|245|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 485.5
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 518.6
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 646.1
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 646.3
+        },
+        {
+          "mediaKey": "bus|141|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 665.2
+        },
+        {
+          "mediaKey": "bus|225|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 835.4
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 847.0
+        },
+        {
+          "mediaKey": "bus|244|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 859.1
+        },
+        {
+          "mediaKey": "bus|311|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 870.0
+        },
+        {
+          "mediaKey": "bus|278|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 878.3
+        },
+        {
+          "mediaKey": "bus|210|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 1009.2
+        },
+        {
+          "mediaKey": "bus|320|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 finance-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 1177.3
+        },
+        {
+          "mediaKey": "metro|235|4B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-南京东路"
+        },
+        {
+          "mediaKey": "metro|237|6号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 finance-南京东路"
+        }
+      ]
+    },
+    "health-南京东路": {
+      "areaName": "南京东路 · 药房密集带",
+      "station": "南京东路",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.482629,
+        "lat": 31.236151,
+        "exit": "4B号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|178|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 66.6
+        },
+        {
+          "mediaKey": "bus|532|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 76.0
+        },
+        {
+          "mediaKey": "bus|147|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 88.5
+        },
+        {
+          "mediaKey": "bus|530|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 88.5
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 88.7
+        },
+        {
+          "mediaKey": "bus|326|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 89.0
+        },
+        {
+          "mediaKey": "bus|177|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 89.1
+        },
+        {
+          "mediaKey": "bus|182|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 105.4
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 259.5
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 420.8
+        },
+        {
+          "mediaKey": "bus|246|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 461.8
+        },
+        {
+          "mediaKey": "bus|245|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 485.5
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 518.6
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 646.1
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 646.3
+        },
+        {
+          "mediaKey": "bus|141|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 665.2
+        },
+        {
+          "mediaKey": "bus|225|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 835.4
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 847.0
+        },
+        {
+          "mediaKey": "bus|244|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 859.1
+        },
+        {
+          "mediaKey": "bus|311|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 870.0
+        },
+        {
+          "mediaKey": "bus|278|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 878.3
+        },
+        {
+          "mediaKey": "bus|210|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 1009.2
+        },
+        {
+          "mediaKey": "bus|320|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-南京东路；data/raw/geo/candidates.json",
+          "distanceM": 1177.3
+        },
+        {
+          "mediaKey": "metro|235|4B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-南京东路"
+        },
+        {
+          "mediaKey": "metro|237|6号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-南京东路"
+        }
+      ]
+    },
+    "health-人民广场": {
+      "areaName": "人民广场 · 个护与药房带",
+      "station": "人民广场",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.471485,
+        "lat": 31.232506,
+        "exit": "10号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|311|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 209.4
+        },
+        {
+          "mediaKey": "bus|278|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 211.5
+        },
+        {
+          "mediaKey": "bus|244|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 564.6
+        },
+        {
+          "mediaKey": "bus|177|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 646.3
+        },
+        {
+          "mediaKey": "bus|532|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 666.2
+        },
+        {
+          "mediaKey": "bus|178|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 666.3
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 714.2
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 722.5
+        },
+        {
+          "mediaKey": "bus|330|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 728.4
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 802.0
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 888.6
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 959.3
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1022.0
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1065.1
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1086.3
+        },
+        {
+          "mediaKey": "bus|246|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1110.4
+        },
+        {
+          "mediaKey": "bus|245|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1118.5
+        },
+        {
+          "mediaKey": "metro|84|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|88|8号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|89|9号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|90|10号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|91|11号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|92|12号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|93|14号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|95|16号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|99|20号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        },
+        {
+          "mediaKey": "metro|1227|1B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-人民广场"
+        }
+      ]
+    },
+    "health-徐家汇": {
+      "areaName": "徐家汇商圈",
+      "station": "徐家汇",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.438632,
+        "lat": 31.192281,
+        "exit": "9号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|223|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 340.1
+        },
+        {
+          "mediaKey": "bus|142|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 341.6
+        },
+        {
+          "mediaKey": "bus|272|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 371.7
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 415.4
+        },
+        {
+          "mediaKey": "bus|173|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 415.7
+        },
+        {
+          "mediaKey": "bus|237|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.6
+        },
+        {
+          "mediaKey": "bus|370|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.7
+        },
+        {
+          "mediaKey": "bus|531|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.7
+        },
+        {
+          "mediaKey": "bus|329|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 432.8
+        },
+        {
+          "mediaKey": "bus|296|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 518.8
+        },
+        {
+          "mediaKey": "bus|163|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 532.2
+        },
+        {
+          "mediaKey": "bus|165|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 663.5
+        },
+        {
+          "mediaKey": "bus|185|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.3
+        },
+        {
+          "mediaKey": "bus|275|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.4
+        },
+        {
+          "mediaKey": "bus|190|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 723.6
+        },
+        {
+          "mediaKey": "bus|130|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 869.1
+        },
+        {
+          "mediaKey": "bus|158|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 869.1
+        },
+        {
+          "mediaKey": "bus|313|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-徐家汇；data/raw/geo/candidates.json",
+          "distanceM": 958.9
+        },
+        {
+          "mediaKey": "metro|39|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-徐家汇"
+        },
+        {
+          "mediaKey": "metro|40|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-徐家汇"
+        },
+        {
+          "mediaKey": "metro|46|9号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-徐家汇"
+        },
+        {
+          "mediaKey": "metro|53|16号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-徐家汇"
+        }
+      ]
+    },
+    "health-打浦桥": {
+      "areaName": "打浦桥 · 日月光",
+      "station": "打浦桥",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.468348,
+        "lat": 31.205744,
+        "exit": "3号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|190|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 151.3
+        },
+        {
+          "mediaKey": "bus|296|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 156.2
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 156.8
+        },
+        {
+          "mediaKey": "bus|329|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 358.4
+        },
+        {
+          "mediaKey": "bus|312|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 377.9
+        },
+        {
+          "mediaKey": "bus|312|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 377.9
+        },
+        {
+          "mediaKey": "bus|249|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 378.2
+        },
+        {
+          "mediaKey": "bus|315|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 379.6
+        },
+        {
+          "mediaKey": "bus|173|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 391.7
+        },
+        {
+          "mediaKey": "bus|163|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 391.7
+        },
+        {
+          "mediaKey": "bus|531|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 433.3
+        },
+        {
+          "mediaKey": "bus|141|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 614.5
+        },
+        {
+          "mediaKey": "bus|529|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 752.5
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 816.6
+        },
+        {
+          "mediaKey": "bus|370|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-打浦桥；data/raw/geo/candidates.json",
+          "distanceM": 868.6
+        },
+        {
+          "mediaKey": "metro|766|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-打浦桥"
+        }
+      ]
+    },
+    "health-静安寺": {
+      "areaName": "静安寺",
+      "station": "静安寺",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.447638,
+        "lat": 31.223556,
+        "exit": "10号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|185|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 37.6
+        },
+        {
+          "mediaKey": "bus|200|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 245.4
+        },
+        {
+          "mediaKey": "bus|276|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 334.2
+        },
+        {
+          "mediaKey": "bus|272|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 516.1
+        },
+        {
+          "mediaKey": "bus|306|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 523.5
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 523.5
+        },
+        {
+          "mediaKey": "bus|315|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 716.4
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 930.2
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 948.9
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-静安寺；data/raw/geo/candidates.json",
+          "distanceM": 958.9
+        },
+        {
+          "mediaKey": "metro|260|8号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-静安寺"
+        },
+        {
+          "mediaKey": "metro|1309|11号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-静安寺"
+        },
+        {
+          "mediaKey": "metro|1310|12号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-静安寺"
+        },
+        {
+          "mediaKey": "metro|1311|13A号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-静安寺"
+        },
+        {
+          "mediaKey": "metro|1312|13B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-静安寺"
+        }
+      ]
+    },
+    "health-隆德路": {
+      "areaName": "曹家渡商圈",
+      "station": "隆德路",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.4232,
+        "lat": 31.231045,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|212|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 518.5
+        },
+        {
+          "mediaKey": "bus|285|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 526.4
+        },
+        {
+          "mediaKey": "bus|165|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 540.1
+        },
+        {
+          "mediaKey": "bus|156|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 560.5
+        },
+        {
+          "mediaKey": "bus|307|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 718.4
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 753.6
+        },
+        {
+          "mediaKey": "bus|200|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 817.8
+        },
+        {
+          "mediaKey": "bus|315|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 947.4
+        },
+        {
+          "mediaKey": "bus|306|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 1065.8
+        },
+        {
+          "mediaKey": "bus|310|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 1139.7
+        },
+        {
+          "mediaKey": "bus|276|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 health-隆德路；data/raw/geo/candidates.json",
+          "distanceM": 1149.6
+        },
+        {
+          "mediaKey": "metro|955|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-隆德路"
+        },
+        {
+          "mediaKey": "metro|956|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-隆德路"
+        },
+        {
+          "mediaKey": "metro|957|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-隆德路"
+        },
+        {
+          "mediaKey": "metro|958|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-隆德路"
+        },
+        {
+          "mediaKey": "metro|959|5号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 health-隆德路"
+        }
+      ]
+    },
+    "hospital-杨高中路": {
+      "areaName": "杨高中路 · 联洋国际社区",
+      "station": "杨高中路",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.549072,
+        "lat": 31.22796,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|452|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 80.2
+        },
+        {
+          "mediaKey": "bus|332|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 80.3
+        },
+        {
+          "mediaKey": "bus|486|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 199.8
+        },
+        {
+          "mediaKey": "bus|328|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 259.9
+        },
+        {
+          "mediaKey": "bus|205|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 405.5
+        },
+        {
+          "mediaKey": "bus|152|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 453.0
+        },
+        {
+          "mediaKey": "bus|451|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 553.3
+        },
+        {
+          "mediaKey": "bus|208|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 568.9
+        },
+        {
+          "mediaKey": "bus|256|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 569.2
+        },
+        {
+          "mediaKey": "bus|225|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 651.5
+        },
+        {
+          "mediaKey": "bus|120|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 720.6
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 720.7
+        },
+        {
+          "mediaKey": "bus|520|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 762.7
+        },
+        {
+          "mediaKey": "bus|22|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 827.2
+        },
+        {
+          "mediaKey": "bus|149|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 881.0
+        },
+        {
+          "mediaKey": "bus|248|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 987.1
+        },
+        {
+          "mediaKey": "bus|530|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 987.2
+        },
+        {
+          "mediaKey": "bus|419|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 1006.4
+        },
+        {
+          "mediaKey": "bus|196|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 1121.3
+        },
+        {
+          "mediaKey": "bus|321|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-杨高中路；data/raw/geo/candidates.json",
+          "distanceM": 1146.9
+        },
+        {
+          "mediaKey": "metro|749|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-杨高中路"
+        },
+        {
+          "mediaKey": "metro|752|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-杨高中路"
+        },
+        {
+          "mediaKey": "metro|1349|6号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-杨高中路"
+        },
+        {
+          "mediaKey": "metro|1350|7号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-杨高中路"
+        }
+      ]
+    },
+    "hospital-交通大学": {
+      "areaName": "交通大学 · 徐汇院区带",
+      "station": "交通大学",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.435702,
+        "lat": 31.202121,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|190|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 230.5
+        },
+        {
+          "mediaKey": "bus|275|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 230.8
+        },
+        {
+          "mediaKey": "bus|185|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 230.8
+        },
+        {
+          "mediaKey": "bus|370|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 383.4
+        },
+        {
+          "mediaKey": "bus|142|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 436.6
+        },
+        {
+          "mediaKey": "bus|272|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 436.6
+        },
+        {
+          "mediaKey": "bus|313|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 517.1
+        },
+        {
+          "mediaKey": "bus|223|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 656.4
+        },
+        {
+          "mediaKey": "bus|125|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 763.8
+        },
+        {
+          "mediaKey": "bus|173|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 896.2
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 911.1
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 918.0
+        },
+        {
+          "mediaKey": "bus|237|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 941.9
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 942.3
+        },
+        {
+          "mediaKey": "bus|329|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 942.4
+        },
+        {
+          "mediaKey": "bus|165|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 1041.8
+        },
+        {
+          "mediaKey": "bus|531|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-交通大学；data/raw/geo/candidates.json",
+          "distanceM": 1077.8
+        },
+        {
+          "mediaKey": "metro|878|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-交通大学"
+        },
+        {
+          "mediaKey": "metro|881|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-交通大学"
+        },
+        {
+          "mediaKey": "metro|883|5号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-交通大学"
+        },
+        {
+          "mediaKey": "metro|885|7号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-交通大学"
+        }
+      ]
+    },
+    "hospital-红宝石路": {
+      "areaName": "古北国际社区",
+      "station": "红宝石路",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.39876,
+        "lat": 31.198886,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|212|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-红宝石路；data/raw/geo/candidates.json",
+          "distanceM": 115.9
+        },
+        {
+          "mediaKey": "bus|307|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-红宝石路；data/raw/geo/candidates.json",
+          "distanceM": 632.0
+        },
+        {
+          "mediaKey": "bus|233|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-红宝石路；data/raw/geo/candidates.json",
+          "distanceM": 632.1
+        },
+        {
+          "mediaKey": "bus|275|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-红宝石路；data/raw/geo/candidates.json",
+          "distanceM": 1035.6
+        },
+        {
+          "mediaKey": "metro|1507|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-红宝石路"
+        },
+        {
+          "mediaKey": "metro|1508|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-红宝石路"
+        },
+        {
+          "mediaKey": "metro|1509|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-红宝石路"
+        },
+        {
+          "mediaKey": "metro|1510|5号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-红宝石路"
+        }
+      ]
+    },
+    "hospital-自然博物馆": {
+      "areaName": "静安 · 高端体检带",
+      "station": "自然博物馆",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.461917,
+        "lat": 31.237003,
+        "exit": "3号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-自然博物馆；data/raw/geo/candidates.json",
+          "distanceM": 45.3
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-自然博物馆；data/raw/geo/candidates.json",
+          "distanceM": 253.0
+        },
+        {
+          "mediaKey": "bus|228|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-自然博物馆；data/raw/geo/candidates.json",
+          "distanceM": 461.1
+        },
+        {
+          "mediaKey": "bus|153|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-自然博物馆；data/raw/geo/candidates.json",
+          "distanceM": 1021.1
+        },
+        {
+          "mediaKey": "bus|311|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-自然博物馆；data/raw/geo/candidates.json",
+          "distanceM": 1063.8
+        },
+        {
+          "mediaKey": "bus|278|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-自然博物馆；data/raw/geo/candidates.json",
+          "distanceM": 1083.3
+        },
+        {
+          "mediaKey": "bus|281|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-自然博物馆；data/raw/geo/candidates.json",
+          "distanceM": 1098.8
+        },
+        {
+          "mediaKey": "bus|52|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-自然博物馆；data/raw/geo/candidates.json",
+          "distanceM": 1169.9
+        },
+        {
+          "mediaKey": "metro|1129|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-自然博物馆"
+        },
+        {
+          "mediaKey": "metro|1130|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-自然博物馆"
+        }
+      ]
+    },
+    "hospital-上海科技馆": {
+      "areaName": "花木 · 联洋",
+      "station": "上海科技馆",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.542915,
+        "lat": 31.219894,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|196|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 190.8
+        },
+        {
+          "mediaKey": "bus|328|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 190.8
+        },
+        {
+          "mediaKey": "bus|205|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 191.0
+        },
+        {
+          "mediaKey": "bus|452|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 215.4
+        },
+        {
+          "mediaKey": "bus|321|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 215.6
+        },
+        {
+          "mediaKey": "bus|19|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 406.3
+        },
+        {
+          "mediaKey": "bus|419|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 411.0
+        },
+        {
+          "mediaKey": "bus|451|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 515.3
+        },
+        {
+          "mediaKey": "bus|152|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 530.8
+        },
+        {
+          "mediaKey": "bus|208|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 530.8
+        },
+        {
+          "mediaKey": "bus|256|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 530.8
+        },
+        {
+          "mediaKey": "bus|370|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 684.7
+        },
+        {
+          "mediaKey": "bus|463|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 684.8
+        },
+        {
+          "mediaKey": "bus|412|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 684.9
+        },
+        {
+          "mediaKey": "bus|243|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 685.0
+        },
+        {
+          "mediaKey": "bus|353|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 685.0
+        },
+        {
+          "mediaKey": "bus|334|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 685.0
+        },
+        {
+          "mediaKey": "bus|259|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 685.2
+        },
+        {
+          "mediaKey": "bus|206|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 685.9
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 686.4
+        },
+        {
+          "mediaKey": "bus|198|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 687.6
+        },
+        {
+          "mediaKey": "bus|225|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 694.0
+        },
+        {
+          "mediaKey": "bus|248|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 696.7
+        },
+        {
+          "mediaKey": "bus|326|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 696.7
+        },
+        {
+          "mediaKey": "bus|432|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 699.4
+        },
+        {
+          "mediaKey": "bus|255|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 699.6
+        },
+        {
+          "mediaKey": "bus|484|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 713.8
+        },
+        {
+          "mediaKey": "bus|291|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 713.8
+        },
+        {
+          "mediaKey": "bus|257|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 713.8
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 814.5
+        },
+        {
+          "mediaKey": "bus|492|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 838.6
+        },
+        {
+          "mediaKey": "bus|332|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 930.7
+        },
+        {
+          "mediaKey": "bus|520|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 1091.5
+        },
+        {
+          "mediaKey": "bus|12|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 hospital-上海科技馆；data/raw/geo/candidates.json",
+          "distanceM": 1129.5
+        },
+        {
+          "mediaKey": "metro|208|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-上海科技馆"
+        },
+        {
+          "mediaKey": "metro|209|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-上海科技馆"
+        },
+        {
+          "mediaKey": "metro|210|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-上海科技馆"
+        },
+        {
+          "mediaKey": "metro|213|6号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-上海科技馆"
+        },
+        {
+          "mediaKey": "metro|214|7号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-上海科技馆"
+        },
+        {
+          "mediaKey": "metro|215|8号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 hospital-上海科技馆"
+        }
+      ]
+    },
+    "park-川沙": {
+      "areaName": "川沙 · 乐园接驳口",
+      "station": "川沙",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.698905,
+        "lat": 31.187305,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|455|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 99.2
+        },
+        {
+          "mediaKey": "bus|476|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 99.3
+        },
+        {
+          "mediaKey": "bus|449|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 99.3
+        },
+        {
+          "mediaKey": "bus|457|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 99.4
+        },
+        {
+          "mediaKey": "bus|150|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 100.2
+        },
+        {
+          "mediaKey": "bus|16|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 107.0
+        },
+        {
+          "mediaKey": "bus|397|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 107.1
+        },
+        {
+          "mediaKey": "bus|464|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 119.1
+        },
+        {
+          "mediaKey": "bus|413|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 119.2
+        },
+        {
+          "mediaKey": "bus|439|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 119.2
+        },
+        {
+          "mediaKey": "bus|395|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 119.2
+        },
+        {
+          "mediaKey": "bus|442|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 119.2
+        },
+        {
+          "mediaKey": "bus|92|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 142.3
+        },
+        {
+          "mediaKey": "bus|50|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 391.0
+        },
+        {
+          "mediaKey": "bus|396|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 518.4
+        },
+        {
+          "mediaKey": "bus|48|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 555.2
+        },
+        {
+          "mediaKey": "bus|456|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 555.2
+        },
+        {
+          "mediaKey": "bus|420|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 564.1
+        },
+        {
+          "mediaKey": "bus|479|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 700.9
+        },
+        {
+          "mediaKey": "bus|337|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 785.2
+        },
+        {
+          "mediaKey": "bus|155|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 785.3
+        },
+        {
+          "mediaKey": "bus|469|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 785.4
+        },
+        {
+          "mediaKey": "bus|425|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 939.8
+        },
+        {
+          "mediaKey": "bus|49|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 1055.8
+        },
+        {
+          "mediaKey": "bus|42|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-川沙；data/raw/geo/candidates.json",
+          "distanceM": 1055.9
+        },
+        {
+          "mediaKey": "metro|172|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-川沙"
+        },
+        {
+          "mediaKey": "metro|173|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-川沙"
+        },
+        {
+          "mediaKey": "metro|1258|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-川沙"
+        }
+      ]
+    },
+    "park-临港大道": {
+      "areaName": "临港大道 · 海洋公园片区",
+      "station": "临港大道",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.911798,
+        "lat": 30.923152,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "metro|1568|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-临港大道"
+        },
+        {
+          "mediaKey": "metro|1569|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-临港大道"
+        },
+        {
+          "mediaKey": "metro|1570|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-临港大道"
+        },
+        {
+          "mediaKey": "metro|1571|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-临港大道"
+        }
+      ]
+    },
+    "park-松江体育中心": {
+      "areaName": "松江体育中心 · 郊野乐园方向",
+      "station": "松江体育中心",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.230935,
+        "lat": 31.015474,
+        "exit": "2号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "metro|816|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-松江体育中心"
+        },
+        {
+          "mediaKey": "metro|817|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-松江体育中心"
+        },
+        {
+          "mediaKey": "metro|818|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-松江体育中心"
+        }
+      ]
+    },
+    "park-陆家嘴": {
+      "areaName": "陆家嘴 · 东方明珠/上海中心",
+      "station": "陆家嘴",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.502438,
+        "lat": 31.234945,
+        "exit": "10号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|192|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 21.4
+        },
+        {
+          "mediaKey": "bus|186|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 22.0
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 26.0
+        },
+        {
+          "mediaKey": "bus|178|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 48.6
+        },
+        {
+          "mediaKey": "bus|246|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 54.2
+        },
+        {
+          "mediaKey": "bus|169|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 66.2
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 90.6
+        },
+        {
+          "mediaKey": "bus|225|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 93.5
+        },
+        {
+          "mediaKey": "bus|532|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 513.0
+        },
+        {
+          "mediaKey": "bus|530|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 513.0
+        },
+        {
+          "mediaKey": "bus|475|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 651.5
+        },
+        {
+          "mediaKey": "bus|317|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 752.1
+        },
+        {
+          "mediaKey": "bus|414|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 752.1
+        },
+        {
+          "mediaKey": "bus|329|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 761.7
+        },
+        {
+          "mediaKey": "bus|196|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 773.6
+        },
+        {
+          "mediaKey": "bus|270|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 781.6
+        },
+        {
+          "mediaKey": "bus|326|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 806.5
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 806.6
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 806.7
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 807.4
+        },
+        {
+          "mediaKey": "bus|210|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 808.9
+        },
+        {
+          "mediaKey": "bus|141|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 815.7
+        },
+        {
+          "mediaKey": "bus|320|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 836.7
+        },
+        {
+          "mediaKey": "bus|412|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 859.8
+        },
+        {
+          "mediaKey": "bus|239|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1084.8
+        },
+        {
+          "mediaKey": "bus|266|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1087.1
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1144.9
+        },
+        {
+          "mediaKey": "bus|283|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1188.9
+        },
+        {
+          "mediaKey": "bus|243|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1189.0
+        },
+        {
+          "mediaKey": "bus|259|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1189.1
+        },
+        {
+          "mediaKey": "bus|338|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-陆家嘴；data/raw/geo/candidates.json",
+          "distanceM": 1189.3
+        },
+        {
+          "mediaKey": "metro|226|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|227|2号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|228|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|229|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|230|5号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|231|6号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|1305|8号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|1306|9A号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        },
+        {
+          "mediaKey": "metro|1307|9B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-陆家嘴"
+        }
+      ]
+    },
+    "park-人民广场": {
+      "areaName": "人民广场 · 外地游客集散",
+      "station": "人民广场",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.471485,
+        "lat": 31.232506,
+        "exit": "10号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|311|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 209.4
+        },
+        {
+          "mediaKey": "bus|278|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 211.5
+        },
+        {
+          "mediaKey": "bus|244|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 564.6
+        },
+        {
+          "mediaKey": "bus|177|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 646.3
+        },
+        {
+          "mediaKey": "bus|532|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 666.2
+        },
+        {
+          "mediaKey": "bus|178|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 666.3
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 714.2
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 722.5
+        },
+        {
+          "mediaKey": "bus|330|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 728.4
+        },
+        {
+          "mediaKey": "bus|301|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 802.0
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 888.6
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 959.3
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1022.0
+        },
+        {
+          "mediaKey": "bus|123|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1065.1
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1086.3
+        },
+        {
+          "mediaKey": "bus|246|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1110.4
+        },
+        {
+          "mediaKey": "bus|245|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-人民广场；data/raw/geo/candidates.json",
+          "distanceM": 1118.5
+        },
+        {
+          "mediaKey": "metro|84|3号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|88|8号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|89|9号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|90|10号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|91|11号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|92|12号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|93|14号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|95|16号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|99|20号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        },
+        {
+          "mediaKey": "metro|1227|1B号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-人民广场"
+        }
+      ]
+    },
+    "park-豫园": {
+      "areaName": "豫园 · 城隍庙",
+      "station": "豫园",
+      "role": "businessArea",
+      "coord": {
+        "lng": 121.487516,
+        "lat": 31.228604,
+        "exit": "1号口",
+        "source": "可视化平台 sopLabelPoints 代表出口坐标；data/raw/geo/station_points.json"
+      },
+      "candidates": [
+        {
+          "mediaKey": "bus|147|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 34.6
+        },
+        {
+          "mediaKey": "bus|240|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 42.1
+        },
+        {
+          "mediaKey": "bus|177|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 42.1
+        },
+        {
+          "mediaKey": "bus|245|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 42.3
+        },
+        {
+          "mediaKey": "bus|252|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 42.7
+        },
+        {
+          "mediaKey": "bus|175|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 42.7
+        },
+        {
+          "mediaKey": "bus|141|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 42.9
+        },
+        {
+          "mediaKey": "bus|182|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 42.9
+        },
+        {
+          "mediaKey": "bus|225|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 226.2
+        },
+        {
+          "mediaKey": "bus|300|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 311.6
+        },
+        {
+          "mediaKey": "bus|303|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 311.8
+        },
+        {
+          "mediaKey": "bus|139|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 333.2
+        },
+        {
+          "mediaKey": "bus|246|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 334.2
+        },
+        {
+          "mediaKey": "bus|178|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 441.3
+        },
+        {
+          "mediaKey": "bus|320|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 469.0
+        },
+        {
+          "mediaKey": "bus|532|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 691.6
+        },
+        {
+          "mediaKey": "bus|530|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 691.7
+        },
+        {
+          "mediaKey": "bus|210|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 737.4
+        },
+        {
+          "mediaKey": "bus|326|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 737.4
+        },
+        {
+          "mediaKey": "bus|244|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 878.5
+        },
+        {
+          "mediaKey": "bus|278|车身三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 916.6
+        },
+        {
+          "mediaKey": "bus|311|大三侧",
+          "relation": "商圈锚点 1200 米覆盖公交线路",
+          "source": "可视化平台 matchCoverLines；锚点 park-豫园；data/raw/geo/candidates.json",
+          "distanceM": 922.4
+        },
+        {
+          "mediaKey": "metro|865|1号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-豫园"
+        },
+        {
+          "mediaKey": "metro|866|3A号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-豫园"
+        },
+        {
+          "mediaKey": "metro|867|4号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-豫园"
+        },
+        {
+          "mediaKey": "metro|1362|5号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-豫园"
+        },
+        {
+          "mediaKey": "metro|1363|6号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-豫园"
+        },
+        {
+          "mediaKey": "metro|1364|7号口",
+          "relation": "锚点同名地铁站的具体出口（非逐出口距离）",
+          "source": "红豆站名/出口精确关联；锚点 park-豫园"
+        }
+      ]
+    }
+  }
+}

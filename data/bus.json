@@ -1,0 +1,5617 @@
+{
+  "mediaByKey": {
+    "bus|1|大三侧": {
+      "kind": "bus",
+      "resourceId": 1,
+      "lineName": "100",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|2|车身三侧": {
+      "kind": "bus",
+      "resourceId": 2,
+      "lineName": "1001",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|3|车身三侧": {
+      "kind": "bus",
+      "resourceId": 3,
+      "lineName": "1002",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|4|车身三侧": {
+      "kind": "bus",
+      "resourceId": 4,
+      "lineName": "1003",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|5|车身三侧": {
+      "kind": "bus",
+      "resourceId": 5,
+      "lineName": "1004",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|6|车身三侧": {
+      "kind": "bus",
+      "resourceId": 6,
+      "lineName": "1005",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|7|车身三侧": {
+      "kind": "bus",
+      "resourceId": 7,
+      "lineName": "1006/1016",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|8|车身三侧": {
+      "kind": "bus",
+      "resourceId": 8,
+      "lineName": "1007",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|9|车身三侧": {
+      "kind": "bus",
+      "resourceId": 9,
+      "lineName": "1008",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|10|车身三侧": {
+      "kind": "bus",
+      "resourceId": 10,
+      "lineName": "1010",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|539|车身三侧": {
+      "kind": "bus",
+      "resourceId": 539,
+      "lineName": "1011",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|11|车身三侧": {
+      "kind": "bus",
+      "resourceId": 11,
+      "lineName": "1012",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|12|车身三侧": {
+      "kind": "bus",
+      "resourceId": 12,
+      "lineName": "1013",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|13|车身三侧": {
+      "kind": "bus",
+      "resourceId": 13,
+      "lineName": "1015",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|14|车身三侧": {
+      "kind": "bus",
+      "resourceId": 14,
+      "lineName": "1017",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|15|车身三侧": {
+      "kind": "bus",
+      "resourceId": 15,
+      "lineName": "1018",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|16|车身三侧": {
+      "kind": "bus",
+      "resourceId": 16,
+      "lineName": "1019",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|18|车身三侧": {
+      "kind": "bus",
+      "resourceId": 18,
+      "lineName": "1020",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|19|车身三侧": {
+      "kind": "bus",
+      "resourceId": 19,
+      "lineName": "1021",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|20|车身三侧": {
+      "kind": "bus",
+      "resourceId": 20,
+      "lineName": "1022",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|21|车身三侧": {
+      "kind": "bus",
+      "resourceId": 21,
+      "lineName": "1023",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|22|车身三侧": {
+      "kind": "bus",
+      "resourceId": 22,
+      "lineName": "1024",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|23|车身三侧": {
+      "kind": "bus",
+      "resourceId": 23,
+      "lineName": "1025",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|24|车身三侧": {
+      "kind": "bus",
+      "resourceId": 24,
+      "lineName": "1026",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|25|车身三侧": {
+      "kind": "bus",
+      "resourceId": 25,
+      "lineName": "1027",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|26|车身三侧": {
+      "kind": "bus",
+      "resourceId": 26,
+      "lineName": "1028",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|27|车身三侧": {
+      "kind": "bus",
+      "resourceId": 27,
+      "lineName": "1029",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|28|车身三侧": {
+      "kind": "bus",
+      "resourceId": 28,
+      "lineName": "1030",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|29|车身三侧": {
+      "kind": "bus",
+      "resourceId": 29,
+      "lineName": "1031",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|30|车身三侧": {
+      "kind": "bus",
+      "resourceId": 30,
+      "lineName": "1032",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|31|车身三侧": {
+      "kind": "bus",
+      "resourceId": 31,
+      "lineName": "1033",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|32|车身三侧": {
+      "kind": "bus",
+      "resourceId": 32,
+      "lineName": "1034",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|33|车身三侧": {
+      "kind": "bus",
+      "resourceId": 33,
+      "lineName": "1035",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|34|车身三侧": {
+      "kind": "bus",
+      "resourceId": 34,
+      "lineName": "1036",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|35|车身三侧": {
+      "kind": "bus",
+      "resourceId": 35,
+      "lineName": "1038",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|36|车身三侧": {
+      "kind": "bus",
+      "resourceId": 36,
+      "lineName": "1039",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|38|车身三侧": {
+      "kind": "bus",
+      "resourceId": 38,
+      "lineName": "1040",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|39|车身三侧": {
+      "kind": "bus",
+      "resourceId": 39,
+      "lineName": "1041",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|40|车身三侧": {
+      "kind": "bus",
+      "resourceId": 40,
+      "lineName": "1042",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|540|车身三侧": {
+      "kind": "bus",
+      "resourceId": 540,
+      "lineName": "1045",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|41|车身三侧": {
+      "kind": "bus",
+      "resourceId": 41,
+      "lineName": "1046",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|42|车身三侧": {
+      "kind": "bus",
+      "resourceId": 42,
+      "lineName": "1047",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|43|车身三侧": {
+      "kind": "bus",
+      "resourceId": 43,
+      "lineName": "1048",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|44|车身三侧": {
+      "kind": "bus",
+      "resourceId": 44,
+      "lineName": "1049",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|45|大三侧": {
+      "kind": "bus",
+      "resourceId": 45,
+      "lineName": "105",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|46|车身三侧": {
+      "kind": "bus",
+      "resourceId": 46,
+      "lineName": "1050",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|47|车身三侧": {
+      "kind": "bus",
+      "resourceId": 47,
+      "lineName": "1051",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|48|车身三侧": {
+      "kind": "bus",
+      "resourceId": 48,
+      "lineName": "1054",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|49|车身三侧": {
+      "kind": "bus",
+      "resourceId": 49,
+      "lineName": "1055",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|50|车身三侧": {
+      "kind": "bus",
+      "resourceId": 50,
+      "lineName": "1056",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|538|车身三侧": {
+      "kind": "bus",
+      "resourceId": 538,
+      "lineName": "1057",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|51|车身三侧": {
+      "kind": "bus",
+      "resourceId": 51,
+      "lineName": "1058",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|533|车身三侧": {
+      "kind": "bus",
+      "resourceId": 533,
+      "lineName": "1059",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|52|大三侧": {
+      "kind": "bus",
+      "resourceId": 52,
+      "lineName": "106",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "大三侧"
+    },
+    "bus|53|车身三侧": {
+      "kind": "bus",
+      "resourceId": 53,
+      "lineName": "1062",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|54|车身三侧": {
+      "kind": "bus",
+      "resourceId": 54,
+      "lineName": "1065",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|55|车身三侧": {
+      "kind": "bus",
+      "resourceId": 55,
+      "lineName": "1066",
+      "levelName": "A+",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|56|车身三侧": {
+      "kind": "bus",
+      "resourceId": 56,
+      "lineName": "1068",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|57|车身三侧": {
+      "kind": "bus",
+      "resourceId": 57,
+      "lineName": "1069",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|58|车身三侧": {
+      "kind": "bus",
+      "resourceId": 58,
+      "lineName": "1070",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|577|车身三侧": {
+      "kind": "bus",
+      "resourceId": 577,
+      "lineName": "1071",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|59|车身三侧": {
+      "kind": "bus",
+      "resourceId": 59,
+      "lineName": "1072",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|60|车身三侧": {
+      "kind": "bus",
+      "resourceId": 60,
+      "lineName": "1073",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|61|车身三侧": {
+      "kind": "bus",
+      "resourceId": 61,
+      "lineName": "1074",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|62|车身三侧": {
+      "kind": "bus",
+      "resourceId": 62,
+      "lineName": "1076",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|63|车身三侧": {
+      "kind": "bus",
+      "resourceId": 63,
+      "lineName": "1079",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|65|车身三侧": {
+      "kind": "bus",
+      "resourceId": 65,
+      "lineName": "1080",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|66|车身三侧": {
+      "kind": "bus",
+      "resourceId": 66,
+      "lineName": "1082",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|67|车身三侧": {
+      "kind": "bus",
+      "resourceId": 67,
+      "lineName": "1083",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|68|车身三侧": {
+      "kind": "bus",
+      "resourceId": 68,
+      "lineName": "1085",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|69|车身三侧": {
+      "kind": "bus",
+      "resourceId": 69,
+      "lineName": "1087",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|70|车身三侧": {
+      "kind": "bus",
+      "resourceId": 70,
+      "lineName": "1088",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|71|车身三侧": {
+      "kind": "bus",
+      "resourceId": 71,
+      "lineName": "1089",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|73|车身三侧": {
+      "kind": "bus",
+      "resourceId": 73,
+      "lineName": "1090",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|74|车身三侧": {
+      "kind": "bus",
+      "resourceId": 74,
+      "lineName": "1091",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|75|车身三侧": {
+      "kind": "bus",
+      "resourceId": 75,
+      "lineName": "1092",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|76|车身三侧": {
+      "kind": "bus",
+      "resourceId": 76,
+      "lineName": "1093",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|77|车身三侧": {
+      "kind": "bus",
+      "resourceId": 77,
+      "lineName": "1095",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|78|车身三侧": {
+      "kind": "bus",
+      "resourceId": 78,
+      "lineName": "1097",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|79|车身三侧": {
+      "kind": "bus",
+      "resourceId": 79,
+      "lineName": "1099",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|80|车身三侧": {
+      "kind": "bus",
+      "resourceId": 80,
+      "lineName": "1100",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|81|车身三侧": {
+      "kind": "bus",
+      "resourceId": 81,
+      "lineName": "1101",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|82|车身三侧": {
+      "kind": "bus",
+      "resourceId": 82,
+      "lineName": "1104",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|576|车身三侧": {
+      "kind": "bus",
+      "resourceId": 576,
+      "lineName": "1105",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|83|车身三侧": {
+      "kind": "bus",
+      "resourceId": 83,
+      "lineName": "1108",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|84|车身三侧": {
+      "kind": "bus",
+      "resourceId": 84,
+      "lineName": "1109",
+      "levelName": "A+",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|86|车身三侧": {
+      "kind": "bus",
+      "resourceId": 86,
+      "lineName": "1110",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|87|车身三侧": {
+      "kind": "bus",
+      "resourceId": 87,
+      "lineName": "1111",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|88|车身三侧": {
+      "kind": "bus",
+      "resourceId": 88,
+      "lineName": "1113",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|89|车身三侧": {
+      "kind": "bus",
+      "resourceId": 89,
+      "lineName": "1115",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|90|车身三侧": {
+      "kind": "bus",
+      "resourceId": 90,
+      "lineName": "1117",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|91|车身三侧": {
+      "kind": "bus",
+      "resourceId": 91,
+      "lineName": "1118",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|92|车身三侧": {
+      "kind": "bus",
+      "resourceId": 92,
+      "lineName": "1119",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|93|车身三侧": {
+      "kind": "bus",
+      "resourceId": 93,
+      "lineName": "1121",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|94|车身三侧": {
+      "kind": "bus",
+      "resourceId": 94,
+      "lineName": "1122",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|95|车身三侧": {
+      "kind": "bus",
+      "resourceId": 95,
+      "lineName": "1126",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|96|车身三侧": {
+      "kind": "bus",
+      "resourceId": 96,
+      "lineName": "1127",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|97|车身三侧": {
+      "kind": "bus",
+      "resourceId": 97,
+      "lineName": "1128",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|98|车身三侧": {
+      "kind": "bus",
+      "resourceId": 98,
+      "lineName": "1129",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|99|车身三侧": {
+      "kind": "bus",
+      "resourceId": 99,
+      "lineName": "1130",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|100|车身三侧": {
+      "kind": "bus",
+      "resourceId": 100,
+      "lineName": "1131",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|101|车身三侧": {
+      "kind": "bus",
+      "resourceId": 101,
+      "lineName": "1132",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|102|车身三侧": {
+      "kind": "bus",
+      "resourceId": 102,
+      "lineName": "1136",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|103|车身三侧": {
+      "kind": "bus",
+      "resourceId": 103,
+      "lineName": "1137",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|104|车身三侧": {
+      "kind": "bus",
+      "resourceId": 104,
+      "lineName": "1138",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|105|车身三侧": {
+      "kind": "bus",
+      "resourceId": 105,
+      "lineName": "1139",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|106|车身三侧": {
+      "kind": "bus",
+      "resourceId": 106,
+      "lineName": "1159",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|108|车身三侧": {
+      "kind": "bus",
+      "resourceId": 108,
+      "lineName": "1161",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|109|车身三侧": {
+      "kind": "bus",
+      "resourceId": 109,
+      "lineName": "1162",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|110|大三侧": {
+      "kind": "bus",
+      "resourceId": 110,
+      "lineName": "118",
+      "levelName": "A++",
+      "total": 12,
+      "mediaForm": "大三侧"
+    },
+    "bus|111|车身三侧": {
+      "kind": "bus",
+      "resourceId": 111,
+      "lineName": "119",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|114|大三侧": {
+      "kind": "bus",
+      "resourceId": 114,
+      "lineName": "1206",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "大三侧"
+    },
+    "bus|115|大三侧": {
+      "kind": "bus",
+      "resourceId": 115,
+      "lineName": "121",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|120|车身三侧": {
+      "kind": "bus",
+      "resourceId": 120,
+      "lineName": "130",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|123|大三侧": {
+      "kind": "bus",
+      "resourceId": 123,
+      "lineName": "136",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|125|大三侧": {
+      "kind": "bus",
+      "resourceId": 125,
+      "lineName": "141",
+      "levelName": "S",
+      "total": 12,
+      "mediaForm": "大三侧"
+    },
+    "bus|128|大三侧": {
+      "kind": "bus",
+      "resourceId": 128,
+      "lineName": "147",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "大三侧"
+    },
+    "bus|129|大三侧": {
+      "kind": "bus",
+      "resourceId": 129,
+      "lineName": "155",
+      "levelName": "S",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|130|大三侧": {
+      "kind": "bus",
+      "resourceId": 130,
+      "lineName": "157",
+      "levelName": "S",
+      "total": 6,
+      "mediaForm": "大三侧"
+    },
+    "bus|135|车身三侧": {
+      "kind": "bus",
+      "resourceId": 135,
+      "lineName": "161",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|137|大三侧": {
+      "kind": "bus",
+      "resourceId": 137,
+      "lineName": "162",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "大三侧"
+    },
+    "bus|138|车身三侧": {
+      "kind": "bus",
+      "resourceId": 138,
+      "lineName": "163",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|139|车身三侧": {
+      "kind": "bus",
+      "resourceId": 139,
+      "lineName": "167",
+      "levelName": "S",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|140|大三侧": {
+      "kind": "bus",
+      "resourceId": 140,
+      "lineName": "168",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "大三侧"
+    },
+    "bus|141|大三侧": {
+      "kind": "bus",
+      "resourceId": 141,
+      "lineName": "17",
+      "levelName": "S",
+      "total": 11,
+      "mediaForm": "大三侧"
+    },
+    "bus|142|大三侧": {
+      "kind": "bus",
+      "resourceId": 142,
+      "lineName": "171",
+      "levelName": "S",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|143|大三侧": {
+      "kind": "bus",
+      "resourceId": 143,
+      "lineName": "172",
+      "levelName": "A+",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|144|车身三侧": {
+      "kind": "bus",
+      "resourceId": 144,
+      "lineName": "174",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|145|车身三侧": {
+      "kind": "bus",
+      "resourceId": 145,
+      "lineName": "175",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|146|车身三侧": {
+      "kind": "bus",
+      "resourceId": 146,
+      "lineName": "177",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|147|大三侧": {
+      "kind": "bus",
+      "resourceId": 147,
+      "lineName": "18",
+      "levelName": "S",
+      "total": 13,
+      "mediaForm": "大三侧"
+    },
+    "bus|149|车身三侧": {
+      "kind": "bus",
+      "resourceId": 149,
+      "lineName": "181",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|150|车身三侧": {
+      "kind": "bus",
+      "resourceId": 150,
+      "lineName": "182",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|151|车身三侧": {
+      "kind": "bus",
+      "resourceId": 151,
+      "lineName": "183",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|152|大三侧": {
+      "kind": "bus",
+      "resourceId": 152,
+      "lineName": "184",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "大三侧"
+    },
+    "bus|153|大三侧": {
+      "kind": "bus",
+      "resourceId": 153,
+      "lineName": "185",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|155|车身三侧": {
+      "kind": "bus",
+      "resourceId": 155,
+      "lineName": "188",
+      "levelName": "A++",
+      "total": 14,
+      "mediaForm": "车身三侧"
+    },
+    "bus|156|大三侧": {
+      "kind": "bus",
+      "resourceId": 156,
+      "lineName": "190",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|157|大三侧": {
+      "kind": "bus",
+      "resourceId": 157,
+      "lineName": "197",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "大三侧"
+    },
+    "bus|158|大三侧": {
+      "kind": "bus",
+      "resourceId": 158,
+      "lineName": "198",
+      "levelName": "S",
+      "total": 7,
+      "mediaForm": "大三侧"
+    },
+    "bus|159|大三侧": {
+      "kind": "bus",
+      "resourceId": 159,
+      "lineName": "199",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|163|大三侧": {
+      "kind": "bus",
+      "resourceId": 163,
+      "lineName": "218",
+      "levelName": "S",
+      "total": 17,
+      "mediaForm": "大三侧"
+    },
+    "bus|165|大三侧": {
+      "kind": "bus",
+      "resourceId": 165,
+      "lineName": "224",
+      "levelName": "S",
+      "total": 15,
+      "mediaForm": "大三侧"
+    },
+    "bus|168|大三侧": {
+      "kind": "bus",
+      "resourceId": 168,
+      "lineName": "28",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|169|大三侧": {
+      "kind": "bus",
+      "resourceId": 169,
+      "lineName": "33",
+      "levelName": "S",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|173|大三侧": {
+      "kind": "bus",
+      "resourceId": 173,
+      "lineName": "43",
+      "levelName": "S",
+      "total": 15,
+      "mediaForm": "大三侧"
+    },
+    "bus|175|车身三侧": {
+      "kind": "bus",
+      "resourceId": 175,
+      "lineName": "451",
+      "levelName": "S",
+      "total": 18,
+      "mediaForm": "车身三侧"
+    },
+    "bus|176|车身三侧": {
+      "kind": "bus",
+      "resourceId": 176,
+      "lineName": "453",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|177|车身三侧": {
+      "kind": "bus",
+      "resourceId": 177,
+      "lineName": "454",
+      "levelName": "S",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|178|车身三侧": {
+      "kind": "bus",
+      "resourceId": 178,
+      "lineName": "455",
+      "levelName": "S",
+      "total": 15,
+      "mediaForm": "车身三侧"
+    },
+    "bus|180|大三侧": {
+      "kind": "bus",
+      "resourceId": 180,
+      "lineName": "502",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "大三侧"
+    },
+    "bus|182|大三侧": {
+      "kind": "bus",
+      "resourceId": 182,
+      "lineName": "537",
+      "levelName": "S",
+      "total": 13,
+      "mediaForm": "大三侧"
+    },
+    "bus|184|大三侧": {
+      "kind": "bus",
+      "resourceId": 184,
+      "lineName": "547",
+      "levelName": "S",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|185|大三侧": {
+      "kind": "bus",
+      "resourceId": 185,
+      "lineName": "548",
+      "levelName": "S",
+      "total": 7,
+      "mediaForm": "大三侧"
+    },
+    "bus|186|大三侧": {
+      "kind": "bus",
+      "resourceId": 186,
+      "lineName": "55",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|187|大三侧": {
+      "kind": "bus",
+      "resourceId": 187,
+      "lineName": "551",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|188|大三侧": {
+      "kind": "bus",
+      "resourceId": 188,
+      "lineName": "552",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "大三侧"
+    },
+    "bus|190|车身三侧": {
+      "kind": "bus",
+      "resourceId": 190,
+      "lineName": "572",
+      "levelName": "S",
+      "total": 12,
+      "mediaForm": "车身三侧"
+    },
+    "bus|191|车身三侧": {
+      "kind": "bus",
+      "resourceId": 191,
+      "lineName": "573",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|192|车身三侧": {
+      "kind": "bus",
+      "resourceId": 192,
+      "lineName": "576",
+      "levelName": "S",
+      "total": 23,
+      "mediaForm": "车身三侧"
+    },
+    "bus|194|大三侧": {
+      "kind": "bus",
+      "resourceId": 194,
+      "lineName": "58",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "大三侧"
+    },
+    "bus|195|车身三侧": {
+      "kind": "bus",
+      "resourceId": 195,
+      "lineName": "581",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|196|车身三侧": {
+      "kind": "bus",
+      "resourceId": 196,
+      "lineName": "583",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|197|车身三侧": {
+      "kind": "bus",
+      "resourceId": 197,
+      "lineName": "604",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|198|车身三侧": {
+      "kind": "bus",
+      "resourceId": 198,
+      "lineName": "610",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|199|车身三侧": {
+      "kind": "bus",
+      "resourceId": 199,
+      "lineName": "611",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|200|大三侧": {
+      "kind": "bus",
+      "resourceId": 200,
+      "lineName": "62",
+      "levelName": "A++",
+      "total": 13,
+      "mediaForm": "大三侧"
+    },
+    "bus|201|大三侧": {
+      "kind": "bus",
+      "resourceId": 201,
+      "lineName": "624",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "大三侧"
+    },
+    "bus|203|大三侧": {
+      "kind": "bus",
+      "resourceId": 203,
+      "lineName": "63",
+      "levelName": "A++",
+      "total": 15,
+      "mediaForm": "大三侧"
+    },
+    "bus|204|车身三侧": {
+      "kind": "bus",
+      "resourceId": 204,
+      "lineName": "636",
+      "levelName": "A++",
+      "total": 17,
+      "mediaForm": "车身三侧"
+    },
+    "bus|205|车身三侧": {
+      "kind": "bus",
+      "resourceId": 205,
+      "lineName": "638",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|206|车身三侧": {
+      "kind": "bus",
+      "resourceId": 206,
+      "lineName": "639",
+      "levelName": "A++",
+      "total": 12,
+      "mediaForm": "车身三侧"
+    },
+    "bus|208|车身三侧": {
+      "kind": "bus",
+      "resourceId": 208,
+      "lineName": "640",
+      "levelName": "A++",
+      "total": 13,
+      "mediaForm": "车身三侧"
+    },
+    "bus|209|车身三侧": {
+      "kind": "bus",
+      "resourceId": 209,
+      "lineName": "642",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|210|大三侧": {
+      "kind": "bus",
+      "resourceId": 210,
+      "lineName": "66",
+      "levelName": "S",
+      "total": 13,
+      "mediaForm": "大三侧"
+    },
+    "bus|212|大三侧": {
+      "kind": "bus",
+      "resourceId": 212,
+      "lineName": "69",
+      "levelName": "S",
+      "total": 12,
+      "mediaForm": "大三侧"
+    },
+    "bus|554|大三侧": {
+      "kind": "bus",
+      "resourceId": 554,
+      "lineName": "727",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "大三侧"
+    },
+    "bus|223|大三侧": {
+      "kind": "bus",
+      "resourceId": 223,
+      "lineName": "732",
+      "levelName": "S",
+      "total": 11,
+      "mediaForm": "大三侧"
+    },
+    "bus|225|大三侧": {
+      "kind": "bus",
+      "resourceId": 225,
+      "lineName": "736",
+      "levelName": "S",
+      "total": 6,
+      "mediaForm": "大三侧"
+    },
+    "bus|226|大三侧": {
+      "kind": "bus",
+      "resourceId": 226,
+      "lineName": "739",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|227|大三侧": {
+      "kind": "bus",
+      "resourceId": 227,
+      "lineName": "74",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|228|大三侧": {
+      "kind": "bus",
+      "resourceId": 228,
+      "lineName": "740",
+      "levelName": "A++",
+      "total": 15,
+      "mediaForm": "大三侧"
+    },
+    "bus|229|大三侧": {
+      "kind": "bus",
+      "resourceId": 229,
+      "lineName": "741",
+      "levelName": "A++",
+      "total": 12,
+      "mediaForm": "大三侧"
+    },
+    "bus|231|大三侧": {
+      "kind": "bus",
+      "resourceId": 231,
+      "lineName": "745",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "大三侧"
+    },
+    "bus|233|大三侧": {
+      "kind": "bus",
+      "resourceId": 233,
+      "lineName": "757",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|234|大三侧": {
+      "kind": "bus",
+      "resourceId": 234,
+      "lineName": "758",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "大三侧"
+    },
+    "bus|235|大三侧": {
+      "kind": "bus",
+      "resourceId": 235,
+      "lineName": "759",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|236|大三侧": {
+      "kind": "bus",
+      "resourceId": 236,
+      "lineName": "763",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|237|大三侧": {
+      "kind": "bus",
+      "resourceId": 237,
+      "lineName": "770",
+      "levelName": "A++",
+      "total": 13,
+      "mediaForm": "大三侧"
+    },
+    "bus|238|车身三侧": {
+      "kind": "bus",
+      "resourceId": 238,
+      "lineName": "772",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|239|车身三侧": {
+      "kind": "bus",
+      "resourceId": 239,
+      "lineName": "774",
+      "levelName": "A++",
+      "total": 14,
+      "mediaForm": "车身三侧"
+    },
+    "bus|240|车身三侧": {
+      "kind": "bus",
+      "resourceId": 240,
+      "lineName": "775",
+      "levelName": "S",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|241|车身三侧": {
+      "kind": "bus",
+      "resourceId": 241,
+      "lineName": "777",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|242|车身三侧": {
+      "kind": "bus",
+      "resourceId": 242,
+      "lineName": "778",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|243|车身三侧": {
+      "kind": "bus",
+      "resourceId": 243,
+      "lineName": "779",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|244|车身三侧": {
+      "kind": "bus",
+      "resourceId": 244,
+      "lineName": "780",
+      "levelName": "S",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|245|车身三侧": {
+      "kind": "bus",
+      "resourceId": 245,
+      "lineName": "782",
+      "levelName": "S",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|246|车身三侧": {
+      "kind": "bus",
+      "resourceId": 246,
+      "lineName": "783",
+      "levelName": "S",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|247|车身三侧": {
+      "kind": "bus",
+      "resourceId": 247,
+      "lineName": "784",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|248|车身三侧": {
+      "kind": "bus",
+      "resourceId": 248,
+      "lineName": "785",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|249|车身三侧": {
+      "kind": "bus",
+      "resourceId": 249,
+      "lineName": "786",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|250|车身三侧": {
+      "kind": "bus",
+      "resourceId": 250,
+      "lineName": "787",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|251|车身三侧": {
+      "kind": "bus",
+      "resourceId": 251,
+      "lineName": "788",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|252|车身三侧": {
+      "kind": "bus",
+      "resourceId": 252,
+      "lineName": "789",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|253|车身三侧": {
+      "kind": "bus",
+      "resourceId": 253,
+      "lineName": "790",
+      "levelName": "A++",
+      "total": 16,
+      "mediaForm": "车身三侧"
+    },
+    "bus|254|车身三侧": {
+      "kind": "bus",
+      "resourceId": 254,
+      "lineName": "791",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|255|车身三侧": {
+      "kind": "bus",
+      "resourceId": 255,
+      "lineName": "792",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|256|车身三侧": {
+      "kind": "bus",
+      "resourceId": 256,
+      "lineName": "794",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|257|车身三侧": {
+      "kind": "bus",
+      "resourceId": 257,
+      "lineName": "795",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|258|车身三侧": {
+      "kind": "bus",
+      "resourceId": 258,
+      "lineName": "796",
+      "levelName": "A+",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|259|车身三侧": {
+      "kind": "bus",
+      "resourceId": 259,
+      "lineName": "798",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|260|车身三侧": {
+      "kind": "bus",
+      "resourceId": 260,
+      "lineName": "799",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|263|大三侧": {
+      "kind": "bus",
+      "resourceId": 263,
+      "lineName": "803",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|264|大三侧": {
+      "kind": "bus",
+      "resourceId": 264,
+      "lineName": "804",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "大三侧"
+    },
+    "bus|265|车身三侧": {
+      "kind": "bus",
+      "resourceId": 265,
+      "lineName": "806",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|266|车身三侧": {
+      "kind": "bus",
+      "resourceId": 266,
+      "lineName": "81",
+      "levelName": "A++",
+      "total": 15,
+      "mediaForm": "车身三侧"
+    },
+    "bus|270|车身三侧": {
+      "kind": "bus",
+      "resourceId": 270,
+      "lineName": "82",
+      "levelName": "A++",
+      "total": 13,
+      "mediaForm": "车身三侧"
+    },
+    "bus|272|大三侧": {
+      "kind": "bus",
+      "resourceId": 272,
+      "lineName": "824",
+      "levelName": "S",
+      "total": 13,
+      "mediaForm": "大三侧"
+    },
+    "bus|273|大三侧": {
+      "kind": "bus",
+      "resourceId": 273,
+      "lineName": "828",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "大三侧"
+    },
+    "bus|274|车身三侧": {
+      "kind": "bus",
+      "resourceId": 274,
+      "lineName": "83",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|275|大三侧": {
+      "kind": "bus",
+      "resourceId": 275,
+      "lineName": "836",
+      "levelName": "A++",
+      "total": 12,
+      "mediaForm": "大三侧"
+    },
+    "bus|276|大三侧": {
+      "kind": "bus",
+      "resourceId": 276,
+      "lineName": "838",
+      "levelName": "A++",
+      "total": 14,
+      "mediaForm": "大三侧"
+    },
+    "bus|277|车身三侧": {
+      "kind": "bus",
+      "resourceId": 277,
+      "lineName": "84",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|278|车身三侧": {
+      "kind": "bus",
+      "resourceId": 278,
+      "lineName": "840",
+      "levelName": "S",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|280|车身三侧": {
+      "kind": "bus",
+      "resourceId": 280,
+      "lineName": "843",
+      "levelName": "A++",
+      "total": 16,
+      "mediaForm": "车身三侧"
+    },
+    "bus|281|大三侧": {
+      "kind": "bus",
+      "resourceId": 281,
+      "lineName": "845",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "大三侧"
+    },
+    "bus|283|车身三侧": {
+      "kind": "bus",
+      "resourceId": 283,
+      "lineName": "85",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|284|大三侧": {
+      "kind": "bus",
+      "resourceId": 284,
+      "lineName": "850",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "大三侧"
+    },
+    "bus|285|大三侧": {
+      "kind": "bus",
+      "resourceId": 285,
+      "lineName": "856",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|286|大三侧": {
+      "kind": "bus",
+      "resourceId": 286,
+      "lineName": "858",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|287|车身三侧": {
+      "kind": "bus",
+      "resourceId": 287,
+      "lineName": "860",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|289|大三侧": {
+      "kind": "bus",
+      "resourceId": 289,
+      "lineName": "866-高峰线",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "大三侧"
+    },
+    "bus|291|车身三侧": {
+      "kind": "bus",
+      "resourceId": 291,
+      "lineName": "871",
+      "levelName": "A++",
+      "total": 14,
+      "mediaForm": "车身三侧"
+    },
+    "bus|292|车身三侧": {
+      "kind": "bus",
+      "resourceId": 292,
+      "lineName": "873",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|293|大三侧": {
+      "kind": "bus",
+      "resourceId": 293,
+      "lineName": "875",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|294|大三侧": {
+      "kind": "bus",
+      "resourceId": 294,
+      "lineName": "881",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "大三侧"
+    },
+    "bus|295|大三侧": {
+      "kind": "bus",
+      "resourceId": 295,
+      "lineName": "887",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "大三侧"
+    },
+    "bus|296|大三侧": {
+      "kind": "bus",
+      "resourceId": 296,
+      "lineName": "89",
+      "levelName": "S",
+      "total": 13,
+      "mediaForm": "大三侧"
+    },
+    "bus|298|大三侧": {
+      "kind": "bus",
+      "resourceId": 298,
+      "lineName": "912",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|299|车身三侧": {
+      "kind": "bus",
+      "resourceId": 299,
+      "lineName": "915",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|300|大三侧": {
+      "kind": "bus",
+      "resourceId": 300,
+      "lineName": "926",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|301|大三侧": {
+      "kind": "bus",
+      "resourceId": 301,
+      "lineName": "927",
+      "levelName": "S",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|303|大三侧": {
+      "kind": "bus",
+      "resourceId": 303,
+      "lineName": "932",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|305|大三侧": {
+      "kind": "bus",
+      "resourceId": 305,
+      "lineName": "937",
+      "levelName": "A++",
+      "total": 15,
+      "mediaForm": "大三侧"
+    },
+    "bus|306|大三侧": {
+      "kind": "bus",
+      "resourceId": 306,
+      "lineName": "94",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "大三侧"
+    },
+    "bus|307|大三侧": {
+      "kind": "bus",
+      "resourceId": 307,
+      "lineName": "941",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "大三侧"
+    },
+    "bus|308|大三侧": {
+      "kind": "bus",
+      "resourceId": 308,
+      "lineName": "944",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|310|大三侧": {
+      "kind": "bus",
+      "resourceId": 310,
+      "lineName": "948",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "大三侧"
+    },
+    "bus|311|大三侧": {
+      "kind": "bus",
+      "resourceId": 311,
+      "lineName": "95",
+      "levelName": "A++",
+      "total": 18,
+      "mediaForm": "大三侧"
+    },
+    "bus|312|大三侧": {
+      "kind": "bus",
+      "resourceId": 312,
+      "lineName": "955",
+      "levelName": "S",
+      "total": 6,
+      "mediaForm": "大三侧"
+    },
+    "bus|312|车身三侧": {
+      "kind": "bus",
+      "resourceId": 312,
+      "lineName": "955",
+      "levelName": "S",
+      "total": 12,
+      "mediaForm": "车身三侧"
+    },
+    "bus|313|大三侧": {
+      "kind": "bus",
+      "resourceId": 313,
+      "lineName": "958",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|315|大三侧": {
+      "kind": "bus",
+      "resourceId": 315,
+      "lineName": "96",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|316|大三侧": {
+      "kind": "bus",
+      "resourceId": 316,
+      "lineName": "960",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "大三侧"
+    },
+    "bus|317|车身三侧": {
+      "kind": "bus",
+      "resourceId": 317,
+      "lineName": "961",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|318|大三侧": {
+      "kind": "bus",
+      "resourceId": 318,
+      "lineName": "963",
+      "levelName": "A++",
+      "total": 18,
+      "mediaForm": "大三侧"
+    },
+    "bus|320|车身三侧": {
+      "kind": "bus",
+      "resourceId": 320,
+      "lineName": "969",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|321|车身三侧": {
+      "kind": "bus",
+      "resourceId": 321,
+      "lineName": "970",
+      "levelName": "A++",
+      "total": 13,
+      "mediaForm": "车身三侧"
+    },
+    "bus|322|车身三侧": {
+      "kind": "bus",
+      "resourceId": 322,
+      "lineName": "971",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|324|车身三侧": {
+      "kind": "bus",
+      "resourceId": 324,
+      "lineName": "976",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|325|车身三侧": {
+      "kind": "bus",
+      "resourceId": 325,
+      "lineName": "978",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|326|车身三侧": {
+      "kind": "bus",
+      "resourceId": 326,
+      "lineName": "980",
+      "levelName": "S",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|327|车身三侧": {
+      "kind": "bus",
+      "resourceId": 327,
+      "lineName": "981",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|328|车身三侧": {
+      "kind": "bus",
+      "resourceId": 328,
+      "lineName": "984",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|329|车身三侧": {
+      "kind": "bus",
+      "resourceId": 329,
+      "lineName": "985",
+      "levelName": "S",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|330|车身三侧": {
+      "kind": "bus",
+      "resourceId": 330,
+      "lineName": "986",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|331|车身三侧": {
+      "kind": "bus",
+      "resourceId": 331,
+      "lineName": "986(区间)",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|332|车身三侧": {
+      "kind": "bus",
+      "resourceId": 332,
+      "lineName": "987",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|333|车身三侧": {
+      "kind": "bus",
+      "resourceId": 333,
+      "lineName": "988",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|334|车身三侧": {
+      "kind": "bus",
+      "resourceId": 334,
+      "lineName": "989",
+      "levelName": "A++",
+      "total": 12,
+      "mediaForm": "车身三侧"
+    },
+    "bus|336|车身三侧": {
+      "kind": "bus",
+      "resourceId": 336,
+      "lineName": "990",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|337|车身三侧": {
+      "kind": "bus",
+      "resourceId": 337,
+      "lineName": "991",
+      "levelName": "A++",
+      "total": 15,
+      "mediaForm": "车身三侧"
+    },
+    "bus|338|车身三侧": {
+      "kind": "bus",
+      "resourceId": 338,
+      "lineName": "992",
+      "levelName": "A++",
+      "total": 13,
+      "mediaForm": "车身三侧"
+    },
+    "bus|339|车身三侧": {
+      "kind": "bus",
+      "resourceId": 339,
+      "lineName": "三林1路",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|342|车身三侧": {
+      "kind": "bus",
+      "resourceId": 342,
+      "lineName": "北蔡1路",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|343|车身三侧": {
+      "kind": "bus",
+      "resourceId": 343,
+      "lineName": "北蔡2路",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|344|全色车": {
+      "kind": "bus",
+      "resourceId": 344,
+      "lineName": "南京路观光线",
+      "levelName": "观光",
+      "total": 11,
+      "mediaForm": "全色车"
+    },
+    "bus|345|车身三侧": {
+      "kind": "bus",
+      "resourceId": 345,
+      "lineName": "南南线",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|346|车身三侧": {
+      "kind": "bus",
+      "resourceId": 346,
+      "lineName": "南园1路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|347|车身三侧": {
+      "kind": "bus",
+      "resourceId": 347,
+      "lineName": "南龙线",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|348|车身三侧": {
+      "kind": "bus",
+      "resourceId": 348,
+      "lineName": "合庆1路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|350|车身三侧": {
+      "kind": "bus",
+      "resourceId": 350,
+      "lineName": "周康10路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|351|车身三侧": {
+      "kind": "bus",
+      "resourceId": 351,
+      "lineName": "周康4路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|352|车身三侧": {
+      "kind": "bus",
+      "resourceId": 352,
+      "lineName": "周康5路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|353|车身三侧": {
+      "kind": "bus",
+      "resourceId": 353,
+      "lineName": "周康9路",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|366|车身三侧": {
+      "kind": "bus",
+      "resourceId": 366,
+      "lineName": "外高桥1路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|367|车身三侧": {
+      "kind": "bus",
+      "resourceId": 367,
+      "lineName": "外高桥3路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|368|车身三侧": {
+      "kind": "bus",
+      "resourceId": 368,
+      "lineName": "外高桥4路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|369|车身三侧": {
+      "kind": "bus",
+      "resourceId": 369,
+      "lineName": "大团2路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|370|车身三侧": {
+      "kind": "bus",
+      "resourceId": 370,
+      "lineName": "大桥六线",
+      "levelName": "S",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|371|车身三侧": {
+      "kind": "bus",
+      "resourceId": 371,
+      "lineName": "大桥四线",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|372|大三侧": {
+      "kind": "bus",
+      "resourceId": 372,
+      "lineName": "宝山10路",
+      "levelName": "A+",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|378|大三侧": {
+      "kind": "bus",
+      "resourceId": 378,
+      "lineName": "宝山29路",
+      "levelName": "A+",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|381|大三侧": {
+      "kind": "bus",
+      "resourceId": 381,
+      "lineName": "宝山32路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "大三侧"
+    },
+    "bus|392|大三侧": {
+      "kind": "bus",
+      "resourceId": 392,
+      "lineName": "宝山95路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "大三侧"
+    },
+    "bus|394|车身三侧": {
+      "kind": "bus",
+      "resourceId": 394,
+      "lineName": "宣桥1路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|395|车身三侧": {
+      "kind": "bus",
+      "resourceId": 395,
+      "lineName": "川沙2路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|396|车身三侧": {
+      "kind": "bus",
+      "resourceId": 396,
+      "lineName": "川沙3路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|397|车身三侧": {
+      "kind": "bus",
+      "resourceId": 397,
+      "lineName": "川沙5路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|398|车身三侧": {
+      "kind": "bus",
+      "resourceId": 398,
+      "lineName": "张江1路",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|399|车身三侧": {
+      "kind": "bus",
+      "resourceId": 399,
+      "lineName": "张江环线",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|400|车身三侧": {
+      "kind": "bus",
+      "resourceId": 400,
+      "lineName": "惠南10路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|401|车身三侧": {
+      "kind": "bus",
+      "resourceId": 401,
+      "lineName": "惠南8路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|402|车身三侧": {
+      "kind": "bus",
+      "resourceId": 402,
+      "lineName": "新场1路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|403|车身三侧": {
+      "kind": "bus",
+      "resourceId": 403,
+      "lineName": "新场2路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|404|车身三侧": {
+      "kind": "bus",
+      "resourceId": 404,
+      "lineName": "新场3路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|405|车身三侧": {
+      "kind": "bus",
+      "resourceId": 405,
+      "lineName": "新场5路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|407|车身三侧": {
+      "kind": "bus",
+      "resourceId": 407,
+      "lineName": "曹路2路",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|408|车身三侧": {
+      "kind": "bus",
+      "resourceId": 408,
+      "lineName": "曹路3路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|409|车身三侧": {
+      "kind": "bus",
+      "resourceId": 409,
+      "lineName": "机场七线",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|410|车身三侧": {
+      "kind": "bus",
+      "resourceId": 410,
+      "lineName": "机场八线",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|412|车身三侧": {
+      "kind": "bus",
+      "resourceId": 412,
+      "lineName": "沪南线",
+      "levelName": "A++",
+      "total": 25,
+      "mediaForm": "车身三侧"
+    },
+    "bus|413|车身三侧": {
+      "kind": "bus",
+      "resourceId": 413,
+      "lineName": "沪川线",
+      "levelName": "A++",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|414|车身三侧": {
+      "kind": "bus",
+      "resourceId": 414,
+      "lineName": "浦东100路",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|415|车身三侧": {
+      "kind": "bus",
+      "resourceId": 415,
+      "lineName": "浦东101路",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|416|车身三侧": {
+      "kind": "bus",
+      "resourceId": 416,
+      "lineName": "浦东102路",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|417|车身三侧": {
+      "kind": "bus",
+      "resourceId": 417,
+      "lineName": "浦东104路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|418|车身三侧": {
+      "kind": "bus",
+      "resourceId": 418,
+      "lineName": "浦东105路",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|419|车身三侧": {
+      "kind": "bus",
+      "resourceId": 419,
+      "lineName": "浦东106路",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|420|车身三侧": {
+      "kind": "bus",
+      "resourceId": 420,
+      "lineName": "浦东108路",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|421|车身三侧": {
+      "kind": "bus",
+      "resourceId": 421,
+      "lineName": "浦东10路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|422|车身三侧": {
+      "kind": "bus",
+      "resourceId": 422,
+      "lineName": "浦东110路",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|423|车身三侧": {
+      "kind": "bus",
+      "resourceId": 423,
+      "lineName": "浦东112路",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|518|车身三侧": {
+      "kind": "bus",
+      "resourceId": 518,
+      "lineName": "浦东115路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|424|车身三侧": {
+      "kind": "bus",
+      "resourceId": 424,
+      "lineName": "浦东116路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|425|车身三侧": {
+      "kind": "bus",
+      "resourceId": 425,
+      "lineName": "浦东117路",
+      "levelName": "A+",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|426|车身三侧": {
+      "kind": "bus",
+      "resourceId": 426,
+      "lineName": "浦东118路",
+      "levelName": "A++",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|427|车身三侧": {
+      "kind": "bus",
+      "resourceId": 427,
+      "lineName": "浦东119路",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|428|车身三侧": {
+      "kind": "bus",
+      "resourceId": 428,
+      "lineName": "浦东122路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|429|车身三侧": {
+      "kind": "bus",
+      "resourceId": 429,
+      "lineName": "浦东123路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|430|车身三侧": {
+      "kind": "bus",
+      "resourceId": 430,
+      "lineName": "浦东124路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|431|车身三侧": {
+      "kind": "bus",
+      "resourceId": 431,
+      "lineName": "浦东125路",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|432|车身三侧": {
+      "kind": "bus",
+      "resourceId": 432,
+      "lineName": "浦东12路",
+      "levelName": "A++",
+      "total": 12,
+      "mediaForm": "车身三侧"
+    },
+    "bus|433|大三侧": {
+      "kind": "bus",
+      "resourceId": 433,
+      "lineName": "浦东15路",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "大三侧"
+    },
+    "bus|434|车身三侧": {
+      "kind": "bus",
+      "resourceId": 434,
+      "lineName": "浦东16路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|435|车身三侧": {
+      "kind": "bus",
+      "resourceId": 435,
+      "lineName": "浦东18路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|436|车身三侧": {
+      "kind": "bus",
+      "resourceId": 436,
+      "lineName": "浦东19路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|437|车身三侧": {
+      "kind": "bus",
+      "resourceId": 437,
+      "lineName": "浦东1路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|438|车身三侧": {
+      "kind": "bus",
+      "resourceId": 438,
+      "lineName": "浦东20路",
+      "levelName": "A+",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|439|大三侧": {
+      "kind": "bus",
+      "resourceId": 439,
+      "lineName": "浦东21路",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "大三侧"
+    },
+    "bus|440|车身三侧": {
+      "kind": "bus",
+      "resourceId": 440,
+      "lineName": "浦东22路",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|441|车身三侧": {
+      "kind": "bus",
+      "resourceId": 441,
+      "lineName": "浦东23路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|442|车身三侧": {
+      "kind": "bus",
+      "resourceId": 442,
+      "lineName": "浦东24路",
+      "levelName": "A+",
+      "total": 14,
+      "mediaForm": "车身三侧"
+    },
+    "bus|443|车身三侧": {
+      "kind": "bus",
+      "resourceId": 443,
+      "lineName": "浦东25路",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|444|车身三侧": {
+      "kind": "bus",
+      "resourceId": 444,
+      "lineName": "浦东26路",
+      "levelName": "A+",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|445|车身三侧": {
+      "kind": "bus",
+      "resourceId": 445,
+      "lineName": "浦东27路",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|446|车身三侧": {
+      "kind": "bus",
+      "resourceId": 446,
+      "lineName": "浦东2路",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|447|车身三侧": {
+      "kind": "bus",
+      "resourceId": 447,
+      "lineName": "浦东30路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|448|车身三侧": {
+      "kind": "bus",
+      "resourceId": 448,
+      "lineName": "浦东31路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|449|车身三侧": {
+      "kind": "bus",
+      "resourceId": 449,
+      "lineName": "浦东32路",
+      "levelName": "A+",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|450|车身三侧": {
+      "kind": "bus",
+      "resourceId": 450,
+      "lineName": "浦东34路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|451|车身三侧": {
+      "kind": "bus",
+      "resourceId": 451,
+      "lineName": "浦东35路",
+      "levelName": "A++",
+      "total": 16,
+      "mediaForm": "车身三侧"
+    },
+    "bus|452|车身三侧": {
+      "kind": "bus",
+      "resourceId": 452,
+      "lineName": "浦东36路",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|453|车身三侧": {
+      "kind": "bus",
+      "resourceId": 453,
+      "lineName": "浦东37路",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|454|车身三侧": {
+      "kind": "bus",
+      "resourceId": 454,
+      "lineName": "浦东38路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|455|车身三侧": {
+      "kind": "bus",
+      "resourceId": 455,
+      "lineName": "浦东39路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|456|车身三侧": {
+      "kind": "bus",
+      "resourceId": 456,
+      "lineName": "浦东3路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|457|车身三侧": {
+      "kind": "bus",
+      "resourceId": 457,
+      "lineName": "浦东41路",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|458|车身三侧": {
+      "kind": "bus",
+      "resourceId": 458,
+      "lineName": "浦东42路",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|459|车身三侧": {
+      "kind": "bus",
+      "resourceId": 459,
+      "lineName": "浦东43路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|460|车身三侧": {
+      "kind": "bus",
+      "resourceId": 460,
+      "lineName": "浦东45路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|461|车身三侧": {
+      "kind": "bus",
+      "resourceId": 461,
+      "lineName": "浦东48路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|462|车身三侧": {
+      "kind": "bus",
+      "resourceId": 462,
+      "lineName": "浦东49路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|463|车身三侧": {
+      "kind": "bus",
+      "resourceId": 463,
+      "lineName": "浦东4路",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|464|车身三侧": {
+      "kind": "bus",
+      "resourceId": 464,
+      "lineName": "浦东50路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|465|车身三侧": {
+      "kind": "bus",
+      "resourceId": 465,
+      "lineName": "浦东51路",
+      "levelName": "A+",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|466|车身三侧": {
+      "kind": "bus",
+      "resourceId": 466,
+      "lineName": "浦东52路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|467|车身三侧": {
+      "kind": "bus",
+      "resourceId": 467,
+      "lineName": "浦东53路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|468|车身三侧": {
+      "kind": "bus",
+      "resourceId": 468,
+      "lineName": "浦东54路",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|469|车身三侧": {
+      "kind": "bus",
+      "resourceId": 469,
+      "lineName": "浦东55路",
+      "levelName": "A+",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|470|车身三侧": {
+      "kind": "bus",
+      "resourceId": 470,
+      "lineName": "浦东57路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|471|车身三侧": {
+      "kind": "bus",
+      "resourceId": 471,
+      "lineName": "浦东58路",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|472|车身三侧": {
+      "kind": "bus",
+      "resourceId": 472,
+      "lineName": "浦东59路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|473|车身三侧": {
+      "kind": "bus",
+      "resourceId": 473,
+      "lineName": "浦东5路",
+      "levelName": "A++",
+      "total": 11,
+      "mediaForm": "车身三侧"
+    },
+    "bus|474|车身三侧": {
+      "kind": "bus",
+      "resourceId": 474,
+      "lineName": "浦东61路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|475|车身三侧": {
+      "kind": "bus",
+      "resourceId": 475,
+      "lineName": "浦东62路",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|476|车身三侧": {
+      "kind": "bus",
+      "resourceId": 476,
+      "lineName": "浦东63路",
+      "levelName": "A+",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|477|车身三侧": {
+      "kind": "bus",
+      "resourceId": 477,
+      "lineName": "浦东64路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|478|车身三侧": {
+      "kind": "bus",
+      "resourceId": 478,
+      "lineName": "浦东67路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|479|车身三侧": {
+      "kind": "bus",
+      "resourceId": 479,
+      "lineName": "浦东68路",
+      "levelName": "A+",
+      "total": 8,
+      "mediaForm": "车身三侧"
+    },
+    "bus|480|车身三侧": {
+      "kind": "bus",
+      "resourceId": 480,
+      "lineName": "浦东69路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|481|车身三侧": {
+      "kind": "bus",
+      "resourceId": 481,
+      "lineName": "浦东70路",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|482|车身三侧": {
+      "kind": "bus",
+      "resourceId": 482,
+      "lineName": "浦东71路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|483|车身三侧": {
+      "kind": "bus",
+      "resourceId": 483,
+      "lineName": "浦东72路",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|484|车身三侧": {
+      "kind": "bus",
+      "resourceId": 484,
+      "lineName": "浦东73路",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|485|车身三侧": {
+      "kind": "bus",
+      "resourceId": 485,
+      "lineName": "浦东77路",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|486|车身三侧": {
+      "kind": "bus",
+      "resourceId": 486,
+      "lineName": "浦东78路",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|487|车身三侧": {
+      "kind": "bus",
+      "resourceId": 487,
+      "lineName": "浦东79路",
+      "levelName": "A+",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|488|车身三侧": {
+      "kind": "bus",
+      "resourceId": 488,
+      "lineName": "浦东80路",
+      "levelName": "A++",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|489|车身三侧": {
+      "kind": "bus",
+      "resourceId": 489,
+      "lineName": "浦东86路",
+      "levelName": "A++",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|490|车身三侧": {
+      "kind": "bus",
+      "resourceId": 490,
+      "lineName": "浦东87路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|491|车身三侧": {
+      "kind": "bus",
+      "resourceId": 491,
+      "lineName": "浦东88路",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|492|车身三侧": {
+      "kind": "bus",
+      "resourceId": 492,
+      "lineName": "浦东89路",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|493|车身三侧": {
+      "kind": "bus",
+      "resourceId": 493,
+      "lineName": "浦东8路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|494|车身三侧": {
+      "kind": "bus",
+      "resourceId": 494,
+      "lineName": "浦东92路",
+      "levelName": "A++",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    },
+    "bus|495|车身三侧": {
+      "kind": "bus",
+      "resourceId": 495,
+      "lineName": "浦东93路",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|496|车身三侧": {
+      "kind": "bus",
+      "resourceId": 496,
+      "lineName": "浦东94路",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|497|车身三侧": {
+      "kind": "bus",
+      "resourceId": 497,
+      "lineName": "浦东95路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|498|车身三侧": {
+      "kind": "bus",
+      "resourceId": 498,
+      "lineName": "浦东96路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|499|车身三侧": {
+      "kind": "bus",
+      "resourceId": 499,
+      "lineName": "浦东98路",
+      "levelName": "A++",
+      "total": 10,
+      "mediaForm": "车身三侧"
+    },
+    "bus|500|车身三侧": {
+      "kind": "bus",
+      "resourceId": 500,
+      "lineName": "浦东99路",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|501|车身三侧": {
+      "kind": "bus",
+      "resourceId": 501,
+      "lineName": "浦东9路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|502|车身三侧": {
+      "kind": "bus",
+      "resourceId": 502,
+      "lineName": "浦江11路",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|503|车身三侧": {
+      "kind": "bus",
+      "resourceId": 503,
+      "lineName": "浦江1路",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|504|车身三侧": {
+      "kind": "bus",
+      "resourceId": 504,
+      "lineName": "浦江2路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|505|车身三侧": {
+      "kind": "bus",
+      "resourceId": 505,
+      "lineName": "浦江3路",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|506|车身三侧": {
+      "kind": "bus",
+      "resourceId": 506,
+      "lineName": "浦江4路",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|507|车身三侧": {
+      "kind": "bus",
+      "resourceId": 507,
+      "lineName": "浦江5路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|508|车身三侧": {
+      "kind": "bus",
+      "resourceId": 508,
+      "lineName": "浦江6路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|509|车身三侧": {
+      "kind": "bus",
+      "resourceId": 509,
+      "lineName": "浦江7路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|510|车身三侧": {
+      "kind": "bus",
+      "resourceId": 510,
+      "lineName": "申崇二线",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "车身三侧"
+    },
+    "bus|511|车身三侧": {
+      "kind": "bus",
+      "resourceId": 511,
+      "lineName": "申崇六线",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|512|车身三侧": {
+      "kind": "bus",
+      "resourceId": 512,
+      "lineName": "申崇六线B线",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|513|车身三侧": {
+      "kind": "bus",
+      "resourceId": 513,
+      "lineName": "申崇四线",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|515|车身三侧": {
+      "kind": "bus",
+      "resourceId": 515,
+      "lineName": "祝桥2路",
+      "levelName": "A+",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|516|车身三侧": {
+      "kind": "bus",
+      "resourceId": 516,
+      "lineName": "祝桥3路",
+      "levelName": "A+",
+      "total": 1,
+      "mediaForm": "车身三侧"
+    },
+    "bus|517|车身三侧": {
+      "kind": "bus",
+      "resourceId": 517,
+      "lineName": "老港1路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|519|车身三侧": {
+      "kind": "bus",
+      "resourceId": 519,
+      "lineName": "航奉线",
+      "levelName": "A+",
+      "total": 6,
+      "mediaForm": "车身三侧"
+    },
+    "bus|520|车身三侧": {
+      "kind": "bus",
+      "resourceId": 520,
+      "lineName": "花木1路",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "车身三侧"
+    },
+    "bus|521|车身三侧": {
+      "kind": "bus",
+      "resourceId": 521,
+      "lineName": "花木2路",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "车身三侧"
+    },
+    "bus|522|大三侧": {
+      "kind": "bus",
+      "resourceId": 522,
+      "lineName": "虹桥枢纽1路",
+      "levelName": "A++",
+      "total": 5,
+      "mediaForm": "大三侧"
+    },
+    "bus|523|全色车": {
+      "kind": "bus",
+      "resourceId": 523,
+      "lineName": "都市观光线",
+      "levelName": "观光",
+      "total": 16,
+      "mediaForm": "全色车"
+    },
+    "bus|524|车身三侧": {
+      "kind": "bus",
+      "resourceId": 524,
+      "lineName": "闵行20路",
+      "levelName": "A++",
+      "total": 13,
+      "mediaForm": "车身三侧"
+    },
+    "bus|525|大三侧": {
+      "kind": "bus",
+      "resourceId": 525,
+      "lineName": "闵行33路A线",
+      "levelName": "A+",
+      "total": 5,
+      "mediaForm": "大三侧"
+    },
+    "bus|526|大三侧": {
+      "kind": "bus",
+      "resourceId": 526,
+      "lineName": "闵行33路B线",
+      "levelName": "A++",
+      "total": 3,
+      "mediaForm": "大三侧"
+    },
+    "bus|527|大三侧": {
+      "kind": "bus",
+      "resourceId": 527,
+      "lineName": "闵行35路",
+      "levelName": "A+",
+      "total": 4,
+      "mediaForm": "大三侧"
+    },
+    "bus|528|车身三侧": {
+      "kind": "bus",
+      "resourceId": 528,
+      "lineName": "闵行39路",
+      "levelName": "A+",
+      "total": 2,
+      "mediaForm": "车身三侧"
+    },
+    "bus|529|车身三侧": {
+      "kind": "bus",
+      "resourceId": 529,
+      "lineName": "隧道一线",
+      "levelName": "A++",
+      "total": 9,
+      "mediaForm": "车身三侧"
+    },
+    "bus|530|车身三侧": {
+      "kind": "bus",
+      "resourceId": 530,
+      "lineName": "隧道三线",
+      "levelName": "S",
+      "total": 13,
+      "mediaForm": "车身三侧"
+    },
+    "bus|531|大三侧": {
+      "kind": "bus",
+      "resourceId": 531,
+      "lineName": "隧道二线",
+      "levelName": "A++",
+      "total": 6,
+      "mediaForm": "大三侧"
+    },
+    "bus|532|车身三侧": {
+      "kind": "bus",
+      "resourceId": 532,
+      "lineName": "隧道六线",
+      "levelName": "S",
+      "total": 7,
+      "mediaForm": "车身三侧"
+    }
+  },
+  "windows": [
+    {
+      "startDate": "2027-06-01",
+      "endDate": "2027-06-30",
+      "queriedAt": "2026-11-21T11:18:58.117626+00:00",
+      "billingMonths": 1,
+      "inventoryByKey": {
+        "bus|1|大三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 5
+        },
+        "bus|2|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|3|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|4|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|5|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|6|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|7|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|8|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|9|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|10|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|539|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|11|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|12|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|13|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|14|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|15|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|16|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|18|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|19|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|20|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|21|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|22|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|23|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|24|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|25|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|26|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|27|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|28|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|29|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|30|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|31|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|32|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|33|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|34|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|35|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|36|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|38|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|39|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|40|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|540|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|41|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|42|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|43|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|44|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|45|大三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|46|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|47|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|48|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|49|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|50|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|538|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|51|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|533|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|52|大三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|53|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|54|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|55|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|56|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|57|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|58|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|577|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|59|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|60|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|61|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|62|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|63|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|65|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|66|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|67|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|68|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|69|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|70|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|71|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|73|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|74|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|75|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|76|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|77|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|78|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|79|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|80|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|81|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|82|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|576|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|83|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|84|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|86|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|87|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|88|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|89|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|90|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|91|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|92|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|93|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|94|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|95|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|96|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|97|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|98|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|99|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|100|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|101|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|102|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|103|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|104|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|105|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|106|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|108|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|109|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|110|大三侧": {
+          "freeCount": 11,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|111|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|114|大三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|115|大三侧": {
+          "freeCount": 9,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|120|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|123|大三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|125|大三侧": {
+          "freeCount": 9,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|128|大三侧": {
+          "freeCount": 7,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|129|大三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|130|大三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|135|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|137|大三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|138|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|139|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 2,
+          "reservedCount": 6
+        },
+        "bus|140|大三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|141|大三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 6
+        },
+        "bus|142|大三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|143|大三侧": {
+          "freeCount": 4,
+          "contractCount": 6,
+          "reservedCount": 0
+        },
+        "bus|144|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|145|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|146|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|147|大三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 5
+        },
+        "bus|149|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 4,
+          "reservedCount": 4
+        },
+        "bus|150|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|151|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|152|大三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|153|大三侧": {
+          "freeCount": 5,
+          "contractCount": 5,
+          "reservedCount": 0
+        },
+        "bus|155|车身三侧": {
+          "freeCount": 10,
+          "contractCount": 2,
+          "reservedCount": 2
+        },
+        "bus|156|大三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 7
+        },
+        "bus|157|大三侧": {
+          "freeCount": 4,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|158|大三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 3
+        },
+        "bus|159|大三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|163|大三侧": {
+          "freeCount": 13,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|165|大三侧": {
+          "freeCount": 12,
+          "contractCount": 0,
+          "reservedCount": 3
+        },
+        "bus|168|大三侧": {
+          "freeCount": 9,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|169|大三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|173|大三侧": {
+          "freeCount": 9,
+          "contractCount": 0,
+          "reservedCount": 6
+        },
+        "bus|175|车身三侧": {
+          "freeCount": 10,
+          "contractCount": 1,
+          "reservedCount": 7
+        },
+        "bus|176|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 1,
+          "reservedCount": 1
+        },
+        "bus|177|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|178|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 3,
+          "reservedCount": 6
+        },
+        "bus|180|大三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|182|大三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 5
+        },
+        "bus|184|大三侧": {
+          "freeCount": 4,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|185|大三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 1
+        },
+        "bus|186|大三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 1
+        },
+        "bus|187|大三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|188|大三侧": {
+          "freeCount": 10,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|190|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|191|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|192|车身三侧": {
+          "freeCount": 15,
+          "contractCount": 4,
+          "reservedCount": 4
+        },
+        "bus|194|大三侧": {
+          "freeCount": 7,
+          "contractCount": 2,
+          "reservedCount": 2
+        },
+        "bus|195|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|196|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 3,
+          "reservedCount": 2
+        },
+        "bus|197|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|198|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|199|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|200|大三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 8
+        },
+        "bus|201|大三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|203|大三侧": {
+          "freeCount": 12,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|204|车身三侧": {
+          "freeCount": 15,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|205|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|206|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 7,
+          "reservedCount": 0
+        },
+        "bus|208|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 2,
+          "reservedCount": 5
+        },
+        "bus|209|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|210|大三侧": {
+          "freeCount": 9,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|212|大三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|554|大三侧": {
+          "freeCount": 0,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|223|大三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 5
+        },
+        "bus|225|大三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 1
+        },
+        "bus|226|大三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 4
+        },
+        "bus|227|大三侧": {
+          "freeCount": 9,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|228|大三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 6
+        },
+        "bus|229|大三侧": {
+          "freeCount": 8,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|231|大三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|233|大三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|234|大三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|235|大三侧": {
+          "freeCount": 7,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|236|大三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 3
+        },
+        "bus|237|大三侧": {
+          "freeCount": 9,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|238|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|239|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 5,
+          "reservedCount": 2
+        },
+        "bus|240|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 1
+        },
+        "bus|241|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|242|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|243|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 4
+        },
+        "bus|244|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 2,
+          "reservedCount": 2
+        },
+        "bus|245|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|246|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|247|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|248|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 3,
+          "reservedCount": 1
+        },
+        "bus|249|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|250|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|251|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|252|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|253|车身三侧": {
+          "freeCount": 13,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|254|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|255|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 2,
+          "reservedCount": 2
+        },
+        "bus|256|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 4
+        },
+        "bus|257|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|258|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|259|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 3,
+          "reservedCount": 2
+        },
+        "bus|260|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|263|大三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 3
+        },
+        "bus|264|大三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|265|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|266|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 4
+        },
+        "bus|270|车身三侧": {
+          "freeCount": 11,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|272|大三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 8
+        },
+        "bus|273|大三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 3
+        },
+        "bus|274|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|275|大三侧": {
+          "freeCount": 5,
+          "contractCount": 2,
+          "reservedCount": 5
+        },
+        "bus|276|大三侧": {
+          "freeCount": 7,
+          "contractCount": 0,
+          "reservedCount": 7
+        },
+        "bus|277|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|278|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|280|车身三侧": {
+          "freeCount": 15,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|281|大三侧": {
+          "freeCount": 10,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|283|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|284|大三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|285|大三侧": {
+          "freeCount": 9,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|286|大三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|287|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|289|大三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|291|车身三侧": {
+          "freeCount": 14,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|292|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|293|大三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 5
+        },
+        "bus|294|大三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|295|大三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|296|大三侧": {
+          "freeCount": 7,
+          "contractCount": 1,
+          "reservedCount": 5
+        },
+        "bus|298|大三侧": {
+          "freeCount": 7,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|299|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|300|大三侧": {
+          "freeCount": 9,
+          "contractCount": 0,
+          "reservedCount": 1
+        },
+        "bus|301|大三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|303|大三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|305|大三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 9
+        },
+        "bus|306|大三侧": {
+          "freeCount": 9,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|307|大三侧": {
+          "freeCount": 6,
+          "contractCount": 2,
+          "reservedCount": 3
+        },
+        "bus|308|大三侧": {
+          "freeCount": 4,
+          "contractCount": 2,
+          "reservedCount": 3
+        },
+        "bus|310|大三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 1
+        },
+        "bus|311|大三侧": {
+          "freeCount": 10,
+          "contractCount": 2,
+          "reservedCount": 6
+        },
+        "bus|312|大三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 3
+        },
+        "bus|312|车身三侧": {
+          "freeCount": 11,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|313|大三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 4
+        },
+        "bus|315|大三侧": {
+          "freeCount": 4,
+          "contractCount": 2,
+          "reservedCount": 4
+        },
+        "bus|316|大三侧": {
+          "freeCount": 7,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|317|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|318|大三侧": {
+          "freeCount": 6,
+          "contractCount": 6,
+          "reservedCount": 6
+        },
+        "bus|320|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 4,
+          "reservedCount": 2
+        },
+        "bus|321|车身三侧": {
+          "freeCount": 9,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|322|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|324|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|325|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|326|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 3
+        },
+        "bus|327|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|328|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|329|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 4
+        },
+        "bus|330|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|331|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 5
+        },
+        "bus|332|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|333|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|334|车身三侧": {
+          "freeCount": 9,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|336|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|337|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 5,
+          "reservedCount": 2
+        },
+        "bus|338|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 6,
+          "reservedCount": 4
+        },
+        "bus|339|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|342|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|343|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|344|全色车": {
+          "freeCount": 8,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|345|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|346|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|347|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 4,
+          "reservedCount": 2
+        },
+        "bus|348|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|350|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|351|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|352|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|353|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|366|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|367|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|368|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|369|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|370|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 2,
+          "reservedCount": 3
+        },
+        "bus|371|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 3
+        },
+        "bus|372|大三侧": {
+          "freeCount": 4,
+          "contractCount": 6,
+          "reservedCount": 0
+        },
+        "bus|378|大三侧": {
+          "freeCount": 5,
+          "contractCount": 5,
+          "reservedCount": 0
+        },
+        "bus|381|大三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|392|大三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|394|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|395|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|396|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|397|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|398|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|399|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|400|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|401|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|402|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|403|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|404|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|405|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|407|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|408|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|409|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|410|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|412|车身三侧": {
+          "freeCount": 12,
+          "contractCount": 7,
+          "reservedCount": 6
+        },
+        "bus|413|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|414|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|415|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|416|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|417|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|418|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|419|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|420|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 2,
+          "reservedCount": 1
+        },
+        "bus|421|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|422|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|423|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|518|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|424|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|425|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|426|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 2
+        },
+        "bus|427|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|428|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|429|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|430|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|431|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|432|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 2,
+          "reservedCount": 2
+        },
+        "bus|433|大三侧": {
+          "freeCount": 5,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|434|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|435|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|436|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|437|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|438|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|439|大三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 1
+        },
+        "bus|440|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|441|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|442|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 13,
+          "reservedCount": 0
+        },
+        "bus|443|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|444|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|445|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|446|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|447|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|448|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|449|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|450|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|451|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 2,
+          "reservedCount": 7
+        },
+        "bus|452|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|453|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|454|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|455|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|456|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|457|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|458|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|459|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|460|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|461|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|462|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|463|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|464|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|465|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 6,
+          "reservedCount": 0
+        },
+        "bus|466|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|467|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|468|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|469|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|470|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|471|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|472|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|473|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|474|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|475|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|476|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|477|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|478|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|479|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|480|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|481|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|482|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|483|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|484|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 3,
+          "reservedCount": 2
+        },
+        "bus|485|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|486|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|487|车身三侧": {
+          "freeCount": 7,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|488|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 3,
+          "reservedCount": 0
+        },
+        "bus|489|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|490|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|491|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|492|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 2,
+          "reservedCount": 0
+        },
+        "bus|493|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|494|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|495|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 4,
+          "reservedCount": 0
+        },
+        "bus|496|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 5,
+          "reservedCount": 2
+        },
+        "bus|497|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|498|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|499|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 2,
+          "reservedCount": 2
+        },
+        "bus|500|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|501|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|502|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|503|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|504|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|505|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|506|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|507|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|508|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|509|车身三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|510|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|511|车身三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|512|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|513|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|515|车身三侧": {
+          "freeCount": 3,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|516|车身三侧": {
+          "freeCount": 0,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|517|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|519|车身三侧": {
+          "freeCount": 5,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|520|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|521|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|522|大三侧": {
+          "freeCount": 1,
+          "contractCount": 0,
+          "reservedCount": 4
+        },
+        "bus|523|全色车": {
+          "freeCount": 16,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|524|车身三侧": {
+          "freeCount": 10,
+          "contractCount": 1,
+          "reservedCount": 2
+        },
+        "bus|525|大三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 1
+        },
+        "bus|526|大三侧": {
+          "freeCount": 2,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|527|大三侧": {
+          "freeCount": 3,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|528|车身三侧": {
+          "freeCount": 2,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|529|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 1,
+          "reservedCount": 0
+        },
+        "bus|530|车身三侧": {
+          "freeCount": 8,
+          "contractCount": 2,
+          "reservedCount": 3
+        },
+        "bus|531|大三侧": {
+          "freeCount": 6,
+          "contractCount": 0,
+          "reservedCount": 0
+        },
+        "bus|532|车身三侧": {
+          "freeCount": 4,
+          "contractCount": 0,
+          "reservedCount": 3
+        }
+      }
+    }
+  ]
+}

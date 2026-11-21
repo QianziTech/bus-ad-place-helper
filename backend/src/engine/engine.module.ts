@@ -1,0 +1,8 @@
+import { Module } from '@nestjs/common';
+import { DataModule } from '../shared/data/data.module';
+import { EngineService } from './engine.service';
+import { ScheduleService } from './schedule.service';
+import { PlanController } from './plan.controller';
+
+@Module({ imports: [DataModule], providers: [EngineService, ScheduleService], controllers: [PlanController], exports: [EngineService, ScheduleService, DataModule] })
+export class EngineModule {}
