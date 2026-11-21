@@ -163,6 +163,37 @@ export interface TraceStep {
 }
 
 export type PlanStatus = 'missing_window' | 'missing_data' | 'no_inventory' | 'over_budget'
+export type InventorySource = 'hongdou' | 'archive' | 'snapshot' | 'missing'
+
+export interface InventoryKindStatus {
+  kind: MediaKind
+  source: InventorySource
+  sourceLabel: string
+  queriedAt?: string
+  sampleDates?: string[]
+  billingMonths: number | null
+  reason?: string
+}
+
+export interface InventoryPreviewRow {
+  mediaKey: string
+  kind: MediaKind
+  name: string
+  levelName: string
+  mediaForm?: string
+  exit?: string
+  freeCount: number | null
+  sampleDates?: string[]
+}
+
+export interface InventoryDetail {
+  startDate: string
+  endDate: string
+  billingMonths: number | null
+  billingStatus: 'confirmed' | 'pending'
+  kinds: InventoryKindStatus[]
+  preview?: InventoryPreviewRow[]
+}
 
 export interface PlanSuccess {
   status: 'ok'
@@ -171,6 +202,9 @@ export interface PlanSuccess {
   campaign: Campaign
   lines: PlanLine[]
   billingMonths: number
+  /** 计费口径未确认时为 pending，金额只是参考估算。 */
+  billingStatus?: 'confirmed' | 'pending'
+  inventory?: InventoryDetail
   totalYuan: number
   remainingYuan: number
   queriedAt: string
@@ -197,6 +231,7 @@ export interface PlanFailure {
   status: PlanStatus
   message: string
   suggestions: string[]
+  inventory?: InventoryDetail
 }
 
 export type PlanResult = PlanSuccess | PlanFailure

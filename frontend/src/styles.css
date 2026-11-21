@@ -98,6 +98,17 @@ a { color: var(--primary); }
 .status-bar.warning { background: #fdf7ef; border-bottom-color: #f0d9b5; }
 .status-bar.error { background: #fbeceb; border-bottom-color: #eccbc8; }
 .status-bar .suggestions { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+/* 档期库存状态：来源、查询时间与周截面参考。 */
+.inventory-status { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.inventory-status.compact { margin-top: 0; flex-direction: row; align-items: center; gap: 8px; flex-wrap: wrap; }
+.inventory-line { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.inventory-kind { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.inventory-kind .inventory-reason { color: var(--warn); }
+.inventory-preview { margin-top: 8px; border-collapse: collapse; font-size: 12px; }
+.inventory-preview th, .inventory-preview td { border-bottom: 1px solid var(--line); padding: 4px 10px; text-align: left; }
+.inventory-preview th { color: var(--ink-3); font-weight: 600; }
+.inventory-preview .num { text-align: right; }
+.preview-toolbar.inventory-bar { height: auto; padding: 8px 16px; align-items: flex-start; }
 
 .diff-list { font-size: 12px; }
 .diff-line { display: flex; gap: 8px; padding: 3px 0; border-bottom: 1px dashed var(--line); align-items: baseline; }

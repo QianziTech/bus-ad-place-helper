@@ -1,6 +1,6 @@
 /** 视图模型：把后端响应换算成 renderPlan 直接可用的结构，回退规则集中在这里。 */
 import type {
-  Anchor, Campaign, Client, PlanAnchor, PlanCopy, PlanFailure, PlanLine, PlanSuccess,
+  Anchor, Campaign, Client, InventoryDetail, PlanAnchor, PlanCopy, PlanFailure, PlanLine, PlanSuccess,
   PipelineSuccess, PlanRequest, Schedule, TrafficReference, MetaIndustry, Check, Round, Degraded,
 } from './types'
 
@@ -68,6 +68,8 @@ export interface PlanVm {
   total: Money
   remaining: Money
   billingMonths: number
+  billingPending: boolean
+  inventory: InventoryDetail | null
   startDate: string
   endDate: string
   queriedAt: string
@@ -299,6 +301,8 @@ export function buildVm(input: {
     total: { yuan: plan.totalYuan, text: yuanText(plan.totalYuan) },
     remaining: { yuan: plan.remainingYuan, text: yuanText(plan.remainingYuan) },
     billingMonths: plan.billingMonths,
+    billingPending: plan.billingStatus === 'pending' || plan.inventory?.billingStatus === 'pending',
+    inventory: plan.inventory || null,
     startDate: plan.request.startDate,
     endDate: plan.request.endDate,
     queriedAt: plan.queriedAt,

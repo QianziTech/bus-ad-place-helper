@@ -63,6 +63,8 @@ Invoke-RestMethod http://127.0.0.1:3000/api/config -Method Put -ContentType 'app
 
 API Key 仅用于写入，读取只返回 `hasKey/keyPreview`，不进入 OpenAPI、提示词或方案。没有提供外部模型账号，当前验证使用本地 HTTP 替身，实际供应商的输出和时延仍需现场验证。
 
+红豆库存模块（`backend/src/inventory/`）使用 `HONGDOU_TOKEN`，或 `HONGDOU_USERNAME / HONGDOU_PASSWORD / HONGDOU_CLIENT_ID / HONGDOU_CLIENT_SECRET` 登录；`HONGDOU_TENANT_ID`（默认 `1`）、`HONGDOU_BASE_URL`、`HONGDOU_TIMEOUT_MS`（默认 `4000`）可选，`HONGDOU_ONLINE=off` 强制只读本地数据。未配置账号时不发起外网请求，`/api/plan` 与 `/api/plan/generate` 都回退到同区间归档；只有区间内周一截面时返回 `missing_window` 并附参考空位与采样日。
+
 可用环境变量：`PORT`、`HOST`、`CORS_ORIGIN`（逗号分隔）、`PLAN_DATA_DIR`、`LLM_CONFIG_PATH`、`ANALYSIS_MODE`、`LLM_PROVIDER`、`LLM_BASE_URL`、`LLM_MODEL`、`LLM_API_KEY`、`LLM_TIMEOUT_MS`、`SINGLE_NIGHT_CAP`、`STRATEGY_PREMIUM_RATIO`（默认 `0.1`，即 10%）。`.env.example` 只作说明，启动不会自动读取 `.env`。
 
 实名扫描通过 `BRAND_MAPPING_PATH` 读取内部 `{map:[{real,alias}]}`。当前工作区也会自动发现仓库相邻的 `../data/internal/brand_mapping.json`。该映射不进入交付仓库；独立部署需在本机配置。映射缺失时响应明确提示无法完成实名核验，不应将其当作已通过实名检查。
@@ -71,7 +73,7 @@ API Key 仅用于写入，读取只返回 `hasKey/keyPreview`，不进入 OpenAP
 
 `data/` 包含 431 条公交媒体、861 个地铁出口、29 个商圈锚点、1,285 条刊例估算、397 条公交历史画像。POI 可关联 149 个公交键和 87 个地铁出口；同一媒体的覆盖与画像证据合并后共用库存。
 
-六月整月库存通过比赛账号 OAuth2 与红豆完整起止日接口取得，两类媒体保留各自带时区的查询时间。原始归档在相邻工作区 `../data/raw/hongdou/windows/`，运行包只含必要字段。52 个单日截面未用作整月库存。
+六月整月库存通过比赛账号 OAuth2 与红豆完整起止日接口取得，两类媒体保留各自带时区的查询时间。原始归档在相邻工作区 `../data/raw/hongdou/windows/`，运行包只含必要字段。52 个周一单日截面收在 `data/snapshots.json`，只用于整段库存查不到时的库存参考，不参与成案、报价或排期。
 
 ```powershell
 python -X utf8 scripts/data/build_data.py --source ../data --output data

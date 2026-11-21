@@ -3,8 +3,9 @@ import { computed } from 'vue'
 import { state, workbench, generate } from '../state/workbench'
 import type { PlanFailure } from '../plan/types'
 import { failureTitle } from '../plan/buildVm'
+import InventoryStatus from './InventoryStatus.vue'
 
-defineProps<{ failure: PlanFailure | null }>()
+const props = defineProps<{ failure: PlanFailure | null }>()
 
 const alertType = computed(() => {
   if (state.networkError) return 'error'
@@ -50,8 +51,14 @@ function applySuggestion(text: string) {
       <a-tag v-for="win in state.meta?.windows || []" :key="`${win.startDate}${win.endDate}`" :bordered="false" style="cursor: pointer"
         @click="() => { workbench.startDate = win.startDate; workbench.endDate = win.endDate; generate() }">{{ win.startDate }} ~ {{ win.endDate }}</a-tag>
     </div>
+    <InventoryStatus :inventory="props.failure?.inventory" />
   </div>
   <!-- off 模式下策略与成稿按设计跳过，不算降级告警。 -->
+  <div v-else-if="state.result && state.result.status === 'ok' && state.result.inventory?.billingStatus === 'pending'" class="status-bar warning">
+    <a-tag color="orange">计费待确认</a-tag>
+    库存已取得，但该区间计费月数尚未确认；报价按 1 个计费月参考估算，确认统一口径后再核算。
+    <InventoryStatus :inventory="state.result.inventory" compact />
+  </div>
   <div v-else-if="state.result && state.result.status === 'ok' && state.mode !== 'off' && state.result.degraded?.length" class="status-bar warning">
     <a-tag color="orange">AI 已降级</a-tag>
     <span v-for="item in state.result.degraded" :key="item.stage">{{ item.stage }}：{{ item.reason }}　</span>

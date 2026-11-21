@@ -7,7 +7,7 @@ import { buildVm, failureTitle } from '../plan/buildVm'
 import { downloadPlan, blockingItems, type BlockingItem } from '../export/download'
 import { humanLocation } from '../plan/locations'
 import { renderPlan } from '../plan/renderPlan'
-import type { CampaignOverride, PipelineSuccess } from '../plan/types'
+import type { CampaignOverride, PipelineSuccess, PlanSuccess } from '../plan/types'
 import ControlPanel from '../components/ControlPanel.vue'
 import StageProgress from '../components/StageProgress.vue'
 import StatusBanner from '../components/StatusBanner.vue'
@@ -15,6 +15,7 @@ import DiffPanel from '../components/DiffPanel.vue'
 import AiDecisionPanel from '../components/AiDecisionPanel.vue'
 import VerifyPanel from '../components/VerifyPanel.vue'
 import PreviewFrame from '../components/PreviewFrame.vue'
+import InventoryStatus from '../components/InventoryStatus.vue'
 
 const highlight = ref<string | null>(null)
 let highlightTimer: number | undefined
@@ -24,8 +25,14 @@ const blocked = ref<BlockingItem[]>([])
 const elapsed = ref(0)
 
 const pipeline = computed<PipelineSuccess | null>(() => (state.result && state.result.status === 'ok' ? state.result : null))
+/** 成功时展示本次结果；失败时保留上一版用于对照，但库存状态与提示必须对应本次失败结果，不能沿用旧方案。 */
 const vm = computed(() => {
   const plan = currentSuccess.value
+  return plan ? buildVm({ plan, meta: state.meta, mode: state.mode }) : null
+})
+const liveSuccess = computed<PlanSuccess | null>(() => (state.result && state.result.status === 'ok' ? state.result : null))
+const liveVm = computed(() => {
+  const plan = liveSuccess.value
   return plan ? buildVm({ plan, meta: state.meta, mode: state.mode }) : null
 })
 const downloadBlocked = computed(() => Boolean(vm.value && !vm.value.exportAllowed))
@@ -34,6 +41,8 @@ watch(vm, next => {
   blocked.value = next && !next.exportAllowed ? blockingItems(next) : []
 })
 const fullscreenHtml = computed(() => (vm.value ? renderPlan(vm.value, { appendix: false, fullscreen: true }) : ''))
+/** 成功方案的库存来源行；失败时改由 StatusBanner 展示本次失败结果的库存状态。 */
+const inventory = computed(() => liveVm.value?.inventory || null)
 const downloadTitle = computed(() => {
   if (!vm.value) return '未生成'
   if (!vm.value.exportAllowed) return '存在阻断项，请先修改文案'
@@ -197,6 +206,9 @@ onMounted(() => window.addEventListener('keydown', onKey))
         <a-tag color="orange">基础分配</a-tag>
         本次展示为基础分配（未含 AI 偏好），用于对照 AI 参与前后的取舍差异。
         <a style="margin-left: 8px; cursor: pointer" @click="restoreAi">恢复 AI 方案</a>
+      </div>
+      <div v-if="inventory" class="preview-toolbar inventory-bar">
+        <InventoryStatus :inventory="inventory" compact />
       </div>
       <div class="preview-toolbar">
         <span class="spacer" style="flex: 1" />
