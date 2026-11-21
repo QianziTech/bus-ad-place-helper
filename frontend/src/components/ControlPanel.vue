@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import dayjs, { type Dayjs } from 'dayjs'
 import { message } from 'ant-design-vue'
 import { workbench, state, windowVerified } from '../state/workbench'
 import { localScan } from '../plan/sanitize'
@@ -17,6 +18,9 @@ const mediaList = computed(() => (state.meta?.media || ['bus', 'metro']).map(kin
   label: kind === 'bus' ? '公交车身' : '地铁出入口',
 })))
 const windows = computed(() => state.meta?.windows || [])
+const rangeValue = computed(() => [dayjs(workbench.startDate), dayjs(workbench.endDate)])
+/** 只允许在 2027 年内选日期；能选不等于能报，非已核对区间照样提交并如实返回 missing_window。 */
+const disabledDate = (current: Dayjs) => current.year() !== 2027
 const briefHits = computed(() => localScan(workbench.briefText))
 
 function toggleMedia(checked: string[]) {
@@ -124,10 +128,11 @@ function applyWindow(start: string, end: string) {
         >{{ win.startDate }} ~ {{ win.endDate.slice(5) }}（已核对）</span>
       </div>
       <a-range-picker
-        :value="[workbench.startDate, workbench.endDate]"
+        :value="rangeValue"
         value-format="YYYY-MM-DD"
         format="YYYY-MM-DD"
         :allow-clear="false"
+        :disabled-date="disabledDate"
         style="width: 100%"
         :placeholder="['开始日期', '结束日期']"
         @update:value="(v: [string, string] | null) => v && applyWindow(v[0], v[1])"
