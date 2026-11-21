@@ -1,6 +1,6 @@
 /** 工作台状态：参数、meta、两次结果、失败、五阶段与降级。所有请求走同一 composable。 */
 import { computed, reactive, ref } from 'vue'
-import { api, ApiError } from '../api/client'
+import { api, ApiError, type ScanHit } from '../api/client'
 import type {
   CampaignOverride, IndustryId, MediaKind, Meta, MetaIndustry, PipelineResult, PlanSuccess, PlanFailure,
 } from '../plan/types'
@@ -40,6 +40,7 @@ export const state = reactive({
   prevSuccess: null as PlanSuccess | null,
   failure: null as PlanFailure | null,
   networkError: '',
+  scanHits: [] as ScanHit[],
   lastQueryMs: 0,
   stages: stageDefaults.map(item => ({ ...item })) as StageState[],
   diff: [] as DiffEntry[],
@@ -160,6 +161,7 @@ export async function generate() {
   controller = new AbortController()
   state.loading = true
   state.networkError = ''
+  state.scanHits = []
   resetStages()
   markStage('candidates', 'running', '读取档期库存与刊例…')
   const started = performance.now()
@@ -182,6 +184,13 @@ export async function generate() {
     fillStageDetails(result)
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') return
+    if (error instanceof ApiError && error.scanChecks.length) {
+      // 入口拦截：原文命中实名或成交价，展示替换建议并保留原文供修改。
+      state.scanHits = error.scanChecks
+      markStage('candidates', 'failed', '原文含需替换表述')
+      state.stages.filter(stage => stage.status === 'idle').forEach(stage => { stage.status = 'skipped' })
+      return
+    }
     state.networkError = error instanceof ApiError ? error.message : error instanceof Error ? error.message : '请求失败'
     markStage('candidates', 'failed', state.networkError)
     state.stages.filter(stage => stage.status === 'idle').forEach(stage => { stage.status = 'skipped' })

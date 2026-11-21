@@ -4,6 +4,22 @@ export class ApiError extends Error {
   constructor(message: string, readonly status?: number, readonly body?: unknown) {
     super(message)
   }
+
+  /** 入口拦截（HTTP 400）返回的确定性扫描结果：实名 / 成交价命中及替换建议。 */
+  get scanChecks(): ScanHit[] {
+    const body = this.body
+    if (this.status !== 400 || !body || typeof body !== 'object' || !('checks' in body)) return []
+    const checks = (body as { checks: unknown }).checks
+    return Array.isArray(checks) ? (checks as ScanHit[]) : []
+  }
+}
+
+export interface ScanHit {
+  element: string
+  status: 'pass' | 'warn' | 'fail'
+  message: string
+  location?: string
+  suggestion?: string
 }
 
 async function request<T>(path: string, init: RequestInit = {}, signal?: AbortSignal): Promise<T> {

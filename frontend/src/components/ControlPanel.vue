@@ -22,6 +22,12 @@ const rangeValue = computed(() => [dayjs(workbench.startDate), dayjs(workbench.e
 /** 只允许在 2027 年内选日期；能选不等于能报，非已核对区间照样提交并如实返回 missing_window。 */
 const disabledDate = (current: Dayjs) => current.year() !== 2027
 const briefHits = computed(() => localScan(workbench.briefText))
+/** 服务端没加载内部品牌映射时，扫描命中恒为零，不能显示成「未检测到实名」。 */
+const mappingMissing = computed(() => {
+  const result = state.result
+  if (!result || result.status !== 'ok') return false
+  return result.checks.some(check => check.element === '实名扫描' && check.status === 'warn' && /品牌映射/.test(check.message))
+})
 
 function toggleMedia(checked: string[]) {
   if (!checked.length) {
@@ -150,7 +156,9 @@ function applyWindow(start: string, end: string) {
         placeholder="粘贴 4A 邮件或一句话需求，例如「6–8 月在徐汇、静安做新品试饮」" />
       <p class="caption" :style="briefHits.length ? 'color: var(--danger)' : ''">
         <template v-if="briefHits.length">● 检测到{{ briefHits.join('、') }}，命中原文不会进入方案</template>
-        <template v-else-if="workbench.briefText.trim()">● 未检测到实名与成交价</template>
+        <template v-else-if="state.scanHits.length">● 服务端已拦截：{{ state.scanHits.map(hit => hit.message).join('；') }}</template>
+        <template v-else-if="mappingMissing">● 服务端未加载内部品牌映射，实名无法校验，请勿视为已通过</template>
+        <template v-else-if="workbench.briefText.trim()">● 未检测到成交价形态；实名由服务端在提交时判定</template>
         <template v-else>有内容时随生成一起提交，仅影响 Campaign。</template>
         <a style="cursor: pointer; margin-left: 4px" @click="goBrief">去 Brief 页 →</a>
       </p>

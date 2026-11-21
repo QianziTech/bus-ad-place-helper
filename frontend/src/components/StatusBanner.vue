@@ -31,7 +31,13 @@ function applySuggestion(text: string) {
 </script>
 
 <template>
-  <div v-if="state.networkError" class="status-bar error">
+  <div v-if="state.scanHits.length" class="status-bar error">
+    <b>客户需求含需替换表述：</b>原文已保留，请按建议修改后重新生成。
+    <div v-for="(hit, index) in state.scanHits" :key="index" style="margin-top: 4px">
+      ✗ {{ hit.element }}｜{{ hit.message }}<template v-if="hit.suggestion">　建议：{{ hit.suggestion }}</template>
+    </div>
+  </div>
+  <div v-else-if="state.networkError" class="status-bar error">
     <b>请求失败：</b>{{ state.networkError }}
     <div class="suggestions">
       <a-button size="small" @click="generate">重试</a-button>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { message } from 'ant-design-vue'
-import { api } from '../api/client'
+import { api, ApiError } from '../api/client'
 import { state, workbench, industryMeta, setCampaignOverride, loadMeta } from '../state/workbench'
 import { localScan } from '../plan/sanitize'
-import type { BriefResult, CampaignOverride, BriefSample } from '../plan/types'
+import type { BriefResult, CampaignOverride, BriefSample, Check } from '../plan/types'
 
 const samples = ref<BriefSample[]>([])
 const selected = ref<string>('')
@@ -12,6 +12,7 @@ const text = ref('')
 const parsing = ref(false)
 const result = ref<BriefResult | null>(null)
 const localHits = ref<string[]>([])
+const scanHits = ref<Pick<Check, 'element' | 'message' | 'suggestion'>[]>([])
 const missing = computed(() => result.value?.missing || [])
 const draft = ref<CampaignOverride>({})
 
@@ -38,6 +39,7 @@ function selectSample(sample: BriefSample) {
 /** 本地扫描只看成交价与单价形态；实名由服务端在提交时扫描（黑名单不进前端产物）。 */
 function runLocalScan() {
   localHits.value = localScan(text.value)
+  scanHits.value = []
 }
 
 watch(text, runLocalScan)
@@ -52,6 +54,7 @@ async function parse() {
     return
   }
   parsing.value = true
+  scanHits.value = []
   try {
     const response = (await api.parseBrief({ text: text.value, industry: workbench.industry })) as unknown as BriefResult
     result.value = response
@@ -59,6 +62,11 @@ async function parse() {
     if (response.status === 'disabled') message.info('当前模式未开启 AI 分析，右栏保留手工填写')
     else if (response.status === 'unavailable') message.warning(response.reason || '拆解不可用，请手工填写')
   } catch (error) {
+    if (error instanceof ApiError && error.scanChecks.length) {
+      // 入口拦截：服务端 400 附 checks[]，保留原文供修改。
+      scanHits.value = error.scanChecks
+      return
+    }
     const detail = error instanceof Error ? error.message : '拆解请求失败'
     message.error(detail)
   } finally {
@@ -142,8 +150,12 @@ onMounted(async () => {
           </div>
           <a-textarea v-model:value="text" :rows="14" :maxlength="2000" show-count
             placeholder="粘贴 4A 邮件，或自拟一段需求（行业仍从上方选择）" />
-          <p class="caption" style="margin-top: 8px">
-            <template v-if="localHits.length">● 检测到：{{ localHits.join('、') }}，已拦下，请修改后再拆解</template>
+          <p class="caption" :style="scanHits.length ? 'color: var(--danger)' : ''">
+            <template v-if="scanHits.length">
+              ● 服务端拦截 {{ scanHits.length }} 处，请按建议修改原文：
+              <span v-for="(hit, index) in scanHits" :key="index" style="display:block">{{ hit.element }}：{{ hit.message }}<template v-if="hit.suggestion">，{{ hit.suggestion }}</template></span>
+            </template>
+            <template v-else-if="localHits.length">● 检测到：{{ localHits.join('、') }}，已拦下，请修改后再拆解</template>
             <template v-else>● 未检测到成交价形态；实名由服务端在提交时校验</template>
           </p>
           <a-space style="margin-top: 8px">
