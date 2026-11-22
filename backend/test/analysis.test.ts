@@ -102,6 +102,33 @@ test('same-source samples cover five industries; custom brief never borrows abse
   assert.deepEqual(testConfig, { ok: true, fixtures: { covered: 5, total: 5 } });
 });
 
+test('brief normalizes grouped yuan and wan budgets without accepting a partial amount', async t => {
+  const s = setup(); t.after(s.cleanup);
+  for (const budget of ['1,200,000 元', '1，200，000 元', '1200000 元', '120 万元', '1.2 百万元']) {
+    const { campaignDraft, missing } = await s.brief.parse(`档期：2027-09-01 至 2027-10-31\n预算：${budget}`, 'food');
+    assert.equal(campaignDraft.budgetHintYuan, 1200000, budget);
+    assert.ok(!missing.includes('⑤ 时间与预算'), budget);
+  }
+  assert.equal((await s.brief.parse('预算：1,20,000 元')).campaignDraft.budgetHintYuan, undefined);
+});
+
+test('live brief can fill a budget backed by the original text and preserves a deterministic amount', async t => {
+  const llm = new LlmClient();
+  const s = setup('live', llm); t.after(s.cleanup);
+  const evidence = '本次投放费用控制在 1,200,000 元以内。';
+  const response = { campaignDraft: { budgetHintYuan: 1200000 }, evidence: { budgetHintYuan: evidence } };
+  t.mock.method(llm, 'complete', async () => response);
+
+  const parsed = await s.brief.parse(`客户：某食品客户\n${evidence}`, 'food');
+  assert.equal(parsed.status, 'ok');
+  assert.equal(parsed.campaignDraft.budgetHintYuan, 1200000);
+  assert.equal((await s.brief.parse('电梯海报制作费是 1,200,000 元')).campaignDraft.budgetHintYuan, undefined);
+
+  response.campaignDraft.budgetHintYuan = 200000;
+  assert.equal((await s.brief.parse(evidence)).campaignDraft.budgetHintYuan, undefined);
+  assert.equal((await s.brief.parse('预算：1,200,000 元')).campaignDraft.budgetHintYuan, 1200000);
+});
+
 test('mock pipeline expands once and recalculates numbers from the engine for changed budget', async t => {
   const s = setup(); t.after(s.cleanup);
   const first = await s.pipeline.generate(request); assert.equal(first.status, 'ok'); if (first.status !== 'ok') return;

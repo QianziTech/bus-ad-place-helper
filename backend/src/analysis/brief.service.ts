@@ -10,6 +10,26 @@ import { briefSample, sampleDraft } from './prompts/__fixtures__/fixtures';
 const labels = ['① 客户', '② 生意目标', '③ 活动目标', '④ 人群', '⑤ 时间与预算', '⑥ 媒体范围', '⑦ 成功衡量'];
 const take = (text: string, label: string) => text.match(new RegExp(`(?:^|[；;。\\n])\\s*(?:${label})\\s*[:：]\\s*([^；;。\\n]+)`))?.[1]?.trim();
 const validDate = (value: string) => /^2027-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
+// Capture the whole numeric token so invalid grouping cannot be read as a valid prefix.
+const amount = /(\d+(?:[.,，]\d+)*)\s*(百万|万)?\s*(元)?/;
+const labeledBudget = new RegExp(`预算(?:上限)?\\s*[:：为是]?\\s*${amount.source}`);
+
+function parseBudgetYuan(match: RegExpMatchArray | null): number | undefined {
+  if (!match || !/^(?:\d+|\d{1,3}(?:[,，]\d{3})+)(?:\.\d+)?$/.test(match[1])) return;
+  const unitExponent = match[2] === '百万' ? 6 : match[2] === '万' ? 4 : 0;
+  const yuan = Number(`${match[1].replace(/[,，]/g, '')}e${unitExponent}`);
+  return Number.isSafeInteger(yuan) && yuan > 0 ? yuan : undefined;
+}
+
+function budgetFromEvidence(text: string, evidence: unknown, suggestedYuan: unknown): number | undefined {
+  if (typeof evidence !== 'string' || !text.includes(evidence)) return;
+  const clause = evidence.trim().replace(/[。；;]$/, '');
+  if (!/预算|投放费用|投放经费/.test(clause) || /[。；;\r\n]/.test(clause)) return;
+  const amounts = [...clause.matchAll(new RegExp(`(?<![\\d.,，+\\-])${amount.source}`, 'g'))].filter(match => match[2] || match[3]);
+  if (amounts.length !== 1) return;
+  const yuan = parseBudgetYuan(amounts[0]);
+  return yuan === suggestedYuan ? yuan : undefined;
+}
 
 export function extractBrief(text: string): CampaignOverride {
   const draft: CampaignOverride = {};
@@ -29,8 +49,8 @@ export function extractBrief(text: string): CampaignOverride {
   const dates = text.match(/2027-\d{2}-\d{2}/g) || [];
   const [start, end] = dates;
   if (typeof start === 'string' && typeof end === 'string' && validDate(start) && validDate(end) && start <= end) draft.window = { start, end };
-  const budget = text.match(/预算(?:上限)?\s*[:：为是]?\s*(\d+(?:\.\d+)?)\s*(万|百万)?\s*元?/);
-  if (budget) { const yuan = Number(budget[1]) * (budget[2] === '万' ? 10000 : budget[2] === '百万' ? 1000000 : 1); if (Number.isSafeInteger(yuan) && yuan > 0) draft.budgetHintYuan = yuan; }
+  const yuan = parseBudgetYuan(text.match(labeledBudget));
+  if (yuan !== undefined) draft.budgetHintYuan = yuan;
   const media: ('bus' | 'metro')[] = [];
   if (/公交|bus\b/i.test(text)) media.push('bus');
   if (/地铁|metro\b/i.test(text)) media.push('metro');
@@ -61,12 +81,15 @@ export class BriefService {
       this.scan.assertPrompt(payload);
       const result = await this.llm.complete<{ campaignDraft?: Record<string, unknown>; evidence?: Record<string, unknown> }>('brief.parse', context, payload, () => ({ campaignDraft: extracted as Record<string, unknown> }));
       if (!result || typeof result !== 'object' || !result.campaignDraft || typeof result.campaignDraft !== 'object') throw new Error('invalid');
-      // Live text fields are accepted only when copied from the user's actual text.
       if (context.mode === 'live') {
         draft = { ...extracted };
         for (const field of ['name', 'businessGoal', 'audience'] as const) {
           const value = result.campaignDraft[field];
           if (typeof value === 'string' && value.trim() && text.includes(value)) draft[field] = value;
+        }
+        if (draft.budgetHintYuan === undefined) {
+          const yuan = budgetFromEvidence(text, result.evidence?.budgetHintYuan, result.campaignDraft.budgetHintYuan);
+          if (yuan !== undefined) draft.budgetHintYuan = yuan;
         }
       }
       trace.push({ step: 'brief', message: exactSample ? '按同源参考需求拆解；仍属提案假设' : '只保留需求原文明示的字段，未提供内容列入待补充', evidenceRefs: ['brief:user-text'] });
