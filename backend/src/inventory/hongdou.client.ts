@@ -10,14 +10,31 @@ export interface HongdouInventory {
 
 export class InventoryUnavailable extends Error {}
 
-interface Credentials { tenantId: string; token?: string; username?: string; password?: string; clientId?: string; clientSecret?: string }
+export interface HongdouLogin {
+  username: string;
+  password: string;
+}
 
-function credentials(): Credentials | undefined {
-  const tenantId = process.env.HONGDOU_TENANT_ID || '1';
+type OAuthClient = { clientId: string; clientSecret: string };
+type Credentials = { tenantId: string } & ({ token: string } | (HongdouLogin & OAuthClient));
+type AccessToken = { value: string; expiresAt: number };
+type Connection = { credentials: Credentials; token?: AccessToken; pendingLogin?: Promise<AccessToken> };
+
+const HONGDOU_TENANT_ID = '1';
+
+function oauthClient(): OAuthClient | undefined {
+  const { HONGDOU_CLIENT_ID, HONGDOU_CLIENT_SECRET } = process.env;
+  if (HONGDOU_CLIENT_ID && HONGDOU_CLIENT_SECRET) return { clientId: HONGDOU_CLIENT_ID, clientSecret: HONGDOU_CLIENT_SECRET };
+  return undefined;
+}
+
+function environmentCredentials(): Credentials | undefined {
+  const tenantId = process.env.HONGDOU_TENANT_ID || HONGDOU_TENANT_ID;
   if (process.env.HONGDOU_TOKEN) return { tenantId, token: process.env.HONGDOU_TOKEN };
-  const { HONGDOU_USERNAME, HONGDOU_PASSWORD, HONGDOU_CLIENT_ID, HONGDOU_CLIENT_SECRET } = process.env;
-  if (HONGDOU_USERNAME && HONGDOU_PASSWORD && HONGDOU_CLIENT_ID && HONGDOU_CLIENT_SECRET) {
-    return { tenantId, username: HONGDOU_USERNAME, password: HONGDOU_PASSWORD, clientId: HONGDOU_CLIENT_ID, clientSecret: HONGDOU_CLIENT_SECRET };
+  const { HONGDOU_USERNAME, HONGDOU_PASSWORD } = process.env;
+  const client = oauthClient();
+  if (HONGDOU_USERNAME && HONGDOU_PASSWORD && client) {
+    return { ...client, tenantId, username: HONGDOU_USERNAME, password: HONGDOU_PASSWORD };
   }
   return undefined;
 }
@@ -28,19 +45,47 @@ function credentials(): Credentials | undefined {
  */
 @Injectable()
 export class HongdouInventoryService {
-  readonly enabled: boolean;
-  private token?: { value: string; expiresAt: number };
-  private pendingLogin?: Promise<{ value: string; expiresAt: number }>;
+  private readonly environment?: Connection;
+  private session?: Connection;
+  private pendingConnection?: Promise<AccessToken>;
 
   constructor() {
-    this.enabled = credentials() !== undefined;
+    const credentials = environmentCredentials();
+    if (credentials) this.environment = { credentials };
+  }
+
+  get enabled(): boolean { return Boolean(this.session ?? this.environment); }
+
+  get source(): 'session' | 'environment' | 'none' {
+    if (this.session) return 'session';
+    return this.environment ? 'environment' : 'none';
+  }
+
+  async connect(input: HongdouLogin, deadline: number): Promise<void> {
+    const client = oauthClient();
+    if (!client) throw new InventoryUnavailable('服务端未配置红豆 OAuth 客户端');
+    const credentials = { ...input, ...client, tenantId: HONGDOU_TENANT_ID };
+    const pending = this.login(credentials, deadline);
+    this.pendingConnection = pending;
+    try {
+      const token = await pending;
+      if (this.pendingConnection !== pending) throw new InventoryUnavailable('红豆登录已取消');
+      this.session = { credentials, token };
+    } finally {
+      if (this.pendingConnection === pending) this.pendingConnection = undefined;
+    }
+  }
+
+  disconnect(): void {
+    this.pendingConnection = undefined;
+    this.session = undefined;
   }
 
   private async payload(response: Response, stage: string): Promise<any> {
     if (!response.ok) throw new InventoryUnavailable(`红豆${stage}接口返回 HTTP ${response.status}`);
     let body: any;
     try { body = await response.json(); } catch { throw new InventoryUnavailable(`红豆${stage}响应不是 JSON`); }
-    if (!body || body.code !== 0) throw new InventoryUnavailable(`红豆${stage}请求失败，code=${body?.code ?? '未知'}`);
+    if (!body || body.code !== 0) throw new InventoryUnavailable(`红豆${stage}请求失败，code=${typeof body?.code === 'number' ? body.code : '未知'}`);
     return body.data;
   }
 
@@ -55,9 +100,9 @@ export class HongdouInventoryService {
   }
 
   /** 环境已提供 HONGDOU_TOKEN 时直接复用，不再登录；否则按 OAuth2 密码模式取令牌，提前 60 秒失效。 */
-  private async login(config: Credentials, deadline: number): Promise<{ value: string; expiresAt: number }> {
-    if (config.token) return { value: config.token, expiresAt: Number.MAX_SAFE_INTEGER };
-    const form = new URLSearchParams({ grant_type: 'password', username: config.username!, password: config.password! });
+  private async login(config: Credentials, deadline: number): Promise<AccessToken> {
+    if ('token' in config) return { value: config.token, expiresAt: Number.MAX_SAFE_INTEGER };
+    const form = new URLSearchParams({ grant_type: 'password', username: config.username, password: config.password });
     const response = await this.fetch('/admin-api/system/oauth2/token', deadline, {
       method: 'POST',
       headers: { 'tenant-id': config.tenantId, 'Content-Type': 'application/x-www-form-urlencoded',
@@ -65,19 +110,23 @@ export class HongdouInventoryService {
       body: form.toString(),
     });
     const data = await this.payload(response, '登录');
-    if (typeof data?.access_token !== 'string') throw new InventoryUnavailable('红豆未返回访问令牌');
-    return { value: data.access_token, expiresAt: Date.now() + Math.max(0, Number(data.expires_in ?? 3600) - 60) * 1000 };
+    if (typeof data?.access_token !== 'string' || !data.access_token) throw new InventoryUnavailable('红豆未返回访问令牌');
+    const expiresIn = Number(data.expires_in ?? 3600);
+    if (!Number.isFinite(expiresIn) || expiresIn <= 0) throw new InventoryUnavailable('红豆返回了无效的令牌有效期');
+    return { value: data.access_token, expiresAt: Date.now() + (expiresIn > 60 ? expiresIn - 60 : expiresIn) * 1000 };
   }
 
   async query(kind: MediaKind, startDate: string, endDate: string, deadline: number, expectedCount: number): Promise<HongdouInventory> {
-    const config = credentials();
-    if (!config) throw new InventoryUnavailable('未配置红豆账号');
+    const connection = this.session ?? this.environment;
+    if (!connection) throw new InventoryUnavailable('未配置红豆账号');
     // 公交与地铁并行查询时共用一次登录，避免同时发起两次令牌请求。
-    if (!this.token || this.token.expiresAt <= Date.now()) this.token = await (this.pendingLogin ??= this.login(config, deadline).finally(() => { this.pendingLogin = undefined; }));
-    const token = this.token.value;
+    if (!connection.token || connection.token.expiresAt <= Date.now()) {
+      connection.token = await (connection.pendingLogin ??= this.login(connection.credentials, deadline).finally(() => { connection.pendingLogin = undefined; }));
+    }
+    const token = connection.token.value;
     const query = new URLSearchParams({ pageNo: '1', pageSize: '1000', startDate, endDate });
     const response = await this.fetch(`/admin-api/orders/media-inventory/${kind}/page?${query}`, deadline, {
-      headers: { 'tenant-id': config.tenantId, Authorization: `Bearer ${token}` },
+      headers: { 'tenant-id': connection.credentials.tenantId, Authorization: `Bearer ${token}` },
     });
     const data = await this.payload(response, `库存(${kind})`);
     const queriedAt = new Date().toISOString();

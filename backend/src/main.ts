@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { loadEnvFile } from 'node:process';
 import { Request, Response, NextFunction } from 'express';
 import { AppModule } from './app.module';
 import { ContentScanService } from './analysis/content-scan.service';
@@ -52,6 +53,8 @@ export async function createApplication() {
 }
 
 async function bootstrap() {
+  const envPath = resolve(existsSync(resolve(process.cwd(), 'backend')) ? 'backend/.env' : '.env');
+  if (existsSync(envPath)) loadEnvFile(envPath);
   const port = Number(process.env.PORT || 3000);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new BadRequestException('PORT 必须为有效端口');
   const app = await createApplication();

@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { message } from 'ant-design-vue'
 import { api } from '../api/client'
+import HongdouConnection from '../components/HongdouConnection.vue'
 import { state } from '../state/workbench'
 import type { PublicConfig } from '../plan/types'
 
@@ -103,10 +104,11 @@ async function test() {
     <div class="page-narrow">
       <div class="page-head">
         <h2>运行配置</h2>
-        <p>设置方案生成方式与 AI 连接，保存后生效。</p>
+        <p>管理红豆档期库存、方案生成方式与 AI 连接。</p>
       </div>
       <div v-if="loadError" class="status-bar error">{{ loadError }}</div>
-      <div class="entry-card">
+      <HongdouConnection />
+      <div class="entry-card" style="margin-top: 14px">
         <h3>分析模式</h3>
         <a-radio-group v-model:value="form.mode">
           <a-radio value="off">规则生成</a-radio>

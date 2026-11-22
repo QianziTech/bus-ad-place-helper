@@ -27,6 +27,17 @@ type PlanJob =
   | { status: 'completed'; result: PipelineResponse }
   | { status: 'failed'; message: string }
 
+export interface HongdouLogin {
+  username: string
+  password: string
+}
+
+export interface HongdouConnection {
+  source: 'session' | 'environment' | 'none'
+  online: boolean
+  forceOffline: boolean
+}
+
 async function request<T>(path: string, init: RequestInit = {}, signal?: AbortSignal): Promise<T> {
   const response = await fetch(`/api${path}`, {
     ...init,
@@ -72,6 +83,15 @@ export const api = {
   },
   testConfig() {
     return request<Record<string, unknown>>('/config/test', { method: 'POST', body: '{}' })
+  },
+  hongdouConnection() {
+    return request<HongdouConnection>('/config/hongdou')
+  },
+  connectHongdou(body: HongdouLogin) {
+    return request<HongdouConnection>('/config/hongdou', { method: 'POST', body: JSON.stringify(body) })
+  },
+  disconnectHongdou() {
+    return request<HongdouConnection>('/config/hongdou', { method: 'DELETE' })
   },
   briefSamples(signal?: AbortSignal) {
     return request<{ samples: { industry: string; title: string; text: string }[] }>('/brief/samples', { method: 'GET' }, signal)

@@ -1,6 +1,8 @@
 import { after, before, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { AddressInfo } from 'node:net';
 import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -8,18 +10,22 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { createApplication } from '../src/main';
 import { PipelineRangeSuccess, PipelineSuccess } from '../src/shared/contracts';
 import { PlanPipelineService } from '../src/shared/pipeline/plan-pipeline.service';
+import { PlanDataService } from '../src/shared/data/plan-data.service';
 
 let app: NestExpressApplication;
 let base: string;
 const temporary = mkdtempSync(resolve(tmpdir(), 'bus-placead-api-'));
 const previousConfig = process.env.LLM_CONFIG_PATH;
 const previousMode = process.env.ANALYSIS_MODE;
+const hongdouEnv = ['HONGDOU_ONLINE', 'HONGDOU_TOKEN', 'HONGDOU_USERNAME', 'HONGDOU_CLIENT_ID', 'HONGDOU_CLIENT_SECRET'] as const;
+const previousHongdou = hongdouEnv.map(key => process.env[key]);
 const request = { industry: 'food', budgetYuan: 2000000, media: ['bus', 'metro'], startDate: '2027-06-01', endDate: '2027-06-30' };
 async function api(path: string, body?: unknown, method = body === undefined ? 'GET' : 'POST') {
   const response = await fetch(base + path, { method, ...(body === undefined ? {} : { headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }) });
   return { status: response.status, body: await response.json() as any };
 }
 before(async () => {
+  for (const key of hongdouEnv) delete process.env[key];
   process.env.LLM_CONFIG_PATH = resolve(temporary, 'runtime.json');
   process.env.ANALYSIS_MODE = 'mock';
   app = await createApplication();
@@ -31,7 +37,91 @@ after(async () => {
   if (app) await app.close();
   if (previousConfig === undefined) delete process.env.LLM_CONFIG_PATH; else process.env.LLM_CONFIG_PATH = previousConfig;
   if (previousMode === undefined) delete process.env.ANALYSIS_MODE; else process.env.ANALYSIS_MODE = previousMode;
+  hongdouEnv.forEach((key, i) => {
+    if (previousHongdou[i] === undefined) delete process.env[key]; else process.env[key] = previousHongdou[i];
+  });
   rmSync(temporary, { recursive: true, force: true });
+});
+
+test('红豆只收账号密码，使用服务端 OAuth 客户端查询并在失败和退出时回退', async () => {
+  const login = { username: 'oauth-user', password: 'oauth-pass' };
+  const client = { id: 'oauth-client', secret: 'oauth-secret' };
+  const plan = { ...request, media: ['bus'] };
+  const bus = app.get(PlanDataService).data.bus;
+  const archive = bus.windows.find(window => window.startDate === plan.startDate && window.endDate === plan.endDate)!;
+  const list = Object.entries(archive.inventoryByKey).map(([key, row]) => ({
+    resourceId: bus.mediaByKey[key].resourceId,
+    mediaName: key.split('|').slice(2).join('|'),
+    freeCount: row.freeCount,
+  }));
+  let stockAvailable = true;
+  let successfulLogins = 0;
+  const stockCalls: { path?: string; authorization?: string; tenant?: string | string[] }[] = [];
+  const upstream = createServer(async (req, res) => {
+    res.setHeader('content-type', 'application/json');
+    if (req.url === '/admin-api/system/oauth2/token') {
+      let body = '';
+      for await (const chunk of req) body += chunk;
+      const form = new URLSearchParams(body);
+      const auth = `Basic ${Buffer.from(`${client.id}:${client.secret}`).toString('base64')}`;
+      if (req.headers.authorization === auth && req.headers['tenant-id'] === '1' &&
+          form.get('grant_type') === 'password' && form.get('username') === login.username && form.get('password') === login.password) {
+        successfulLogins++;
+        res.end(JSON.stringify({ code: 0, data: { access_token: 'upstream-token', expires_in: 3600 } }));
+      } else {
+        res.end(JSON.stringify({ code: 401, msg: 'upstream private text' }));
+      }
+      return;
+    }
+    stockCalls.push({ path: req.url, authorization: req.headers.authorization, tenant: req.headers['tenant-id'] });
+    res.end(JSON.stringify(stockAvailable ? { code: 0, data: { list } } : { code: 503 }));
+  });
+  await new Promise<void>(resolve => upstream.listen(0, '127.0.0.1', resolve));
+  const previousBaseUrl = process.env.HONGDOU_BASE_URL;
+  process.env.HONGDOU_BASE_URL = `http://127.0.0.1:${(upstream.address() as AddressInfo).port}`;
+  const disconnected = { source: 'none', online: false, forceOffline: false };
+  const connected = { source: 'session', online: true, forceOffline: false };
+  try {
+    assert.deepEqual((await api('/config/hongdou')).body, disconnected);
+    assert.equal((await api('/config/hongdou', { ...login, clientId: 'other-client', tenantId: '7' })).status, 400);
+    assert.equal((await api('/config/hongdou', login)).status, 503);
+    process.env.HONGDOU_CLIENT_ID = client.id;
+    process.env.HONGDOU_CLIENT_SECRET = client.secret;
+    assert.equal((await api('/plan', plan)).body.inventory.kinds[0].source, 'archive');
+    assert.deepEqual(await api('/config/hongdou', login), { status: 200, body: connected });
+    assert.deepEqual((await api('/config/hongdou')).body, connected);
+
+    const failedLogin = await api('/config/hongdou', { ...login, password: 'incorrect' });
+    assert.equal(failedLogin.status, 503);
+    assert.match(failedLogin.body.message, /红豆登录请求失败/);
+    assert.doesNotMatch(failedLogin.body.message, /upstream private text/);
+    for (const path of ['/plan', '/plan/generate']) {
+      const result = await api(path, plan);
+      assert.equal(result.body.status, 'ok');
+      assert.equal(result.body.inventory.kinds[0].source, 'hongdou');
+    }
+    assert.equal(successfulLogins, 1);
+    assert.equal(stockCalls.length, 2);
+    for (const call of stockCalls) {
+      assert.match(call.path!, /\/media-inventory\/bus\/page.*startDate=2027-06-01&endDate=2027-06-30/);
+      assert.equal(call.authorization, 'Bearer upstream-token');
+      assert.equal(call.tenant, '1');
+    }
+
+    stockAvailable = false;
+    const fallback = (await api('/plan', plan)).body.inventory.kinds[0];
+    assert.equal(fallback.source, 'archive');
+    assert.match(fallback.reason, /实时查询失败/);
+    assert.deepEqual((await api('/config/hongdou', undefined, 'DELETE')).body, disconnected);
+    assert.equal((await api('/plan', plan)).body.inventory.kinds[0].source, 'archive');
+    assert.equal(stockCalls.length, 3);
+  } finally {
+    await api('/config/hongdou', undefined, 'DELETE');
+    delete process.env.HONGDOU_CLIENT_ID;
+    delete process.env.HONGDOU_CLIENT_SECRET;
+    if (previousBaseUrl === undefined) delete process.env.HONGDOU_BASE_URL; else process.env.HONGDOU_BASE_URL = previousBaseUrl;
+    await new Promise<void>(resolve => upstream.close(() => resolve()));
+  }
 });
 
 test('real June data: five industries, three media combinations and four budgets remain within stock and budget', async () => {
@@ -233,11 +323,18 @@ test('background generation returns a job before the plan is ready', async t => 
 test('OpenAPI discovers synchronous and background operations without API keys', async () => {
   const schema = (await api('/openapi.json')).body;
   const operations = Object.values(schema.paths).flatMap((path: any) => Object.values(path).map((operation: any) => operation.operationId));
-  assert.deepEqual(operations.sort(), ['getMeta', 'generatePlan', 'generatePlanPipeline', 'parseBrief', 'recommendStrategy', 'verifyPlan', 'composeCopy', 'getBriefSamples', 'getConfig', 'putConfig', 'testConfig', 'startPlanJob', 'getPlanJob'].sort());
+  assert.deepEqual(operations.sort(), [
+    'getMeta', 'generatePlan', 'generatePlanPipeline', 'parseBrief', 'recommendStrategy', 'verifyPlan', 'composeCopy',
+    'getBriefSamples', 'getConfig', 'putConfig', 'testConfig', 'startPlanJob', 'getPlanJob',
+    'getHongdouConnection', 'connectHongdou', 'disconnectHongdou',
+  ].sort());
   assert.equal(schema.paths['/api/plan'].post.responses['200'].content['application/json'].schema.oneOf.length, 5);
   assert.equal(schema.paths['/api/plan/generate'].post.responses['200'].content['application/json'].schema.oneOf.length, 6);
   assert.ok(schema.paths['/api/brief/parse'].post.responses['200'].content['application/json'].schema.oneOf.length >= 3);
   assert.equal(JSON.stringify(schema).includes('"apiKey"'), false);
+  const login = schema.components.schemas.HongdouLoginDto;
+  assert.deepEqual(Object.keys(login.properties), ['username', 'password']);
+  assert.equal(login.properties.password.writeOnly, true);
   assert.ok(Object.keys(schema.components.schemas.CreatePlanDto.properties).includes('campaignOverride'));
   assert.equal((await fetch(base + '/docs')).status, 200);
   assert.equal((await fetch(base + '/docs/swagger-ui-bundle.js')).status, 200);

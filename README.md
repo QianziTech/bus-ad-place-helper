@@ -66,7 +66,7 @@ API Key 仅用于写入，读取只返回 `hasKey/keyPreview`，不进入 OpenAP
 
 可用环境变量：`PORT`、`HOST`、`CORS_ORIGIN`（逗号分隔）、`PLAN_DATA_DIR`、`LLM_CONFIG_PATH`、`ANALYSIS_MODE`、`LLM_PROVIDER`、`LLM_BASE_URL`、`LLM_MODEL`、`LLM_API_KEY`、`LLM_TIMEOUT_MS`、`SINGLE_NIGHT_CAP`、`STRATEGY_PREMIUM_RATIO`（默认 `0.1`，即 10%）。`.env.example` 只作说明，启动不会自动读取 `.env`。
 
-红豆库存模块（`backend/src/inventory/`）使用 `HONGDOU_TOKEN`，或 `HONGDOU_USERNAME / HONGDOU_PASSWORD / HONGDOU_CLIENT_ID / HONGDOU_CLIENT_SECRET` 登录；`HONGDOU_TENANT_ID`（默认 `1`）、`HONGDOU_BASE_URL`、`HONGDOU_TIMEOUT_MS`（默认 `4000`）可选，`HONGDOU_ONLINE=off` 强制只读本地数据。未配置账号时不发起外网请求，`/api/plan` 与 `/api/plan/generate` 都回退到同区间归档；只有区间内周一截面时返回 `missing_window` 并附参考空位与采样日。
+后端从环境变量或 `backend/.env` 读取红豆共用的 `HONGDOU_CLIENT_ID` 与 `HONGDOU_CLIENT_SECRET`。在「运行配置 → 红豆档期库存」填写个人红豆账号和密码即可登录，租户固定为 `1`。服务端也可通过环境配置 `HONGDOU_TOKEN`，或通过 `HONGDOU_USERNAME / HONGDOU_PASSWORD` 配合共用 OAuth 客户端登录；此方式可设置 `HONGDOU_TENANT_ID`（默认 `1`）。`HONGDOU_BASE_URL`、`HONGDOU_TIMEOUT_MS`（默认 `30000`）可选，`HONGDOU_ONLINE=off` 强制只读本地数据。登录后优先核对所选档期的实时库存，查询失败或未登录时读取同区间归档。只有区间内周一截面时返回 `missing_window` 并附参考空位与采样日。
 
 实名扫描通过 `BRAND_MAPPING_PATH` 读取内部 `{map:[{real,alias}]}`。当前工作区也会自动发现仓库相邻的 `../data/internal/brand_mapping.json`。该映射不进入交付仓库；独立部署需在本机配置。映射缺失时响应明确提示无法完成实名核验，不应将其当作已通过实名检查。
 
