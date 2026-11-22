@@ -21,32 +21,59 @@ export class LlmClient {
     const { llm } = context.config;
     if (llm.apiKey && payload.includes(llm.apiKey)) throw new AnalysisUnavailable('上下文含配置密钥，已停止发送');
     const endpoint = llm.baseUrl.endsWith('/chat/completions') ? llm.baseUrl : `${llm.baseUrl}/chat/completions`;
+    const started = Date.now();
+    const modelTime = context.modelTime;
+    const deadline = started + modelTime.remainingMs;
     for (let attempt = 0; attempt <= llm.retries; attempt++) {
-      const remaining = context.deadline - Date.now();
-      if (remaining <= 5) throw new AnalysisUnavailable('分析总时限已到');
+      const remaining = deadline - Date.now();
+      if (remaining <= 5) throw new AnalysisUnavailable(attempt === 0 ? '共享分析时限已用完，本环节未发起模型请求' : '共享分析时限已用完，未能重试模型请求');
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), Math.min(llm.timeoutMs, remaining));
+      const sharedLimit = remaining <= llm.timeoutMs;
+      const limitMs = Math.min(llm.timeoutMs, remaining);
+      const timeout = setTimeout(() => controller.abort(), limitMs);
+      let phase = '等待模型响应头';
       try {
         const response = await fetch(endpoint, { method: 'POST', signal: controller.signal,
           headers: { 'Content-Type': 'application/json', ...(llm.apiKey ? { Authorization: `Bearer ${llm.apiKey}` } : {}) },
           body: JSON.stringify({ model: llm.model, temperature: llm.temperature, messages: [{ role: 'system', content: system }, { role: 'user', content: payload }] }),
         });
+        phase = '读取模型响应正文';
         if (!response.ok) {
-          if (response.status >= 500 || response.status === 429) throw new Error('retryable');
+          const retryable = response.status >= 500 || response.status === 429;
+          if (retryable && attempt < llm.retries && deadline - Date.now() > 5) {
+            await response.body?.cancel();
+            continue;
+          }
           throw new AnalysisUnavailable(`模型接口返回 HTTP ${response.status}`);
         }
-        const body = await response.json() as { choices?: { message?: { content?: unknown } }[] };
-        const content = body.choices?.[0]?.message?.content;
+        const body = await response.json().catch(error => {
+          if (error instanceof SyntaxError) throw new AnalysisUnavailable('模型接口响应正文不是 JSON');
+          throw error;
+        }) as { choices?: { message?: { content?: unknown } }[] } | null;
+        const content = body?.choices?.[0]?.message?.content;
         if (typeof content !== 'string') throw new AnalysisUnavailable('模型未返回 JSON 文本');
         let result: T;
         try { result = JSON.parse(content.replace(/^\s*```(?:json)?\s*/i, '').replace(/\s*```\s*$/, '')) as T; }
         catch { throw new AnalysisUnavailable('模型 JSON 无法解析'); }
-        if (Date.now() >= context.deadline) throw new AnalysisUnavailable('分析总时限已到');
+        if (Date.now() >= deadline) throw new AnalysisUnavailable('收到模型结果时，共享分析时限已用完');
         return result;
       } catch (error) {
         if (error instanceof AnalysisUnavailable) throw error;
-        if (attempt === llm.retries || context.deadline - Date.now() <= 5) throw new AnalysisUnavailable(controller.signal.aborted ? '模型请求超时' : '模型连接不可用');
-      } finally { clearTimeout(timeout); }
+        if (attempt === llm.retries || deadline - Date.now() <= 5) {
+          const elapsed = ((Date.now() - started) / 1000).toFixed(1);
+          const diagnostic = `第 ${attempt + 1} 次尝试，累计 ${elapsed} 秒，输入 ${(system.length + payload.length).toLocaleString('zh-CN')} 字符`;
+          if (controller.signal.aborted) {
+            const limit = sharedLimit ? '共享时限剩余' : '单次请求上限';
+            throw new AnalysisUnavailable(`${phase}超时（${limit} ${(limitMs / 1000).toFixed(1)} 秒，${diagnostic}）`);
+          }
+          const cause = error instanceof Error ? error.cause as { code?: unknown } | undefined : undefined;
+          const code = typeof cause?.code === 'string' && /^[A-Z_][A-Z_\d]*$/.test(cause.code) ? `，${cause.code}` : '';
+          throw new AnalysisUnavailable(`${phase}失败（${diagnostic}${code}）`);
+        }
+      } finally {
+        clearTimeout(timeout);
+        modelTime.remainingMs = Math.max(0, deadline - Date.now());
+      }
     }
     throw new AnalysisUnavailable('模型连接不可用');
   }

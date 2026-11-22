@@ -81,7 +81,7 @@ function applyWindow(start: string, end: string) {
         :placeholder="['开始日期', '结束日期']"
         @update:value="(v: [string, string] | null) => v && applyWindow(v[0], v[1])"
       />
-      <p class="caption">生成时核对所选日期的库存，可用本地周截面时会提示确认。</p>
+      <p class="caption">生成时按起止日期查询整段库存，可用本地周截面时会提示确认。</p>
     </section>
 
     <section>

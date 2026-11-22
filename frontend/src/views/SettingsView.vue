@@ -133,6 +133,7 @@ async function test() {
             <a-checkbox v-model:checked="form.includeHistoricalProfiles">使用历史人群画像</a-checkbox>
           </label>
         </div>
+        <p class="caption">每份方案的模型请求和重试共享 120 秒。库存查询和规则核算耗时另计。</p>
         <a-space style="margin-top: 12px">
           <a-button :loading="testing" @click="test">测试连接</a-button>
           <span class="caption" :style="{ color: testResult?.ok === false ? 'var(--danger)' : 'var(--ink-3)' }">

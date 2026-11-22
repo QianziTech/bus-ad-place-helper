@@ -25,13 +25,17 @@ export class InventoryService {
   }
 
   /** 有红豆连接时按请求区间查实时库存，失败时逐类回退。 */
-  async resolve(request: PlanRequest): Promise<InventoryResolution> {
+  async resolve(request: PlanRequest, onKindResolved?: (kind: KindInventory) => void): Promise<InventoryResolution> {
     const data = this.planData.data;
     const selected = KINDS.filter(kind => request.media.includes(kind));
     if (!this.online) return offlineResolution(data, selected, request);
     const billingMonths = billingMonthsFor(request.startDate, request.endDate);
     const deadline = Date.now() + this.timeoutMs;
-    const kinds = await Promise.all(selected.map(kind => this.resolveKind(data, kind, request, billingMonths, deadline)));
+    const kinds = await Promise.all(selected.map(async kind => {
+      const result = await this.resolveKind(data, kind, request, billingMonths, deadline);
+      onKindResolved?.(result);
+      return result;
+    }));
     return finalizeResolution(request, kinds);
   }
 

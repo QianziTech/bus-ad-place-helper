@@ -188,11 +188,16 @@ test('white-list context omits secrets, other industries, trace and disabled his
 test('live compatible endpoint receives header key only, malformed slots fall back and time budget includes retries', async t => {
   const bodies: { body: string; key?: string }[] = [];
   let slow = false;
+  let sendHeadersFirst = false;
   const server = createServer((req, res) => {
     let body = ''; req.on('data', chunk => { body += String(chunk); });
     req.on('end', () => { bodies.push({ body, key: req.headers.authorization });
       const answer = () => { res.writeHead(200, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ choices: [{ message: { content: JSON.stringify({ headline: '测试场景主标题', brandContext: '', strategyLine: '共投放 999 台', selectionRationale: '依据已核对覆盖解释', assumptionEcho: '业务目标为提案假设' }) } }] })); };
-      if (slow) setTimeout(answer, 500); else answer();
+      if (sendHeadersFirst) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.flushHeaders();
+        setTimeout(() => res.end('{}'), 500);
+      } else if (slow) setTimeout(answer, 500); else answer();
     });
   });
   await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -204,11 +209,57 @@ test('live compatible endpoint receives header key only, malformed slots fall ba
   const result = await s.copy.compose(plan); assert.equal(result.status, 'ok'); assert.equal(result.copy.headline, '测试场景主标题'); assert.equal(result.copy.source, 'template');
   assert.ok(!result.copy.strategyLine.includes('999')); assert.equal(bodies[0].key, 'Bearer header-only-secret'); assert.ok(!bodies[0].body.includes('header-only-secret'));
   slow = true;
-  const context: AnalysisContext = { ...s.config.context(), deadline: Date.now() + 150 };
+  const context: AnalysisContext = { ...s.config.context(), modelTime: { remainingMs: 150 } };
   const started = Date.now();
-  await assert.rejects(() => new LlmClient().complete('brief.parse', context, '[客户] {} [活动] {} [候选] [] [约束] {}', () => ({})));
+  await assert.rejects(() => new LlmClient().complete('brief.parse', context, '[客户] {} [活动] {} [候选] [] [约束] {}', () => ({})), /等待模型响应头超时.*共享时限剩余.*第 2 次尝试.*输入/);
   assert.ok(Date.now() - started < 350, 'remaining shared deadline must cap the retry');
   assert.ok(bodies.length <= 3);
+  const attempts = bodies.length;
+  await assert.rejects(() => new LlmClient().complete('brief.parse', context, '{}', () => ({})), /本环节未发起模型请求/);
+  assert.equal(bodies.length, attempts);
+  sendHeadersFirst = true;
+  s.config.update({ llm: { retries: 0 } });
+  await assert.rejects(() => new LlmClient().complete('brief.parse', s.config.context(), '{}', () => ({})), /读取模型响应正文超时.*单次请求上限.*第 1 次尝试/);
+});
+
+test('time spent on inventory and rule calculation does not consume the model request budget', async t => {
+  let now = Date.now();
+  t.mock.method(Date, 'now', () => now);
+  const calls: string[] = [];
+  const server = createServer(async (req, res) => {
+    let body = '';
+    for await (const chunk of req) body += chunk;
+    const prompt = JSON.parse(body).messages[0].content as string;
+    let content: object;
+    if (prompt.includes('strategyPreferences')) {
+      calls.push('strategy');
+      content = { strategyPreferences: [], mediaObjective: '以认知为主', requestReplan: false };
+    } else if (prompt.includes('headline')) {
+      calls.push('copy');
+      content = { headline: '通勤场景', brandContext: '围绕认知目标', strategyLine: '聚焦通勤覆盖', selectionRationale: '使用已核对的覆盖依据' };
+    } else {
+      calls.push('verify');
+      content = { checks: [] };
+    }
+    res.end(JSON.stringify({ choices: [{ message: { content: JSON.stringify(content) } }] }));
+  });
+  await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => { server.closeAllConnections(); server.close(); });
+  const address = server.address(); assert.ok(address && typeof address !== 'string');
+  const s = setup('live'); t.after(s.cleanup);
+  s.config.update({ llm: { baseUrl: `http://127.0.0.1:${address.port}`, model: 'test-model' } });
+  const { budgetYuan: _budget, ...rangeRequest } = request;
+  const budgetProgress: string[] = [];
+  const result = await s.pipeline.generate(rangeRequest, stage => {
+    if (stage.status === 'running' && (stage.key === 'inventory' || stage.key === 'engine')) now += 180_000;
+    if (stage.key === 'engine' && stage.detail.startsWith('已核算')) budgetProgress.push(stage.detail);
+  });
+  assert.equal(result.status, 'ok');
+  if (result.status !== 'ok') return;
+  assert.deepEqual(calls, ['strategy', 'copy', 'verify']);
+  assert.deepEqual(result.degraded, []);
+  assert.equal(budgetProgress[0], '已核算 0/401 个预算档');
+  assert.equal(budgetProgress.at(-1), '已核算 400/401 个预算档');
 });
 
 test('failed live stages degrade without losing a valid deterministic plan', async t => {

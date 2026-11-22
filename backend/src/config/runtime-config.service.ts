@@ -26,7 +26,7 @@ export class RuntimeConfigService {
   }
 
   snapshot(): RuntimeConfig { return structuredClone(this.current); }
-  context(): AnalysisContext { const config = this.snapshot(); return { mode: config.mode, config, deadline: Date.now() + ANALYSIS_TIMEOUT_MS }; }
+  context(): AnalysisContext { const config = this.snapshot(); return { mode: config.mode, config, modelTime: { remainingMs: ANALYSIS_TIMEOUT_MS } }; }
   publicConfig() {
     const { apiKey, ...llm } = this.current.llm;
     return { ...this.current, llm: { ...llm, hasKey: !!apiKey, keyPreview: apiKey ? `****${apiKey.slice(-4)}` : '' } };

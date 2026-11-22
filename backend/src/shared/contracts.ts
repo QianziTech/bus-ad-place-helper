@@ -116,7 +116,7 @@ export interface PipelineRangeSuccess extends Omit<PipelineSuccess, 'request' | 
   /** 默认金额对应的完整成案；滑块初始位置直接渲染它。 */
   defaultPlan: PipelineSuccess;
 }
-export interface AnalysisContext { mode: AnalysisMode; deadline: number; config: RuntimeConfig }
+export interface AnalysisContext { mode: AnalysisMode; config: RuntimeConfig; modelTime: { remainingMs: number } }
 export interface RuntimeConfig { mode: AnalysisMode; llm: { provider: string; baseUrl: string; model: string; timeoutMs: number; retries: number; temperature: number; apiKey?: string }; includeHistoricalProfiles: boolean; updatedAt: string; source: 'file' | 'environment' }
 export interface StrategyResult { status: 'ok' | 'disabled' | 'unavailable'; strategyPreferences: StrategyPreference[]; mediaObjective: string; requestReplan: boolean; replanReason?: string; windowFit?: { status: 'aligned' | 'risk' | 'unknown'; reason: string; evidenceRefs: string[] }; measurement?: { kpi: string; proof: string }; reason?: string }
 export interface BriefResult { status: 'ok' | 'disabled' | 'unavailable'; campaignDraft: CampaignOverride; missing: string[]; confidence: number; trace: TraceStep[] }

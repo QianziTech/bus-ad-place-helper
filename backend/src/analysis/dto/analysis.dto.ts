@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional, getSchemaPath, OmitType } from '@nest
 import { Type } from 'class-transformer';
 import { IsArray, IsIn, IsInt, IsObject, IsOptional, IsString, Max, MaxLength, Min, MinLength, ValidateNested } from 'class-validator';
 import { Campaign, Check, INDUSTRIES, IndustryId, PipelineSuccess, PipelineRangeSuccess, PlanCopy, PlanFailure, PlanSuccess } from '../../shared/contracts';
+import { PLAN_STAGES, PLAN_STAGE_STATUSES, PlanStageUpdate } from '../../shared/pipeline/plan-pipeline.service';
 import { CampaignDto, CampaignOverrideDto, CreatePlanDto, GeneratePlanDto, StrategyPreferenceDto } from '../../engine/dto/create-plan.dto';
 import { AnchorSummaryDto, AppliedStrategyPreferenceDto, BudgetDto, ClientDto, InventoryDetailDto, PlanFailureDto, PlanSuccessDto, ScheduleDto, TrafficReferenceDto, TrajectoryDto } from '../../engine/dto/plan-response.dto';
 
@@ -221,8 +222,15 @@ export const pipelineRangeResultSchema = {
 export class PlanJobAcceptedDto {
   @ApiProperty({ format: 'uuid' }) id!: string;
 }
+export class PlanJobProgressDto implements PlanStageUpdate {
+  @ApiProperty({ enum: PLAN_STAGES }) key!: PlanStageUpdate['key'];
+  @ApiProperty({ enum: PLAN_STAGE_STATUSES }) status!: PlanStageUpdate['status'];
+  @ApiProperty({ example: '提取活动目标、人群与约束' }) detail!: string;
+  @ApiProperty({ minimum: 0, description: '该阶段已用时间（毫秒）' }) elapsedMs!: number;
+}
 export class PlanJobDto extends PlanJobAcceptedDto {
   @ApiProperty({ enum: ['running', 'completed', 'failed'] }) status!: 'running' | 'completed' | 'failed';
+  @ApiProperty({ type: [PlanJobProgressDto] }) progress!: PlanJobProgressDto[];
   @ApiProperty({ required: false, ...pipelineRangeResultSchema }) result?: PipelineSuccess | PipelineRangeSuccess | PlanFailure;
   @ApiProperty({ required: false, example: '方案生成失败，请重试' }) message?: string;
 }

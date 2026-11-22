@@ -22,7 +22,9 @@ let highlightTimer: number | undefined
 const fullscreen = ref(false)
 const drawerOpen = ref(false)
 const blocked = ref<BlockingItem[]>([])
-const elapsed = ref(0)
+const activeStage = computed(() => state.stages.find(stage => stage.status === 'running'))
+const expandedProgress = ref(['generation'])
+watch(() => state.loading, loading => { if (loading) expandedProgress.value = ['generation'] })
 
 const pipeline = computed<PipelineSuccess | null>(() => (state.result && state.result.status === 'ok' && 'lines' in state.result ? state.result as PipelineSuccess : null))
 /** 侧栏面板用的当前成案：全区间时把共用分析字段与当前金额的清单拼在一起。 */
@@ -86,8 +88,7 @@ function create() {
     return
   }
   blocked.value = []
-  const started = performance.now()
-  void generate().finally(() => { elapsed.value = Math.round(performance.now() - started) })
+  void generate()
 }
 
 function openFullscreen() {
@@ -192,16 +193,6 @@ onMounted(() => window.addEventListener('keydown', onKey))
         <p class="caption" style="margin-top: 6px">修改投放条件后，请重新生成方案；预算在成品卷首拖动切换。</p>
       </div>
 
-      <div class="panel-block">
-        <p v-if="state.loading" class="caption" role="status">正在生成方案…</p>
-        <a-collapse v-if="state.loading || state.result || state.networkError || state.scanHits.length" ghost size="small">
-          <a-collapse-panel key="generation" header="生成记录">
-            <StageProgress :stages="state.stages" />
-            <p v-if="state.lastQueryMs" class="caption">上次生成用时 {{ (state.lastQueryMs / 1000).toFixed(1) }} 秒</p>
-          </a-collapse-panel>
-        </a-collapse>
-      </div>
-
       <div class="panel-block" v-if="(panels && state.prevSuccess) || state.showBaseline">
         <h4>{{ state.showBaseline ? 'AI 方案 → 基础分配' : '本次变化' }}</h4>
         <DiffPanel :diff="state.diff" :mode="state.showBaseline ? 'baseline' : 'regen'" @focus="focusLine" @clear="clearCompare" />
@@ -217,6 +208,14 @@ onMounted(() => window.addEventListener('keydown', onKey))
     </div>
 
     <div class="preview-wrap">
+      <a-collapse v-if="state.loading || state.lastQueryMs" v-model:active-key="expandedProgress" class="generation-progress" ghost size="small">
+        <a-collapse-panel key="generation">
+          <template #header>
+            <span role="status">生成进度<span v-if="state.loading"> · {{ activeStage?.label || '提交任务中' }}</span><span v-else> · 耗时 {{ (state.lastQueryMs / 1000).toFixed(1) }} 秒</span></span>
+          </template>
+          <StageProgress :stages="state.stages" />
+        </a-collapse-panel>
+      </a-collapse>
       <StatusBanner :failure="currentFailure" />
       <div v-if="state.showBaseline" class="status-bar">
         <a-tag color="orange">基础方案</a-tag>

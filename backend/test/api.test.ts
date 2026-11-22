@@ -9,7 +9,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { createApplication } from '../src/main';
 import { PipelineRangeSuccess, PipelineSuccess } from '../src/shared/contracts';
-import { PlanPipelineService } from '../src/shared/pipeline/plan-pipeline.service';
+import { InventoryService } from '../src/inventory/inventory.service';
 import { PlanDataService } from '../src/shared/data/plan-data.service';
 
 let app: NestExpressApplication;
@@ -299,13 +299,15 @@ test('all independent tools work; deterministic export scan blocks risky or iden
 });
 
 test('background generation returns a job before the plan is ready', async t => {
-  const pipeline = app.get(PlanPipelineService);
-  const generate = pipeline.generate.bind(pipeline);
+  const inventory = app.get(InventoryService);
+  const resolveInventory = inventory.resolve.bind(inventory);
   let release = () => {};
   const gate = new Promise<void>(resolve => { release = resolve; });
-  t.mock.method(pipeline, 'generate', async (input: Parameters<typeof generate>[0]) => {
+  t.mock.method(inventory, 'resolve', async (...[input, onKindResolved]: Parameters<typeof resolveInventory>) => {
+    const result = await resolveInventory(input);
+    onKindResolved?.(result.kinds[0]);
     await gate;
-    return generate(input);
+    return result;
   });
   assert.equal((await api('/plan/jobs', { ...request, budgetYuan: 1 })).status, 400);
   assert.equal((await api('/plan/jobs', { ...request, briefText: '成交价 4.6 万元每辆' })).status, 400);
@@ -316,7 +318,13 @@ test('background generation returns a job before the plan is ready', async t => 
     assert.equal(submitted.status, 202);
     assert.ok(submitted.body.id);
     jobUrl = `/plan/jobs/${submitted.body.id}`;
-    assert.deepEqual((await api(jobUrl)).body, { id: submitted.body.id, status: 'running' });
+    const { body } = await api(jobUrl);
+    assert.equal(body.id, submitted.body.id);
+    assert.equal(body.status, 'running');
+    assert.deepEqual(body.progress.map(({ key, status }: { key: string; status: string }) => [key, status]), [['brief', 'skipped'], ['inventory', 'running']]);
+    assert.match(body.progress[1].detail, /2027-06-01 至 2027-06-30.*公交 离线完整档期.*地铁 读取本地库存中/);
+    await delay(20);
+    assert.ok((await api(jobUrl)).body.progress[1].elapsedMs > body.progress[1].elapsedMs);
   } finally {
     release();
   }
@@ -327,6 +335,9 @@ test('background generation returns a job before the plan is ready', async t => 
   }
   assert.equal(job.status, 200);
   assert.equal(job.body.status, 'completed');
+  assert.equal(job.body.progress.length, 7);
+  assert.equal(job.body.progress.find((stage: { key: string }) => stage.key === 'inventory').status, 'done');
+  assert.equal(job.body.progress.find((stage: { key: string }) => stage.key === 'verify').status, 'done');
   assert.equal(job.body.result.status, 'ok');
   assert.equal(job.body.result.copy.source, 'mock');
 });

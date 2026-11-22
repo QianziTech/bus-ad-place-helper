@@ -60,7 +60,7 @@ Invoke-RestMethod http://127.0.0.1:3000/api/config -Method Put -ContentType 'app
 
 - `off`：规则引擎、模板文案及确定性扫描；`degraded` 记录跳过的策略与成稿阶段。
 - `mock`：五行业同源离线样例，最多两轮扩选。
-- `live` 使用兼容 `chat/completions` 的模型 HTTP 服务，需要配置 `llm.baseUrl/model/apiKey`。整条流水线共享 120 秒，单次请求和最多一次重试都受剩余时间限制。新配置的单次超时默认为 120 秒，已有配置可在设置页调整 `timeoutMs`。分析阶段失败时逐阶段降级。
+- `live` 使用兼容 `chat/completions` 的模型 HTTP 服务，需要配置 `llm.baseUrl/model/apiKey`。一份方案的模型请求与重试共享 120 秒，库存查询、候选筛选和规则核算的耗时另计。新配置的单次模型请求超时默认为 120 秒，可在设置页调整 `timeoutMs`。分析阶段失败时逐阶段降级，工作台右侧显示进度和回退原因。
 
 API Key 仅用于写入，读取只返回 `hasKey/keyPreview`，不进入 OpenAPI、提示词或方案。自动化测试使用本地 HTTP 替身。
 

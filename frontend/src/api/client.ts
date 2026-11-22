@@ -22,10 +22,18 @@ export interface ScanHit {
   suggestion?: string
 }
 
-type PlanJob =
-  | { status: 'running' }
+export interface PlanJobProgress {
+  key: 'brief' | 'inventory' | 'candidates' | 'strategy' | 'engine' | 'copy' | 'verify'
+  status: 'running' | 'done' | 'skipped' | 'degraded' | 'failed'
+  detail: string
+  elapsedMs: number
+}
+
+type PlanJob = { progress?: PlanJobProgress[] } & (
+  { status: 'running' }
   | { status: 'completed'; result: PipelineResponse }
   | { status: 'failed'; message: string }
+)
 
 export interface HongdouLogin {
   username: string
@@ -60,10 +68,11 @@ export const api = {
   meta(signal?: AbortSignal) {
     return request<Meta>('/meta', { method: 'GET' }, signal)
   },
-  async generate(body: Record<string, unknown>, signal?: AbortSignal): Promise<PipelineResponse> {
+  async generate(body: Record<string, unknown>, signal?: AbortSignal, onProgress?: (progress: PlanJobProgress[]) => void): Promise<PipelineResponse> {
     const { id } = await request<{ id: string }>('/plan/jobs', { method: 'POST', body: JSON.stringify(body) }, signal)
     for (;;) {
       const job = await request<PlanJob>(`/plan/jobs/${encodeURIComponent(id)}`, {}, signal)
+      if (job.progress) onProgress?.(job.progress)
       if (job.status === 'completed') return job.result
       if (job.status === 'failed') throw new ApiError(job.message)
       await new Promise(resolve => window.setTimeout(resolve, 1000))

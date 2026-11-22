@@ -233,7 +233,7 @@ export class EngineService {
    * 一次生成覆盖滑块全区间：候选、库存、刊例与策略偏好只算一次，
    * 每个 1 万元金额点沿用同一分配规则，逐档给出清单、排期与预算分析。
    */
-  generateRange(request: PipelineRequest, pool: CandidatePool): { status: 'ok'; range: PlanRangeBase; defaultPlan: PlanSuccess } | PlanFailure {
+  async generateRange(request: PipelineRequest, pool: CandidatePool, onProgress?: (computed: number, total: number) => void): Promise<{ status: 'ok'; range: PlanRangeBase; defaultPlan: PlanSuccess } | PlanFailure> {
     const options: BudgetOption[] = [];
     const selectedKeys = new Set<string>();
     let previous: PlanSuccess | undefined;
@@ -241,7 +241,13 @@ export class EngineService {
     let firstFailure: PlanFailure | undefined;
     let low: PlanSuccess | undefined;
     const outlineOf = (plan: PlanSuccess) => plan.lines.map(line => `${line.mediaKey}:${line.quantity}`).sort().join('|');
+    const total = (BUDGET_RANGE.maxYuan - BUDGET_RANGE.minYuan) / BUDGET_RANGE.stepYuan + 1;
     for (let budgetYuan = BUDGET_RANGE.minYuan; budgetYuan <= BUDGET_RANGE.maxYuan; budgetYuan += BUDGET_RANGE.stepYuan) {
+      if (onProgress && options.length % 25 === 0) {
+        onProgress(options.length, total);
+        // 让任务轮询能在下一批核算开始前读取已完成档数。
+        await new Promise<void>(resolve => setImmediate(resolve));
+      }
       const plan = this.assemble({ ...request, budgetYuan }, pool);
       if (plan.status !== 'ok') {
         firstFailure ??= plan;

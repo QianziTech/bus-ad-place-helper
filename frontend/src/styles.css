@@ -61,15 +61,18 @@ a { color: var(--primary); }
 }
 .chip-btn.active { border-color: var(--primary); color: var(--primary); background: var(--primary-wash); }
 .caption { font-size: 11px; color: var(--ink-3); margin-top: 6px; line-height: 1.5; }
-.stage-list { margin-top: 8px; }
-.stage-row { display: flex; gap: 8px; align-items: baseline; font-size: 12px; padding: 3px 0; color: var(--ink-2); }
-.stage-row .dot { width: 14px; flex: none; text-align: center; font-weight: 700; }
+.generation-progress { flex: none; background: var(--bg); border-bottom: 1px solid var(--line); }
+.stage-list { max-height: 32vh; overflow: auto; }
+.stage-row { display: grid; grid-template-columns: 14px 7em minmax(0, 1fr) auto; gap: 8px; align-items: baseline; font-size: 12px; padding: 3px 0; color: var(--ink-2); }
+.stage-row .dot { text-align: center; font-weight: 700; }
 .stage-row.done .dot { color: var(--ok); }
 .stage-row.failed .dot { color: var(--danger); }
 .stage-row.running .dot { color: var(--accent); }
+.stage-row.degraded .dot { color: var(--warn); }
 .stage-row.skipped { color: var(--ink-3); }
-.stage-row.skipped .dot { color: var(--ink-3); }
-.stage-row .detail { margin-left: auto; text-align: right; color: var(--ink-3); max-width: 58%; }
+.stage-row .detail { overflow-wrap: anywhere; }
+.stage-row .stage-time, .stage-row.idle { color: var(--ink-3); }
+.stage-row.running .stage-label { color: var(--ink); font-weight: 600; }
 
 .preview-wrap { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--canvas); }
 .preview-toolbar {
