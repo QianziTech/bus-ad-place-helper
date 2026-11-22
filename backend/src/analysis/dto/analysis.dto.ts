@@ -184,7 +184,8 @@ export class PlanRangeBaseDto {
   @ApiProperty({ format: 'date-time' }) queriedAt!: string;
   @ApiProperty({ type: [RangeAnchorDto] }) anchors!: RangeAnchorDto[];
   @ApiProperty({ type: BudgetDto }) budget!: BudgetDto;
-  @ApiProperty({ type: [BudgetOptionDto], description: '按金额升序，覆盖 100–500 万元每 1 万元' }) budgetOptions!: BudgetOptionDto[];
+  @ApiProperty({ minimum: 1, description: '已核对的最低媒体组合在所选档期内的估算总额，元' }) minimumEstimateYuan!: number;
+  @ApiProperty({ type: [BudgetOptionDto], description: '从可成案的预算下限到 500 万元，每 1 万元一档' }) budgetOptions!: BudgetOptionDto[];
   @ApiProperty({ type: Object, description: '跨档共用的媒体静态信息，以 mediaKey 为键' }) mediaByKey!: Record<string, OptionMediaDto>;
   @ApiProperty({ type: [String] }) assumptions!: string[];
   @ApiProperty({ type: [String] }) notices!: string[];

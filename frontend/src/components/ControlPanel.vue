@@ -66,7 +66,7 @@ function applyWindow(start: string, end: string) {
     <section>
       <h4>投放媒体</h4>
       <a-checkbox-group :value="workbench.media" :options="mediaList" @update:value="toggleMedia" />
-      <p class="caption">预算在生成后于成品卷首拖动切换，100–500 万元按 1 万元推演。</p>
+      <p class="caption">成品卷首可调整预算，从本档期可成案的金额起，每 1 万元一档，最高 500 万元。</p>
     </section>
 
     <section>

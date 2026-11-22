@@ -141,6 +141,45 @@ test('mock pipeline expands once and recalculates numbers from the engine for ch
   assert.ok(first.rounds.every(round => round.rejected.every(item => ['unknown_media', 'no_stock', 'over_budget', 'premium_exceeded', 'invalid_evidence'].includes(item.reason))));
 });
 
+test('annual bus and metro range starts at the first affordable budget and explains failure above the cap', async t => {
+  const s = setup('off'); t.after(s.cleanup);
+  const window = { startDate: '2027-01-01', endDate: '2027-12-31' };
+  const input = { industry: request.industry, ...window, media: ['bus', 'metro'] as PlanRequest['media'] };
+  const data = s.data.data;
+  const metro = 'metro|1|1号口';
+  const price = { monthlyLowYuan: 150000, monthlyHighYuan: 150000, productionYuan: 86500, source: 'test-only', assumptions: [] };
+  Object.assign(data.bus.windows[0], window, { billingMonths: 12 });
+  data.metro.mediaByKey[metro] = { kind: 'metro', resourceId: 1, lineName: '模拟站', levelName: 'A+', exit: '1号口' };
+  data.metro.windows.push({ ...data.bus.windows[0], inventoryByKey: { [metro]: { freeCount: 1 } } });
+  data.coverage.anchorsById['anchor-one'].candidates.push({ mediaKey: metro, relation: '模拟覆盖', source: 'test-only' });
+  data.pricing.pricesByMediaKey[metro] = price;
+
+  const range = await s.pipeline.generate(input);
+  assert.ok(range.status === 'ok' && 'budgetOptions' in range);
+  assert.equal(range.billingMonths, 12);
+  assert.equal(range.minimumEstimateYuan, 2374000);
+  assert.deepEqual(range.budget, { minYuan: 2380000, maxYuan: 5000000, stepYuan: 10000, presetsYuan: [2380000, 5000000], defaultYuan: 2380000 });
+  assert.equal(range.budgetOptions[0].budgetYuan, 2380000);
+  assert.equal(range.budgetOptions.at(-1)?.budgetYuan, 5000000);
+  assert.equal(range.defaultPlan.totalYuan, 2374000);
+  assert.deepEqual(range.defaultPlan.lines.map(line => line.kind).sort(), ['bus', 'metro']);
+  assert.equal((await s.pipeline.generate({ ...input, budgetYuan: 1000000 })).status, 'over_budget');
+
+  Object.assign(price, { monthlyLowYuan: 370000, monthlyHighYuan: 370000, productionYuan: 72500 });
+  const cap = await s.pipeline.generate(input);
+  assert.ok(cap.status === 'ok' && 'budgetOptions' in cap);
+  assert.deepEqual(cap.budgetOptions.map(option => option.budgetYuan), [5000000]);
+
+  price.productionYuan++;
+  const over = await s.pipeline.generate(input);
+  assert.ok(over.status === 'over_budget');
+  assert.match(over.message, /公交.*487,500 元.*地铁.*4,512,501 元.*5,000,001 元.*超出 500 万元预算上限 1 元/);
+  delete data.pricing.pricesByMediaKey['bus|11|车身'];
+  const pending = await s.pipeline.generate(input);
+  assert.ok(pending.status === 'missing_data');
+  assert.match(pending.message, /超出 500 万元预算上限 1 元.*库存或刊例待核对/);
+});
+
 test('off mode returns template and deterministic checks; verification changes refs with quantity', async t => {
   const s = setup('off'); t.after(s.cleanup);
   const result = await s.pipeline.generate(request); assert.equal(result.status, 'ok'); if (result.status !== 'ok') return;

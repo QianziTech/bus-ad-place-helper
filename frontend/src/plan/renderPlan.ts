@@ -102,10 +102,14 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
     return same ? used.map(label).join(' + ') : `${used.map(label).join(' + ')}（客户预设：${campaign.mediaScope.map(label).join(' + ')}）`
   }
 
+  const minimumBudgetNote = range?.minimumEstimateYuan !== undefined
+    ? `<p class="note">本档期已核对的最低媒体组合估算为 ${h((range.minimumEstimateYuan / 10000).toLocaleString('zh-CN', { maximumFractionDigits: 4 }))} 万元，最低可选预算档为 ${range.budget.minYuan / 10000} 万元。</p>`
+    : ''
+  const singleBudget = range && range.budget.minYuan === range.budget.maxYuan
   const slider = range
     ? `<div class="budget-slider" role="group" aria-label="预算推演">
-    <div class="budget-head"><span class="caption">预算上限</span><b data-budget-label>${(budgetYuan / 10000).toFixed(0)} 万</b><span class="caption no-print">拖动查看每个金额的清单与报价</span><span class="caption print-only" data-print-hint>本页为当前档位 ${(budgetYuan / 10000).toFixed(0)} 万的清单与报价</span></div>
-    <input type="range" min="${range.budget.minYuan}" max="${range.budget.maxYuan}" step="${range.budget.stepYuan}" value="${budgetYuan}" aria-label="预算上限（元）" data-budget-range>
+    <div class="budget-head"><span class="caption">预算上限</span><b data-budget-label>${(budgetYuan / 10000).toFixed(0)} 万</b><span class="caption no-print">${singleBudget ? '本档期仅有这一预算档' : '拖动查看每个金额的清单与报价'}</span><span class="caption print-only" data-print-hint>本页为当前档位 ${(budgetYuan / 10000).toFixed(0)} 万的清单与报价</span></div>
+    <input type="range" min="${range.budget.minYuan}" max="${range.budget.maxYuan}" step="${range.budget.stepYuan}" value="${budgetYuan}" aria-label="预算上限（元）" data-budget-range${singleBudget ? ' disabled' : ''}>
     <div class="budget-ticks">${range.budget.presetsYuan.map(preset => `<button type="button" class="tick" data-budget-tick="${preset}">${preset / 10000} 万</button>`).join('')}</div>
   </div>`
     : ''
@@ -169,6 +173,7 @@ ${head}
   ${slot('chips')}
   ${slot('kpis')}
   ${slot('note')}
+  ${minimumBudgetNote}
   ${slider}
 </section>
 

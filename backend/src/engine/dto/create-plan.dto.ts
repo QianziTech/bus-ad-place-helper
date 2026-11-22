@@ -134,8 +134,8 @@ export class CreatePlanDto implements PlanRequest {
   @ValidateIf((_o, value) => value !== undefined) @IsString() @MaxLength(2000) briefText?: string;
 }
 
-/** 流水线请求：省略 budgetYuan 时一次生成 100–500 万元全区间。显式给出时保持单预算契约。 */
+/** 流水线请求：省略 budgetYuan 时生成档期内可成案的预算区间。 */
 export class GeneratePlanDto extends OmitType(CreatePlanDto, ['budgetYuan'] as const) implements PipelineRequest {
-  @ApiPropertyOptional({ minimum: 1000000, maximum: 5000000, example: 2000000, description: '省略时按滑块全区间生成；给出时只算该金额' })
+  @ApiPropertyOptional({ minimum: 1000000, maximum: 5000000, example: 2000000, description: '省略时从可成案的预算下限算到 500 万元；给出时只算该金额' })
   @ValidateIf((_o, value) => value !== undefined) @IsInt() @Min(1000000) @Max(5000000) budgetYuan?: number;
 }

@@ -53,7 +53,7 @@ export interface PlanData { bus: MediaData; metro: MediaData; pricing: { pricesB
 export type RejectionReason = 'unknown_media' | 'no_stock' | 'over_budget' | 'premium_exceeded' | 'invalid_evidence';
 export interface StrategyPreference { mediaKey: string; reason: string; evidenceRefs: string[]; disposition?: 'accepted' | `rejected:${RejectionReason}` }
 export interface PlanRequest { industry: IndustryId; budgetYuan: number; media: MediaKind[]; startDate: string; endDate: string; acceptWeekly?: boolean; campaignOverride?: CampaignOverride; strategyPreferences?: StrategyPreference[]; briefText?: string }
-/** 流水线请求：省略 budgetYuan 时按滑块全区间生成。 */
+/** 流水线请求：省略 budgetYuan 时生成档期内可成案的预算区间。 */
 export type PipelineRequest = Omit<PlanRequest, 'budgetYuan'> & { budgetYuan?: number };
 export interface Candidate {
   mediaKey: string; kind: MediaKind; name: string; levelName: string; mediaForm?: string; exit?: string; total?: number;
@@ -62,7 +62,7 @@ export interface Candidate {
   anchorIds: string[]; evidenceRefs: string[]; reasons: string[]; sources: string[]; assumptions: string[]; trafficReference?: TrafficReference; trajectory?: Trajectory;
 }
 export interface PlanFailure { status: 'missing_window' | 'missing_data' | 'no_inventory' | 'over_budget'; message: string; suggestions: string[]; inventory?: InventoryDetail }
-export interface CandidatePool { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; candidates: Candidate[]; anchors: AnchorSummary[]; billingMonths: number; queriedAt: string; notices: string[]; excluded: { mediaKey: string; reason: RejectionReason }[]; inventory: InventoryDetail }
+export interface CandidatePool { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; candidates: Candidate[]; minimumEstimateYuan: number; anchors: AnchorSummary[]; billingMonths: number; queriedAt: string; notices: string[]; excluded: { mediaKey: string; reason: RejectionReason }[]; inventory: InventoryDetail }
 export interface PlanLine extends Omit<Candidate, 'anchorIds' | 'assumptions'> { quantity: number; lineTotalYuan: number; preferredByAi?: boolean }
 export interface ScheduleBatch { no: number; nightDate: string; mediaKeys: string[]; quantity: number; kindQuantities?: Partial<Record<MediaKind, number>>; cumulative: number; publishStartDate: string; risk: string | null }
 export interface Schedule { status: 'ok' | 'unavailable' | 'capacity_short'; singleNightCap: number; batches: ScheduleBatch[]; rainBufferNights: number; compensationBufferQty: number; notes: string[]; assumptions: string[] }
@@ -107,6 +107,7 @@ export interface PlanRangeBase {
   status: 'ok'; request: PipelineRequest; client: Client; campaign: Campaign;
   billingMonths: number; billingStatus: 'confirmed' | 'pending'; inventory: InventoryDetail; queriedAt: string;
   anchors: RangeAnchor[]; budget: BudgetOptions; budgetOptions: BudgetOption[]; mediaByKey: Record<string, OptionMedia>;
+  minimumEstimateYuan: number;
   assumptions: string[]; notices: string[]; trace: TraceStep[]; strategyPreferences?: StrategyPreference[];
 }
 /** 省略 budgetYuan 时的流水线结果：默认金额的完整成案 + 逐档结果，一次生成后滑块切换不再请求。 */

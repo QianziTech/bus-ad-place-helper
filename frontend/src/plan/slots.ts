@@ -9,6 +9,7 @@ import type { CoverageMapData } from './coverageMap'
 
 export interface RangeData {
   budget: { minYuan: number; maxYuan: number; stepYuan: number; presetsYuan: number[]; defaultYuan: number }
+  minimumEstimateYuan?: number
   budgetOptions: BudgetOption[]
   mediaByKey: Record<string, OptionMedia>
   anchors: RangeAnchor[]

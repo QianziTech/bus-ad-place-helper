@@ -53,7 +53,7 @@ export class PlanPipelineService {
     // Raw text is consumed once; it is never sent with subsequent model calls.
     delete request.briefText;
     // 一轮请求只解析一次库存，两轮候选共用同一批整段库存与查询时间。
-    const candidateRequest = { ...request, budgetYuan: explicitBudget ?? BUDGET_RANGE.minYuan };
+    const candidateRequest = { ...request, budgetYuan: explicitBudget ?? BUDGET_RANGE.maxYuan };
     const dateRange = `${request.startDate} 至 ${request.endDate}`;
     const stockProgress = new Map(request.media.map(kind => [kind, this.inventory.online ? '查询红豆库存中' : '读取本地库存中']));
     const reportStock = () => report('inventory', 'running', `${dateRange} · ${[...stockProgress].map(([kind, detail]) => `${KIND_LABELS[kind]} ${detail}`).join(' / ')}`);
@@ -91,7 +91,7 @@ export class PlanPipelineService {
       request.strategyPreferences = strategy.status === 'ok' ? strategy.strategyPreferences : [];
       strategyOutput = { mediaObjective: strategy.mediaObjective, ...(strategy.windowFit ? { windowFit: strategy.windowFit } : {}), ...(strategy.measurement ? { measurement: strategy.measurement } : {}) };
       // 全区间请求只需判断是否需要第二轮回环；单预算失败直接沿用现有响应。
-      const probeRequest = explicitBudget !== undefined ? request as PlanRequest : { ...request, budgetYuan: BUDGET_RANGE.defaultYuan };
+      const probeRequest = { ...request, budgetYuan: explicitBudget ?? Math.max(BUDGET_RANGE.defaultYuan, pool.minimumEstimateYuan) };
       report('engine', 'running', `第 ${round} 轮 · 核算数量、报价与排期`);
       const probe = this.engine.generate(probeRequest, pool);
       if (probe.status !== 'ok' && explicitBudget !== undefined) {

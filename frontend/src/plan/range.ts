@@ -75,6 +75,7 @@ export function planForBudget(range: PipelineRangeSuccess, budgetYuan: number): 
 export function rangeData(range: PipelineRangeSuccess, mode: 'off' | 'mock' | 'live' = 'mock'): RangeData {
   return {
     budget: range.budget,
+    minimumEstimateYuan: range.minimumEstimateYuan,
     budgetOptions: range.budgetOptions,
     mediaByKey: range.mediaByKey,
     anchors: range.anchors.map(anchor => ({

@@ -12,6 +12,7 @@ export const BUDGET_RANGE: BudgetOptions = { minYuan: 1_000_000, maxYuan: 5_000_
 const unique = <T>(values: T[]) => [...new Set(values)];
 const keyOrder = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
 const baseOrder = (a: Candidate, b: Candidate) => b.anchorIds.length - a.anchorIds.length || a.unitEstimateYuan - b.unitEstimateYuan || keyOrder(a.mediaKey, b.mediaKey);
+const priceOrder = (a: Candidate, b: Candidate) => a.unitEstimateYuan - b.unitEstimateYuan || baseOrder(a, b);
 interface Evidence { anchorIds: string[]; evidenceRefs: string[]; reasons: string[]; sources: string[] }
 
 function publicClient(client: Client): Client {
@@ -194,22 +195,30 @@ export class EngineService {
       if (missing && priced) notices.push(`${labels[kind]}有 ${missing} 个候选的库存或刊例待核对，当前报价仅采用已核对候选。`);
     }
     if (blockers.length) return { ...failure(blockers.some(item => item.status === 'no_inventory') ? 'no_inventory' : 'missing_data', blockers.map(item => item.message).join('；') + '。', ['单选具备库存与刊例的媒体。', '调整档期，或补充缺失库存和刊例。']), inventory: detail };
-    const minimum = selectedKinds.reduce((sum, kind) => sum + Math.min(...allCandidates.filter(candidate => candidate.kind === kind).map(candidate => candidate.unitEstimateYuan)), 0);
-    if (minimum > request.budgetYuan) return { ...failure(missingCouldChangeBudget ? 'missing_data' : 'over_budget', missingCouldChangeBudget ? '已核对组合超过预算，但仍有库存或刊例待核对，暂不能断言最低组合超预算。' : `已核对的最低媒体组合估算为 ${minimum} 元，超过预算上限 ${request.budgetYuan} 元。`, ['提高预算上限，或改为单一媒体。', ...(missingCouldChangeBudget ? ['先补齐候选库存和刊例。'] : [])]), inventory: detail };
+    const minimumCombination = selectedKinds.map(kind => allCandidates.filter(candidate => candidate.kind === kind).sort(priceOrder)[0]);
+    const minimumEstimateYuan = minimumCombination.reduce((sum, candidate) => sum + candidate.unitEstimateYuan, 0);
+    if (minimumEstimateYuan > request.budgetYuan) {
+      const combination = minimumCombination.map(candidate => `${labels[candidate.kind]}「${candidate.name}」1 单位 ${candidate.unitEstimateYuan.toLocaleString('zh-CN')} 元`).join('、');
+      const excessYuan = minimumEstimateYuan - request.budgetYuan;
+      const estimate = `本档期已核对的最低组合为 ${combination}，合计 ${minimumEstimateYuan.toLocaleString('zh-CN')} 元，超出 ${request.budgetYuan / 10000} 万元预算上限 ${excessYuan.toLocaleString('zh-CN')} 元。`;
+      const suggestions = request.budgetYuan < BUDGET_RANGE.maxYuan ? ['提高预算上限，或改为单一媒体。'] : ['调整档期，或改为单一媒体。'];
+      if (missingCouldChangeBudget) suggestions.unshift('先补齐候选库存和刊例。');
+      const message = missingCouldChangeBudget ? `${estimate}部分候选的库存或刊例待核对，目前无法判断预算内是否有其他组合。` : estimate;
+      return { ...failure(missingCouldChangeBudget ? 'missing_data' : 'over_budget', message, suggestions), inventory: detail };
+    }
     let candidates = allCandidates;
     if (!expanded) {
       const profiles = allCandidates.filter(candidate => candidate.anchorIds.length === 0).sort((a, b) => this.profileScore(b, campaign) - this.profileScore(a, campaign) || baseOrder(a, b));
       const initialProfiles = new Set(profiles.slice(0, 8).map(candidate => candidate.mediaKey));
       candidates = allCandidates.filter(candidate => candidate.anchorIds.length > 0 || initialProfiles.has(candidate.mediaKey));
       // 最低组合不能因首轮画像数量限制被隐藏。
-      for (const kind of selectedKinds) {
-        const cheapest = allCandidates.filter(candidate => candidate.kind === kind).sort((a, b) => a.unitEstimateYuan - b.unitEstimateYuan || baseOrder(a, b))[0];
+      for (const cheapest of minimumCombination) {
         if (!candidates.some(candidate => candidate.mediaKey === cheapest.mediaKey)) candidates.push(cheapest);
       }
       if (profiles.length > initialProfiles.size) notices.push('首轮保留全部行业 POI 候选和匹配度靠前的 8 个圈外画像候选；扩选轮纳入其余有证据候选。');
     }
     if (candidates.some(candidate => candidate.trafficReference)) notices.push('公交历史画像按原月份展示，仅作人群参考；不同线路历史覆盖人次不相加为方案触达。');
-    return { status: 'ok', request: structuredClone(request), client: publicClient(industry.client), campaign, candidates: candidates.sort(baseOrder), anchors: this.summarizeAnchors(activeAnchors), billingMonths: priceMonths, queriedAt, notices, excluded, inventory: detail };
+    return { status: 'ok', request: structuredClone(request), client: publicClient(industry.client), campaign, candidates: candidates.sort(baseOrder), minimumEstimateYuan, anchors: this.summarizeAnchors(activeAnchors), billingMonths: priceMonths, queriedAt, notices, excluded, inventory: detail };
   }
 
   private profileScore(candidate: Candidate, campaign: Campaign) {
@@ -230,19 +239,22 @@ export class EngineService {
   }
 
   /**
-   * 一次生成覆盖滑块全区间：候选、库存、刊例与策略偏好只算一次，
+   * 从最低组合能成案的预算档起生成：候选、库存、刊例与策略偏好只算一次，
    * 每个 1 万元金额点沿用同一分配规则，逐档给出清单、排期与预算分析。
    */
   async generateRange(request: PipelineRequest, pool: CandidatePool, onProgress?: (computed: number, total: number) => void): Promise<{ status: 'ok'; range: PlanRangeBase; defaultPlan: PlanSuccess } | PlanFailure> {
+    const { maxYuan, stepYuan } = BUDGET_RANGE;
+    const minYuan = Math.max(BUDGET_RANGE.minYuan, Math.ceil(pool.minimumEstimateYuan / stepYuan) * stepYuan);
+    if (minYuan > maxYuan) return { ...failure('over_budget', `本档期已核对的最低组合估算为 ${pool.minimumEstimateYuan.toLocaleString('zh-CN')} 元，超过 ${maxYuan / 10000} 万元预算上限。`), inventory: pool.inventory };
     const options: BudgetOption[] = [];
     const selectedKeys = new Set<string>();
     let previous: PlanSuccess | undefined;
     let lastChange: { plan: PlanSuccess; budgetYuan: number } | undefined;
     let firstFailure: PlanFailure | undefined;
     let low: PlanSuccess | undefined;
+    const total = (maxYuan - minYuan) / stepYuan + 1;
     const outlineOf = (plan: PlanSuccess) => plan.lines.map(line => `${line.mediaKey}:${line.quantity}`).sort().join('|');
-    const total = (BUDGET_RANGE.maxYuan - BUDGET_RANGE.minYuan) / BUDGET_RANGE.stepYuan + 1;
-    for (let budgetYuan = BUDGET_RANGE.minYuan; budgetYuan <= BUDGET_RANGE.maxYuan; budgetYuan += BUDGET_RANGE.stepYuan) {
+    for (let budgetYuan = minYuan; budgetYuan <= maxYuan; budgetYuan += stepYuan) {
       if (onProgress && options.length % 25 === 0) {
         onProgress(options.length, total);
         // 让任务轮询能在下一批核算开始前读取已完成档数。
@@ -287,7 +299,8 @@ export class EngineService {
         billingMonths: low.billingMonths, billingStatus: low.billingStatus, inventory: low.inventory, queriedAt: low.queriedAt,
         assumptions: low.assumptions, notices: low.notices, trace: low.trace, ...(low.strategyPreferences ? { strategyPreferences: low.strategyPreferences } : {}),
         // defaultYuan 取实际采用的默认金额（建议预算归入区间后的最近可行档），供滑块定位。
-        anchors, budget: { ...structuredClone(BUDGET_RANGE), defaultYuan }, budgetOptions: options, mediaByKey,
+        anchors, budget: { ...BUDGET_RANGE, minYuan, presetsYuan: [minYuan, ...BUDGET_RANGE.presetsYuan.filter(preset => preset > minYuan)], defaultYuan },
+        minimumEstimateYuan: pool.minimumEstimateYuan, budgetOptions: options, mediaByKey,
       },
     };
   }
@@ -379,7 +392,7 @@ export class EngineService {
     }
     let remaining = request.budgetYuan;
     for (const kind of selectedKinds) {
-      const cheapest = candidates.filter(candidate => candidate.kind === kind).sort((a, b) => a.unitEstimateYuan - b.unitEstimateYuan || baseOrder(a, b))[0];
+      const cheapest = candidates.filter(candidate => candidate.kind === kind).sort(priceOrder)[0];
       if (!cheapest) return failure('missing_data', `${labels[kind]}没有可报价候选。`, ['补齐所选媒体数据。']);
       quantities.set(cheapest.mediaKey, 1);
       remaining -= cheapest.unitEstimateYuan;

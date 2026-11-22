@@ -54,7 +54,7 @@ export class AnalysisController {
   compose(@Body() body: CopyPlanDto) { assertPlan(body.plan, body.campaign); return this.copy.compose(body.plan, body.campaign, body.checks); }
   @Post('plan/verify') @HttpCode(200) @ApiOperation({ operationId: 'verifyPlan', summary: '核验成案并扫描文案及导出正文，返回导出许可' }) @ApiOkResponse({ schema: response(VerifyResultDto) })
   check(@Body() body: VerifyPlanDto) { assertPlan(body.plan, body.campaign); return this.verify.verify(body.plan, body.campaign, body.copy, body.exportText); }
-  @Post('plan/generate') @HttpCode(200) @ApiOperation({ operationId: 'generatePlanPipeline', summary: '一次执行候选、策略、成案、文案、核验五阶段；省略 budgetYuan 时覆盖 100–500 万元全区间' })
+  @Post('plan/generate') @HttpCode(200) @ApiOperation({ operationId: 'generatePlanPipeline', summary: '一次执行候选、策略、成案、文案、核验；省略 budgetYuan 时从可成案的预算下限算到 500 万元' })
   @ApiOkResponse({ schema: { oneOf: [pipelineRangeResultSchema.oneOf[0], ...pipelineResultSchema.oneOf] } })
   generate(@Body() body: GeneratePlanDto) { return this.pipeline.generate(body); }
   @Post('plan/jobs') @HttpCode(202) @ApiOperation({ operationId: 'startPlanJob', summary: '提交后台成案任务' })

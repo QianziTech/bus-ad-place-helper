@@ -107,7 +107,7 @@ export interface PlanRequest {
   briefText?: string
 }
 
-/** 流水线请求：省略 budgetYuan 时由后端一次生成 100–500 万元全区间。 */
+/** 流水线请求：省略 budgetYuan 时由后端生成档期内可成案的预算区间。 */
 export type PipelineRequest = Omit<PlanRequest, 'budgetYuan'> & { budgetYuan?: number }
 
 export interface Candidate {
@@ -346,6 +346,7 @@ export interface PipelineRangeSuccess extends Omit<PipelineSuccess, 'request' | 
   request: PipelineRequest
   industryName: string
   budget: BudgetOptions
+  minimumEstimateYuan?: number
   budgetOptions: BudgetOption[]
   mediaByKey: Record<string, OptionMedia>
   anchors: RangeAnchor[]
