@@ -17,12 +17,14 @@ const prefs = computed<StrategyPreference[]>(() => props.result?.strategyPrefere
 /** 媒体键只用于内部对照：面板显示线路名与形式，键放在 title 里作证据。 */
 function labelOf(mediaKey: string): string {
   const result = props.result
-  if (!result) return '未识别资源'
+  const kind = mediaKey.startsWith('metro') ? '地铁候选' : mediaKey.startsWith('bus') ? '公交候选' : '候选资源'
+  if (!result) return kind
   const line = result.lines.find(item => item.mediaKey === mediaKey)
   if (line) return `${line.name}${line.mediaForm ? ` · ${line.mediaForm}` : line.exit ? ` · ${line.exit}` : ''}`
   const media = (result as { mediaByKey?: Record<string, { name: string; mediaForm?: string; exit?: string }> }).mediaByKey?.[mediaKey]
   if (media) return `${media.name}${media.mediaForm ? ` · ${media.mediaForm}` : media.exit ? ` · ${media.exit}` : ''}`
-  return '未识别资源'
+  // 未入选的候选不在本轮结果里，只按媒体类型给中性标签，不回显内部键。
+  return `${kind} · 本档未采用`
 }
 const rejectedCount = computed(() => prefs.value.filter(item => item.disposition?.startsWith('rejected:')).length)
 const rounds = computed(() => props.result?.rounds || [])

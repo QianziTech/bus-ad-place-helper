@@ -24,6 +24,23 @@ export interface RenderOptions {
 
 const SLOTS: SlotName[] = ['chips', 'kpis', 'note', 's2window', 's2anchors', 's3table', 's4', 's5', 's6', 'analysis', 'map', 's65', 's66']
 
+const STEP_LABELS: Record<string, string> = {
+  candidates: '候选核对', minimum: '最低组合', preference: '偏好采纳', preference_rejected: '偏好未采用',
+  pricing: '计价', schedule: '排期', 'verify.scan': '合规扫描', 'verify.analysis': '模型复核',
+}
+const REASON_LABELS: Record<string, string> = {
+  over_budget: '超预算', no_stock: '无库存', premium_exceeded: '溢价超限', invalid_evidence: '证据无效', unknown_media: '未知媒体',
+}
+/** 附录面向客户：内部键与英文步骤名换成可读说明，媒体键按线路名回填。 */
+function traceText(vm: PlanVm, message: string): string {
+  const names = new Map(vm.lines.map(line => [line.mediaKey, `${line.kind === 'bus' ? '公交' : '地铁'} ${line.name}`]))
+  return message
+    .replace(/[a-z]+\|\d+\|[^\s，；、：:]+/g, key => names.get(key) ?? (key.startsWith('bus|') ? '公交候选' : '地铁候选'))
+    .replace(/\b(over_budget|no_stock|premium_exceeded|invalid_evidence|unknown_media)\b/g, key => REASON_LABELS[key] || key)
+    // 与自己比价没有信息量：同一资源作为基准时只说明按基准价分配。
+    .replace(/([^，；。]+?) 相对同类基准 \1 的单位价差 0 元，未超过 [\d.]+% 溢价上限，本次分配 (\d+) 单位。/g, '按同类基准价分配 $2 单位。')
+}
+
 function appendixBlock(vm: PlanVm): string {
   const summary = `生成记录 · ${h(analysisModeText(vm.mode))} · ${vm.rounds.length} 轮`
   if (vm.mode === 'off') {
@@ -37,9 +54,21 @@ function appendixBlock(vm: PlanVm): string {
   rows.push(['策略', vm.rounds.length
     ? vm.rounds.map(round => `第 ${round.round} 轮：候选 ${round.candidateCount}，推荐 ${round.preferredCount}，采用 ${round.acceptedCount}，未采用 ${round.rejected.length}${round.requestReplan ? '（继续调整）' : ''}`).join('；')
     : '本次未返回分轮记录。'])
-  rows.push(['计算记录', vm.trace.slice(0, 8).map(step => `${step.step}：${copyText(step.message, 90)}`).join('；') || '暂无计算记录。'])
+  rows.push(['计算记录', vm.trace.slice(0, 8).map(step => `${STEP_LABELS[step.step] || '计算'}：${copyText(traceText(vm, step.message), 90)}`).join('；') || '暂无计算记录。'])
   rows.push(['文案', `来源：${vm.brandContextSource}。数量与金额取自方案计算结果。`])
   rows.push(['方案检查', `共 ${vm.checks.length} 项，${vm.checks.filter(item => item.status === 'fail' && item.blocking).length} 项阻断；明细见工作台核验面板。`])
+  // 来源路径属内部技术依据，交付件只留可读口径：来源类型 + 核对时间。
+  const tagsOf = (line: PlanVm['lines'][number]) => {
+    const joined = line.sources.join(' ')
+    const tags: string[] = []
+    if (/平台|覆盖|sopLabelPoints|matchCoverLines/.test(joined)) tags.push('平台覆盖分析')
+    if (/红豆|归档|截面|bus\.json|metro\.json|库存/.test(joined)) tags.push('红豆库存')
+    if (/pricing|刊例/.test(joined)) tags.push('刊例')
+    tags.push('客流 2023-05')
+    return tags.join(' · ')
+  }
+  const sourceRows = vm.lines.slice(0, 8).map(line => `${line.name}：${tagsOf(line)}`).join('\n')
+  rows.push(['数据依据', sourceRows || '无'])
   rows.push(['备用处理', vm.degraded.length ? vm.degraded.map(item => `${item.stage}：${item.reason}`).join('；') : '无'])
   return `<details class="appendix"><summary>${summary}</summary>
     <table class="appendix-table">${rows.map(([key, value]) => `<tr><td class="k">${h(key)}</td><td>${h(value)}</td></tr>`).join('')}</table>
@@ -62,6 +91,14 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
     ? buildSlots(range, budgetYuan, highlight)
     : buildSlots(rangeDataFor(vm), budgetYuan, highlight)
   const slot = (name: SlotName) => `<div data-slot="${name}"${name === 'kpis' ? ' class="kpis"' : name === 'chips' ? ' class="chips"' : ''}>${slots[name]}</div>`
+
+  /** 假设书⑥只写本次实际选择的媒体；与客户预设不同时括号注明预设。 */
+  const mediaScopeText = () => {
+    const label = (kind: string) => (kind === 'bus' ? '公交' : '地铁')
+    const used = vm.request.media.length ? vm.request.media : campaign.mediaScope
+    const same = used.length === campaign.mediaScope.length && used.every(kind => campaign.mediaScope.includes(kind))
+    return same ? used.map(label).join(' + ') : `${used.map(label).join(' + ')}（客户预设：${campaign.mediaScope.map(label).join(' + ')}）`
+  }
 
   const slider = range
     ? `<div class="budget-slider" role="group" aria-label="预算推演">
@@ -141,7 +178,7 @@ ${head}
         <tr><th>③ 投放活动</th><td>${h(`${campaign.name}（主目标：${campaign.primaryGoal}）`)}</td></tr>
         <tr><th>④ 人群</th><td>${h(campaign.audience)}</td></tr>
         <tr><th>⑤ 时间与预算</th><td>${slot('s2window')}</td></tr>
-        <tr><th>⑥ 媒体范围</th><td>${h(campaign.mediaScope.map(kind => (kind === 'bus' ? '公交' : '地铁')).join(' + '))}</td></tr>
+        <tr><th>⑥ 媒体范围</th><td>${h(mediaScopeText())}</td></tr>
         <tr><th>⑦ 成功衡量</th><td>${h(`${campaign.successMetric.kpi}；${campaign.successMetric.proof}`)}</td></tr>
       </table>
       <p class="note" style="margin-top:12px">目标与人群见推荐理由，档期见投放排期，预算见估算报价。客户以代称呈现。</p>
@@ -270,6 +307,7 @@ function rangeDataFor(vm: PlanVm): RangeData {
     queriedAt: vm.queriedAt,
     billingMonths: vm.billingMonths,
     billingStatus: vm.billingPending ? 'pending' : 'confirmed',
+    requestMedia: [...vm.request.media],
     assumptions: vm.assumptions,
     notices: vm.notices,
     mode: vm.mode,

@@ -90,6 +90,7 @@ table.appendix-table td.k{width:7em;color:var(--ink-2);font-weight:600}
 [data-src]:hover::after{opacity:1}
 @media (hover:none){[data-src]::after{display:none}}
 .load{display:inline-block;margin-left:8px;font-size:11px;font-weight:600;color:var(--accent)}
+.tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:10px;background:var(--primary-wash);color:var(--primary);margin:0 4px 0 0}
 .win{line-height:1.7}
 .win b{font-size:15px}
 .win span{color:var(--ink-2);font-size:13px}

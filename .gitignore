@@ -6,3 +6,4 @@ data/config/*.tmp
 data/internal/
 *.log
 coverage/
+.tmp/

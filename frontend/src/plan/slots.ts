@@ -18,6 +18,8 @@ export interface RangeData {
   }
   client: { code: string; alias: string; category: string; scale: string }
   inventory: { startDate: string; endDate: string; billingStatus: 'confirmed' | 'pending'; kinds: { kind: 'bus' | 'metro'; sourceLabel: string; queriedAt?: string; sampleDates?: string[] }[] }
+  /** 本次实际选择的媒体，与 campaign.mediaScope（客户预设）分开显示。 */
+  requestMedia: ('bus' | 'metro')[]
   queriedAt: string
   billingMonths: number
   billingStatus: 'confirmed' | 'pending'
@@ -78,6 +80,17 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   const variant = (line: NonNullable<ReturnType<typeof lineOf>>) => (line.kind === 'bus' ? line.mediaForm || '—' : line.exit || '—')
   const levelLabel = (level: string) => (level === '观光' ? '观光车（双层/都市观光）' : level)
 
+/** 内部标识（函数名、文件名、键）不进入交付物：一级折叠只留四个来源短标签，路径与键进二级折叠。 */
+  const sourceTags = (line: NonNullable<ReturnType<typeof lineOf>>) => {
+    const tags: string[] = []
+    const joined = line.sources.join(' ')
+    if (/平台|覆盖|sopLabelPoints|matchCoverLines/.test(joined)) tags.push('平台覆盖分析')
+    if (/红豆|归档|截面|bus\.json|metro\.json|库存/.test(joined)) tags.push('红豆库存')
+    if (/pricing|刊例/.test(joined)) tags.push('刊例')
+    if (line.traffic) tags.push(`客流 ${line.traffic.period || '历史'}`)
+    if (!tags.length) tags.push('平台覆盖分析')
+    return tags.map(tag => `<span class="tag">${esc(tag)}</span>`).join('')
+  }
   const row = (line: NonNullable<ReturnType<typeof lineOf>>) => {
     const star = line.preferredByAi ? '<span class="star" title="AI 推荐资源">★ </span>' : ''
     const anchorNames = anchors.filter(anchor => anchor.selectedCount > 0 && line.anchorIds.indexOf(anchor.id) >= 0).map(anchor => anchor.areaName)
@@ -90,7 +103,7 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
     const details = [
       `<p><b>库存</b>　${esc(stockLine)}${leftNote ? `<br><span class="muted">${esc(leftNote)}</span>` : ''}</p>`,
       line.reasons.length ? `<p><b>入选理由</b></p><ul>${line.reasons.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : '',
-      line.sources.length ? `<p><b>来源</b></p><ul>${line.sources.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : '',
+      `<p><b>来源</b>　${sourceTags(line)}</p>`,
       anchorNames.length ? `<p>关联商圈：${esc(anchorNames.join('、'))}</p>` : '',
       line.kind === 'bus'
         ? line.traffic
@@ -114,9 +127,16 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
     ? `<table class="data"><thead><tr><th>线路 / 站点</th><th>形式 / 出口</th><th>等级</th><th class="num">可售 / 总量</th><th class="num">数量</th><th class="num">月价（区间）</th><th class="num">制作费</th><th class="num">行合计</th></tr></thead><tbody>${subset.map(row).join('')}</tbody></table>`
     : '<p class="muted">本次没有该类媒体入选。</p>'
 
+  const mediaLabelOf = (kind: string) => (kind === 'bus' ? '公交车身' : '地铁出入口')
+  const mediaLine = () => {
+    const used = data.requestMedia && data.requestMedia.length ? data.requestMedia : data.campaign.mediaScope
+    const preset = data.campaign.mediaScope
+    const same = used.length === preset.length && used.every(kind => preset.indexOf(kind) >= 0)
+    return same ? used.map(mediaLabelOf).join(' + ') : `${used.map(mediaLabelOf).join(' + ')}（客户预设：${preset.map(mediaLabelOf).join(' + ')}）`
+  }
   const chips = `<span class="chip on">${esc(data.industryName)}</span>
     <span class="chip">预算上限 ${esc(`${budgetYuan / 10000} 万`)}</span>
-    <span class="chip">${esc(data.campaign.mediaScope.map(kind => (kind === 'bus' ? '公交车身' : '地铁出入口')).join(' + '))}</span>
+    <span class="chip">${esc(mediaLine())}</span>
     <span class="chip">${esc(windowText(data.inventory.startDate, data.inventory.endDate))}</span>`
   // 假设书⑤：本次档期以实际核对档期为准；与建议窗口不同时补一行接续说明与月度成本。
   const start = data.inventory.startDate || ''
@@ -125,12 +145,19 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   const months = Math.max(1, data.billingMonths || 1)
   const monthlyCost = total / months
   const differs = suggested && (suggested.start !== start || suggested.end !== end)
+  // 只有建议窗口接着本次档期（不晚于次日）且终点更晚，才谈得上「续投」；更早、提前结束或中间断档都只说不同。
+  const nextDay = (value: string) => {
+    const date = new Date(`${value}T00:00:00`)
+    date.setDate(date.getDate() + 1)
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+  }
+  const extendable = differs && suggested.end > end && suggested.start <= nextDay(end)
   const monthCount = (from: string, to: string) => {
     const a = new Date(`${from}T00:00:00`), b = new Date(`${to}T00:00:00`)
     return Math.max(1, (b.getFullYear() - a.getFullYear()) * 12 + b.getMonth() - a.getMonth() + 1)
   }
-  const restMonths = differs ? Math.max(0, monthCount(suggested.start, suggested.end) - months) : 0
-  const s2window = `<div class="win"><b>${esc(start && end ? `${start} ~ ${end}` : '档期待确认')}</b><span>${esc(data.billingStatus === 'pending' ? '计费口径待确认' : `${months} 个投放月`)} · 上限 ${esc(`${budgetYuan / 10000} 万`)}</span>${differs ? `<br><small>建议窗口 ${esc(`${suggested.start} ~ ${suggested.end}`)}；本次先投 ${esc(`${start} ~ ${end}`)}${restMonths ? `，余下 ${restMonths} 个月可续投，按本档单价约 ${esc(wanMoney(monthlyCost))}／月` : ''}</small>` : ''}</div>`
+  const restMonths = extendable ? Math.max(0, monthCount(suggested.start, suggested.end) - months) : 0
+  const s2window = `<div class="win"><b>${esc(start && end ? `${start} ~ ${end}` : '档期待确认')}</b><span>${esc(data.billingStatus === 'pending' ? '计费口径待确认' : `${months} 个投放月`)} · 上限 ${esc(`${budgetYuan / 10000} 万`)}</span>${differs ? `<br><small>${extendable ? `建议窗口 ${esc(`${suggested.start} ~ ${suggested.end}`)}；本次先投 ${esc(`${start} ~ ${end}`)}${restMonths ? `，余下 ${restMonths} 个月可续投，按本档单价约 ${esc(wanMoney(monthlyCost))}／月` : ''}` : `与客户预设窗口 ${esc(`${suggested.start} ~ ${suggested.end}`)} 不同，本次按 ${esc(`${start} ~ ${end}`)} 投放`}</small>` : ''}</div>`
   const kpis = `<div class="kpi"><b>${quantity}<em>台 / 个</em></b><small>媒体单位</small></div>
     <div class="kpi"><b>${busLines.length + metroLines.length}<em>条 / 个</em></b><small>公交线路 · 地铁出口</small></div>
     <div class="kpi"><b>${esc(wanMoney(total))}</b><small>估算总额</small></div>
@@ -258,7 +285,7 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   // 行业约束里的内部合规清单不外泄：只把「不得 X」类条款翻成一句正面承诺，原句留在工作台核验面板。
   const compliance = data.campaign.constraints
     .filter(item => /不得|禁止|须/.test(item))
-    .map(item => item.replace(/；|;|。/g, '，').replace(/不得使用/g, '不使用').replace(/不得出现/g, '不出现').replace(/不得涉及/g, '不涉及').replace(/不得承诺/g, '不承诺').replace(/不得(?:使用|出现|涉及|承诺)?/g, '不').replace(/禁止/g, '不').replace(/须/g, '附带').replace(/^，|，$/g, '').trim())
+    .map(item => item.replace(/；|;|。/g, '，').replace(/须带/g, '带').replace(/不得使用/g, '不使用').replace(/不得出现/g, '不出现').replace(/不得涉及/g, '不涉及').replace(/不得承诺/g, '不承诺').replace(/不得(?:使用|出现|涉及|承诺)?/g, '不').replace(/禁止/g, '不').replace(/(?<!附)须/g, '附带').replace(/^，|，$/g, '').trim())
     .filter(Boolean)
   const complianceLine = compliance.length ? `本方案按行业合规要求处理：${esc(compliance.join('；'))}。` : ''
   const s66 = `${schedule.status === 'capacity_short' ? `<div class="risk">档期产能不足：${esc(schedule.notes[0] || '请延长档期或减少数量')}</div>` : ''}

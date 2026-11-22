@@ -96,6 +96,7 @@ export function rangeData(range: PipelineRangeSuccess, mode: 'off' | 'mock' | 'l
     queriedAt: range.queriedAt,
     billingMonths: range.billingMonths,
     billingStatus: range.billingStatus ?? 'confirmed',
+    requestMedia: [...range.request.media],
     assumptions: range.assumptions,
     notices: range.notices,
     mode,
