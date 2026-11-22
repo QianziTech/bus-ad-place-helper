@@ -328,6 +328,25 @@ test('time spent on inventory and rule calculation does not consume the model re
   assert.equal(budgetProgress.at(-1), '已核算 400/401 个预算档');
 });
 
+test('connection test and brief fallback expose the upstream error message without the API key', async t => {
+  const server = createServer((_req, res) => {
+    res.writeHead(400, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: { message: 'Unsupported model for key test-secret' } }));
+  });
+  await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => { server.closeAllConnections(); server.close(); });
+  const address = server.address(); assert.ok(address && typeof address !== 'string');
+  const llm = new LlmClient();
+  const s = setup('live', llm); t.after(s.cleanup);
+  s.config.update({ llm: { baseUrl: `http://127.0.0.1:${address.port}`, model: 'invalid-model', apiKey: 'test-secret' } });
+
+  const expected = '模型接口返回 HTTP 400：Unsupported model for key [已隐藏]';
+  assert.deepEqual(await new ConfigController(s.config, llm).test(), { ok: false, code: 'unavailable', message: expected });
+  const brief = await s.brief.parse('主目标：认知；媒体：公交');
+  assert.equal(brief.status, 'unavailable');
+  assert.equal(brief.trace.at(-1)?.message, expected);
+});
+
 test('failed live stages degrade without losing a valid deterministic plan', async t => {
   const s = setup('live'); t.after(s.cleanup);
   const result = await s.pipeline.generate(request); assert.equal(result.status, 'ok'); if (result.status !== 'ok') return;

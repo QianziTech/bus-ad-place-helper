@@ -61,7 +61,9 @@ async function parse() {
     result.value = response
     draft.value = { ...(response.campaignDraft || {}) }
     if (response.status === 'disabled') message.info('当前未开启 AI，可使用行业参考需求')
-    else if (response.status === 'unavailable') message.warning(response.reason || '暂时无法提取需求，可使用行业参考需求')
+    else if (response.status === 'unavailable') {
+      message.warning(response.reason || response.trace?.at(-1)?.message || '暂时无法提取需求，可使用行业参考需求')
+    }
   } catch (error) {
     if (error instanceof ApiError && error.scanChecks.length) {
       // 入口拦截：服务端 400 附 checks[]，保留原文供修改。

@@ -44,7 +44,11 @@ export class LlmClient {
             await response.body?.cancel();
             continue;
           }
-          throw new AnalysisUnavailable(`模型接口返回 HTTP ${response.status}`);
+          const errorBody = await response.json().catch(() => null) as { error?: { message?: unknown }; message?: unknown } | null;
+          const message = errorBody?.error?.message ?? errorBody?.message;
+          const redacted = typeof message === 'string' && llm.apiKey ? message.split(llm.apiKey).join('[已隐藏]') : message;
+          const detail = typeof redacted === 'string' ? redacted.replace(/\s+/g, ' ').trim().slice(0, 300) : '';
+          throw new AnalysisUnavailable(`模型接口返回 HTTP ${response.status}${detail ? `：${detail}` : ''}`);
         }
         const body = await response.json().catch(error => {
           if (error instanceof SyntaxError) throw new AnalysisUnavailable('模型接口响应正文不是 JSON');
