@@ -101,6 +101,7 @@ export interface PlanRequest {
   media: MediaKind[]
   startDate: string
   endDate: string
+  acceptWeekly?: boolean
   campaignOverride?: CampaignOverride
   strategyPreferences?: StrategyPreference[]
   briefText?: string
@@ -145,6 +146,7 @@ export interface ScheduleBatch {
   nightDate: string
   mediaKeys: string[]
   quantity: number
+  kindQuantities?: Partial<Record<MediaKind, number>>
   cumulative: number
   publishStartDate: string
   risk: string | null
@@ -197,6 +199,7 @@ export interface InventoryDetail {
   billingMonths: number | null
   billingStatus: 'confirmed' | 'pending'
   kinds: InventoryKindStatus[]
+  canUseWeekly?: boolean
   preview?: InventoryPreviewRow[]
 }
 

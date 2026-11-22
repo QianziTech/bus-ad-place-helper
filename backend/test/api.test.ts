@@ -218,9 +218,20 @@ test('HTTP validates real dates, nested fields and invalid requests; missing win
     { startDate: '2026-06-01' }, { endDate: '2027-01-01' }, { campaignOverride: { realName: 'wrong' } }, { briefText: 'a'.repeat(2001) }, { extra: true }]) {
     assert.equal((await api('/plan/generate', { ...request, ...change })).status, 400, JSON.stringify(change));
   }
-  const missing = await api('/plan', { ...request, startDate: '2027-07-01', endDate: '2027-07-31' });
+  const july = { ...request, startDate: '2027-07-01', endDate: '2027-07-31' };
+  const missing = await api('/plan', july);
   assert.equal(missing.status, 200);
   assert.equal(missing.body.status, 'missing_window');
+  assert.equal(missing.body.inventory.canUseWeekly, true);
+  assert.ok(missing.body.inventory.kinds.every((kind: { source: string }) => kind.source === 'snapshot'));
+  const continued = await api('/plan/generate', { ...july, acceptWeekly: true });
+  assert.equal(continued.body.status, 'ok');
+  assert.equal(continued.body.inventory.billingStatus, 'pending');
+  assert.equal(continued.body.exportAllowed, true);
+  assert.ok(continued.body.schedule.batches.length > 0);
+  const noSample = await api('/plan', { ...july, startDate: '2027-01-01', endDate: '2027-01-03', acceptWeekly: true });
+  assert.equal(noSample.body.status, 'missing_window');
+  assert.equal(noSample.body.inventory.canUseWeekly, undefined);
   assert.equal((await api('/plan/copy', { plan: {}, campaign: {} })).status, 400);
   assert.equal((await api('/plan/verify', { plan: { status: 'ok' }, campaign: {} })).status, 400);
   assert.equal((await api('/plan', { ...request, briefText: '成交价 4.6 万元每辆' })).status, 400);

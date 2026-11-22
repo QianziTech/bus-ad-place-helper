@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { state, workbench, generate, selectBudget } from '../state/workbench'
+import { state, workbench, generate, selectBudget, canConfirmWeekly, confirmWeekly } from '../state/workbench'
 import type { PlanFailure } from '../plan/types'
 import { failureTitle } from '../plan/buildVm'
 import InventoryStatus from './InventoryStatus.vue'
@@ -34,10 +34,6 @@ function applySuggestion(text: string) {
       return
     }
   }
-  if (state.meta?.windows[0]) {
-    workbench.startDate = state.meta.windows[0].startDate
-    workbench.endDate = state.meta.windows[0].endDate
-  }
   void generate()
 }
 </script>
@@ -52,22 +48,25 @@ function applySuggestion(text: string) {
   <div v-else-if="state.networkError" class="status-bar error">
     <b>请求失败：</b>{{ state.networkError }}
     <div class="suggestions">
-      <a-button size="small" @click="generate">重试</a-button>
+      <a-button size="small" @click="generate()">重试</a-button>
     </div>
   </div>
   <div v-else-if="failure" class="status-bar" :class="alertType === 'error' ? 'error' : 'warning'">
-    <b>{{ failureTitle(failure.status) }}：</b>{{ failure.message }}
+    <b>{{ failure.inventory?.canUseWeekly ? '确认周排期' : failureTitle(failure.status) }}：</b>{{ failure.message }}
     <div class="suggestions">
-      <a-button v-for="suggestion in failure.suggestions" :key="suggestion" size="small" @click="applySuggestion(suggestion)">{{ suggestion }}</a-button>
-      <a-tag v-for="win in state.meta?.windows || []" :key="`${win.startDate}${win.endDate}`" :bordered="false" style="cursor: pointer"
-        @click="() => { workbench.startDate = win.startDate; workbench.endDate = win.endDate; generate() }">{{ win.startDate }} ~ {{ win.endDate }}</a-tag>
+      <a-button v-if="failure.inventory?.canUseWeekly" size="small" type="primary"
+        :disabled="!canConfirmWeekly" :loading="state.loading" @click="confirmWeekly">确认按周排期并继续</a-button>
+      <template v-else v-for="suggestion in failure.suggestions" :key="suggestion">
+        <a-button v-if="/仅地铁|只投地铁|仅公交|只投公交|单一公交/.test(suggestion)" size="small" @click="applySuggestion(suggestion)">{{ suggestion }}</a-button>
+        <div v-else class="caption">{{ suggestion }}</div>
+      </template>
     </div>
     <InventoryStatus :inventory="props.failure?.inventory" />
   </div>
   <!-- off 模式下策略与成稿按设计跳过，不算降级告警。 -->
   <div v-else-if="state.result && state.result.status === 'ok' && state.result.inventory?.billingStatus === 'pending'" class="status-bar warning">
     <a-tag color="orange">计费待确认</a-tag>
-    库存已取得，但该区间计费月数尚未确认；报价按 1 个计费月参考估算，确认统一口径后再核算。
+    该区间计费口径待确认，报价为参考估算。
     <InventoryStatus :inventory="state.result.inventory" compact />
   </div>
   <div v-else-if="state.result && state.result.status === 'ok' && state.mode !== 'off' && state.result.degraded?.length" class="status-bar warning">

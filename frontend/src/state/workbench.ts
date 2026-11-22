@@ -56,6 +56,7 @@ export const state = reactive({
 })
 
 let controller: AbortController | null = null
+const weeklyRequest = ref('')
 
 /** 本轮结果在当前金额下的完整成案；不可成案时为 null，原因由 currentOption 提供。 */
 export const currentSuccess = computed<PlanSuccess | null>(() => {
@@ -79,8 +80,22 @@ export function industryMeta(): MetaIndustry | undefined {
   return state.meta?.industries.find(item => item.id === workbench.industry)
 }
 
-export function windowVerified(start = workbench.startDate, end = workbench.endDate): boolean {
-  return Boolean(state.meta?.windows.some(item => item.startDate === start && item.endDate === end))
+export function chooseIndustry(id: IndustryId) {
+  if (workbench.industry !== id) workbench.campaignOverride = undefined
+  workbench.industry = id
+  const window = industryMeta()?.campaign.window
+  if (!window) return
+  const [year, month] = window.start.split('-').map(Number)
+  const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate()
+  const monthEnd = window.start.slice(0, 8) + lastDay
+  workbench.startDate = window.start
+  workbench.endDate = monthEnd < window.end ? monthEnd : window.end
+}
+
+export const canConfirmWeekly = computed(() => !state.loading && weeklyRequest.value === JSON.stringify(buildRequest()))
+
+export function confirmWeekly() {
+  if (canConfirmWeekly.value) return generate(true)
 }
 
 export async function loadMeta() {
@@ -89,18 +104,7 @@ export async function loadMeta() {
     state.meta = meta
     state.metaError = ''
     const defaultIndustry = meta.industries.find(item => item.id === workbench.industry) || meta.industries[0]
-    if (defaultIndustry) {
-      workbench.industry = defaultIndustry.id
-      if (!workbench.startDate) {
-        const first = meta.windows[0]
-        workbench.startDate = first?.startDate || defaultIndustry.campaign.window.start
-        workbench.endDate = first?.endDate || defaultIndustry.campaign.window.end
-      }
-    }
-    if (!meta.windows.length && !workbench.startDate) {
-      workbench.startDate = defaultIndustry?.campaign.window.start || '2027-07-01'
-      workbench.endDate = defaultIndustry?.campaign.window.end || '2027-07-31'
-    }
+    if (defaultIndustry && !workbench.startDate) chooseIndustry(defaultIndustry.id)
   } catch (error) {
     state.metaError = error instanceof Error ? error.message : '无法读取 /api/meta'
     if (!workbench.startDate) {
@@ -173,11 +177,13 @@ function fillStageDetails(result: PipelineResponse) {
   markStage('verify', fail ? 'failed' : 'done', `${pass} 通过 · ${warn} 待确认 · ${fail} 未通过`)
 }
 
-export async function generate() {
+export async function generate(acceptWeekly = false) {
   if (!workbench.media.length) return
   controller?.abort()
   const requestController = new AbortController()
   controller = requestController
+  const payload = buildRequest()
+  weeklyRequest.value = ''
   state.loading = true
   state.networkError = ''
   state.scanHits = []
@@ -185,7 +191,7 @@ export async function generate() {
   markStage('candidates', 'running', '正在后台生成方案…')
   const started = performance.now()
   try {
-    const result = await api.generate(buildRequest(), requestController.signal)
+    const result = await api.generate(acceptWeekly ? { ...payload, acceptWeekly: true } : payload, requestController.signal)
     if (requestController.signal.aborted) return
     const elapsed = Math.round(performance.now() - started)
     state.lastQueryMs = elapsed
@@ -201,6 +207,7 @@ export async function generate() {
       state.generatedAt = Date.now()
     } else {
       state.failure = result
+      if (result.inventory?.canUseWeekly) weeklyRequest.value = JSON.stringify(payload)
       state.diff = []
     }
     fillStageDetails(result)
@@ -240,7 +247,8 @@ export function selectBudget(budgetYuan: number) {
 export async function loadBaseline() {
   if (!currentSuccess.value) return
   try {
-    const request = { ...buildRequest(), budgetYuan: state.selectedYuan }
+    const { strategyPreferences: _preferences, ...parameters } = currentSuccess.value.request
+    const request = { ...parameters, budgetYuan: state.selectedYuan }
     const baseline = await api.plan(request)
     if (baseline.status === 'ok' && 'lines' in baseline) {
       state.baseline = baseline as PlanSuccess

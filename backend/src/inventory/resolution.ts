@@ -55,9 +55,12 @@ export function archiveKind(kind: MediaKind, data: MediaData, startDate: string,
 
 /** 区间内周一单日截面的最小值；每个媒体标出实际可用的采样日。 */
 export function snapshotKind(kind: MediaKind, data: MediaData, snapshots: SnapshotData, startDate: string, endDate: string): KindInventory {
-  const dates = snapshots.dates.filter(date => date >= startDate && date <= endDate);
+  const weekStart = new Date(startDate + 'T00:00:00Z');
+  weekStart.setUTCDate(weekStart.getUTCDate() - (weekStart.getUTCDay() + 6) % 7);
+  const firstMonday = weekStart.toISOString().slice(0, 10);
+  const dates = snapshots.dates.filter(date => date >= firstMonday && date <= endDate);
   const empty = (reason: string): KindInventory => ({ kind, source: 'missing', billingMonths: null, inventoryByKey: {}, reason });
-  if (!dates.length) return empty('区间内没有可用的周一单日截面');
+  if (!dates.length) return empty('所选日期涉及的周内没有可用的周一截面');
   const indexes = dates.map(date => snapshots.dates.indexOf(date));
   const inventoryByKey: Record<string, Inventory> = {};
   const sampleByKey: Record<string, string[]> = {};

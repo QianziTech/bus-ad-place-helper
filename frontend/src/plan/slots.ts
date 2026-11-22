@@ -4,7 +4,7 @@
  * 不引用模块作用域、不依赖任何外部资源，只使用参数对象和内置全局。
  * 预览与导出共用它，保证滑块切换后的内容与首次渲染一致。
  */
-import type { BudgetOption, OptionMedia, RangeAnchor } from './types'
+import type { BudgetOption, InventoryKindStatus, OptionMedia, RangeAnchor } from './types'
 import type { CoverageMapData } from './coverageMap'
 
 export interface RangeData {
@@ -18,7 +18,7 @@ export interface RangeData {
     successMetric: { kpi: string; proof: string }; constraints: string[]
   }
   client: { code: string; alias: string; category: string; scale: string }
-  inventory: { startDate: string; endDate: string; billingStatus: 'confirmed' | 'pending'; kinds: { kind: 'bus' | 'metro'; sourceLabel: string; queriedAt?: string; sampleDates?: string[] }[] }
+  inventory: { startDate: string; endDate: string; billingStatus: 'confirmed' | 'pending'; kinds: InventoryKindStatus[] }
   /** 本次实际选择的媒体，与 campaign.mediaScope（客户预设）分开显示。 */
   requestMedia: ('bus' | 'metro')[]
   queriedAt: string
@@ -30,7 +30,7 @@ export interface RangeData {
   industryName: string
 }
 
-export type SlotName = 'chips' | 'kpis' | 'note' | 's2window' | 's2anchors' | 's3table' | 's4' | 's5' | 's6' | 'analysis' | 'map' | 's65' | 's66'
+export type SlotName = 'strategy' | 'selection' | 'chips' | 'kpis' | 'note' | 's2window' | 's2anchors' | 's3table' | 's4' | 's5' | 's6' | 'analysis' | 'map' | 's65' | 's66'
 
 /** 返回某金额下的全部动态区块；金额不可成案时只有 note（原因）有内容。 */
 export function buildSlots(data: RangeData, budgetYuan: number, highlight?: string | null): Record<SlotName, string> {
@@ -51,7 +51,7 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   }
   const windowText = (start: string, end: string) => (!start || !end ? '—' : start === end ? start : `${start} ~ ${end.slice(5)}`)
   const mediaLabel = (kind: string) => (kind === 'bus' ? '公交车身' : '地铁出入口')
-  const empty: Record<SlotName, string> = { chips: '', kpis: '', note: '', s2window: '', s2anchors: '', s3table: '', s4: '', s5: '', s6: '', analysis: '', map: '', s65: '', s66: '' }
+  const empty: Record<SlotName, string> = { strategy: '', selection: '', chips: '', kpis: '', note: '', s2window: '', s2anchors: '', s3table: '', s4: '', s5: '', s6: '', analysis: '', map: '', s65: '', s66: '' }
   const option = data.budgetOptions.filter(item => item.budgetYuan === budgetYuan)[0]
   if (!option) return empty
   if (option.status !== 'ok' || !option.lines || !option.schedule) {
@@ -69,6 +69,7 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
       anchorIds: source.anchorIds || [], traffic: source.trafficReference, trajectory: source.trajectory, preferredByAi: Boolean(item.preferredByAi) }
   }
   const lines = option.lines.map(line => lineOf(line.mediaKey)).filter((line): line is NonNullable<ReturnType<typeof lineOf>> => Boolean(line))
+  const sourceOf = (kind: 'bus' | 'metro') => data.inventory.kinds.find(item => item.kind === kind)
   const busLines = lines.filter(line => line.kind === 'bus')
   const metroLines = lines.filter(line => line.kind === 'metro')
   const selected = new Map((option.selectedAnchors || []).map(item => [item.anchorId, item.selectedCount]))
@@ -86,7 +87,9 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
     const tags: string[] = []
     const joined = line.sources.join(' ')
     if (/平台|覆盖|sopLabelPoints|matchCoverLines/.test(joined)) tags.push('平台覆盖分析')
-    if (/红豆|归档|截面|bus\.json|metro\.json|库存/.test(joined)) tags.push('红豆库存')
+    const stockSource = sourceOf(line.kind)
+    if (stockSource) tags.push(stockSource.sourceLabel)
+    else if (/红豆|归档|截面|bus\.json|metro\.json|库存/.test(joined)) tags.push('库存')
     if (/pricing|刊例/.test(joined)) tags.push('刊例')
     if (line.traffic) tags.push(`客流 ${line.traffic.period || '历史'}`)
     if (!tags.length) tags.push('平台覆盖分析')
@@ -96,9 +99,10 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
     const star = line.preferredByAi ? '<span class="star" title="AI 推荐资源">★ </span>' : ''
     const anchorNames = anchors.filter(anchor => anchor.selectedCount > 0 && line.anchorIds.indexOf(anchor.id) >= 0).map(anchor => anchor.areaName)
     // 库存四态写进展开区：手机上没有 hover，关键数字必须有一处落点。
-    const stockLine = `可售 ${line.freeCount}${line.contractCount !== undefined ? ` · 合同 ${line.contractCount}` : ''}${line.reservedCount !== undefined ? ` · 预定 ${line.reservedCount}` : ''}${line.total !== undefined ? ` · 总量 ${line.total}` : ''}`
-    const leftOver = line.total !== undefined ? line.total - line.quantity : undefined
-    const leftNote = leftOver !== undefined && leftOver > 0 ? `本方案采用 ${line.quantity}，其余 ${leftOver} 台未订，留作同档期的替换与备损缓冲。` : ''
+    const weekly = sourceOf(line.kind)?.source === 'snapshot'
+    const stockLine = `${weekly ? '周参考空位' : '可售'} ${line.freeCount}${line.contractCount !== undefined ? ` · 合同 ${line.contractCount}` : ''}${line.reservedCount !== undefined ? ` · 预定 ${line.reservedCount}` : ''}${line.total !== undefined ? ` · 总量 ${line.total}` : ''}`
+    const leftOver = line.freeCount - line.quantity
+    const leftNote = leftOver > 0 ? `${weekly ? '周参考余量' : '本方案采用后剩余空位'} ${leftOver} ${line.kind === 'bus' ? '台' : '个出口'}。` : ''
     const pct = option.totalYuan ? Math.round((line.lineTotalYuan / option.totalYuan) * 1000) / 10 : 0
     const load = pct >= 30 ? `<span class="load">主承重 ${pct}%</span>` : ''
     const details = [
@@ -144,21 +148,17 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   const end = data.inventory.endDate || ''
   const suggested = data.campaign.window
   const months = Math.max(1, data.billingMonths || 1)
-  const monthlyCost = total / months
+  const nextDate = (value: string, days = 1) => {
+    const date = new Date(`${value}T00:00:00Z`)
+    date.setUTCDate(date.getUTCDate() + days)
+    return date.toISOString().slice(0, 10)
+  }
   const differs = suggested && (suggested.start !== start || suggested.end !== end)
-  // 只有建议窗口接着本次档期（不晚于次日）且终点更晚，才谈得上「续投」；更早、提前结束或中间断档都只说不同。
-  const nextDay = (value: string) => {
-    const date = new Date(`${value}T00:00:00`)
-    date.setDate(date.getDate() + 1)
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
-  }
-  const extendable = differs && suggested.end > end && suggested.start <= nextDay(end)
-  const monthCount = (from: string, to: string) => {
-    const a = new Date(`${from}T00:00:00`), b = new Date(`${to}T00:00:00`)
-    return Math.max(1, (b.getFullYear() - a.getFullYear()) * 12 + b.getMonth() - a.getMonth() + 1)
-  }
-  const restMonths = extendable ? Math.max(0, monthCount(suggested.start, suggested.end) - months) : 0
-  const s2window = `<div class="win"><b>${esc(start && end ? `${start} ~ ${end}` : '档期待确认')}</b><span>${esc(data.billingStatus === 'pending' ? '计费口径待确认' : `${months} 个投放月`)} · 上限 ${esc(`${budgetYuan / 10000} 万`)}</span>${differs ? `<br><small>${extendable ? `建议窗口 ${esc(`${suggested.start} ~ ${suggested.end}`)}；本次先投 ${esc(`${start} ~ ${end}`)}${restMonths ? `，余下 ${restMonths} 个月可续投，按本档单价约 ${esc(wanMoney(monthlyCost))}／月` : ''}` : `与客户预设窗口 ${esc(`${suggested.start} ~ ${suggested.end}`)} 不同，本次按 ${esc(`${start} ~ ${end}`)} 投放`}</small>` : ''}</div>`
+  const nextDay = end ? nextDate(end) : ''
+  const remainingStart = suggested.start > nextDay ? suggested.start : nextDay
+  const followUp = remainingStart && remainingStart <= suggested.end
+    ? `；后续档期 ${remainingStart} ~ ${suggested.end} 如需投放，另行查档与报价` : ''
+  const s2window = `<div class="win"><b>${esc(start && end ? `${start} ~ ${end}` : '档期待确认')}</b><span>${esc(data.billingStatus === 'pending' ? '计费口径待确认' : `${months} 个投放月`)} · 上限 ${esc(`${budgetYuan / 10000} 万`)}</span>${differs ? `<br><small>${esc(`建议窗口 ${suggested.start} ~ ${suggested.end}${followUp}`)}</small>` : ''}</div>`
   const kpis = `<div class="kpi"><b>${quantity}<em>台 / 个</em></b><small>媒体单位</small></div>
     <div class="kpi"><b>${busLines.length + metroLines.length}<em>条 / 个</em></b><small>公交线路 · 地铁出口</small></div>
     <div class="kpi"><b>${esc(wanMoney(total))}</b><small>估算总额</small></div>
@@ -179,6 +179,18 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   <h3 style="margin-top:32px">地铁出入口（${metroLines.length} 个出口 · ${metroLines.reduce((sum, line) => sum + line.quantity, 0)} 个）</h3>
   ${table(metroLines)}
   <p class="note" style="margin-top:12px">数量不超过该档期可售量；未订到的空位留在同一档期内，可作替换与备损。行合计占总额 30% 以上的资源标为「主承重」，单点延误影响较大。${lines.some(line => line.preferredByAi) ? '<span class="star">★</span> 表示 AI 推荐资源。' : ''}</p>`
+  const busAnchors = anchors.filter(anchor => busLines.some(line => line.anchorIds.includes(anchor.id)))
+  const metroPoints = [...new Set(metroLines.map(line => [line.name, line.exit].filter(Boolean).join(' ')))]
+  const summarize = (items: string[]) => items.slice(0, 4).join('、') + (items.length > 4 ? '等' : '')
+  const strategy = esc([
+    busLines.length ? (busAnchors.length ? '公交覆盖' + summarize(busAnchors.map(anchor => anchor.areaName)) : '公交按历史人群匹配选线') : '',
+    metroPoints.length ? '地铁在' + summarize(metroPoints) + '提供出入口曝光' : '',
+  ].filter(Boolean).join('；') + '。')
+  const selection = esc([
+    busLines.length ? `入选公交 ${busLines.length} 条媒体记录，其中 ${busLines.filter(line => line.anchorIds.length).length} 条关联目标商圈` : '',
+    metroPoints.length ? (metroPoints.length === 1 ? `地铁仅保留 ${metroPoints[0]}` : `入选地铁出口 ${metroPoints.length} 个`) : '',
+  ].filter(Boolean).join('；') + '。各资源的覆盖或人群依据见清单。')
+
   const schedule = option.schedule
   const inventoryLine = data.inventory.kinds.map(item => {
     const label = item.kind === 'bus' ? '公交' : '地铁'
@@ -194,11 +206,35 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   const capacity = schedule.status === 'capacity_short'
     ? `<div class="risk">当前产能 ${schedule.batches.length} 夜 < 所需 ${neededNights} 夜：请延长档期或减少 ${Math.max(1, quantity - schedule.batches.reduce((sum, batch) => sum + batch.quantity, 0))} 台。</div>`
     : ''
-  const s5 = `<div class="tl"><b>${esc(windowText(data.inventory.startDate, data.inventory.endDate))}</b><br><small>${data.billingStatus === 'pending' ? '计费口径待确认（报价按 1 个计费月参考估算）' : `${data.billingMonths} 个计费月`} · ${esc(inventoryLine)}</small></div>
+  const placement = data.inventory.kinds.flatMap(kind => {
+    if (kind.source !== 'snapshot' && kind.source !== 'hongdou') return []
+    const weekly = kind.source === 'snapshot'
+    const configured = lines.filter(line => line.kind === kind.kind).reduce((sum, line) => sum + line.quantity, 0)
+    if (!configured) return []
+    const label = kind.kind === 'bus' ? '公交' : '地铁'
+    const days = weekly ? kind.sampleDates || [] : Array.from(
+      { length: Math.floor((Date.parse(end) - Date.parse(start)) / 86400000) + 1 },
+      (_, index) => nextDate(start, index),
+    )
+    const rows = days.map(day => {
+      const from = day < start ? start : day
+      const weekEnd = weekly ? nextDate(day, 6) : day
+      const to = weekEnd > end ? end : weekEnd
+      if (from > to) return ''
+      const launched = schedule.batches.reduce((sum, batch) =>
+        batch.publishStartDate <= to ? sum + (batch.kindQuantities?.[kind.kind] ?? 0) : sum, 0)
+      return `<tr><td>${esc(windowText(from, to))}</td>${weekly ? `<td>${esc(day)}</td>` : ''}<td class="num">${configured}</td><td class="num">${launched}</td></tr>`
+    }).join('')
+    const explanation = weekly ? '配置量采用各采样周的共同参考数量。表中只列有采样的周，实际空位需另行核对。'
+      : '按红豆整段核对可用量配置，按日反映施工上线进度。'
+    return [`<details><summary>${label}${weekly ? '逐周参考排期' : '逐日上线计划'}</summary><p class="note">${explanation}</p>
+    <table class="data"><thead><tr><th>投放日期</th>${weekly ? '<th>采样日</th>' : ''}<th class="num">配置量</th><th class="num">期末计划上线量</th></tr></thead><tbody>${rows}</tbody></table></details>`]
+  }).join('')
+  const s5 = `<div class="tl"><b>${esc(windowText(data.inventory.startDate, data.inventory.endDate))}</b><br><small>${data.billingStatus === 'pending' ? `计费口径待确认，按 ${data.billingMonths} 个计费月暂估` : `${data.billingMonths} 个计费月`} · ${esc(inventoryLine)}</small></div>
   <h3 style="margin-top:12px">上线批次（夜间施工，单晚上限 ${schedule.singleNightCap} 台 / 口）</h3>
   ${schedule.batches.length ? `<table class="data batch"><thead><tr><th>批次</th><th>施工夜</th><th>主要线路 / 点位</th><th class="num">数量</th><th class="num">累计</th><th>发布期起算</th></tr></thead><tbody>${scheduleRows}</tbody></table>` : '<p class="muted">本次没有可编排的施工批次。</p>'}
   <p class="note" style="margin-top:12px">首批 ${schedule.batches.length ? schedule.batches[0].nightDate : '—'} 夜间施工，${schedule.batches.length ? schedule.batches[0].publishStartDate : '—'} 08:00 起算；已预留 ${schedule.rainBufferNights} 个雨天顺延夜在档期内 · 误一补二预留 ${schedule.compensationBufferQty} 台。本方案计划 ${schedule.batches.length} 批。</p>
-  <p class="note">本方案展示计划投放档期；实际施工与上刊由签约后的执行流程确认。</p>${capacity}`
+  <p class="note">本方案展示计划投放档期；实际施工与上刊由签约后的执行流程确认。</p>${capacity}${placement}`
 
   // 预算使用率与加投弹性：余量对比最低单位价，告诉客户还能不能再加一个单位。
   const cheapest = lines.reduce((min, line) => (line.unitEstimateYuan < min ? line.unitEstimateYuan : min), Number.POSITIVE_INFINITY)
@@ -301,5 +337,5 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
         <li>不含素材制作与创意，折扣与票税按客户协议另议</li></ul></div></div>
   ${complianceLine ? `<p class="note" style="margin-top:16px">${complianceLine}</p>` : ''}`
 
-  return { chips, kpis, note, s2window, s2anchors, s3table, s4, s5, s6, analysis, map, s65, s66 }
+  return { strategy, selection, chips, kpis, note, s2window, s2anchors, s3table, s4, s5, s6, analysis, map, s65, s66 }
 }

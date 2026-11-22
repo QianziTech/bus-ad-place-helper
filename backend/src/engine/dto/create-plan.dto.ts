@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { ArrayMaxSize, ArrayMinSize, ArrayUnique, IsArray, IsIn, IsInt, IsNotEmpty, IsNumber, IsObject, IsString, Max, MaxLength, Min, Validate, ValidateIf, ValidateNested, ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, ArrayUnique, IsArray, IsBoolean, IsIn, IsInt, IsNotEmpty, IsNumber, IsObject, IsString, Max, MaxLength, Min, Validate, ValidateIf, ValidateNested, ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 import { Campaign, CampaignOverride, INDUSTRIES, IndustryId, MediaKind, PlanRequest, PipelineRequest, StrategyPreference } from '../../shared/contracts';
 import { isPlanDate } from '../../shared/data/plan-data';
 
@@ -120,6 +120,9 @@ export class CreatePlanDto implements PlanRequest {
 
   @ApiProperty({ example: '2027-06-30', pattern: '^2027-\\d{2}-\\d{2}$' })
   @Validate(PlanDateConstraint) @Validate(DateOrderConstraint, ['startDate']) endDate!: string;
+
+  @ApiPropertyOptional({ description: '已确认采用本地周截面做参考排期' })
+  @ValidateIf((_o, value) => value !== undefined) @IsBoolean() acceptWeekly?: boolean;
 
   @ApiPropertyOptional({ type: CampaignOverrideDto, description: '只接受 Campaign 的可编辑字段，不接受客户身份或 campaign.id' })
   @ValidateIf((_o, value) => value !== undefined) @IsObject() @ValidateNested() @Type(() => CampaignOverrideDto) campaignOverride?: CampaignOverrideDto;

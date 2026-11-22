@@ -65,6 +65,7 @@ export class ScheduleBatchDto {
   @ApiProperty({ format: 'date' }) nightDate!: string;
   @ApiProperty({ type: [String] }) mediaKeys!: string[];
   @ApiProperty({ minimum: 1 }) quantity!: number;
+  @ApiPropertyOptional({ type: 'object', properties: { bus: { type: 'number' }, metro: { type: 'number' } } }) kindQuantities?: { bus?: number; metro?: number };
   @ApiProperty({ minimum: 1 }) cumulative!: number;
   @ApiProperty({ format: 'date', description: '该批施工照次日 08:00 起算的日期' }) publishStartDate!: string;
   @ApiProperty({ type: String, nullable: true }) risk!: string | null;
@@ -112,6 +113,7 @@ export class InventoryDetailDto {
   @ApiProperty({ type: Number, nullable: true }) billingMonths!: number | null;
   @ApiProperty({ enum: ['confirmed', 'pending'], description: '计费口径是否已确认' }) billingStatus!: string;
   @ApiProperty({ type: [InventoryKindStatusDto] }) kinds!: InventoryKindStatusDto[];
+  @ApiPropertyOptional({ description: '可在用户确认后使用周截面生成参考排期' }) canUseWeekly?: boolean;
   @ApiPropertyOptional({ type: [InventoryPreviewRowDto], description: '存在周截面参考时返回可售空位参考值，仅用于库存预览' }) preview?: InventoryPreviewRowDto[];
 }
 export class PlanSuccessDto {

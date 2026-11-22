@@ -23,7 +23,7 @@ export interface RenderOptions {
   budgetYuan?: number
 }
 
-const SLOTS: SlotName[] = ['chips', 'kpis', 'note', 's2window', 's2anchors', 's3table', 's4', 's5', 's6', 'analysis', 'map', 's65', 's66']
+const SLOTS: SlotName[] = ['strategy', 'selection', 'chips', 'kpis', 'note', 's2window', 's2anchors', 's3table', 's4', 's5', 's6', 'analysis', 'map', 's65', 's66']
 const inlineScript = (code: string) => code.replace(/<\/script/gi, '<\\/script')
 
 const STEP_LABELS: Record<string, string> = {
@@ -162,7 +162,7 @@ ${head}
   <p class="kicker">户外投放方案</p>
   <p class="kicker" style="margin-top:10px">${h(vm.headlineTemplate)}</p>
   <h1>${h(vm.headline)}</h1>
-  <p class="lede">${h(copyText(vm.copy.strategyLine, 160) || `${vm.chips[0].industry} · ${vm.chips[0].media} · ${vm.chips[0].window}`)}</p>
+  <p class="lede" data-slot="strategy">${slots.strategy}</p>
   ${slot('chips')}
   ${slot('kpis')}
   ${slot('note')}
@@ -178,7 +178,7 @@ ${head}
       <table class="brief">
         <tr><th>① 客户</th><td>${h(`${vm.client.code} · ${vm.client.alias}`)}<br><small>${h(`${vm.client.category} · ${vm.client.scale}`)}</small></td></tr>
         <tr><th>② 生意目标</th><td>${h(campaign.businessGoal)}</td></tr>
-        <tr><th>③ 投放活动</th><td>${h(`${campaign.name}（主目标：${campaign.primaryGoal}）`)}</td></tr>
+        <tr><th>③ 建议活动</th><td>${h(`${campaign.name}（主目标：${campaign.primaryGoal}）`)}</td></tr>
         <tr><th>④ 人群</th><td>${h(campaign.audience)}</td></tr>
         <tr><th>⑤ 时间与预算</th><td>${slot('s2window')}</td></tr>
         <tr><th>⑥ 媒体范围</th><td>${h(mediaScopeText())}</td></tr>
@@ -192,7 +192,7 @@ ${head}
 
 <section id="s3">
   <h2>推荐理由</h2>
-  <p>${h(copyText(vm.copy.selectionRationale, 300) || '公交承担面覆盖与补量，地铁集中核心商圈出入口；具体取舍见清单与来源。')}</p>
+  <p data-slot="selection">${slots.selection}</p>
   <details><summary>查看推荐过程</summary><p>${h(vm.strategySource)}</p></details>
   <div class="split wide" style="margin-top:20px">
     <div>
@@ -300,7 +300,7 @@ function rangeDataFor(vm: PlanVm): RangeData {
     mediaByKey: Object.fromEntries(vm.lines.map(line => [line.mediaKey, {
       mediaKey: line.mediaKey, kind: line.kind, name: line.name, levelName: line.levelName,
       ...(line.variant && line.variant !== '—' ? (line.kind === 'bus' ? { mediaForm: line.variant } : { exit: line.variant }) : {}),
-      ...(line.total === undefined ? {} : { total: line.total }), freeCount: line.freeCount,
+      ...(line.total === undefined ? {} : { total: line.total }), freeCount: line.freeCount, contractCount: line.contractCount, reservedCount: line.reservedCount,
       monthlyLowYuan: line.monthlyLowYuan, monthlyHighYuan: line.monthlyHighYuan,
       productionUnitYuan: line.quantity ? line.productionYuan / line.quantity : 0, unitEstimateYuan: line.quantity ? line.lineTotalYuan / line.quantity : 0,
       anchorIds: line.anchorIds, evidenceRefs: [], reasons: line.reasons, sources: line.sources, assumptions: vm.assumptions,
@@ -314,7 +314,7 @@ function rangeDataFor(vm: PlanVm): RangeData {
       successMetric: vm.campaign.successMetric, constraints: vm.campaign.constraints },
     client: vm.client,
     inventory: vm.inventory ? { startDate: vm.inventory.startDate, endDate: vm.inventory.endDate, billingStatus: vm.inventory.billingStatus,
-      kinds: vm.inventory.kinds.map(kind => ({ kind: kind.kind, sourceLabel: kind.sourceLabel, ...(kind.queriedAt ? { queriedAt: kind.queriedAt } : {}), ...(kind.sampleDates ? { sampleDates: kind.sampleDates } : {}) })) }
+      kinds: vm.inventory.kinds }
       : { startDate: vm.startDate, endDate: vm.endDate, billingStatus: vm.billingPending ? 'pending' : 'confirmed', kinds: [] },
     queriedAt: vm.queriedAt,
     billingMonths: vm.billingMonths,

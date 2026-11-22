@@ -276,6 +276,9 @@ export function buildVm(input: {
     })
     .filter(item => item.yuan > 0 || item.productionYuan > 0)
   const firstAnchor = anchors[0]?.areaName || plan.campaign.mediaScope.map(kind => (kind === 'bus' ? '公交沿线' : '地铁站口')).slice(0, 1).join('')
+  const outsideWindow = plan.request.endDate < plan.campaign.window.start || plan.request.startDate > plan.campaign.window.end
+  const actualTitle = plan.request.industry === 'park' && plan.request.endDate < plan.campaign.window.start
+    ? '旺季前引流' : `${plan.campaign.primaryGoal}投放方案`
   const headlineTemplate =
     copy.headline && copy.headline.trim()
       ? copy.headline.trim()
@@ -290,10 +293,10 @@ export function buildVm(input: {
     campaign: plan.campaign,
     request: plan.request,
     chips,
-    headlineTemplate: `${plan.client.alias} · ${plan.campaign.name}`,
-    headline: headlineTemplate,
+    headlineTemplate: `${plan.client.alias} · ${outsideWindow ? actualTitle : plan.campaign.name}`,
+    headline: outsideWindow ? actualTitle : headlineTemplate,
     headlineSource: copy.source,
-    copy,
+    copy: outsideWindow ? { ...copy, brandContext: `本次投放围绕${plan.campaign.primaryGoal}目标，建议活动窗口见下表。` } : copy,
     brandContextSource: copy.source === 'llm' ? 'AI 辅助整理' : copy.source === 'mock' ? '演示样例' : '模板文案',
     strategySource:
       mode === 'off'

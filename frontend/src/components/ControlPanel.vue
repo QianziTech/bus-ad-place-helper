@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import dayjs, { type Dayjs } from 'dayjs'
+import type { Dayjs } from 'dayjs'
 import { message } from 'ant-design-vue'
-import { workbench, state, windowVerified } from '../state/workbench'
+import { workbench, state, chooseIndustry } from '../state/workbench'
 import { localScan } from '../plan/sanitize'
 
 const industryItems = computed(() => state.meta?.industries || [])
@@ -10,9 +10,8 @@ const mediaList = computed(() => (state.meta?.media || ['bus', 'metro']).map(kin
   value: kind,
   label: kind === 'bus' ? '公交车身' : '地铁出入口',
 })))
-const windows = computed(() => state.meta?.windows || [])
-const rangeValue = computed(() => [dayjs(workbench.startDate), dayjs(workbench.endDate)])
-/** 只允许在 2027 年内选日期；能选不等于能报，非已核对区间照样提交并如实返回 missing_window。 */
+const rangeValue = computed<[string, string] | undefined>(() =>
+  workbench.startDate && workbench.endDate ? [workbench.startDate, workbench.endDate] : undefined)
 const disabledDate = (current: Dayjs) => current.year() !== 2027
 const briefHits = computed(() => localScan(workbench.briefText))
 /** 服务端没加载内部品牌映射时，扫描命中恒为零，不能显示成「未检测到实名」。 */
@@ -29,13 +28,6 @@ function toggleMedia(checked: string[]) {
   }
   workbench.media = checked as ('bus' | 'metro')[]
 }
-
-const windowTag = computed(() => {
-  if (!workbench.startDate || !workbench.endDate) return { text: '未选', color: 'default' }
-  return windowVerified()
-    ? { text: '已核对', color: 'success' as const }
-    : { text: '待核对', color: 'warning' as const }
-})
 
 function goBrief() {
   location.hash = '/brief'
@@ -61,8 +53,8 @@ function applyWindow(start: string, end: string) {
           role="radio"
           :aria-checked="workbench.industry === item.id"
           :tabindex="0"
-          @click="workbench.industry = item.id"
-          @keydown.enter.prevent="workbench.industry = item.id"
+          @click="item.id !== workbench.industry && chooseIndustry(item.id)"
+          @keydown.enter.prevent="item.id !== workbench.industry && chooseIndustry(item.id)"
         >
           <b>{{ item.name }}</b>
           <small>{{ item.client.alias }}</small>
@@ -79,15 +71,6 @@ function applyWindow(start: string, end: string) {
 
     <section>
       <h4>投放档期</h4>
-      <div class="chips">
-        <span
-          v-for="win in windows"
-          :key="`${win.startDate}-${win.endDate}`"
-          class="chip-btn"
-          :class="{ active: workbench.startDate === win.startDate && workbench.endDate === win.endDate }"
-          @click="applyWindow(win.startDate, win.endDate)"
-        >{{ win.startDate }} ~ {{ win.endDate.slice(5) }}（已核对）</span>
-      </div>
       <a-range-picker
         :value="rangeValue"
         value-format="YYYY-MM-DD"
@@ -98,12 +81,7 @@ function applyWindow(start: string, end: string) {
         :placeholder="['开始日期', '结束日期']"
         @update:value="(v: [string, string] | null) => v && applyWindow(v[0], v[1])"
       />
-      <p class="caption" style="display: flex; gap: 8px; align-items: center">
-        <a-tag :color="windowTag.color">{{ windowTag.text }}</a-tag>
-        <span v-if="windowVerified()">已有完整档期库存。</span>
-        <span v-else-if="windows.length">暂无该完整档期库存，可选择上方已核对档期。</span>
-        <span v-else>暂无完整档期库存，请先核对。</span>
-      </p>
+      <p class="caption">生成时核对所选日期的库存，可用本地周截面时会提示确认。</p>
     </section>
 
     <section>

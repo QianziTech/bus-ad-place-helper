@@ -36,6 +36,7 @@ export interface InventoryDetail {
   billingStatus: 'confirmed' | 'pending';
   kinds: InventoryKindStatus[];
   preview?: InventoryPreviewRow[];
+  canUseWeekly?: boolean;
 }
 export interface Price { monthlyLowYuan: number; monthlyHighYuan: number; productionYuan: number; source: string; assumptions: string[] }
 export interface CoverageCandidate { mediaKey: string; relation: string; source: string; distanceM?: number }
@@ -51,7 +52,7 @@ export interface SnapshotData { dates: string[]; freeByKey: Record<string, (numb
 export interface PlanData { bus: MediaData; metro: MediaData; pricing: { pricesByMediaKey: Record<string, Price> }; briefs: { industries: Industry[] }; coverage: { anchorsById: Record<string, Anchor> }; traffic: { byMediaKey: Record<string, TrafficReference> }; trajectories: TrajectorySet; snapshots?: SnapshotData }
 export type RejectionReason = 'unknown_media' | 'no_stock' | 'over_budget' | 'premium_exceeded' | 'invalid_evidence';
 export interface StrategyPreference { mediaKey: string; reason: string; evidenceRefs: string[]; disposition?: 'accepted' | `rejected:${RejectionReason}` }
-export interface PlanRequest { industry: IndustryId; budgetYuan: number; media: MediaKind[]; startDate: string; endDate: string; campaignOverride?: CampaignOverride; strategyPreferences?: StrategyPreference[]; briefText?: string }
+export interface PlanRequest { industry: IndustryId; budgetYuan: number; media: MediaKind[]; startDate: string; endDate: string; acceptWeekly?: boolean; campaignOverride?: CampaignOverride; strategyPreferences?: StrategyPreference[]; briefText?: string }
 /** 流水线请求：省略 budgetYuan 时按滑块全区间生成。 */
 export type PipelineRequest = Omit<PlanRequest, 'budgetYuan'> & { budgetYuan?: number };
 export interface Candidate {
@@ -63,7 +64,7 @@ export interface Candidate {
 export interface PlanFailure { status: 'missing_window' | 'missing_data' | 'no_inventory' | 'over_budget'; message: string; suggestions: string[]; inventory?: InventoryDetail }
 export interface CandidatePool { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; candidates: Candidate[]; anchors: AnchorSummary[]; billingMonths: number; queriedAt: string; notices: string[]; excluded: { mediaKey: string; reason: RejectionReason }[]; inventory: InventoryDetail }
 export interface PlanLine extends Omit<Candidate, 'anchorIds' | 'assumptions'> { quantity: number; lineTotalYuan: number; preferredByAi?: boolean }
-export interface ScheduleBatch { no: number; nightDate: string; mediaKeys: string[]; quantity: number; cumulative: number; publishStartDate: string; risk: string | null }
+export interface ScheduleBatch { no: number; nightDate: string; mediaKeys: string[]; quantity: number; kindQuantities?: Partial<Record<MediaKind, number>>; cumulative: number; publishStartDate: string; risk: string | null }
 export interface Schedule { status: 'ok' | 'unavailable' | 'capacity_short'; singleNightCap: number; batches: ScheduleBatch[]; rainBufferNights: number; compensationBufferQty: number; notes: string[]; assumptions: string[] }
 export interface TraceStep { step: string; message: string; evidenceRefs?: string[]; elapsedMs?: number }
 export interface PlanSuccess { status: 'ok'; request: PlanRequest; client: Client; campaign: Campaign; lines: PlanLine[]; anchors: PlanAnchor[]; billingMonths: number; billingStatus: 'confirmed' | 'pending'; totalYuan: number; remainingYuan: number; queriedAt: string; schedule: Schedule; assumptions: string[]; notices: string[]; trace: TraceStep[]; strategyPreferences?: StrategyPreference[]; inventory: InventoryDetail }

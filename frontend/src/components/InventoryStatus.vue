@@ -28,7 +28,7 @@ const hasSnapshot = computed(() => Boolean(props.inventory?.kinds.some(item => i
     <div v-for="kind in inventory.kinds" :key="kind.kind" class="inventory-kind">
       <a-tag :color="sourceColor[kind.source] || 'default'">{{ kindLabel(kind.kind) }} · {{ kind.sourceLabel }}</a-tag>
       <span v-if="kind.queriedAt" class="caption">查询于 {{ dateTimeText(kind.queriedAt) }}</span>
-      <span v-else-if="kind.sampleDates?.length" class="caption">采样日 {{ kind.sampleDates.join('、') }}（取各采样日最小空位）</span>
+      <span v-else-if="kind.sampleDates?.length" class="caption">采样日 {{ kind.sampleDates.join('、') }}</span>
       <span v-if="kind.reason" class="caption inventory-reason">{{ kind.reason }}</span>
     </div>
     <table v-if="previewRows.length && !compact" class="inventory-preview">
@@ -43,7 +43,7 @@ const hasSnapshot = computed(() => Boolean(props.inventory?.kinds.some(item => i
       </tbody>
     </table>
     <p v-if="hasSnapshot && !compact" class="caption">
-      周截面只用于库存参考，已核对数量、报价与 HTML 导出需整段库存；可直接切换到下方已核对的完整档期。
+      周截面来自周一采样，用于参考排期。各周实际空位及计费需在签约前核对。
     </p>
   </div>
 </template>

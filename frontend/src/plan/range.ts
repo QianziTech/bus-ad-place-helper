@@ -90,7 +90,7 @@ export function rangeData(range: PipelineRangeSuccess, mode: 'off' | 'mock' | 'l
     inventory: range.inventory
       ? {
         startDate: range.inventory.startDate, endDate: range.inventory.endDate, billingStatus: range.inventory.billingStatus,
-        kinds: range.inventory.kinds.map(kind => ({ kind: kind.kind, sourceLabel: kind.sourceLabel, ...(kind.queriedAt ? { queriedAt: kind.queriedAt } : {}), ...(kind.sampleDates ? { sampleDates: kind.sampleDates } : {}) })),
+        kinds: range.inventory.kinds,
       }
       : { startDate: range.request.startDate, endDate: range.request.endDate, billingStatus: range.billingStatus ?? 'confirmed', kinds: [] },
     queriedAt: range.queriedAt,

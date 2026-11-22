@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable, Optional } from '@nestjs/commo
 import { BudgetOption, BudgetOptions, Campaign, Candidate, CandidatePool, Client, Industry, InventoryDetail, MediaKind, OptionMedia, PipelineRangeSuccess, PlanAnchor, PlanFailure, PlanLine, PlanRangeBase, PlanRequest, PlanResult, PlanSuccess, PipelineRequest, RejectionReason, StrategyPreference, TraceStep } from '../shared/contracts';
 import { PlanDataService } from '../shared/data/plan-data.service';
 import { ScheduleService } from './schedule.service';
-import { KIND_LABELS, offlineResolution, SOURCE_LABELS, kindStatus, previewRows, type InventoryResolution, type KindInventory } from '../inventory/resolution';
+import { billingMonthsFor, KIND_LABELS, offlineResolution, SOURCE_LABELS, kindStatus, previewRows, type InventoryResolution, type KindInventory } from '../inventory/resolution';
 
 const kinds: MediaKind[] = ['bus', 'metro'];
 const labels = { bus: '公交', metro: '地铁' };
@@ -78,9 +78,7 @@ export class EngineService {
     const inventory = resolution ?? offlineResolution(data, selectedKinds, request);
     const detail: InventoryDetail = { startDate: request.startDate, endDate: request.endDate, billingMonths: inventory.billingMonths, billingStatus: inventory.billingStatus, kinds: inventory.kinds.map(kindStatus) };
     const byKind = new Map<MediaKind, KindInventory>(inventory.kinds.map(kind => [kind.kind, kind]));
-    const pendingBilling = inventory.billingMonths === null;
     const notices: string[] = [];
-    if (pendingBilling) notices.push('该档期计费月数尚未确认，报价暂按 1 个计费月估算，计费口径待确认。');
     const evidence = new Map<string, Evidence>();
     const add = (key: string, partial: Evidence) => {
       const previous = evidence.get(key) ?? { anchorIds: [], evidenceRefs: [], reasons: [], sources: [] };
@@ -99,7 +97,7 @@ export class EngineService {
       for (const candidate of anchor.candidates) {
         add(candidate.mediaKey, {
           anchorIds: [ref.id], evidenceRefs: [`coverage:${ref.id}:${candidate.mediaKey}`],
-          reasons: [`${anchor.areaName}：${candidate.relation}${candidate.distanceM === undefined ? '' : `（已核对距离 ${candidate.distanceM} 米）`}`, ref.rationale], sources: [candidate.source, anchor.coord.source],
+          reasons: [`${anchor.areaName}：${candidate.relation}${candidate.distanceM === undefined ? '' : `（已核对距离 ${candidate.distanceM} 米）`}`], sources: [candidate.source, anchor.coord.source],
         });
       }
     }
@@ -111,7 +109,7 @@ export class EngineService {
     }
     const unavailable = selectedKinds.filter(kind => {
       const resolved = byKind.get(kind);
-      return !resolved || (resolved.source !== 'hongdou' && resolved.source !== 'archive');
+      return !resolved || resolved.source === 'missing' || (resolved.source === 'snapshot' && !request.acceptWeekly);
     });
     if (unavailable.length) {
       const reasons = unavailable.map(kind => {
@@ -124,14 +122,20 @@ export class EngineService {
         return `${labels[kind]}${SOURCE_LABELS[resolved?.source ?? 'missing']}：${resolved?.reason ?? '缺整段库存'}`;
       });
       const preview = previewRows(data, inventory, [...evidence.keys()]);
-      return { ...failure('missing_window', `${unavailable.map(kind => labels[kind]).join('、')}缺少 ${request.startDate} 至 ${request.endDate} 的完整库存档期。${reasons.join('；')}。`, ['选择已核对的完整档期。', '单选已有完整档期的媒体，或补充该档期库存。']),
-        inventory: { ...detail, ...(preview.length ? { preview } : {}) } };
+      const canUseWeekly = unavailable.every(kind => byKind.get(kind)?.source === 'snapshot') &&
+        unavailable.every(kind => preview.some(row => row.kind === kind && (row.freeCount ?? 0) > 0 &&
+          row.sampleDates?.length === byKind.get(kind)?.sampleDates?.length && data.pricing.pricesByMediaKey[row.mediaKey]));
+      return { ...failure('missing_window', canUseWeekly ? '完整档期待核对。可确认使用本地周截面，继续生成参考排期。' :
+        unavailable.map(kind => labels[kind]).join('、') + '缺少可用于该档期的库存。' + reasons.join('；'),
+      canUseWeekly ? [] : ['请调整档期或媒体范围，或补充该档期库存。']),
+        inventory: { ...detail, ...(preview.length ? { preview } : {}), ...(canUseWeekly ? { canUseWeekly: true } : {}) } };
     }
-    const billingMonths = inventory.billingMonths!;
+    const weekly = inventory.kinds.some(kind => kind.source === 'snapshot');
+    const priceMonths = inventory.billingMonths ?? billingMonthsFor(request.startDate, request.endDate) ?? 1;
     const inconsistentBilling = inventory.billingMismatch;
-    const queriedAt = selectedKinds.map(kind => byKind.get(kind)!.queriedAt!).sort((a, b) => Date.parse(a) - Date.parse(b))[0];
-    // 计费口径未确认时按 1 个计费月给出参考金额，响应与界面标注「计费待确认」。
-    const priceMonths = pendingBilling ? 1 : billingMonths;
+    const queriedAt = inventory.kinds.flatMap(kind => kind.queriedAt ? [kind.queriedAt] : []).sort((a, b) => Date.parse(a) - Date.parse(b))[0] ?? '';
+    if (weekly) notices.push('已按本地周截面生成参考排期。每种媒体按各采样周的共同参考量配置，签约前须核对实际投放区间。');
+    if (inventory.billingStatus === 'pending') notices.push('计费口径待确认，报价按 ' + priceMonths + ' 个计费月暂估。');
     const allCandidates: Candidate[] = [];
     const excluded: CandidatePool['excluded'] = [];
     const blockers: { kind: MediaKind; status: 'missing_data' | 'no_inventory'; message: string }[] = [];
@@ -144,7 +148,9 @@ export class EngineService {
       let missing = 0;
       let priced = 0;
       for (const [key, item] of entries) {
-        const stock = resolvedKind.inventoryByKey[key];
+        const sampleDates = resolvedKind.sampleByKey?.[key];
+        const stock = resolvedKind.source === 'snapshot' && sampleDates?.length !== resolvedKind.sampleDates?.length
+          ? undefined : resolvedKind.inventoryByKey[key];
         const price = data.pricing.pricesByMediaKey[key];
         if (stock?.freeCount === 0) {
           knownZero++;
@@ -171,7 +177,9 @@ export class EngineService {
           freeCount: stock.freeCount, ...(stock.contractCount === undefined ? {} : { contractCount: stock.contractCount }), ...(stock.reservedCount === undefined ? {} : { reservedCount: stock.reservedCount }),
           monthlyLowYuan: price.monthlyLowYuan, monthlyHighYuan: price.monthlyHighYuan, productionYuan: price.productionYuan, unitEstimateYuan,
           anchorIds: item.anchorIds, evidenceRefs: item.evidenceRefs, reasons: item.reasons,
-          sources: unique([...item.sources, `${kind}.json：${request.startDate} 至 ${request.endDate} ${SOURCE_LABELS[resolvedKind.source]}，查询于 ${resolvedKind.queriedAt ?? '—'}`, `pricing.json：${price.source}`]),
+          sources: unique([...item.sources, resolvedKind.source === 'snapshot'
+            ? '本地周截面：' + (sampleDates?.join('、') ?? '') + '，各周按共同参考数量编排'
+            : SOURCE_LABELS[resolvedKind.source] + '：' + request.startDate + ' 至 ' + request.endDate + '，查询于 ' + (resolvedKind.queriedAt ?? '—'), 'pricing.json：' + price.source]),
           assumptions: price.assumptions,
           ...(data.traffic.byMediaKey[key] ? { trafficReference: structuredClone(data.traffic.byMediaKey[key]) } : {}),
           ...(data.trajectories.byLineName[media.lineName]
@@ -418,7 +426,10 @@ export class EngineService {
       return { ...line, quantity, productionYuan: candidate.productionYuan * quantity, lineTotalYuan: candidate.unitEstimateYuan * quantity, reasons: preference ? unique([...candidate.reasons, `策略偏好：${preference.reason}`]) : candidate.reasons, ...(preferredKeys.has(candidate.mediaKey) ? { preferredByAi: true } : {}) };
     });
     const totalYuan = lines.reduce((sum, line) => sum + line.lineTotalYuan, 0);
-    const schedule = this.schedule.generate(lines, request, resolved.campaign, Object.fromEntries(candidates.map(candidate => [candidate.mediaKey, candidate.anchorIds.length])));
+    const weeklyStarts = Object.fromEntries(resolved.inventory.kinds.flatMap(kind =>
+      kind.source === 'snapshot' && kind.sampleDates?.length ? [[kind.kind, kind.sampleDates[0]]] : []));
+    const schedule = this.schedule.generate(lines, request, resolved.campaign,
+      Object.fromEntries(candidates.map(candidate => [candidate.mediaKey, candidate.anchorIds.length])), weeklyStarts);
     const selectedKeys = new Set(lines.map(line => line.mediaKey));
     // 同一 mediaKey 被多锚点命中时，每个锚点各自计一次，不做跨锚点求和。
     const anchors: PlanAnchor[] = resolved.anchors.map(anchor => ({

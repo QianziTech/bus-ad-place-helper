@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
-import { Campaign, PlanLine, PlanRequest, Schedule, ScheduleBatch } from '../shared/contracts';
+import { Campaign, MediaKind, PlanLine, PlanRequest, Schedule, ScheduleBatch } from '../shared/contracts';
 import { isPlanDate } from '../shared/data/plan-data';
 
 export interface ScheduleOptions { singleNightCap?: number; rainBufferNights?: number; compensationBufferQty?: number }
@@ -18,10 +18,11 @@ export class ScheduleService {
     if (!Number.isSafeInteger(this.cap) || this.cap < 1 || !Number.isSafeInteger(this.rain) || this.rain < 0 || !Number.isSafeInteger(this.compensation) || this.compensation < 0) throw new Error('排期产能和缓冲参数必须是有效整数');
   }
 
-  generate(lines: PlanLine[], request: PlanRequest, campaign: Campaign, anchorCounts: Record<string, number> = {}): Schedule {
+  generate(lines: PlanLine[], request: PlanRequest, campaign: Campaign, anchorCounts: Record<string, number> = {},
+    weeklyStarts: Partial<Record<MediaKind, string>> = {}): Schedule {
     const result: Schedule = {
       status: 'ok', singleNightCap: this.cap, batches: [], rainBufferNights: this.rain, compensationBufferQty: this.compensation,
-      assumptions: [`单晚上刊上限 ${this.cap} 台，按资料 02 推断；实际产能待施工方确认。`, `预留 ${this.rain} 个雨天备用夜；按 4A 框架“误一补二”预留 ${this.compensation} 台补刊产能。`, '按直客合同，发布期以施工照次日 08:00 起算；本表为日期级施工估算。'],
+      assumptions: [`单晚上刊上限 ${this.cap} 台，按资料 02 推断；实际产能待施工方确认。`, '按直客合同，发布期以施工照次日 08:00 起算；本表为日期级施工估算。'],
       notes: [],
     };
     if (!lines.length || !isPlanDate(request.startDate) || !isPlanDate(request.endDate) || request.startDate > request.endDate) {
@@ -35,28 +36,32 @@ export class ScheduleService {
     // 雨天顺延夜留在档期内，否则顺延即出档，缓冲形同虚设。
     const firstNight = start - 1;
     const total = lines.reduce((sum, line) => sum + line.quantity, 0);
-    const available = Math.max(0, end - start + 1 - this.rain);
-    const nights = Math.min(Math.ceil(total / this.cap), available);
+    const rain = Math.min(this.rain, end - start);
+    result.rainBufferNights = rain;
+    result.assumptions.push(`预留 ${rain} 个雨天备用夜；按 4A 框架“误一补二”预留 ${this.compensation} 台补刊产能。`);
+    const available = end - start + 1 - rain;
     // 同权重时地铁先上；随后优先覆盖核心锚点。
     const pending = lines.map(line => ({ ...line, remaining: line.quantity })).sort((a, b) =>
       campaign.mediaBias[b.kind] - campaign.mediaBias[a.kind]
       || (a.kind === b.kind ? 0 : a.kind === 'metro' ? -1 : 1)
       || (anchorCounts[b.mediaKey] ?? 0) - (anchorCounts[a.mediaKey] ?? 0)
       || a.mediaKey.localeCompare(b.mediaKey, 'en'));
-    let index = 0;
     let cumulative = 0;
-    for (let night = 0; night < nights; night++) {
+    for (let night = 0; night < available && cumulative < total; night++) {
       let remainingCapacity = this.cap;
-      const batch: ScheduleBatch = { no: night + 1, nightDate: dateAt(firstNight + night), mediaKeys: [], quantity: 0, cumulative, publishStartDate: dateAt(firstNight + night + 1), risk: null };
-      while (remainingCapacity > 0 && index < pending.length) {
-        const current = pending[index];
+      const kindQuantities = { bus: 0, metro: 0 };
+      const batch: ScheduleBatch = { no: result.batches.length + 1, nightDate: dateAt(firstNight + night), mediaKeys: [], quantity: 0, kindQuantities, cumulative, publishStartDate: dateAt(firstNight + night + 1), risk: null };
+      for (const current of pending) {
+        if (!remainingCapacity) break;
+        if (!current.remaining || (weeklyStarts[current.kind] ?? '') > batch.publishStartDate) continue;
         const quantity = Math.min(remainingCapacity, current.remaining);
         batch.mediaKeys.push(current.mediaKey);
         batch.quantity += quantity;
+        kindQuantities[current.kind] += quantity;
         remainingCapacity -= quantity;
         current.remaining -= quantity;
-        if (current.remaining === 0) index++;
       }
+      if (!batch.quantity) continue;
       cumulative += batch.quantity;
       batch.cumulative = cumulative;
       result.batches.push(batch);
@@ -68,7 +73,7 @@ export class ScheduleService {
     }
     if (result.batches.length) {
       const publishDate = result.batches[0].publishStartDate;
-      result.notes.push(`首批 ${result.batches[0].nightDate} 夜间施工，${publishDate} 08:00 起算；预留 ${this.rain} 个雨天顺延夜在档期内，实际合同起算需确认。`);
+      result.notes.push(`首批 ${result.batches[0].nightDate} 夜间施工，${publishDate} 08:00 起算；预留 ${rain} 个雨天顺延夜在档期内，实际合同起算需确认。`);
     }
     result.notes.push('从档期首日正排施工夜，夜晚施工、次日 08:00 起算；备用产能不计入已选数量和报价。');
     return result;
