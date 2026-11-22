@@ -5,6 +5,7 @@
  * 预览与导出共用它，保证滑块切换后的内容与首次渲染一致。
  */
 import type { BudgetOption, OptionMedia, RangeAnchor } from './types'
+import type { CoverageMapData } from './coverageMap'
 
 export interface RangeData {
   budget: { minYuan: number; maxYuan: number; stepYuan: number; presetsYuan: number[]; defaultYuan: number }
@@ -239,33 +240,33 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
 
   const analysis = (option.analysis || []).length ? `<ul class="col-list budget-analysis">${(option.analysis || []).map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : ''
 
-  const drawn = busLines.filter(line => line.trajectory && line.trajectory.polyline.length)
-  const missing = busLines.filter(line => !line.trajectory || !line.trajectory.polyline.length)
-  const pois = anchors.filter(anchor => anchor.selectedCount > 0 && anchor.coord)
   const map = (() => {
-    if (!drawn.length) return `<p class="muted">本轮入选公交线路暂无可绘制轨迹${missing.length ? `（缺轨迹：${missing.map(line => line.name).join('、')}）` : ''}；清单与报价不受影响。</p>`
-    const points = drawn.reduce((list, line) => list.concat(line.trajectory!.polyline), [] as [number, number][])
-    const lngs = points.map(point => point[0]).concat(pois.map(anchor => anchor.coord!.lng))
-    const lats = points.map(point => point[1]).concat(pois.map(anchor => anchor.coord!.lat))
-    const minLng = Math.min(...lngs); const maxLng = Math.max(...lngs)
-    const minLat = Math.min(...lats); const maxLat = Math.max(...lats)
-    const width = 640; const height = 360; const gap = 28
-    const scale = Math.min((width - gap * 2) / Math.max(maxLng - minLng, 1e-3), (height - gap * 2) / Math.max(maxLat - minLat, 1e-3))
-    const offsetX = (width - (maxLng - minLng) * scale) / 2
-    const offsetY = (height - (maxLat - minLat) * scale) / 2
-    const project = (lng: number, lat: number) => [offsetX + (lng - minLng) * scale, height - (offsetY + (lat - minLat) * scale)]
-    const paths = drawn.map((line, index) => {
-      const d = line.trajectory!.polyline.map(point => project(point[0], point[1]).map(value => value.toFixed(1)).join(',')).join(' ')
-      return `<polyline points="${d}" fill="none" stroke="hsl(${(index * 47) % 360} 46% 42%)" stroke-width="${Math.min(6, 2 + Math.ceil(line.quantity / 3))}" stroke-linejoin="round" stroke-linecap="round" opacity="0.9"><title>${esc(line.name)} ×${line.quantity}</title></polyline>`
-    }).join('')
-    const dots = pois.map(anchor => {
-      const projected = project(anchor.coord!.lng, anchor.coord!.lat)
-      return `<g><circle cx="${projected[0].toFixed(1)}" cy="${projected[1].toFixed(1)}" r="4" fill="#c4562e"><title>${esc(anchor.areaName)}</title></circle><text x="${(projected[0] + 7).toFixed(1)}" y="${(projected[1] + 4).toFixed(1)}" font-size="11" fill="#5b6470">${esc(anchor.areaName)}</text></g>`
-    }).join('')
-    const legend = drawn.slice(0, 8).map((line, index) => `<span class="legend-item"><i style="background:hsl(${(index * 47) % 360} 46% 42%)"></i>${esc(line.name)} ×${line.quantity}</span>`).join('')
-    return `<svg class="offline-map" viewBox="0 0 ${width} ${height}" role="img" aria-label="入选公交线路与关联商圈示意图" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="${width}" height="${height}" fill="#f4f5f6" rx="6"/>${paths}${dots}</svg>
-    <p class="note">示意图按本轮数据内嵌的线路轨迹（GCJ-02，简化至约 12 m）等比绘制，不用于测距；圆点为当前金额入选资源命中的商圈。${missing.length ? `缺轨迹：${missing.map(line => line.name).join('、')}。` : ''}</p>
-    <p class="map-legend">${legend}</p>`
+    const byName = new Map<string, { name: string; quantity: number; coords: [number, number][] }>()
+    for (const line of busLines) {
+      const coords = line.trajectory?.polyline ?? []
+      const route = byName.get(line.name)
+      if (route) {
+        route.quantity += line.quantity
+        if (route.coords.length < 2) route.coords = coords
+      } else {
+        byName.set(line.name, { name: line.name, quantity: line.quantity, coords })
+      }
+    }
+    const routes = [...byName.values()].filter(route => route.coords.length >= 2)
+      .map((route, index) => ({ ...route, color: `hsl(${Math.round(index * 137.508) % 360}, 66%, 38%)` }))
+    const missing = [...byName.values()].filter(route => route.coords.length < 2).map(route => esc(route.name))
+    if (!routes.length) return `<p class="muted">${missing.length ? `本轮入选公交线路暂无可绘制轨迹（${missing.join('、')}）。` : '当前方案未选公交线路。'}</p>`
+
+    const pois: CoverageMapData['pois'] = anchors.flatMap(anchor => anchor.selectedCount > 0 && anchor.coord
+      ? [{ name: anchor.areaName, coord: [anchor.coord.lng, anchor.coord.lat] }]
+      : [])
+    const mapData: CoverageMapData = { routes, pois }
+    const routeLegend = routes.map(route => `<span class="legend-item"><i style="background:${route.color}"></i>${esc(route.name)} ×${route.quantity}</span>`).join('')
+    const poiLegend = pois.map((poi, index) => `<span class="legend-item"><b>${index + 1}</b>${esc(poi.name)}</span>`).join('')
+    return `<script type="application/json" data-map-data>${JSON.stringify(mapData).replace(/</g, '\\u003c')}</script>
+    <p class="map-legend" aria-label="公交线路图例">${routeLegend}</p>
+    ${poiLegend ? `<p class="map-legend" aria-label="商圈图例">${poiLegend}</p>` : ''}
+    <p class="note">线路与商圈来源于可视化平台，底图来源于阿里云 DataV.GeoAtlas，坐标采用 GCJ-02。线路为约 12 m 容差简化的走向示意。${missing.length ? `缺轨迹的线路：${missing.join('、')}。` : ''}</p>`
   })()
 
   const s65 = busLines.length

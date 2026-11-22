@@ -1,38 +1,33 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { PlanVm } from '../plan/buildVm'
+import { buildVm } from '../plan/buildVm'
 import { renderPlan } from '../plan/renderPlan'
-import { initialBudget, rangeData } from '../plan/range'
+import { rangeData } from '../plan/range'
 import { selectBudget, state } from '../state/workbench'
 
 const props = defineProps<{ vm: PlanVm | null; highlight: string | null }>()
 const zoom = ref<'fit' | '100'>('fit')
-/** 文档内的当前金额；切换由 iframe 自己完成，外层不重建 srcdoc，避免拖动时整页重载。 */
-const documentBudget = ref(state.selectedYuan)
-/** 最近一次由 iframe 上报的金额；外层同步时用它避免回环。 */
+const previewRange = computed(() => state.showBaseline ? null : state.range)
+/** 记录 iframe 的金额。普通预算变动通过消息同步，保留地图设置与滚动位置。 */
 let iframeBudget = state.selectedYuan
 
 function frameWindow() {
   return document.querySelector<HTMLIFrameElement>('iframe.preview')?.contentWindow || null
 }
 
-// 新一代结果或初始金额变化时才重建文档；文档内拖动不触发。
-watch(() => state.range, range => { documentBudget.value = range ? initialBudget(range) : state.selectedYuan; iframeBudget = documentBudget.value })
+watch(previewRange, () => { iframeBudget = state.selectedYuan })
 watch(() => state.selectedYuan, next => {
   if (next === iframeBudget) return
   iframeBudget = next
-  // 外层（侧栏建议、基础方案切换）改金额：让文档自己切，不重载。
   const win = frameWindow()
-  if (win && state.range) win.postMessage({ type: 'plan-set-budget', budgetYuan: next }, '*')
-  else documentBudget.value = next
+  if (win && previewRange.value) win.postMessage({ type: 'plan-set-budget', budgetYuan: next }, '*')
 })
 
 function onMessage(event: MessageEvent) {
   if (event.data?.type !== 'plan-budget' || typeof event.data.budgetYuan !== 'number') return
   if (event.source !== frameWindow()) return
   iframeBudget = event.data.budgetYuan
-  // 文档内切换后也记录当前金额，外层若因此重建文档（重生成等）能从同一档位继续。
-  documentBudget.value = event.data.budgetYuan
   selectBudget(event.data.budgetYuan)
 }
 
@@ -41,11 +36,13 @@ onBeforeUnmount(() => window.removeEventListener('message', onMessage))
 
 /** 全区间结果把每一档的内容内嵌进 iframe，预览里也能直接拖滑块，与导出文件同一套交互。 */
 const html = computed(() => {
-  if (!props.vm) return ''
-  return renderPlan(props.vm, {
+  const range = previewRange.value
+  const vm = range ? buildVm({ plan: range.defaultPlan, meta: state.meta, mode: state.mode }) : props.vm
+  if (!vm) return ''
+  return renderPlan(vm, {
     highlight: props.highlight,
     appendix: false,
-    ...(state.range ? { range: rangeData(state.range, state.mode), budgetYuan: documentBudget.value } : {}),
+    ...(range ? { range: rangeData(range, state.mode), budgetYuan: iframeBudget } : {}),
   })
 })
 
@@ -74,13 +71,13 @@ const sections = [
     <span class="spacer" style="flex: 1" />
   </div>
   <div class="preview-frame">
-    <div v-if="!vm" class="empty-state">
+    <div v-if="!html" class="empty-state">
       <span class="mark">▤</span>
       <div>设置投放条件，生成推荐方案</div>
       <small>查看推荐资源、排期和估算报价</small>
     </div>
     <div v-else class="doc-scale" :style="zoom === '100' ? { width: '1600px' } : { width: '100%' }" style="height: 100%">
-      <!-- 内容是本地生成的方案文档（文案已转义），放行脚本只为预算滑块交互。 -->
+      <!-- 本地生成的方案文档，脚本用于预算切换与离线地图。 -->
       <iframe class="preview" :srcdoc="html" title="方案预览" sandbox="allow-same-origin allow-scripts" />
     </div>
   </div>

@@ -40,7 +40,7 @@ const vm = computed(() => {
 })
 /** 全区间视图：预览、全屏、下载共用同一份内嵌数据，切换只读本轮结果。 */
 const range = computed<PipelineRangeSuccess | null>(() => state.range)
-const rangeMeta = computed(() => (range.value ? rangeData(range.value, state.mode) : null))
+const rangeMeta = computed(() => (!state.showBaseline && range.value ? rangeData(range.value, state.mode) : null))
 const liveSuccess = computed<PlanSuccess | null>(() => (state.result && state.result.status === 'ok' && 'lines' in state.result ? state.result as PipelineSuccess : null))
 const liveVm = computed(() => {
   const plan = liveSuccess.value

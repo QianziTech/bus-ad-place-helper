@@ -1,6 +1,6 @@
 /**
  * 唯一渲染器：预览、全屏演示与导出 HTML 都调用这里。
- * 只输出原生 HTML + 内联 CSS，不引入任何组件库，不发起任何网络请求。
+ * HTML 内嵌样式、预算数据及 ECharts 覆盖图资源，打开时无需网络请求。
  * 预算相关的动态区块全部由 `buildSlots` 产出；同一函数会被内联进导出文件，
  * 滑块切换时在浏览器里重跑，因此切换后的内容与首次渲染完全一致。
  */
@@ -8,6 +8,7 @@ import { PLAN_CSS } from './plan.css'
 import { escapeHtml as h, copyText } from './sanitize'
 import { analysisModeText, windowText, type PlanVm } from './buildVm'
 import { buildSlots, type RangeData, type SlotName } from './slots'
+import coverageMapScript from 'virtual:offline-coverage-map'
 
 export interface RenderOptions {
   /** 预览时的高亮 mediaKey，导出为空。 */
@@ -23,6 +24,7 @@ export interface RenderOptions {
 }
 
 const SLOTS: SlotName[] = ['chips', 'kpis', 'note', 's2window', 's2anchors', 's3table', 's4', 's5', 's6', 'analysis', 'map', 's65', 's66']
+const inlineScript = (code: string) => code.replace(/<\/script/gi, '<\\/script')
 
 const STEP_LABELS: Record<string, string> = {
   candidates: '候选核对', minimum: '最低组合', preference: '偏好采纳', preference_rejected: '偏好未采用',
@@ -87,9 +89,9 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
 
   const range = options.range
   const budgetYuan = options.budgetYuan ?? vm.request.budgetYuan
-  const slots: Record<SlotName, string> = range
-    ? buildSlots(range, budgetYuan, highlight)
-    : buildSlots(rangeDataFor(vm), budgetYuan, highlight)
+  const data = range ?? rangeDataFor(vm)
+  const slots = buildSlots(data, budgetYuan, highlight)
+  const hasMap = Object.values(data.mediaByKey).some(media => media.kind === 'bus' && (media.trajectory?.polyline.length ?? 0) >= 2)
   const slot = (name: SlotName) => `<div data-slot="${name}"${name === 'kpis' ? ' class="kpis"' : name === 'chips' ? ' class="chips"' : ''}>${slots[name]}</div>`
 
   /** 假设书⑥只写本次实际选择的媒体；与客户预设不同时括号注明预设。 */
@@ -114,7 +116,7 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
     ? `<script id="budget-data" type="application/json">${embedded}</script>
 <script>
 (function () {
-  var buildSlots = ${buildSlots.toString()};
+  var buildSlots = ${inlineScript(buildSlots.toString())};
   var payload = JSON.parse(document.getElementById('budget-data').textContent);
   var slots = ${JSON.stringify(SLOTS)};
   var current = ${budgetYuan};
@@ -129,6 +131,7 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
       var target = document.querySelector('[data-slot="' + name + '"]');
       if (target) target.innerHTML = next[name];
     });
+    document.dispatchEvent(new Event('plan-map-update'));
     if (label) label.textContent = (budget / 10000) + ' 万';
     if (range && Number(range.value) !== budget) range.value = String(budget);
     // 预览内拖动时通知外层同步当前金额；导出文件没有外层，静默忽略。
@@ -228,6 +231,13 @@ ${head}
 
 <section id="s7map">
   <h2>线路覆盖示意图</h2>
+  ${hasMap ? `<div data-coverage-map hidden>
+    <div class="map-controls">
+      <label>底图 <select data-map-layer><option value="districts">上海行政区</option><option value="outline">上海轮廓</option></select></label>
+      <label>范围 <select data-map-scope><option value="routes">入选线路</option><option value="city">上海全市</option></select></label>
+    </div>
+    <div class="offline-map" data-map-canvas role="img" aria-label="入选公交线路与关联商圈示意图"></div>
+  </div>` : ''}
   ${slot('map')}
 </section>
 
@@ -271,6 +281,7 @@ ${head}
 </footer>
 </main>
 ${script}
+${hasMap ? `<script>${inlineScript(coverageMapScript)}</script>` : ''}
 </body></html>`
 }
 
@@ -282,6 +293,7 @@ function rangeDataFor(vm: PlanVm): RangeData {
     budgetOptions: [{
       budgetYuan, status: 'ok', totalYuan: vm.total.yuan, remainingYuan: vm.remaining.yuan,
       lines: vm.lines.map(line => ({ mediaKey: line.mediaKey, quantity: line.quantity, lineTotalYuan: line.lineTotalYuan, ...(line.preferredByAi ? { preferredByAi: true } : {}) })),
+      schedule: vm.schedule,
       selectedAnchors: vm.anchors.filter(anchor => anchor.selectedCount > 0).map(anchor => ({ anchorId: anchor.id, selectedCount: anchor.selectedCount })),
       analysis: [],
     }],

@@ -105,10 +105,15 @@ table.appendix-table td.k{width:7em;color:var(--ink-2);font-weight:600}
 .budget-ticks .tick:hover{color:var(--accent)}
 .budget-panel{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}
 .budget-analysis{margin-top:8px}
-.offline-map{width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius);display:block}
+.map-controls{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:12px;color:var(--ink-2);font-size:13px}
+.map-controls label{display:inline-flex;gap:6px;align-items:center}
+.map-controls select{font:inherit;color:inherit;background:#fff;border:1px solid var(--line);border-radius:4px;padding:4px 8px}
+.offline-map{width:100%;height:clamp(280px,42vw,560px);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#edf3f5}
 .map-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--ink-2);margin-top:8px}
 .map-legend .legend-item{display:inline-flex;align-items:center;gap:6px}
 .map-legend i{width:14px;height:4px;border-radius:2px;display:inline-block}
+.map-legend b{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:#344553;color:#fff;font-size:10px}
+@media print{.map-controls{display:none}[data-coverage-map]{break-inside:avoid}.offline-map{height:320px}}
 @media (max-width:1500px){.doc{padding:0 48px}header.doc-head,nav.sections{padding-left:48px;padding-right:48px}}
 @media (max-width:1100px){.split,.split.wide,.cards,.two-col{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(4,1fr)}.kpi{padding:12px 10px}.kpi b{font-size:30px}header.doc-head,nav.sections{padding-left:24px;padding-right:24px}.doc{padding:0 24px 40px}}
 /* ---- 打印：A4 纵向，headless Chromium 与手动打印共用 ---- */
