@@ -104,7 +104,7 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
 
   const slider = range
     ? `<div class="budget-slider" role="group" aria-label="预算推演">
-    <div class="budget-head"><span class="caption">预算上限</span><b data-budget-label>${(budgetYuan / 10000).toFixed(0)} 万</b><span class="caption">拖动查看每个金额的清单与报价</span></div>
+    <div class="budget-head"><span class="caption">预算上限</span><b data-budget-label>${(budgetYuan / 10000).toFixed(0)} 万</b><span class="caption no-print">拖动查看每个金额的清单与报价</span><span class="caption print-only" data-print-hint>本页为当前档位 ${(budgetYuan / 10000).toFixed(0)} 万的清单与报价</span></div>
     <input type="range" min="${range.budget.minYuan}" max="${range.budget.maxYuan}" step="${range.budget.stepYuan}" value="${budgetYuan}" aria-label="预算上限（元）" data-budget-range>
     <div class="budget-ticks">${range.budget.presetsYuan.map(preset => `<button type="button" class="tick" data-budget-tick="${preset}">${preset / 10000} 万</button>`).join('')}</div>
   </div>`
@@ -133,6 +133,9 @@ export function renderPlan(vm: PlanVm, options: RenderOptions = {}): string {
     });
     document.dispatchEvent(new Event('plan-map-update'));
     if (label) label.textContent = (budget / 10000) + ' 万';
+    // 打印稿没有「拖动」，用同一处文案给出静态说明，跟着当前档位一起更新。
+    var printHint = document.querySelector('[data-print-hint]');
+    if (printHint) printHint.textContent = '本页为当前档位 ' + (budget / 10000) + ' 万的清单与报价';
     if (range && Number(range.value) !== budget) range.value = String(budget);
     // 预览内拖动时通知外层同步当前金额；导出文件没有外层，静默忽略。
     try { if (window.parent && window.parent !== window) window.parent.postMessage({ type: 'plan-budget', budgetYuan: budget }, '*'); } catch (error) {}

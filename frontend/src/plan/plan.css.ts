@@ -29,9 +29,11 @@ small,.note{font-size:13px;line-height:1.6;color:var(--ink-3)}
 .chip.on{border-color:var(--primary);color:var(--primary);background:var(--primary-wash)}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:28px 0 0}
 .kpi{background:var(--bg);padding:18px 20px}
-.kpi b{display:block;font:600 56px/1.1 "PingFang SC","Microsoft YaHei UI",sans-serif;letter-spacing:-.02em}
+.kpi b{display:block;white-space:nowrap;font:600 56px/1.1 "PingFang SC","Microsoft YaHei UI",sans-serif;letter-spacing:-.02em}
 .kpi b em{font-style:normal;font-size:16px;font-weight:400;margin-left:4px;color:var(--ink-2)}
 .kpi small{display:block;margin-top:4px}
+.kpi small .nb{white-space:nowrap}
+.kpi small .kpi-tag{display:block}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:48px}
 .split.wide{grid-template-columns:3fr 2fr}
 .card{border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;background:var(--bg)}
@@ -45,6 +47,8 @@ table.data{width:100%;border-collapse:collapse;font-size:15px}
 table.data th{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);background:var(--canvas);font-size:13px;color:var(--ink-2);font-weight:600;position:sticky;top:0}
 table.data td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 table.data td.num,table.data th.num{text-align:right;white-space:nowrap;font-weight:500}
+/* 2~4 字的短值单元格（车身三侧 / 3号口 / A+）不要让最后一个字掉到第二行 */
+table.data td[data-label="形式 / 出口"],table.data td[data-label="等级"]{word-break:keep-all}
 table.data tr.tot td{border-top:2px solid var(--ink);font-weight:600}
 .star{color:var(--accent);font-weight:600}
 details{margin:4px 0}
@@ -93,7 +97,7 @@ table.appendix-table td.k{width:7em;color:var(--ink-2);font-weight:600}
 .tag{display:inline-block;font-size:12px;padding:1px 7px;border-radius:10px;background:var(--primary-wash);color:var(--primary);margin:0 4px 0 0}
 .win{line-height:1.7}
 .win b{font-size:15px}
-.win span{color:var(--ink-2);font-size:13px}
+.win span{color:var(--ink-2);font-size:13px;margin-left:2px}
 .win small{display:block;color:var(--ink-3)}
 .hl{outline:2px solid var(--accent);outline-offset:2px;background:#fdf0e9}
 .budget-slider{border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px 12px;margin-top:20px;background:var(--canvas)}
@@ -118,12 +122,26 @@ table.appendix-table td.k{width:7em;color:var(--ink-2);font-weight:600}
 @media (max-width:1100px){.split,.split.wide,.cards,.two-col{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(4,1fr)}.kpi{padding:12px 10px}.kpi b{font-size:30px}header.doc-head,nav.sections{padding-left:24px;padding-right:24px}.doc{padding:0 24px 40px}}
 /* ---- 打印：A4 纵向，headless Chromium 与手动打印共用 ---- */
 @page{size:A4 portrait;margin:14mm 12mm}
+.print-only{display:none}
 @media print{
   .doc{width:auto;max-width:none;padding:0}
   header.doc-head{position:static;padding:0 0 10px}
   nav.sections{display:none}
-  table.data{font-size:10.5pt}
-  table.data th{position:static;background:#f2f3f4}
+  /* A4 内容宽约 700px，会命中移动端断点。移动端规则已限定 screen，这里再显式恢复表格，
+     防止整张资源表被打散成 label/value 卡片、页数翻倍、列间失去可比性。 */
+  table.data{display:table;width:100%;font-size:9pt}
+  table.data thead{display:table-header-group}
+  table.data tbody{display:table-row-group}
+  table.data tr{display:table-row;border:none;padding:0;margin:0;break-inside:avoid}
+  table.data th{display:table-cell;position:static;background:#f2f3f4;padding:5px 6px;font-size:8.5pt;word-break:keep-all}
+  table.data td{display:table-cell;padding:5px 6px;border-bottom:1px solid var(--line);font-size:9pt}
+  table.data td::before{content:none}
+  table.data td.num{text-align:right}
+  .kpis{grid-template-columns:repeat(4,1fr)}
+  .kpi{padding:10px 12px}
+  .kpi b{font-size:30px}
+  .no-print{display:none!important}
+  .print-only{display:inline!important}
   thead{display:table-header-group}
   tr,.card,.kpi,.risk,.ok-block{break-inside:avoid}
   h2,h3{break-after:avoid}
@@ -134,8 +152,8 @@ table.appendix-table td.k{width:7em;color:var(--ink-2);font-weight:600}
   details summary{list-style:none}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
-/* ---- 移动端：页眉导航不再常驻，表格转卡片 ---- */
-@media (max-width:760px){
+/* ---- 移动端：页眉导航不再常驻，表格转卡片（只作用于屏幕，打印走上面的表格版式） ---- */
+@media screen and (max-width:760px){
   header.doc-head{position:static;padding:14px 16px;flex-direction:column;align-items:flex-start;gap:4px}
   nav.sections{position:static;padding:10px 16px;flex-wrap:nowrap;overflow-x:auto;gap:16px}
   nav.sections a{white-space:nowrap;padding:8px 0;min-height:44px;display:inline-flex;align-items:center}
@@ -144,6 +162,14 @@ table.appendix-table td.k{width:7em;color:var(--ink-2);font-weight:600}
   .lede{font-size:15px}
   .kpis{grid-template-columns:1fr 1fr}
   .kpi{padding:12px 14px} .kpi b{font-size:26px}
+  /* 滑块标题：390 宽下三个元素挤在一行会把“预算上限”竖排折断，让说明独占一行 */
+  .budget-head{flex-wrap:wrap;row-gap:2px;column-gap:8px}
+  .budget-head .caption{white-space:nowrap}
+  .budget-head b{font-size:24px}
+  .budget-head .no-print{flex:0 0 100%;order:3;font-size:12px}
+  /* 手机窄栏放不下「公交 76 台 · 地铁 1 个出口」，按媒体各占一行，去掉行首的顿点 */
+  .kpi small .nb{display:block}
+  .kpi small .sep{display:none}
   details summary{min-height:44px;display:flex;align-items:center;padding:2px 0}
   table.data,table.data tbody,table.data tr,table.data td{display:block;width:auto}
   table.data thead{display:none}

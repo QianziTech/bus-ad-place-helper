@@ -156,11 +156,29 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   const differs = suggested && (suggested.start !== start || suggested.end !== end)
   const nextDay = end ? nextDate(end) : ''
   const remainingStart = suggested.start > nextDay ? suggested.start : nextDay
+  // 窗口月数按自然月计（2027-07-01~08-31 → 2），避免再说出「余下 1 个月」这类自相矛盾的数。
+  const monthSpan = (from: string, to: string) => {
+    const a = new Date(`${from}T00:00:00Z`), b = new Date(`${to}T00:00:00Z`)
+    return Math.max(1, (b.getUTCFullYear() - a.getUTCFullYear()) * 12 + b.getUTCMonth() - a.getUTCMonth() + 1)
+  }
+  const windowMonths = suggested ? monthSpan(suggested.start, suggested.end) : 0
   const followUp = remainingStart && remainingStart <= suggested.end
-    ? `；后续档期 ${remainingStart} ~ ${suggested.end} 如需投放，另行查档与报价` : ''
-  const s2window = `<div class="win"><b>${esc(start && end ? `${start} ~ ${end}` : '档期待确认')}</b><span>${esc(data.billingStatus === 'pending' ? '计费口径待确认' : `${months} 个投放月`)} · 上限 ${esc(`${budgetYuan / 10000} 万`)}</span>${differs ? `<br><small>${esc(`建议窗口 ${suggested.start} ~ ${suggested.end}${followUp}`)}</small>` : ''}</div>`
-  const kpis = `<div class="kpi"><b>${quantity}<em>台 / 个</em></b><small>媒体单位</small></div>
-    <div class="kpi"><b>${busLines.length + metroLines.length}<em>条 / 个</em></b><small>公交线路 · 地铁出口</small></div>
+    ? (remainingStart === suggested.start
+      ? '；窗口尚未开始，后续如需投放另行查档与报价'
+      : `；后续 ${remainingStart} ~ ${suggested.end} 如需投放，另行查档与报价`)
+    : ''
+  const s2window = `<div class="win"><b>${esc(start && end ? `${start} ~ ${end}` : '档期待确认')}</b><span>· ${esc(data.billingStatus === 'pending' ? '计费口径待确认' : `${months} 个投放月`)} · 上限 ${esc(`${budgetYuan / 10000} 万`)}</span>${differs ? `<br><small>${esc(`建议窗口 ${suggested.start} ~ ${suggested.end}（${windowMonths} 个月）；本次按 ${start} ~ ${end} 投放${followUp}`)}</small>` : ''}</div>`
+  // 台（公交）与口（地铁）不能并排成「台 / 个」；单位进小字，按实际媒体组合拼出构成。
+  const busQty = busLines.reduce((sum, line) => sum + line.quantity, 0)
+  const metroQty = metroLines.reduce((sum, line) => sum + line.quantity, 0)
+  // 每段单独 nowrap：A4 / 手机窄栏里只能断在顿号处，不会把“地铁”拆成“地”+“铁”。
+  const nb = (text: string) => `<span class="nb">${esc(text)}</span>`
+  const sep = '<span class="nb sep"> · </span>'
+  const mixOf = (parts: string[]) => parts.filter(Boolean).map(nb).join(sep)
+  const qtyMix = mixOf([busLines.length ? `公交 ${busQty} 台` : '', metroLines.length ? `地铁 ${metroQty} 个出口` : ''])
+  const lineMix = mixOf([busLines.length ? `公交 ${busLines.length} 条` : '', metroLines.length ? `地铁 ${metroLines.length} 个出口` : ''])
+  const kpis = `<div class="kpi"><b>${quantity}</b><small><span class="kpi-tag">媒体单位</span>${qtyMix}</small></div>
+    <div class="kpi"><b>${busLines.length + metroLines.length}</b><small><span class="kpi-tag">线路与点位</span>${lineMix}</small></div>
     <div class="kpi"><b>${esc(wanMoney(total))}</b><small>估算总额</small></div>
     <div class="kpi"><b>${esc(wanMoney(remaining))}</b><small>预算余量</small></div>`
   const note = `<p class="note" style="margin-top:16px">${data.mode === 'mock' ? '演示方案 · ' : ''}报价按刊例区间中值估算，详见报价明细。</p>`
@@ -168,15 +186,15 @@ export function buildSlots(data: RangeData, budgetYuan: number, highlight?: stri
   const s2anchors = anchorWork.length
     ? `<div class="cards" style="grid-template-columns:1fr 1fr">${anchorWork.map(anchor => {
       const coord = anchor.coord ? `<details><summary>查看坐标</summary><p>${anchor.coord.lng.toFixed(6)}, ${anchor.coord.lat.toFixed(6)}${anchor.coord.exit ? ` · ${esc(anchor.coord.exit)}` : ''}</p></details>` : ''
-      return `<div class="card"><h3>${esc(anchor.areaName)}</h3><small>${anchor.station ? `站点 ${esc(anchor.station)} · ` : ''}${anchor.role === 'landmark' ? '地标' : '业务区'}</small>
+      return `<div class="card"><h3>${esc(anchor.areaName)}</h3><small>${anchor.station ? `站点 ${esc(anchor.station)}` : ''}${anchor.station ? ' · ' : ''}${anchor.role === 'landmark' ? '地标' : '商圈'}</small>
         <p style="margin:8px 0 0;font-size:14px">周边候选 公交 ${anchor.candidateCounts ? anchor.candidateCounts.bus : '—'} · 地铁 ${anchor.candidateCounts ? anchor.candidateCounts.metro : '—'}<br><span class="muted">本方案选中 ${anchor.selectedCount} 项</span></p>
         ${anchor.rationale ? `<p class="note" style="margin-top:6px">${esc(copyText(anchor.rationale, 120))}</p>` : ''}${coord}</div>`
     }).join('')}</div>`
     : '<div class="card"><p class="muted">暂无商圈资料。</p></div>'
   const s3table = `<table class="data"><thead><tr><th>商圈</th><th>站点</th><th class="num">公交候选</th><th class="num">地铁候选</th><th class="num">已选资源</th></tr></thead><tbody>${anchors.map(anchor => `<tr><td data-label="商圈">${esc(anchor.areaName)}</td><td data-label="站点">${esc(anchor.station || '—')}</td><td class="num" data-label="公交候选">${anchor.candidateCounts ? anchor.candidateCounts.bus : '—'}</td><td class="num" data-label="地铁候选">${anchor.candidateCounts ? anchor.candidateCounts.metro : '—'}</td><td class="num" data-label="已选资源">${anchor.selectedCount}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">暂无商圈资料。</td></tr>'}</tbody></table>`
-  const s4 = `<h3 style="margin-top:20px">公交车身（${busLines.length} 条线路 · ${busLines.reduce((sum, line) => sum + line.quantity, 0)} 台）</h3>
+  const s4 = `<h3 style="margin-top:20px">公交车身（${busLines.length} 条线路 · ${busQty} 台）</h3>
   ${table(busLines)}
-  <h3 style="margin-top:32px">地铁出入口（${metroLines.length} 个出口 · ${metroLines.reduce((sum, line) => sum + line.quantity, 0)} 个）</h3>
+  <h3 style="margin-top:32px">地铁出入口（${metroLines.length} 个出口${metroQty === metroLines.length ? '' : ` · 共 ${metroQty} 个`}）</h3>
   ${table(metroLines)}
   <p class="note" style="margin-top:12px">数量不超过该档期可售量；未订到的空位留在同一档期内，可作替换与备损。行合计占总额 30% 以上的资源标为「主承重」，单点延误影响较大。${lines.some(line => line.preferredByAi) ? '<span class="star">★</span> 表示 AI 推荐资源。' : ''}</p>`
   const busAnchors = anchors.filter(anchor => busLines.some(line => line.anchorIds.includes(anchor.id)))
